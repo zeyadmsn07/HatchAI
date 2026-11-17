@@ -69,8 +69,10 @@ def verify_event(payload: dict, signature: str) -> bool:
     return hmac.compare_digest(expected, signature)
 
 
-def checkout(run_id: str, amount_egp: int = 4900) -> dict:
-    """Simulate a checkout.completed event."""
+def checkout(run_id: str, amount_minor: int = 4900, amount_egp: int | None = None) -> dict:
+    """Simulate a checkout.completed event. amount_minor: price in minor units (cents) of the pricing
+    currency (USD in the pipeline). amount_egp is a legacy alias kept for older callers."""
+    amount_minor = amount_egp if amount_egp is not None else amount_minor
     import uuid
     order_id = f"ord_{uuid.uuid4().hex[:12]}"
     idempotency_key = f"ik_{hashlib.sha256(order_id.encode()).hexdigest()[:16]}"
@@ -81,13 +83,13 @@ def checkout(run_id: str, amount_egp: int = 4900) -> dict:
             conn.execute(
                 "INSERT INTO orders (order_id, run_id, amount_minor, status, idempotency_key, created_at) "
                 "VALUES (?, ?, ?, 'CREATED', ?, ?)",
-                (order_id, run_id, amount_egp, idempotency_key, ts),
+                (order_id, run_id, amount_minor, idempotency_key, ts),
             )
         except sqlite3.IntegrityError:
             return {"status": "duplicate", "order_id": order_id}
 
     payload = {"event_type": "checkout.completed", "order_id": order_id,
-               "idempotency_key": idempotency_key, "amount": amount_egp}
+               "idempotency_key": idempotency_key, "amount": amount_minor}
     sig = sign_event(payload)
     return {"order_id": order_id, "idempotency_key": idempotency_key,
             "signature": sig, "payload": payload}

@@ -17,8 +17,9 @@ ALLOWED_TO_DIFFER = ("payment_test_log", "phase3_step3_mvp-test-report")
 
 
 def test_three_committed_snapshots_exist():
-    assert [p.name for p in SNAPSHOT_FILES] == ["repeat_scenario.json", "strong_scenario.json", "weak_scenario.json"]
-    for name in ("strong_scenario.json", "weak_scenario.json"):
+    assert [p.name for p in SNAPSHOT_FILES] == ["repeat_scenario.json", "strong_scenario.json",
+                                                "strong_v2_scenario.json", "weak_scenario.json"]
+    for name in ("strong_scenario.json", "weak_scenario.json", "strong_v2_scenario.json"):
         snap = json.loads((orchestrator.SNAPSHOTS / name).read_text(encoding="utf-8"))
         assert snap["capture_metadata"]["code_state"]["commit"]          # newer captures carry metadata
 
@@ -47,9 +48,10 @@ def test_two_default_demo_runs_are_identical(monkeypatch, tmp_path):
 
     v1_runs = {"demo-strong": "completed", "demo-weak": "stopped", "demo-replay": "completed"}
     assert {k: r1[k]["status"] for k in v1_runs} == v1_runs
-    assert set(r1) == set(v1_runs) | {f"{k}-v2" for k in v1_runs}       # the same snapshots under scoring v2
+    assert r1["demo-headline"]["status"] == "completed"                 # live v2 capture, replayed under v2
+    assert set(r1) == set(v1_runs) | {f"{k}-v2" for k in v1_runs} | {"demo-headline"}
     for rid in r1:
-        if rid in v1_runs:      # captured under v1, replayed under v1: must reproduce the capture exactly
+        if rid in v1_runs or rid == "demo-headline":      # captured under v1, replayed under v1: must reproduce the capture exactly
             assert r1[rid]["match"] is True and r2[rid]["match"] is True
         else:                   # replayed under v2: a labelled scoring-version difference, not a match
             assert r1[rid]["scoring_difference"] is True and r1[rid]["match"] is False

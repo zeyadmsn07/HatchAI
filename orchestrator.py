@@ -47,7 +47,9 @@ RUNS = ROOT / "runs"
 DEMO_RUNS = {"demo-strong": "", "demo-weak": "-weak-idea", "demo-replay": "-replay-scenario",
              # the same three snapshots replayed under scoring v2 (separate, labelled output files)
              "demo-strong-v2": "-scoring-v2", "demo-weak-v2": "-weak-idea-scoring-v2",
-             "demo-replay-v2": "-replay-scenario-scoring-v2"}
+             "demo-replay-v2": "-replay-scenario-scoring-v2",
+             # headline: the strong brief re-captured LIVE under scoring v2 (REPEAT -> PIVOT -> GO)
+             "demo-headline": "-headline-v2"}
 # Committed evidence snapshot for the reproducible REPEAT/PIVOT scenario (captured from a live run).
 SNAPSHOTS = ROOT / "evidence_snapshots"
 DEMO_SNAPSHOT = SNAPSHOTS / "repeat_scenario.json"
@@ -253,6 +255,25 @@ def advance_after_gate(run_id: str, gate_id: int, decision: str) -> None:
         _spawn(_run_phase_1, run_id)
 
 
+def _advise(run_id: str, gate_id: int, gate: GateResult, step: int, features=None) -> dict | None:
+    """Write the Advisor memo for this gate. Advisory: a failure here is logged, never fatal."""
+    try:
+        from agents.advisor import run as advisor_run
+        c = _counters(run_id)
+        res = advisor_run(run_id, gate_id, gate, _load(run_id, "brief", FounderBrief),
+                          _load(run_id, "findings", ResearchFindings),
+                          critique=_load(run_id, "critique", Critique),
+                          features=features, demand_test=_load(run_id, "demand_test", DemandTest),
+                          round_no=c["round"], pivots=c["pivots"])
+        _write(run_id, f"phase{gate_id}_step{step}_advisor-memo.md", res["memo"])
+        return res
+    except Exception as exc:   # advisory layer must never block the pipeline
+        log.warning("advisor memo failed for %s gate %s: %s", run_id, gate_id, exc)
+        callbacks.log(run_id, "advisor", f"advisor_memo_gate_{gate_id}_failed", phase=gate_id,
+                      outcome=f"{type(exc).__name__}: {exc}"[:300])
+        return None
+
+
 def _gate(run_id: str, gate: GateResult, phase: int, extra: str = "") -> None:
     c = _counters(run_id)
     c["history"].append({"gate": gate.gate_id, "outcome": gate.outcome.value, "round": c["round"],
@@ -345,6 +366,7 @@ def _run_phase_1(run_id: str):
         _write(run_id, "phase1_step2_research-findings.md", _format_findings(findings))
         _write(run_id, "phase1_step3_sources.json", json.dumps(
             [s.model_dump() for s in findings.sources], indent=2, ensure_ascii=False))
+        _advise(run_id, 1, gate, 5)
         replay_note = ""
         if findings.evidence_mode == "replay":
             replay_note = (f"\n> **Evidence mode: REPLAY** of snapshot {findings.snapshot}. No new evidence was "
@@ -376,6 +398,7 @@ def _run_phase_2(run_id: str):
         _write(run_id, "phase2_step1_critique.md", _format_critique(critique))
         _write(run_id, "phase2_step2_lean-canvas.md", _format_canvas(canvas, findings))
         _write(run_id, "phase2_step3_demand-test-plan.md", _format_demand_test(demand_test))
+        _advise(run_id, 2, gate, 4)
         _gate(run_id, gate, 2)
     except Exception as exc:
         _fail(run_id, 2, exc)
@@ -401,6 +424,7 @@ def _run_phase_3(run_id: str):
             # No template fits: write a spec-only document; never claim an MVP exists.
             _store(run_id, "app", {"supported": False, "reason": report["unsupported_reason"]})
             _write(run_id, "phase3_step1_mvp-spec.md", _format_unsupported_spec(report, brief, canvas, critique))
+            _advise(run_id, 3, gate, 4)
             _gate(run_id, gate, 3)
             return
         _store(run_id, "app", {"product_name": report["spec"].product_name, "app_dir": str(report["app_dir"]),
@@ -409,7 +433,15 @@ def _run_phase_3(run_id: str):
         _write(run_id, "phase3_step1_mvp-spec.md", _format_mvp_spec(report, canvas))
         _write(run_id, "phase3_step2_mvp-source.md", _format_mvp_source(report))
         _write(run_id, "phase3_step3_mvp-test-report.txt", _format_test_report(report))
-        _gate(run_id, gate, 3)
+        adv = _advise(run_id, 3, gate, 4, features=report["spec"].features)
+        cov = (adv or {}).get("coverage")
+        extra = ("" if not cov else
+                 f"\n> **Advisory, not part of the gate:** the MVP covers **{cov['covered']} of {cov['total']}** "
+                 "verified pains in the demand evidence. See `phase3_step4_advisor-memo.md`.\n")
+        if adv and not cov:
+            extra = ("\n> **Advisory, not part of the gate:** no verified pain was found in the demand evidence, "
+                     "so feature fit is untested. See `phase3_step4_advisor-memo.md`.\n")
+        _gate(run_id, gate, 3, extra)
     except Exception as exc:
         _fail(run_id, 3, exc)
 
@@ -450,7 +482,7 @@ def _run_phase_5(run_id: str):
         _write(run_id, "phase5_step1_launch-drafts.md", drafts)
 
         amount = int(round(pricing.get("plus", 4.0) * 100))  # minor units (cents)
-        co = checkout(run_id, amount_egp=amount)
+        co = checkout(run_id, amount_minor=amount)
         paid = process_checkout(co["payload"], co["signature"])
         replay = process_checkout(co["payload"], co["signature"])
         refund = process_refund(co["order_id"])
@@ -522,6 +554,7 @@ def _format_brief(brief: FounderBrief) -> str:
 
 
 def _format_findings(f: ResearchFindings) -> str:
+    import evidence as _ev
     by_key = {s.key: s for s in f.sources}
     lines = []
     for c in f.claims:
@@ -552,10 +585,49 @@ def _format_findings(f: ResearchFindings) -> str:
 |---|---|
 {chr(10).join(f"| {k.replace('_', ' ')} | {v} |" for k, v in breakdown.items())}
 
+{_format_quality(f)}
+
 ## Source ledger ({len(f.sources)} sources, {len({s.domain for s in f.sources})} domains)
 
-{chr(10).join(f"- `{s.key}` [{s.title}]({s.url}) — {s.collector}, {s.category}, fetched {s.fetch_time}, sha256:{s.text_hash}" for s in f.sources) or "- none fetched"}
+{chr(10).join(f"- `{s.key}` [{s.title}]({s.url}) — {s.collector}, {s.category}, {_ev.credibility(s)}, published {_ev.source_date(s)[0] or 'undated'}, fetched {s.fetch_time}, sha256:{s.text_hash}" for s in f.sources) or "- none fetched"}
 """
+
+
+def _format_quality(f: ResearchFindings) -> str:
+    """Freshness / credibility / passage-origin audit of the verified claims (advisory, not scored)."""
+    import evidence as _ev
+    q = _ev.quality_report(f.sources, f.claims)
+    sm = q["summary"]
+    rows = "\n".join(
+        f"| {r['category']} | {r['key']} | {r['domain']} | {r['credibility']} | {r['published'] or 'undated'}"
+        f"{' (' + r['date_from'] + ')' if r['date_from'] else ''} | {r['freshness']}"
+        f"{'' if r['age_days'] is None else ' (' + str(r['age_days']) + ' d)'} | {r['origin']} |"
+        for r in q["rows"]) or "| – | – | – | – | – | – | – |"
+    warn = "\n".join(f"- ⚠ {w}" for w in q["warnings"]) or "- none"
+    return f"""## Evidence quality audit (advisory: shown to the founder, not part of the E score)
+
+A quote that matches its source proves **where** a sentence came from, not that it is **true**. This audit
+shows who is speaking, how old the source is, and whether the quote came from the fetched page or only from
+the search engine's snippet. Freshness: fresh ≤ 18 months, aging ≤ 36 months, stale > 36 months (age measured
+at fetch time).
+
+| Metric | Value |
+|---|---|
+| Cited sources | {sm['cited_sources']} |
+| Dated (publication date found) | {int(sm['dated_share'] * 100)}% |
+| Fresh (≤ 18 months) | {int(sm['fresh_share'] * 100)}% |
+| Independent (not a vendor writing about its own market) | {int(sm['independent_share'] * 100)}% |
+| Quotes taken from a search snippet rather than the page | {int(sm['snippet_quote_share'] * 100)}% |
+| Categories backed by independent, non-stale evidence | {', '.join(sm['categories_with_independent_non_stale_evidence']) or 'none'} |
+| Categories backed only by vendor or stale evidence | {', '.join(sm['categories_only_vendor_or_stale']) or 'none'} |
+
+| Category | Source | Domain | Who is speaking | Published | Freshness | Quote origin |
+|---|---|---|---|---|---|---|
+{rows}
+
+**Warnings**
+
+{warn}"""
 
 
 def _format_gate(g: GateResult, history: list) -> str:
@@ -821,6 +893,7 @@ def _reset_run(run_id: str):
     import shutil
     from payments import init_payments
     shutil.rmtree(RUNS / run_id, ignore_errors=True)
+    db.init_db()      # a fresh database (first command, or an isolated test) has no tables yet
     init_payments()   # make sure the simulation tables exist before clearing them
     with db.get_conn() as conn:
         for t in ("gate_results", "decision_log", "runs"):
@@ -1056,6 +1129,8 @@ DEMO_SCENARIOS = {
     "demo-strong": (DEMO_BRIEF_STRONG, SNAPSHOTS / "strong_scenario.json"),
     "demo-weak": (DEMO_BRIEF_WEAK, SNAPSHOTS / "weak_scenario.json"),
     "demo-replay": (None, DEMO_SNAPSHOT),          # REPEAT -> GO; always replayed
+    # Headline scenario: strong brief captured live under the stricter v2 relevance rule
+    "demo-headline": (DEMO_BRIEF_STRONG, SNAPSHOTS / "strong_v2_scenario.json"),
 }
 
 
@@ -1108,6 +1183,8 @@ def run_demo(live: bool = False, log_path=None) -> dict:
               + ("" if match is None else f"  (matches capture: {match})"))
     if not live:
         for rid, (brief, snap) in DEMO_SCENARIOS.items():
+            if load_snapshot(snap).get("scoring_version", "v1") == "v2":
+                continue                    # already captured and replayed under v2
             rid2 = f"{rid}-v2"
             res = replay(snap, rid2, scoring="v2")
             run = db.get_run(rid2)

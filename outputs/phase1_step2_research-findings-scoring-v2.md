@@ -34,24 +34,57 @@
 | domain diversity | 20.0 |
 | source type triangulation | 10.0 |
 
+## Evidence quality audit (advisory: shown to the founder, not part of the E score)
+
+A quote that matches its source proves **where** a sentence came from, not that it is **true**. This audit
+shows who is speaking, how old the source is, and whether the quote came from the fetched page or only from
+the search engine's snippet. Freshness: fresh ≤ 18 months, aging ≤ 36 months, stale > 36 months (age measured
+at fetch time).
+
+| Metric | Value |
+|---|---|
+| Cited sources | 7 |
+| Dated (publication date found) | 86% |
+| Fresh (≤ 18 months) | 71% |
+| Independent (not a vendor writing about its own market) | 28% |
+| Quotes taken from a search snippet rather than the page | 62% |
+| Categories backed by independent, non-stale evidence | local_constraints |
+| Categories backed only by vendor or stale evidence | channels, competitors, pricing |
+
+| Category | Source | Domain | Who is speaking | Published | Freshness | Quote origin |
+|---|---|---|---|---|---|---|
+| competitors | S11 | motownai.com | vendor (self-interested) | 2026-07-29 (snippet-date) | fresh (111 d) | search-snippet |
+| competitors | S9 | laxuai.com | vendor (self-interested) | 2026-08-26 (snippet-date) | fresh (83 d) | search-snippet |
+| pricing | S9 | laxuai.com | vendor (self-interested) | 2026-08-26 (snippet-date) | fresh (83 d) | page |
+| pricing | S13 | studyboost.org | vendor (self-interested) | 2026-02-28 (snippet-date) | fresh (262 d) | search-snippet |
+| local_constraints | S3 | data.worldbank.org | official-statistics | 2024 (api (data year)) | aging (686 d) | api |
+| local_constraints | S4 | data.worldbank.org | official-statistics | 2025 (api (data year)) | fresh (321 d) | api |
+| channels | S18 | 23hublab.com | vendor (self-interested) | undated | undated | search-snippet |
+| channels | S19 | leadsquared.com | vendor (self-interested) | 2026-10-23 (snippet-date) | fresh (25 d) | search-snippet |
+
+**Warnings**
+
+- ⚠ pricing: S13 (studyboost.org) is a vendor writing about its own market — treat as a claim, not independent evidence.
+- ⚠ pricing: S9 (laxuai.com) is a vendor writing about its own market — treat as a claim, not independent evidence.
+
 ## Source ledger (19 sources, 15 domains)
 
-- `S1` [HN: Show HN: I Tried Coolify to Self-Host My AI-Powered Anki Flashcard Generator](https://news.ycombinator.com/item?id=40626452) — hn, demand, fetched 2026-11-17T15:52:51+00:00, sha256:66e7e5d12dc3caa3
-- `S2` [HN: Show HN: Keepmind – AI-powered flashcards and quizzes from your notes](https://news.ycombinator.com/item?id=44491043) — hn, demand, fetched 2026-11-17T15:52:51+00:00, sha256:33586c8a190f1e79
-- `S3` [World Bank — Individuals using the Internet (% of population), Egypt, Arab Rep.](https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG) — worldbank, local_constraints, fetched 2026-11-17T15:52:51+00:00, sha256:faf656f908089c33
-- `S4` [World Bank — GDP per capita (current US$), Egypt, Arab Rep.](https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG) — worldbank, local_constraints, fetched 2026-11-17T15:52:51+00:00, sha256:a517d2c9627f30b0
-- `S5` [Memdora: Designing Cognitively-Grounded Flashcard ...](https://arxiv.org/pdf/2607.25096) — web:yahoo, demand, fetched 2026-11-17T15:52:51+00:00, sha256:01f51d3060616694
-- `S6` [Memdora: Designing Cognitively-Grounded Flashcard ...](https://arxiv.org/html/2607.25096v1) — web:yahoo, demand, fetched 2026-11-17T15:52:51+00:00, sha256:e4c59da47594adab
-- `S7` [Active Recall & Spaced Repetition: Evidence & Effectiveness](https://studycardsai.com/blog/spaced-repetition-science-ai-optimization) — web:yahoo, demand, fetched 2026-11-17T15:52:51+00:00, sha256:b8656f9530e6d883
-- `S8` [The Science Behind AI-Generated Flashcards - notiq.study](https://notiq.study/blog/flashcards-spaced-repetition-science) — web:yahoo, demand, fetched 2026-11-17T15:52:51+00:00, sha256:dd37c93efc5283eb
-- `S9` [7 Best Spaced Repetition Apps in 2026: Hands-On Comparison](https://laxuai.com/blog/best-spaced-repetition-apps-2026) — web:yahoo, competitors, fetched 2026-11-17T15:52:51+00:00, sha256:04e5d148dd3bc418
-- `S10` [Best Spaced Repetition Apps (2026) · Free Anki Alternatives](https://www.mintdeck.app/blog/best-spaced-repetition-apps-2026) — web:yahoo, competitors, fetched 2026-11-17T15:52:51+00:00, sha256:c9529c858fea86b7
-- `S11` [Best Flashcard Apps for University Students in 2026 ...](https://www.motownai.com/blog/best-flashcard-apps-university-students-2026) — web:yahoo, competitors, fetched 2026-11-17T15:52:51+00:00, sha256:8bc99d792e24a6fb
-- `S12` [Best Spaced Repetition Apps 2026: FSRS vs SM-2 Ranked](https://studyglen.com/guides/best-spaced-repetition-apps) — web:yahoo, competitors, fetched 2026-11-17T15:52:51+00:00, sha256:b69225e6dc48cb53
-- `S13` [Best AI Spaced Repetition Flashcard App | Studyboost](https://studyboost.org/blog/best-spaced-repetition-app/) — web:yahoo, pricing, fetched 2026-11-17T15:52:51+00:00, sha256:dd12a712028df757
-- `S14` [RemNote Pricing - Free, Pro, and EDU Plans](https://www.remnote.com/pricing) — web:yahoo, pricing, fetched 2026-11-17T15:52:51+00:00, sha256:cb5735bb9c89e28c
-- `S15` [5 Best Flashcard Apps for Students in 2026 | Laxu AI](https://laxuai.com/blog/best-flashcard-apps-for-students-2026) — web:yahoo, pricing, fetched 2026-11-17T15:52:51+00:00, sha256:c1d35cba3ebe4137
-- `S16` [Marketing and Social Media Consulting | The American ...](https://www.aucegypt.edu/services/communications/marketing) — web:yahoo, channels, fetched 2026-11-17T15:52:51+00:00, sha256:44eb9aa5d5e5676a
-- `S17` [School of Marketing - FacebookStudent Acquisition Strategy in Egypt - 23HubLabHigher Education Marketing: The Complete 2026 Guide - LeadSquaredDigital marketing](https://www.facebook.com/SchoolOfMarketing.CO/) — web:yahoo, channels, fetched 2026-11-17T15:52:51+00:00, sha256:74ab4789a3bd381c
-- `S18` [Student Acquisition Strategy in Egypt - 23HubLab](https://23hublab.com/student-acquisition-strategy-in-egypt/) — web:yahoo, channels, fetched 2026-11-17T15:52:51+00:00, sha256:5b932d0a8c3c2ff0
-- `S19` [Higher Education Marketing: The Complete 2026 Guide - LeadSquared](https://www.leadsquared.com/industries/education/higher-education-marketing-guide/) — web:yahoo, channels, fetched 2026-11-17T15:52:51+00:00, sha256:ae10d0a3d91922e6
+- `S1` [HN: Show HN: I Tried Coolify to Self-Host My AI-Powered Anki Flashcard Generator](https://news.ycombinator.com/item?id=40626452) — hn, demand, community, published 2024-06-09, fetched 2026-11-17T15:52:51+00:00, sha256:66e7e5d12dc3caa3
+- `S2` [HN: Show HN: Keepmind – AI-powered flashcards and quizzes from your notes](https://news.ycombinator.com/item?id=44491043) — hn, demand, community, published 2025-07-07, fetched 2026-11-17T15:52:51+00:00, sha256:33586c8a190f1e79
+- `S3` [World Bank — Individuals using the Internet (% of population), Egypt, Arab Rep.](https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG) — worldbank, local_constraints, official-statistics, published 2024, fetched 2026-11-17T15:52:51+00:00, sha256:faf656f908089c33
+- `S4` [World Bank — GDP per capita (current US$), Egypt, Arab Rep.](https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG) — worldbank, local_constraints, official-statistics, published 2025, fetched 2026-11-17T15:52:51+00:00, sha256:a517d2c9627f30b0
+- `S5` [Memdora: Designing Cognitively-Grounded Flashcard ...](https://arxiv.org/pdf/2607.25096) — web:yahoo, demand, academic, published undated, fetched 2026-11-17T15:52:51+00:00, sha256:01f51d3060616694
+- `S6` [Memdora: Designing Cognitively-Grounded Flashcard ...](https://arxiv.org/html/2607.25096v1) — web:yahoo, demand, academic, published 2026-07-27, fetched 2026-11-17T15:52:51+00:00, sha256:e4c59da47594adab
+- `S7` [Active Recall & Spaced Repetition: Evidence & Effectiveness](https://studycardsai.com/blog/spaced-repetition-science-ai-optimization) — web:yahoo, demand, independent-web, published 2026-04-12, fetched 2026-11-17T15:52:51+00:00, sha256:b8656f9530e6d883
+- `S8` [The Science Behind AI-Generated Flashcards - notiq.study](https://notiq.study/blog/flashcards-spaced-repetition-science) — web:yahoo, demand, vendor (self-interested), published 2026-05-29, fetched 2026-11-17T15:52:51+00:00, sha256:dd37c93efc5283eb
+- `S9` [7 Best Spaced Repetition Apps in 2026: Hands-On Comparison](https://laxuai.com/blog/best-spaced-repetition-apps-2026) — web:yahoo, competitors, vendor (self-interested), published 2026-08-26, fetched 2026-11-17T15:52:51+00:00, sha256:04e5d148dd3bc418
+- `S10` [Best Spaced Repetition Apps (2026) · Free Anki Alternatives](https://www.mintdeck.app/blog/best-spaced-repetition-apps-2026) — web:yahoo, competitors, vendor (self-interested), published 2026-01-08, fetched 2026-11-17T15:52:51+00:00, sha256:c9529c858fea86b7
+- `S11` [Best Flashcard Apps for University Students in 2026 ...](https://www.motownai.com/blog/best-flashcard-apps-university-students-2026) — web:yahoo, competitors, vendor (self-interested), published 2026-07-29, fetched 2026-11-17T15:52:51+00:00, sha256:8bc99d792e24a6fb
+- `S12` [Best Spaced Repetition Apps 2026: FSRS vs SM-2 Ranked](https://studyglen.com/guides/best-spaced-repetition-apps) — web:yahoo, competitors, vendor (self-interested), published 2026-11-03, fetched 2026-11-17T15:52:51+00:00, sha256:b69225e6dc48cb53
+- `S13` [Best AI Spaced Repetition Flashcard App | Studyboost](https://studyboost.org/blog/best-spaced-repetition-app/) — web:yahoo, pricing, vendor (self-interested), published 2026-02-28, fetched 2026-11-17T15:52:51+00:00, sha256:dd12a712028df757
+- `S14` [RemNote Pricing - Free, Pro, and EDU Plans](https://www.remnote.com/pricing) — web:yahoo, pricing, vendor (self-interested), published undated, fetched 2026-11-17T15:52:51+00:00, sha256:cb5735bb9c89e28c
+- `S15` [5 Best Flashcard Apps for Students in 2026 | Laxu AI](https://laxuai.com/blog/best-flashcard-apps-for-students-2026) — web:yahoo, pricing, vendor (self-interested), published 2026-10-18, fetched 2026-11-17T15:52:51+00:00, sha256:c1d35cba3ebe4137
+- `S16` [Marketing and Social Media Consulting | The American ...](https://www.aucegypt.edu/services/communications/marketing) — web:yahoo, channels, academic, published undated, fetched 2026-11-17T15:52:51+00:00, sha256:44eb9aa5d5e5676a
+- `S17` [School of Marketing - FacebookStudent Acquisition Strategy in Egypt - 23HubLabHigher Education Marketing: The Complete 2026 Guide - LeadSquaredDigital marketing](https://www.facebook.com/SchoolOfMarketing.CO/) — web:yahoo, channels, community, published undated, fetched 2026-11-17T15:52:51+00:00, sha256:74ab4789a3bd381c
+- `S18` [Student Acquisition Strategy in Egypt - 23HubLab](https://23hublab.com/student-acquisition-strategy-in-egypt/) — web:yahoo, channels, vendor (self-interested), published undated, fetched 2026-11-17T15:52:51+00:00, sha256:5b932d0a8c3c2ff0
+- `S19` [Higher Education Marketing: The Complete 2026 Guide - LeadSquared](https://www.leadsquared.com/industries/education/higher-education-marketing-guide/) — web:yahoo, channels, vendor (self-interested), published 2026-10-23, fetched 2026-11-17T15:52:51+00:00, sha256:ae10d0a3d91922e6

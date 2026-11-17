@@ -571,3 +571,25 @@ def run(run_id: str, brief: FounderBrief, canvas: LeanCanvas, critique: Critique
         "features_traced": all(f.traces_to.strip() for f in spec.features),
         "forbidden_phrases": gates.scan_output(text_blob), "model": model,
     }
+
+
+# ---------------------------------------------------------------------------
+# Gap analysis: does the MVP address the pains the evidence describes? (advisory, never gates)
+# ---------------------------------------------------------------------------
+
+def _stem(w: str) -> str:
+    return w.lower()[:6]
+
+
+def coverage(features: list, pains: list[dict]) -> dict:
+    """Match each verified pain signal to the MVP features whose name/description share a pain term
+    (6-letter stem match). `features`: FeatureSpec objects or dicts with name/description."""
+    feats = [f if isinstance(f, dict) else f.model_dump() for f in features]
+    rows = []
+    for p in pains:
+        stems = {_stem(t) for t in p["terms"]}
+        hits = [f["name"] for f in feats
+                if stems & {_stem(w) for w in re.findall(r"[a-zA-Z]{4,}", f"{f['name']} {f['description']}")}]
+        rows.append({**p, "features": hits})
+    covered = sum(1 for r in rows if r["features"])
+    return {"rows": rows, "covered": covered, "total": len(rows)}

@@ -34,29 +34,64 @@
 | domain diversity | 20.0 |
 | source type triangulation | 15.0 |
 
+## Evidence quality audit (advisory: shown to the founder, not part of the E score)
+
+A quote that matches its source proves **where** a sentence came from, not that it is **true**. This audit
+shows who is speaking, how old the source is, and whether the quote came from the fetched page or only from
+the search engine's snippet. Freshness: fresh ≤ 18 months, aging ≤ 36 months, stale > 36 months (age measured
+at fetch time).
+
+| Metric | Value |
+|---|---|
+| Cited sources | 8 |
+| Dated (publication date found) | 62% |
+| Fresh (≤ 18 months) | 38% |
+| Independent (not a vendor writing about its own market) | 50% |
+| Quotes taken from a search snippet rather than the page | 56% |
+| Categories backed by independent, non-stale evidence | competitors, local_constraints |
+| Categories backed only by vendor or stale evidence | channels, demand, pricing |
+
+| Category | Source | Domain | Who is speaking | Published | Freshness | Quote origin |
+|---|---|---|---|---|---|---|
+| demand | S2 | news.ycombinator.com | community | 2023-06-14 (api) | stale (1252 d) | api |
+| demand | S14 | axiobench.com | vendor (self-interested) | 2026-11-10 (snippet-date) | fresh (7 d) | search-snippet |
+| competitors | S17 | sawwahtravel.com | vendor (self-interested) | undated | undated | page |
+| competitors | S15 | simplybook.me | independent-web | 2026-06-02 (snippet-date) | fresh (168 d) | search-snippet |
+| pricing | S19 | asiabylocals.com | vendor (self-interested) | undated | undated | search-snippet |
+| local_constraints | S3 | data.worldbank.org | official-statistics | 2024 (api (data year)) | aging (686 d) | api |
+| local_constraints | S4 | data.worldbank.org | official-statistics | 2025 (api (data year)) | fresh (321 d) | api |
+| channels | S22 | telegram-groups.com | vendor (self-interested) | undated | undated | search-snippet |
+| channels | S14 | axiobench.com | vendor (self-interested) | 2026-11-10 (snippet-date) | fresh (7 d) | search-snippet |
+
+**Warnings**
+
+- ⚠ demand: S14 (axiobench.com) is a vendor writing about its own market — treat as a claim, not independent evidence.
+- ⚠ demand: S2 (news.ycombinator.com) is older than 3 years (2023-06-14).
+- ⚠ pricing: S19 (asiabylocals.com) is a vendor writing about its own market — treat as a claim, not independent evidence.
+
 ## Source ledger (24 sources, 21 domains)
 
-- `S1` [HN: Ask HN: How to market software to Dubai, Qatar, etc?](https://news.ycombinator.com/item?id=10447090) — hn, demand, fetched 2026-11-17T15:31:22+00:00, sha256:c004345412b2d10b
-- `S2` [HN: Ask HN: Books to learn about Arabic text processing](https://news.ycombinator.com/item?id=36323393) — hn, demand, fetched 2026-11-17T15:31:22+00:00, sha256:92817c7a19f59a2f
-- `S3` [World Bank — Individuals using the Internet (% of population), Jordan](https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=JO) — worldbank, local_constraints, fetched 2026-11-17T15:31:22+00:00, sha256:71880db740774ed1
-- `S4` [World Bank — GDP per capita (current US$), Jordan](https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=JO) — worldbank, local_constraints, fetched 2026-11-17T15:31:22+00:00, sha256:909f661718b27cf7
-- `S5` [Workshops | Arabic Calligraphy | Harf.Lawn](https://www.harflawn.com/arabic-calligraphy-workshops) — web:yahoo, competitors, fetched 2026-11-17T15:31:22+00:00, sha256:f39dc1af856dd327
-- `S6` [Scripts 'n' Scribes- Arabic Calligraphy](https://www.scriptsnscribes.com/) — web:yahoo, competitors, fetched 2026-11-17T15:31:22+00:00, sha256:822bee1ee83f7e57
-- `S7` [My Qalam Academy | Master the Art of Arabic Calligraphy](https://mqacademy.app/) — web:yahoo, competitors, fetched 2026-11-17T15:31:22+00:00, sha256:7d34a2eb41b5f23e
-- `S8` [Arabic Calligraphy Workshops - Book A Muslim](https://bookamuslim.com/arabic-calligraphy-workshops/) — web:yahoo, competitors, fetched 2026-11-17T15:31:22+00:00, sha256:b65d45f3c6f17817
-- `S9` [Contact - Jordan Marketing](https://www.jordanmarketing.net/contact-us/) — web:yahoo, channels, fetched 2026-11-17T15:31:22+00:00, sha256:d07d57ab15677b62
-- `S10` [Jordan Marketing - Digital Marketing & Lead Generation ...](https://www.jordanmarketing.net/) — web:yahoo, channels, fetched 2026-11-17T15:31:22+00:00, sha256:d07d57ab15677b62
-- `S11` [Contact Jordan Digital Marketing | Talk to a Growth Strategy ...](https://www.jordandigitalmarketing.com/contact-us) — web:yahoo, channels, fetched 2026-11-17T15:31:22+00:00, sha256:70f16314c580978b
-- `S12` [ALLSPOTS ☎: Reach Jordan](https://www.allspots.com/jo/directory/Marketing+&+marketing+surveys-تسويق+ودراسات+تسويق/Reach+Jordan-.html) — web:yahoo, channels, fetched 2026-11-17T15:31:22+00:00, sha256:667361db3199c438
-- `S13` [Booking Industry Statistics 2026 — Data & Trends | Addagio](https://addagio.io/resources/booking-statistics) — web:yahoo, demand, fetched 2026-11-17T15:31:34+00:00, sha256:22d366fc828b0763
-- `S14` [Booking Industry Statistics | Verified 2026 Data – Axiobench](https://axiobench.com/booking-industry-statistics/) — web:yahoo, demand, fetched 2026-11-17T15:31:34+00:00, sha256:efd2884cefc9b86f
-- `S15` [Online Booking Statistics 2026: 35+ Trends Every Business ...](https://simplybook.me/en/blog/online-booking-statistics) — web:yahoo, demand, fetched 2026-11-17T15:31:34+00:00, sha256:457200b841f74221
-- `S16` [(PDF) A Systematic Review on Arabic Calligraphy within ...](https://www.researchgate.net/publication/353275523_A_Systematic_Review_on_Arabic_Calligraphy_within_Islamic_Architecture) — web:yahoo, demand, fetched 2026-11-17T15:31:34+00:00, sha256:620dcd31a11fbabf
-- `S17` [Authentic Experiences with Sawwah Travel and tour booking ...](https://sawwahtravel.com/trips/570/calligraphy-house-experience) — web:yahoo, local_constraints, fetched 2026-11-17T15:31:34+00:00, sha256:8c24e2aa13b64178
-- `S18` [Arabic Calligraphy Experience In Jordan | Quest Travel](https://questtravel-jo.com/tour/an-artistic-heritage-experience/) — web:yahoo, local_constraints, fetched 2026-11-17T15:31:34+00:00, sha256:5e9edf36a695a712
-- `S19` [Amman: Calligraphy Class, Art Walk | AsiaByLocals](https://www.asiabylocals.com/jordan/amman/amman-calligraphy-class-art-walk-and-lunch-tour) — web:yahoo, local_constraints, fetched 2026-11-17T15:31:34+00:00, sha256:ca645b2a02be83c5
-- `S20` [ELHARF | Amman - Facebookواقع توظيف الخط العربي في التصميم الجرافيكي لدى المصمم ...Arabic Calligrapher Jordan - Scarlett Entertainmentالأردن المهيأ - اكاديمية ا](https://www.facebook.com/elharfhouse/) — web:yahoo, local_constraints, fetched 2026-11-17T15:31:34+00:00, sha256:52ee22a1a97fe06f
-- `S21` [Jordan Communities and Forums - Arab - Araboo.com](http://www.araboo.com/dir/jordan-communities-forums) — web:yahoo, channels, fetched 2026-11-17T15:31:34+00:00, sha256:6c92db851c1467b2
-- `S22` [50 Jordan Telegram Groups (2026) — 44K Members](https://www.telegram-groups.com/jordan-telegram-groups/) — web:yahoo, channels, fetched 2026-11-17T15:31:34+00:00, sha256:e94a0bc2a0fc3d77
-- `S23` [For Jordanians, by Jordanians. - Reddit](https://www.reddit.com/r/Jordanians/) — web:yahoo, channels, fetched 2026-11-17T15:31:34+00:00, sha256:94e1981608dcac9c
-- `S24` [Jordan‘s Expat Community - Make Friends - Find Forums & Events](https://www.internations.org/jordan-expats) — web:yahoo, channels, fetched 2026-11-17T15:31:34+00:00, sha256:33285cb76da4e35e
+- `S1` [HN: Ask HN: How to market software to Dubai, Qatar, etc?](https://news.ycombinator.com/item?id=10447090) — hn, demand, community, published 2015-10-25, fetched 2026-11-17T15:31:22+00:00, sha256:c004345412b2d10b
+- `S2` [HN: Ask HN: Books to learn about Arabic text processing](https://news.ycombinator.com/item?id=36323393) — hn, demand, community, published 2023-06-14, fetched 2026-11-17T15:31:22+00:00, sha256:92817c7a19f59a2f
+- `S3` [World Bank — Individuals using the Internet (% of population), Jordan](https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=JO) — worldbank, local_constraints, official-statistics, published 2024, fetched 2026-11-17T15:31:22+00:00, sha256:71880db740774ed1
+- `S4` [World Bank — GDP per capita (current US$), Jordan](https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=JO) — worldbank, local_constraints, official-statistics, published 2025, fetched 2026-11-17T15:31:22+00:00, sha256:909f661718b27cf7
+- `S5` [Workshops | Arabic Calligraphy | Harf.Lawn](https://www.harflawn.com/arabic-calligraphy-workshops) — web:yahoo, competitors, vendor (self-interested), published undated, fetched 2026-11-17T15:31:22+00:00, sha256:f39dc1af856dd327
+- `S6` [Scripts 'n' Scribes- Arabic Calligraphy](https://www.scriptsnscribes.com/) — web:yahoo, competitors, vendor (self-interested), published undated, fetched 2026-11-17T15:31:22+00:00, sha256:822bee1ee83f7e57
+- `S7` [My Qalam Academy | Master the Art of Arabic Calligraphy](https://mqacademy.app/) — web:yahoo, competitors, independent-web, published undated, fetched 2026-11-17T15:31:22+00:00, sha256:7d34a2eb41b5f23e
+- `S8` [Arabic Calligraphy Workshops - Book A Muslim](https://bookamuslim.com/arabic-calligraphy-workshops/) — web:yahoo, competitors, vendor (self-interested), published undated, fetched 2026-11-17T15:31:22+00:00, sha256:b65d45f3c6f17817
+- `S9` [Contact - Jordan Marketing](https://www.jordanmarketing.net/contact-us/) — web:yahoo, channels, vendor (self-interested), published undated, fetched 2026-11-17T15:31:22+00:00, sha256:d07d57ab15677b62
+- `S10` [Jordan Marketing - Digital Marketing & Lead Generation ...](https://www.jordanmarketing.net/) — web:yahoo, channels, vendor (self-interested), published undated, fetched 2026-11-17T15:31:22+00:00, sha256:d07d57ab15677b62
+- `S11` [Contact Jordan Digital Marketing | Talk to a Growth Strategy ...](https://www.jordandigitalmarketing.com/contact-us) — web:yahoo, channels, vendor (self-interested), published undated, fetched 2026-11-17T15:31:22+00:00, sha256:70f16314c580978b
+- `S12` [ALLSPOTS ☎: Reach Jordan](https://www.allspots.com/jo/directory/Marketing+&+marketing+surveys-تسويق+ودراسات+تسويق/Reach+Jordan-.html) — web:yahoo, channels, vendor (self-interested), published undated, fetched 2026-11-17T15:31:22+00:00, sha256:667361db3199c438
+- `S13` [Booking Industry Statistics 2026 — Data & Trends | Addagio](https://addagio.io/resources/booking-statistics) — web:yahoo, demand, vendor (self-interested), published undated, fetched 2026-11-17T15:31:34+00:00, sha256:22d366fc828b0763
+- `S14` [Booking Industry Statistics | Verified 2026 Data – Axiobench](https://axiobench.com/booking-industry-statistics/) — web:yahoo, demand, vendor (self-interested), published 2026-11-10, fetched 2026-11-17T15:31:34+00:00, sha256:efd2884cefc9b86f
+- `S15` [Online Booking Statistics 2026: 35+ Trends Every Business ...](https://simplybook.me/en/blog/online-booking-statistics) — web:yahoo, demand, independent-web, published 2026-06-02, fetched 2026-11-17T15:31:34+00:00, sha256:457200b841f74221
+- `S16` [(PDF) A Systematic Review on Arabic Calligraphy within ...](https://www.researchgate.net/publication/353275523_A_Systematic_Review_on_Arabic_Calligraphy_within_Islamic_Architecture) — web:yahoo, demand, academic, published 2021-04-25, fetched 2026-11-17T15:31:34+00:00, sha256:620dcd31a11fbabf
+- `S17` [Authentic Experiences with Sawwah Travel and tour booking ...](https://sawwahtravel.com/trips/570/calligraphy-house-experience) — web:yahoo, local_constraints, vendor (self-interested), published undated, fetched 2026-11-17T15:31:34+00:00, sha256:8c24e2aa13b64178
+- `S18` [Arabic Calligraphy Experience In Jordan | Quest Travel](https://questtravel-jo.com/tour/an-artistic-heritage-experience/) — web:yahoo, local_constraints, vendor (self-interested), published undated, fetched 2026-11-17T15:31:34+00:00, sha256:5e9edf36a695a712
+- `S19` [Amman: Calligraphy Class, Art Walk | AsiaByLocals](https://www.asiabylocals.com/jordan/amman/amman-calligraphy-class-art-walk-and-lunch-tour) — web:yahoo, local_constraints, vendor (self-interested), published undated, fetched 2026-11-17T15:31:34+00:00, sha256:ca645b2a02be83c5
+- `S20` [ELHARF | Amman - Facebookواقع توظيف الخط العربي في التصميم الجرافيكي لدى المصمم ...Arabic Calligrapher Jordan - Scarlett Entertainmentالأردن المهيأ - اكاديمية ا](https://www.facebook.com/elharfhouse/) — web:yahoo, local_constraints, community, published undated, fetched 2026-11-17T15:31:34+00:00, sha256:52ee22a1a97fe06f
+- `S21` [Jordan Communities and Forums - Arab - Araboo.com](http://www.araboo.com/dir/jordan-communities-forums) — web:yahoo, channels, vendor (self-interested), published undated, fetched 2026-11-17T15:31:34+00:00, sha256:6c92db851c1467b2
+- `S22` [50 Jordan Telegram Groups (2026) — 44K Members](https://www.telegram-groups.com/jordan-telegram-groups/) — web:yahoo, channels, vendor (self-interested), published undated, fetched 2026-11-17T15:31:34+00:00, sha256:e94a0bc2a0fc3d77
+- `S23` [For Jordanians, by Jordanians. - Reddit](https://www.reddit.com/r/Jordanians/) — web:yahoo, channels, community, published undated, fetched 2026-11-17T15:31:34+00:00, sha256:94e1981608dcac9c
+- `S24` [Jordan‘s Expat Community - Make Friends - Find Forums & Events](https://www.internations.org/jordan-expats) — web:yahoo, channels, independent-web, published undated, fetched 2026-11-17T15:31:34+00:00, sha256:33285cb76da4e35e

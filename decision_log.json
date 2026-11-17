@@ -1,6 +1,6 @@
 [
   {
-    "timestamp": "2026-11-17T18:33:40.843681+00:00",
+    "timestamp": "2026-11-17T21:10:52.825008+00:00",
     "agent": "orchestrator",
     "action": "llm_mode_at_start",
     "sources": [],
@@ -12,7 +12,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:40.911343+00:00",
+    "timestamp": "2026-11-17T21:10:52.848023+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -23,7 +23,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:40.929828+00:00",
+    "timestamp": "2026-11-17T21:10:52.854824+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_1",
     "sources": [
@@ -55,7 +55,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:40.968467+00:00",
+    "timestamp": "2026-11-17T21:10:52.877313+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -76,7 +76,29 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:41.006441+00:00",
+    "timestamp": "2026-11-17T21:10:52.925469+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_1",
+    "sources": [
+      "https://arxiv.org/html/2607.25096v1",
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
+      "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://studyboost.org/blog/best-spaced-repetition-app/",
+      "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
+      "https://www.leadsquared.com/industries/education/higher-education-marketing-guide/",
+      "https://www.motownai.com/blog/best-flashcard-apps-university-students-2026"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=1; coverage=0/1; removed_sentences=0",
+    "run_id": "demo-strong",
+    "scoring_version": "v1"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:52.967012+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -88,7 +110,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:41.058557+00:00",
+    "timestamp": "2026-11-17T21:10:52.984113+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -100,7 +122,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:41.126490+00:00",
+    "timestamp": "2026-11-17T21:10:52.995292+00:00",
     "agent": "validator",
     "action": "red_team_critique",
     "sources": [
@@ -121,7 +143,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:41.140830+00:00",
+    "timestamp": "2026-11-17T21:10:53.000997+00:00",
     "agent": "validator",
     "action": "build_lean_canvas",
     "sources": [
@@ -142,7 +164,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:41.154873+00:00",
+    "timestamp": "2026-11-17T21:10:53.006185+00:00",
     "agent": "validator",
     "action": "design_demand_test",
     "sources": [],
@@ -153,7 +175,29 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:41.202405+00:00",
+    "timestamp": "2026-11-17T21:10:53.021068+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_2",
+    "sources": [
+      "https://arxiv.org/html/2607.25096v1",
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
+      "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://studyboost.org/blog/best-spaced-repetition-app/",
+      "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
+      "https://www.leadsquared.com/industries/education/higher-education-marketing-guide/",
+      "https://www.motownai.com/blog/best-flashcard-apps-university-students-2026"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=1; coverage=0/1; removed_sentences=0",
+    "run_id": "demo-strong",
+    "scoring_version": "v1"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:53.032816+00:00",
     "agent": "gate",
     "action": "gate_2_evaluation",
     "sources": [],
@@ -165,7 +209,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:41.251093+00:00",
+    "timestamp": "2026-11-17T21:10:53.049964+00:00",
     "agent": "founder",
     "action": "gate_2_decision",
     "sources": [],
@@ -177,7 +221,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:41.333991+00:00",
+    "timestamp": "2026-11-17T21:10:53.065792+00:00",
     "agent": "builder",
     "action": "select_template",
     "sources": [],
@@ -189,7 +233,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:41.350460+00:00",
+    "timestamp": "2026-11-17T21:10:53.071699+00:00",
     "agent": "builder",
     "action": "llm_spec_text",
     "sources": [],
@@ -201,7 +245,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:41.365286+00:00",
+    "timestamp": "2026-11-17T21:10:53.078054+00:00",
     "agent": "builder",
     "action": "design_app_spec",
     "sources": [],
@@ -212,7 +256,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:41.397380+00:00",
+    "timestamp": "2026-11-17T21:10:53.088998+00:00",
     "agent": "builder",
     "action": "generate_mvp_code_spaced_repetition",
     "sources": [],
@@ -223,7 +267,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:42.932389+00:00",
+    "timestamp": "2026-11-17T21:10:53.849121+00:00",
     "agent": "builder",
     "action": "run_generated_tests",
     "sources": [],
@@ -235,7 +279,29 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:42.991686+00:00",
+    "timestamp": "2026-11-17T21:10:53.863821+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_3",
+    "sources": [
+      "https://arxiv.org/html/2607.25096v1",
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
+      "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://studyboost.org/blog/best-spaced-repetition-app/",
+      "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
+      "https://www.leadsquared.com/industries/education/higher-education-marketing-guide/",
+      "https://www.motownai.com/blog/best-flashcard-apps-university-students-2026"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=1; coverage=0/1; removed_sentences=0",
+    "run_id": "demo-strong",
+    "scoring_version": "v1"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:53.877029+00:00",
     "agent": "gate",
     "action": "gate_3_evaluation",
     "sources": [],
@@ -247,7 +313,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.046540+00:00",
+    "timestamp": "2026-11-17T21:10:53.895191+00:00",
     "agent": "founder",
     "action": "gate_3_decision",
     "sources": [],
@@ -259,7 +325,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.105280+00:00",
+    "timestamp": "2026-11-17T21:10:53.906354+00:00",
     "agent": "commercial",
     "action": "evidence_anchored_pricing",
     "sources": [
@@ -275,7 +341,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.119522+00:00",
+    "timestamp": "2026-11-17T21:10:53.911609+00:00",
     "agent": "commercial",
     "action": "draft_policy_templates",
     "sources": [],
@@ -286,7 +352,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.157265+00:00",
+    "timestamp": "2026-11-17T21:10:53.923500+00:00",
     "agent": "gate",
     "action": "gate_4_evaluation",
     "sources": [],
@@ -298,7 +364,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.211034+00:00",
+    "timestamp": "2026-11-17T21:10:53.941310+00:00",
     "agent": "founder",
     "action": "gate_4_decision",
     "sources": [],
@@ -310,7 +376,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.253370+00:00",
+    "timestamp": "2026-11-17T21:10:53.952070+00:00",
     "agent": "launch",
     "action": "draft_launch_copy",
     "sources": [],
@@ -322,7 +388,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.351711+00:00",
+    "timestamp": "2026-11-17T21:10:53.989578+00:00",
     "agent": "payments",
     "action": "sale_to_cash_simulation_mocked",
     "sources": [],
@@ -333,7 +399,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.385203+00:00",
+    "timestamp": "2026-11-17T21:10:54.001486+00:00",
     "agent": "gate",
     "action": "gate_5_evaluation",
     "sources": [],
@@ -345,7 +411,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.438230+00:00",
+    "timestamp": "2026-11-17T21:10:54.018192+00:00",
     "agent": "founder",
     "action": "gate_5_decision",
     "sources": [],
@@ -357,7 +423,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.476807+00:00",
+    "timestamp": "2026-11-17T21:10:54.028790+00:00",
     "agent": "operate",
     "action": "read_metrics_and_apply_preregistered_rule",
     "sources": [],
@@ -369,7 +435,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.513522+00:00",
+    "timestamp": "2026-11-17T21:10:54.041186+00:00",
     "agent": "orchestrator",
     "action": "run_completed",
     "sources": [],
@@ -381,7 +447,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.534017+00:00",
+    "timestamp": "2026-11-17T21:10:54.046727+00:00",
     "agent": "orchestrator",
     "action": "replay_check",
     "sources": [],
@@ -393,7 +459,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.602509+00:00",
+    "timestamp": "2026-11-17T21:10:54.068547+00:00",
     "agent": "orchestrator",
     "action": "llm_mode_at_start",
     "sources": [],
@@ -405,7 +471,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.649726+00:00",
+    "timestamp": "2026-11-17T21:10:54.088631+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -416,7 +482,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.664352+00:00",
+    "timestamp": "2026-11-17T21:10:54.094951+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_1",
     "sources": [
@@ -439,7 +505,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.688249+00:00",
+    "timestamp": "2026-11-17T21:10:54.106521+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -458,7 +524,27 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.718931+00:00",
+    "timestamp": "2026-11-17T21:10:54.124570+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_1",
+    "sources": [
+      "https://genio.co/pricing/individuals",
+      "https://news.ycombinator.com/item?id=12382737",
+      "https://news.ycombinator.com/item?id=13195588",
+      "https://richtactic.com/tactic/study-notes-selling",
+      "https://studyrift.com/",
+      "https://www.goodnotes.com/blog/best-free-note-taking-apps-for-students-2026",
+      "https://www.screensnap.pro/blog/best-study-notes-app"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=0; removed_sentences=0",
+    "run_id": "demo-weak",
+    "scoring_version": "v1"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:54.139271+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -470,7 +556,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.764038+00:00",
+    "timestamp": "2026-11-17T21:10:54.157087+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -482,7 +568,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.794001+00:00",
+    "timestamp": "2026-11-17T21:10:54.168453+00:00",
     "agent": "orchestrator",
     "action": "run_stopped",
     "sources": [],
@@ -494,7 +580,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.813559+00:00",
+    "timestamp": "2026-11-17T21:10:54.174139+00:00",
     "agent": "orchestrator",
     "action": "replay_check",
     "sources": [],
@@ -506,7 +592,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.881925+00:00",
+    "timestamp": "2026-11-17T21:10:54.197805+00:00",
     "agent": "orchestrator",
     "action": "llm_mode_at_start",
     "sources": [],
@@ -518,7 +604,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.929622+00:00",
+    "timestamp": "2026-11-17T21:10:54.214148+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -529,7 +615,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.946688+00:00",
+    "timestamp": "2026-11-17T21:10:54.219783+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_1",
     "sources": [
@@ -554,7 +640,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:43.964324+00:00",
+    "timestamp": "2026-11-17T21:10:54.225626+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -569,7 +655,23 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:44.006900+00:00",
+    "timestamp": "2026-11-17T21:10:54.233973+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_1",
+    "sources": [
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=JO",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=JO",
+      "https://news.ycombinator.com/item?id=36323393"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=0; removed_sentences=0",
+    "run_id": "demo-replay",
+    "scoring_version": "v1"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:54.247033+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -581,7 +683,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:44.054444+00:00",
+    "timestamp": "2026-11-17T21:10:54.264138+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -593,7 +695,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:44.103124+00:00",
+    "timestamp": "2026-11-17T21:10:54.276715+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_2",
     "sources": [
@@ -618,7 +720,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:44.123752+00:00",
+    "timestamp": "2026-11-17T21:10:54.285287+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -638,7 +740,28 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:44.157266+00:00",
+    "timestamp": "2026-11-17T21:10:54.297517+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_1",
+    "sources": [
+      "https://axiobench.com/booking-industry-statistics/",
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=JO",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=JO",
+      "https://news.ycombinator.com/item?id=36323393",
+      "https://sawwahtravel.com/trips/570/calligraphy-house-experience",
+      "https://simplybook.me/en/blog/online-booking-statistics",
+      "https://www.asiabylocals.com/jordan/amman/amman-calligraphy-class-art-walk-and-lunch-tour",
+      "https://www.telegram-groups.com/jordan-telegram-groups/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=0; removed_sentences=0",
+    "run_id": "demo-replay",
+    "scoring_version": "v1"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:54.309794+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -650,7 +773,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:44.210271+00:00",
+    "timestamp": "2026-11-17T21:10:54.325894+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -662,7 +785,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:44.262362+00:00",
+    "timestamp": "2026-11-17T21:10:54.337876+00:00",
     "agent": "validator",
     "action": "red_team_critique",
     "sources": [
@@ -682,7 +805,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:44.274935+00:00",
+    "timestamp": "2026-11-17T21:10:54.343090+00:00",
     "agent": "validator",
     "action": "build_lean_canvas",
     "sources": [
@@ -702,7 +825,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:44.289496+00:00",
+    "timestamp": "2026-11-17T21:10:54.348304+00:00",
     "agent": "validator",
     "action": "design_demand_test",
     "sources": [],
@@ -713,7 +836,28 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:44.341546+00:00",
+    "timestamp": "2026-11-17T21:10:54.359484+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_2",
+    "sources": [
+      "https://axiobench.com/booking-industry-statistics/",
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=JO",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=JO",
+      "https://news.ycombinator.com/item?id=36323393",
+      "https://sawwahtravel.com/trips/570/calligraphy-house-experience",
+      "https://simplybook.me/en/blog/online-booking-statistics",
+      "https://www.asiabylocals.com/jordan/amman/amman-calligraphy-class-art-walk-and-lunch-tour",
+      "https://www.telegram-groups.com/jordan-telegram-groups/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=0; removed_sentences=0",
+    "run_id": "demo-replay",
+    "scoring_version": "v1"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:54.372606+00:00",
     "agent": "gate",
     "action": "gate_2_evaluation",
     "sources": [],
@@ -725,7 +869,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:44.390321+00:00",
+    "timestamp": "2026-11-17T21:10:54.390338+00:00",
     "agent": "founder",
     "action": "gate_2_decision",
     "sources": [],
@@ -737,7 +881,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:44.432568+00:00",
+    "timestamp": "2026-11-17T21:10:54.402059+00:00",
     "agent": "builder",
     "action": "select_template",
     "sources": [],
@@ -749,7 +893,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:44.449104+00:00",
+    "timestamp": "2026-11-17T21:10:54.407738+00:00",
     "agent": "builder",
     "action": "llm_spec_text",
     "sources": [],
@@ -761,7 +905,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:44.461625+00:00",
+    "timestamp": "2026-11-17T21:10:54.413032+00:00",
     "agent": "builder",
     "action": "design_app_spec",
     "sources": [],
@@ -772,7 +916,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:44.496169+00:00",
+    "timestamp": "2026-11-17T21:10:54.422116+00:00",
     "agent": "builder",
     "action": "generate_mvp_code_booking",
     "sources": [],
@@ -783,7 +927,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:46.111422+00:00",
+    "timestamp": "2026-11-17T21:10:55.106581+00:00",
     "agent": "builder",
     "action": "run_generated_tests",
     "sources": [],
@@ -795,7 +939,28 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:46.212227+00:00",
+    "timestamp": "2026-11-17T21:10:55.121335+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_3",
+    "sources": [
+      "https://axiobench.com/booking-industry-statistics/",
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=JO",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=JO",
+      "https://news.ycombinator.com/item?id=36323393",
+      "https://sawwahtravel.com/trips/570/calligraphy-house-experience",
+      "https://simplybook.me/en/blog/online-booking-statistics",
+      "https://www.asiabylocals.com/jordan/amman/amman-calligraphy-class-art-walk-and-lunch-tour",
+      "https://www.telegram-groups.com/jordan-telegram-groups/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=0; removed_sentences=0",
+    "run_id": "demo-replay",
+    "scoring_version": "v1"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.132611+00:00",
     "agent": "gate",
     "action": "gate_3_evaluation",
     "sources": [],
@@ -807,7 +972,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:46.260821+00:00",
+    "timestamp": "2026-11-17T21:10:55.148634+00:00",
     "agent": "founder",
     "action": "gate_3_decision",
     "sources": [],
@@ -819,7 +984,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:46.298671+00:00",
+    "timestamp": "2026-11-17T21:10:55.159026+00:00",
     "agent": "commercial",
     "action": "evidence_anchored_pricing",
     "sources": [
@@ -832,7 +997,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:46.311676+00:00",
+    "timestamp": "2026-11-17T21:10:55.164347+00:00",
     "agent": "commercial",
     "action": "draft_policy_templates",
     "sources": [],
@@ -843,7 +1008,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:46.352547+00:00",
+    "timestamp": "2026-11-17T21:10:55.175220+00:00",
     "agent": "gate",
     "action": "gate_4_evaluation",
     "sources": [],
@@ -855,7 +1020,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:46.404217+00:00",
+    "timestamp": "2026-11-17T21:10:55.192613+00:00",
     "agent": "founder",
     "action": "gate_4_decision",
     "sources": [],
@@ -867,7 +1032,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:46.448758+00:00",
+    "timestamp": "2026-11-17T21:10:55.202811+00:00",
     "agent": "launch",
     "action": "draft_launch_copy",
     "sources": [],
@@ -879,7 +1044,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:46.547245+00:00",
+    "timestamp": "2026-11-17T21:10:55.235456+00:00",
     "agent": "payments",
     "action": "sale_to_cash_simulation_mocked",
     "sources": [],
@@ -890,7 +1055,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:46.581288+00:00",
+    "timestamp": "2026-11-17T21:10:55.247434+00:00",
     "agent": "gate",
     "action": "gate_5_evaluation",
     "sources": [],
@@ -902,7 +1067,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:46.840397+00:00",
+    "timestamp": "2026-11-17T21:10:55.264674+00:00",
     "agent": "founder",
     "action": "gate_5_decision",
     "sources": [],
@@ -914,7 +1079,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:46.883584+00:00",
+    "timestamp": "2026-11-17T21:10:55.275384+00:00",
     "agent": "operate",
     "action": "read_metrics_and_apply_preregistered_rule",
     "sources": [],
@@ -926,7 +1091,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:46.918767+00:00",
+    "timestamp": "2026-11-17T21:10:55.285899+00:00",
     "agent": "orchestrator",
     "action": "run_completed",
     "sources": [],
@@ -938,7 +1103,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:46.938439+00:00",
+    "timestamp": "2026-11-17T21:10:55.291686+00:00",
     "agent": "orchestrator",
     "action": "replay_check",
     "sources": [],
@@ -950,7 +1115,647 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.023519+00:00",
+    "timestamp": "2026-11-17T21:10:55.323516+00:00",
+    "agent": "orchestrator",
+    "action": "llm_mode_at_start",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "LLM_DISABLED: HATCHAI_NO_LLM=1",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.338866+00:00",
+    "agent": "intake",
+    "action": "normalize_brief",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.344720+00:00",
+    "agent": "researcher",
+    "action": "replay_evidence_round_1",
+    "sources": [
+      "https://news.ycombinator.com/item?id=40626452",
+      "https://news.ycombinator.com/item?id=44491043",
+      "https://en.wikipedia.org/wiki/Duolingo",
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://arxiv.org/pdf/2607.25096",
+      "https://arxiv.org/html/2607.25096",
+      "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
+      "https://notiq.study/blog/flashcards-spaced-repetition-science",
+      "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://studyboost.org/blog/best-spaced-repetition-app/",
+      "https://www.remnote.com/pricing",
+      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
+      "https://www.aucegypt.edu/services/communications/marketing",
+      "https://www.facebook.com/SchoolOfMarketing.CO/",
+      "https://23hublab.com/student-acquisition-strategy-in-egypt/",
+      "https://www.leadsquared.com/industries/education/higher-education-marketing-guide/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "REPLAY of snapshot evidence_snapshots/strong_v2_scenario.json captured 2026-11-17T20:51:46+00:00; no new collection",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.357718+00:00",
+    "agent": "researcher",
+    "action": "synthesize_and_verify_claims",
+    "sources": [
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
+      "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://studyboost.org/blog/best-spaced-repetition-app/",
+      "https://www.aucegypt.edu/services/communications/marketing",
+      "https://www.facebook.com/SchoolOfMarketing.CO/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.368101+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_1",
+    "sources": [
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
+      "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://studyboost.org/blog/best-spaced-repetition-app/",
+      "https://www.aucegypt.edu/services/communications/marketing",
+      "https://www.facebook.com/SchoolOfMarketing.CO/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=0; removed_sentences=0",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.378125+00:00",
+    "agent": "gate",
+    "action": "gate_1_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "repeat",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.397119+00:00",
+    "agent": "founder",
+    "action": "gate_1_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "repeat (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.410475+00:00",
+    "agent": "researcher",
+    "action": "replay_evidence_round_2",
+    "sources": [
+      "https://study-genius-ai.hatolabs.com/blog/best-spaced-repetition-software-2026",
+      "https://studyglen.com/guides/best-spaced-repetition-apps",
+      "https://www.mindomax.com/best-ai-flashcard-apps-with-spaced-repetition-2026",
+      "https://activerecalling.com/blog/spaced-repetition-apps-compared",
+      "https://www.mintdeck.app/blog/best-spaced-repetition-apps-2026",
+      "https://www.getsticky.ai/learn/best-spaced-repetition-apps",
+      "https://apps.ankiweb.net/",
+      "https://flashlearns.com/",
+      "https://anki-ai.app/",
+      "https://www.anyflashcards.com/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "REPLAY of snapshot evidence_snapshots/strong_v2_scenario.json captured 2026-11-17T20:51:46+00:00; no new collection",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.428569+00:00",
+    "agent": "researcher",
+    "action": "synthesize_and_verify_claims",
+    "sources": [
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://studyboost.org/blog/best-spaced-repetition-app/",
+      "https://www.aucegypt.edu/services/communications/marketing",
+      "https://www.facebook.com/SchoolOfMarketing.CO/",
+      "https://www.mintdeck.app/blog/best-spaced-repetition-apps-2026"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.440228+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_1",
+    "sources": [
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://studyboost.org/blog/best-spaced-repetition-app/",
+      "https://www.aucegypt.edu/services/communications/marketing",
+      "https://www.facebook.com/SchoolOfMarketing.CO/",
+      "https://www.mintdeck.app/blog/best-spaced-repetition-apps-2026"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=0; removed_sentences=0",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.451294+00:00",
+    "agent": "gate",
+    "action": "gate_1_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pivot",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.468301+00:00",
+    "agent": "founder",
+    "action": "gate_1_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "pivot (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.474211+00:00",
+    "agent": "orchestrator",
+    "action": "pivot",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "Narrow the idea to university students in Egypt: An AI-powered flashcard and spaced-repetition study tool for university",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.485175+00:00",
+    "agent": "researcher",
+    "action": "replay_evidence_round_1",
+    "sources": [
+      "https://news.ycombinator.com/item?id=35576335",
+      "https://news.ycombinator.com/item?id=41130993",
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://www.researchgate.net/publication/390306214_The_Development_of_Higher_Education_in_Egypt",
+      "https://www.ijnrd.org/papers/IJNRD2504556.pdf",
+      "https://papers.iafor.org/wp-content/uploads/papers/ece2024/ECE2024_82382.pdf",
+      "https://www.hrw.org/news/2025/01/27/egypt-declining-funding-undermines-education",
+      "https://www.reddit.com/r/Egypt/comments/szb3p4/studying_in_egypt/",
+      "https://www.reddit.com/r/Egypt/comments/p13ywx/coming_to_study_in_egypt/",
+      "https://www.reuters.com/investigates/special-report/egypt-students/",
+      "https://mena.org.eg/en/news/egypt-steps-preuniversity-education-reform-8d66b432-4e89-4bf6-89c4-ab0f287930de",
+      "https://www.memmo.org/en/magazine/studyapps",
+      "https://liners.com/best/edtech/egypt",
+      "https://www.mindomax.com/best-study-apps-for-students",
+      "https://notehive.app/blog/best-study-apps-for-college-students-2026",
+      "https://www.techbloat.com/software/narrow/pricing/",
+      "https://www.notion.com/pricing",
+      "https://www.idea.edu/",
+      "https://www.jetbrains.com/academy/student-pack/",
+      "https://xpay.app/blog/epayments-education-sector-egypt",
+      "https://www3.aucegypt.edu/OnlinePayment/Default.aspx",
+      "https://www.aucegypt.edu/academics/registrar/steps-e-payment",
+      "https://www.aucegypt.edu/services/communications/marketing"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "REPLAY of snapshot evidence_snapshots/strong_v2_scenario.json captured 2026-11-17T20:51:46+00:00; no new collection",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.497031+00:00",
+    "agent": "researcher",
+    "action": "synthesize_and_verify_claims",
+    "sources": [
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://mena.org.eg/en/news/egypt-steps-preuniversity-education-reform-8d66b432-4e89-4bf6-89c4-ab0f287930de",
+      "https://notehive.app/blog/best-study-apps-for-college-students-2026",
+      "https://www.aucegypt.edu/services/communications/marketing",
+      "https://www.memmo.org/en/magazine/studyapps",
+      "https://www.reddit.com/r/Egypt/comments/szb3p4/studying_in_egypt/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.507845+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_1",
+    "sources": [
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://mena.org.eg/en/news/egypt-steps-preuniversity-education-reform-8d66b432-4e89-4bf6-89c4-ab0f287930de",
+      "https://notehive.app/blog/best-study-apps-for-college-students-2026",
+      "https://www.aucegypt.edu/services/communications/marketing",
+      "https://www.memmo.org/en/magazine/studyapps",
+      "https://www.reddit.com/r/Egypt/comments/szb3p4/studying_in_egypt/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=0; removed_sentences=0",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.521019+00:00",
+    "agent": "gate",
+    "action": "gate_1_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "go",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.536896+00:00",
+    "agent": "founder",
+    "action": "gate_1_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "approve (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.549653+00:00",
+    "agent": "validator",
+    "action": "red_team_critique",
+    "sources": [
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://www.reddit.com/r/Egypt/comments/szb3p4/studying_in_egypt/",
+      "https://mena.org.eg/en/news/egypt-steps-preuniversity-education-reform-8d66b432-4e89-4bf6-89c4-ab0f287930de",
+      "https://www.memmo.org/en/magazine/studyapps",
+      "https://notehive.app/blog/best-study-apps-for-college-students-2026",
+      "https://www.aucegypt.edu/services/communications/marketing"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.556339+00:00",
+    "agent": "validator",
+    "action": "build_lean_canvas",
+    "sources": [
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://www.reddit.com/r/Egypt/comments/szb3p4/studying_in_egypt/",
+      "https://mena.org.eg/en/news/egypt-steps-preuniversity-education-reform-8d66b432-4e89-4bf6-89c4-ab0f287930de",
+      "https://www.memmo.org/en/magazine/studyapps",
+      "https://notehive.app/blog/best-study-apps-for-college-students-2026",
+      "https://www.aucegypt.edu/services/communications/marketing"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.561090+00:00",
+    "agent": "validator",
+    "action": "design_demand_test",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.572463+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_2",
+    "sources": [
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://mena.org.eg/en/news/egypt-steps-preuniversity-education-reform-8d66b432-4e89-4bf6-89c4-ab0f287930de",
+      "https://notehive.app/blog/best-study-apps-for-college-students-2026",
+      "https://www.aucegypt.edu/services/communications/marketing",
+      "https://www.memmo.org/en/magazine/studyapps",
+      "https://www.reddit.com/r/Egypt/comments/szb3p4/studying_in_egypt/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=0; removed_sentences=0",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.584424+00:00",
+    "agent": "gate",
+    "action": "gate_2_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "go",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.600861+00:00",
+    "agent": "founder",
+    "action": "gate_2_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "approve (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.611646+00:00",
+    "agent": "builder",
+    "action": "select_template",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "spaced_repetition",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.616902+00:00",
+    "agent": "builder",
+    "action": "llm_spec_text",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "LLM_DISABLED: LLM disabled (HATCHAI_NO_LLM=1)",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.621624+00:00",
+    "agent": "builder",
+    "action": "design_app_spec",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:55.629356+00:00",
+    "agent": "builder",
+    "action": "generate_mvp_code_spaced_repetition",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.303245+00:00",
+    "agent": "builder",
+    "action": "run_generated_tests",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "ran=23 failed=0 errors=0 smoke=True",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.313042+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_3",
+    "sources": [
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://mena.org.eg/en/news/egypt-steps-preuniversity-education-reform-8d66b432-4e89-4bf6-89c4-ab0f287930de",
+      "https://notehive.app/blog/best-study-apps-for-college-students-2026",
+      "https://www.aucegypt.edu/services/communications/marketing",
+      "https://www.memmo.org/en/magazine/studyapps",
+      "https://www.reddit.com/r/Egypt/comments/szb3p4/studying_in_egypt/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=0; removed_sentences=0",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.324418+00:00",
+    "agent": "gate",
+    "action": "gate_3_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "go",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.340167+00:00",
+    "agent": "founder",
+    "action": "gate_3_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "approve (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.351007+00:00",
+    "agent": "commercial",
+    "action": "evidence_anchored_pricing",
+    "sources": [
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.356306+00:00",
+    "agent": "commercial",
+    "action": "draft_policy_templates",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.367596+00:00",
+    "agent": "gate",
+    "action": "gate_4_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "go",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.384309+00:00",
+    "agent": "founder",
+    "action": "gate_4_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "approve (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.394861+00:00",
+    "agent": "launch",
+    "action": "draft_launch_copy",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pending_founder_approval",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.426232+00:00",
+    "agent": "payments",
+    "action": "sale_to_cash_simulation_mocked",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.437419+00:00",
+    "agent": "gate",
+    "action": "gate_5_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "go",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.453547+00:00",
+    "agent": "founder",
+    "action": "gate_5_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "approve (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.463435+00:00",
+    "agent": "operate",
+    "action": "read_metrics_and_apply_preregistered_rule",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "insufficient_data (real: 0 visitors, 0 sign-ups)",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.474861+00:00",
+    "agent": "orchestrator",
+    "action": "run_completed",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "completed",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.480460+00:00",
+    "agent": "orchestrator",
+    "action": "replay_check",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "gate outcomes MATCH capture of 2026-11-17T20:51:46+00:00",
+    "run_id": "demo-headline",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.526528+00:00",
     "agent": "orchestrator",
     "action": "llm_mode_at_start",
     "sources": [],
@@ -962,7 +1767,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.071830+00:00",
+    "timestamp": "2026-11-17T21:10:56.542677+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -973,7 +1778,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.088473+00:00",
+    "timestamp": "2026-11-17T21:10:56.549467+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_1",
     "sources": [
@@ -1005,7 +1810,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.133830+00:00",
+    "timestamp": "2026-11-17T21:10:56.564096+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -1024,7 +1829,27 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.171574+00:00",
+    "timestamp": "2026-11-17T21:10:56.575552+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_1",
+    "sources": [
+      "https://23hublab.com/student-acquisition-strategy-in-egypt/",
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://studyboost.org/blog/best-spaced-repetition-app/",
+      "https://www.leadsquared.com/industries/education/higher-education-marketing-guide/",
+      "https://www.motownai.com/blog/best-flashcard-apps-university-students-2026"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=0; removed_sentences=0",
+    "run_id": "demo-strong-v2",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.589814+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -1036,7 +1861,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.223877+00:00",
+    "timestamp": "2026-11-17T21:10:56.607054+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -1048,7 +1873,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.291637+00:00",
+    "timestamp": "2026-11-17T21:10:56.626865+00:00",
     "agent": "orchestrator",
     "action": "replay_round_not_captured",
     "sources": [],
@@ -1060,7 +1885,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.324904+00:00",
+    "timestamp": "2026-11-17T21:10:56.651882+00:00",
     "agent": "orchestrator",
     "action": "replay_check",
     "sources": [],
@@ -1072,7 +1897,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.460159+00:00",
+    "timestamp": "2026-11-17T21:10:56.723316+00:00",
     "agent": "orchestrator",
     "action": "llm_mode_at_start",
     "sources": [],
@@ -1084,7 +1909,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.510075+00:00",
+    "timestamp": "2026-11-17T21:10:56.742876+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -1095,7 +1920,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.526982+00:00",
+    "timestamp": "2026-11-17T21:10:56.748309+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_1",
     "sources": [
@@ -1118,7 +1943,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.554305+00:00",
+    "timestamp": "2026-11-17T21:10:56.759807+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -1134,7 +1959,24 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.594970+00:00",
+    "timestamp": "2026-11-17T21:10:56.775200+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_1",
+    "sources": [
+      "https://genio.co/pricing/individuals",
+      "https://richtactic.com/tactic/study-notes-selling",
+      "https://www.goodnotes.com/blog/best-free-note-taking-apps-for-students-2026",
+      "https://www.screensnap.pro/blog/best-study-notes-app"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=0; removed_sentences=0",
+    "run_id": "demo-weak-v2",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.787873+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -1146,7 +1988,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.653805+00:00",
+    "timestamp": "2026-11-17T21:10:56.808676+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -1158,7 +2000,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.684970+00:00",
+    "timestamp": "2026-11-17T21:10:56.822538+00:00",
     "agent": "orchestrator",
     "action": "run_stopped",
     "sources": [],
@@ -1170,7 +2012,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.703843+00:00",
+    "timestamp": "2026-11-17T21:10:56.829092+00:00",
     "agent": "orchestrator",
     "action": "replay_check",
     "sources": [],
@@ -1182,7 +2024,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.830793+00:00",
+    "timestamp": "2026-11-17T21:10:56.906226+00:00",
     "agent": "orchestrator",
     "action": "llm_mode_at_start",
     "sources": [],
@@ -1194,7 +2036,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.881795+00:00",
+    "timestamp": "2026-11-17T21:10:56.929752+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -1205,7 +2047,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.902020+00:00",
+    "timestamp": "2026-11-17T21:10:56.935674+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_1",
     "sources": [
@@ -1230,7 +2072,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.925591+00:00",
+    "timestamp": "2026-11-17T21:10:56.942541+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -1244,7 +2086,22 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:47.966940+00:00",
+    "timestamp": "2026-11-17T21:10:56.949886+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_1",
+    "sources": [
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=JO",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=JO"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=0; removed_sentences=0",
+    "run_id": "demo-replay-v2",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:56.962532+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -1256,7 +2113,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:48.018107+00:00",
+    "timestamp": "2026-11-17T21:10:56.981436+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -1268,7 +2125,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:48.064976+00:00",
+    "timestamp": "2026-11-17T21:10:56.994539+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_2",
     "sources": [
@@ -1293,7 +2150,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:48.097699+00:00",
+    "timestamp": "2026-11-17T21:10:57.007775+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -1310,7 +2167,25 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:48.136987+00:00",
+    "timestamp": "2026-11-17T21:10:57.019751+00:00",
+    "agent": "advisor",
+    "action": "advisor_memo_gate_1",
+    "sources": [
+      "http://www.araboo.com/dir/jordan-communities-forums",
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=JO",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=JO",
+      "https://sawwahtravel.com/trips/570/calligraphy-house-experience",
+      "https://www.telegram-groups.com/jordan-telegram-groups/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pains=0; removed_sentences=0",
+    "run_id": "demo-replay-v2",
+    "scoring_version": "v2"
+  },
+  {
+    "timestamp": "2026-11-17T21:10:57.032155+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -1322,7 +2197,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:48.188615+00:00",
+    "timestamp": "2026-11-17T21:10:57.059129+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -1334,7 +2209,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:48.213391+00:00",
+    "timestamp": "2026-11-17T21:10:57.067323+00:00",
     "agent": "orchestrator",
     "action": "pivot",
     "sources": [],
@@ -1346,7 +2221,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:48.248215+00:00",
+    "timestamp": "2026-11-17T21:10:57.079548+00:00",
     "agent": "orchestrator",
     "action": "replay_round_not_captured",
     "sources": [],
@@ -1358,7 +2233,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:48.279849+00:00",
+    "timestamp": "2026-11-17T21:10:57.091978+00:00",
     "agent": "orchestrator",
     "action": "replay_check",
     "sources": [],
@@ -1370,7 +2245,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T18:33:55.942643+00:00",
+    "timestamp": "2026-11-17T21:10:59.244059+00:00",
     "agent": "demo_script",
     "action": "send_labelled_test_traffic",
     "sources": [],
@@ -1382,7 +2257,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:55.958662+00:00",
+    "timestamp": "2026-11-17T21:10:59.249436+00:00",
     "agent": "orchestrator",
     "action": "remeasure_phase_6",
     "sources": [],
@@ -1393,7 +2268,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:55.981901+00:00",
+    "timestamp": "2026-11-17T21:10:59.256837+00:00",
     "agent": "operate",
     "action": "read_metrics_and_apply_preregistered_rule",
     "sources": [],
@@ -1405,7 +2280,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T18:33:55.996512+00:00",
+    "timestamp": "2026-11-17T21:10:59.261858+00:00",
     "agent": "operate",
     "action": "pipeline_check_on_test_traffic",
     "sources": [],

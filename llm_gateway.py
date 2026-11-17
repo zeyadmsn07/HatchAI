@@ -199,7 +199,10 @@ def complete_json(system_prompt: str, user_prompt: str, response_model: Type[T],
         "temperature": temperature,
         "max_tokens": max_tokens,
         "stream": False,
-        "response_format": {"type": "json_object"},
+        # Grammar-constrained structured output (Ollama, llama.cpp, vLLM): small open-weight models
+        # otherwise tend to echo the schema back instead of filling it in.
+        "response_format": {"type": "json_schema",
+                            "json_schema": {"name": response_model.__name__, "schema": schema, "strict": True}},
     }
     last_error, attempts = "", 0
     for attempt in range(1 + retries()):

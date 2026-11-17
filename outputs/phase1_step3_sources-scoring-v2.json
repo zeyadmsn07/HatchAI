@@ -10,7 +10,10 @@
       "Show HN: I Tried Coolify to Self-Host My AI-Powered Anki Flashcard Generator — Hacker News thread with 4 points and 1 comments, posted 2024-06-09."
     ],
     "collector": "hn",
-    "category": "demand"
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S2",
@@ -23,7 +26,10 @@
       "Show HN: Keepmind – AI-powered flashcards and quizzes from your notes — Hacker News thread with 3 points and 2 comments, posted 2025-07-07."
     ],
     "collector": "hn",
-    "category": "demand"
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S3",
@@ -36,7 +42,10 @@
       "Individuals using the Internet (% of population) for Egypt, Arab Rep. in 2024: 74.6."
     ],
     "collector": "worldbank",
-    "category": "local_constraints"
+    "category": "local_constraints",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S4",
@@ -49,7 +58,10 @@
       "GDP per capita (current US$) for Egypt, Arab Rep. in 2025: 3,085.8."
     ],
     "collector": "worldbank",
-    "category": "local_constraints"
+    "category": "local_constraints",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S5",
@@ -62,7 +74,10 @@
       "We present Memdora, an AI-powered spaced repetition system (Figure 1) that addresses both limitations through four primary contributions:"
     ],
     "collector": "web:yahoo",
-    "category": "demand"
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S6",
@@ -78,7 +93,10 @@
       "The study involved 6 students using a research prototype with a single basic card type."
     ],
     "collector": "web:yahoo",
-    "category": "demand"
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S7",
@@ -94,7 +112,10 @@
       "Discover how AI-powered flashcards use spaced repetition science to ensure you study the right material at precisely the right time-maximizing retention while minimizing time spent."
     ],
     "collector": "web:yahoo",
-    "category": "demand"
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S8",
@@ -107,7 +128,10 @@
       "May 29, 2026 · AI flashcards and spaced repetition are two of the most evidence-backed tools in the study science toolkit — and combining them produces results that look almost implausible until you understand the mechanisms."
     ],
     "collector": "web:yahoo",
-    "category": "demand"
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S9",
@@ -123,7 +147,10 @@
       "Study Techniques 16 min read 5 Best Flashcard Apps for Students in 2026 Study Techniques 13 min read Mind Mapping for Studying: When and How to Use It Put these techniques into practice Upload your study materials and let Laxu AI create flashcards, notes, and quizzes automatically."
     ],
     "collector": "web:yahoo",
-    "category": "competitors"
+    "category": "competitors",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S10",
@@ -139,7 +166,10 @@
       "StudyFetch offers AI‑heavy subscriptions targeted at students who want lecture‑to‑quiz automation."
     ],
     "collector": "web:yahoo",
-    "category": "competitors"
+    "category": "competitors",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S11",
@@ -155,7 +185,10 @@
       "Brainscape — confidence-based repetition Best for: Students who want a simple, well-designed flashcard experience Brainscape uses a confidence-based repetition system: after each card, you rate how well you knew the answer on a 1–5 scale, and the platform schedules future reviews based on your rating."
     ],
     "collector": "web:yahoo",
-    "category": "competitors"
+    "category": "competitors",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S12",
@@ -171,7 +204,10 @@
       "Open tool Text to Flashcards Paste your study notes, textbook content, or any text."
     ],
     "collector": "web:yahoo",
-    "category": "competitors"
+    "category": "competitors",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S13",
@@ -187,7 +223,10 @@
       "Best AI Spaced Repetition Flashcard App | Studyboost The best AI flashcard app with spaced repetition worth paying for is Studyboost."
     ],
     "collector": "web:yahoo",
-    "category": "pricing"
+    "category": "pricing",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S14",
@@ -203,7 +242,10 @@
       "Stanford Medicine - Stanford University Imported my notes from Notion and flashcards from Anki and it was surprisingly smooth."
     ],
     "collector": "web:yahoo",
-    "category": "pricing"
+    "category": "pricing",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S15",
@@ -219,7 +261,10 @@
       "Turbo AI - Another $20/month option Turbo AI is similar to StudyFetch: AI flashcards, quizzes and a lecture notetaker in one app."
     ],
     "collector": "web:yahoo",
-    "category": "pricing"
+    "category": "pricing",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S16",
@@ -232,7 +277,10 @@
       "Our team will help you promote your academic achievements, research breakthroughs or special events and initiatives on the relevant AUC social media channels so you can reach the widest possible audience or target a specific group."
     ],
     "collector": "web:yahoo",
-    "category": "channels"
+    "category": "channels",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S17",
@@ -245,7 +293,10 @@
       "سياسة الاسترجاع (Refund Policy) تقدّر School of Marketing ثقة المتدربين وتحرص على رضاهم الكامل عن الخدمات التعليمية المقدَّمة من خلال منصّتها الإلكترونية. لذلك، تم إعداد سياسة الاسترجاع التالية لتنظيم عملية استرداد الرسوم في حال وجود أسباب وجيهة. Egyptian education marketing has historically been organized around physical channels — enrollment fairs, campus open days, direct mail, and word-of-mouth through community networks. These channels remain important, but they are less commercially efficient than they were five years ago for two reasons: Oct 23, 2026 · Whether you work at a 2-year or 4-year institution, focus on traditional or non-traditional students, serve in-house or at an agency specializing in education marketing, or hold a role as a university administrator or enrollment professional—this guide is for you. Jun 9, 2023 · To stand out, universities must prioritise digital marketing strategies, using a targeted approach. There are a few simple steps that universities can take to ensure marketing efforts are reaching international students. First, universities must specify who their target audience is. May 18, 2026 · When marketing to college students, your chances of success can be higher if you keep the tips below in mind: 1. Profile your student targets. Decide what type of student you want to reach with your product or service before marketing it. Apr 6, 2026 · It's about time to get use of all our marketing efforts and to get to know each other well."
     ],
     "collector": "web:yahoo",
-    "category": "channels"
+    "category": "channels",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S18",
@@ -258,7 +309,10 @@
       "Egyptian education marketing has historically been organized around physical channels — enrollment fairs, campus open days, direct mail, and word-of-mouth through community networks. These channels remain important, but they are less commercially efficient than they were five years ago for two reasons:"
     ],
     "collector": "web:yahoo",
-    "category": "channels"
+    "category": "channels",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S19",
@@ -271,6 +325,9 @@
       "Oct 23, 2026 · Whether you work at a 2-year or 4-year institution, focus on traditional or non-traditional students, serve in-house or at an agency specializing in education marketing, or hold a role as a university administrator or enrollment professional—this guide is for you."
     ],
     "collector": "web:yahoo",
-    "category": "channels"
+    "category": "channels",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   }
 ]

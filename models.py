@@ -53,6 +53,11 @@ class Source(BaseModel):
     passages: List[str] = Field(default_factory=list)
     collector: str = ""          # web:<backend> | hn | wikipedia | worldbank
     category: str = ""           # evidence category the query targeted
+    # Provenance and freshness (added after the first captures; old snapshots load with defaults
+    # and the quality report re-derives what it can from the stored text):
+    published: Optional[str] = None                            # YYYY-MM-DD or YYYY, if the page states one
+    published_from: str = ""                                   # page-meta | snippet-date | api | ""
+    passage_origins: List[str] = Field(default_factory=list)   # per passage: search-snippet | page | api
 
 
 class Claim(BaseModel):

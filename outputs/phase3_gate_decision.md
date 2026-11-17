@@ -28,3 +28,5 @@ Required before anything proceeds — see `decision_log.json` (`gate_3_decision`
 | 1 | 1 | GO | 95.0 | 0.0 |
 | 2 | 1 | GO | 95.0 | 4.5 |
 | 3 | 1 | GO | 0.0 | 0.0 |
+
+> **Advisory, not part of the gate:** the MVP covers **0 of 1** verified pains in the demand evidence. See `phase3_step4_advisor-memo.md`.

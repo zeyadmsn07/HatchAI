@@ -10,7 +10,10 @@
       "Maker of EpiPen to Sell Generic Version for Half the Price — Hacker News thread with 1 points and 1 comments, posted 2016-08-29."
     ],
     "collector": "hn",
-    "category": "demand"
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S2",
@@ -23,7 +26,10 @@
       "Mylan to Sell Generic EpiPen at Half the Price of Original — Hacker News thread with 1 points and 0 comments, posted 2016-12-16."
     ],
     "collector": "hn",
-    "category": "demand"
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S3",
@@ -39,7 +45,10 @@
       "What makes a good study notes app in 2026?"
     ],
     "collector": "web:yahoo",
-    "category": "competitors"
+    "category": "competitors",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S4",
@@ -52,7 +61,10 @@
       "Sep 8, 2026 · We tested the best note-taking apps for students. Compare features, pricing, pros and cons to find the right option for you."
     ],
     "collector": "web:yahoo",
-    "category": "competitors"
+    "category": "competitors",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S5",
@@ -68,7 +80,10 @@
       "Goodnotes Content Team View related posts Study Tips The 15 best free note-taking apps for students in 2026 Goodnotes Content Team A roundup comparing the free plans of 15 note-taking apps (Goodnotes, Apple Notes, Freenotes, Notion, Obsidian, Notability, OneNote, and more) on features, limitations, and device support."
     ],
     "collector": "web:yahoo",
-    "category": "competitors"
+    "category": "competitors",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S6",
@@ -82,7 +97,10 @@
       "So the sensible shape of a study setup is small: one tool that tests you, one place your notes live, and, if attention is the real problem, one thing that stands between you and the phone."
     ],
     "collector": "web:yahoo",
-    "category": "competitors"
+    "category": "competitors",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S7",
@@ -98,7 +116,10 @@
       "🌍 Worldwide Reach Students from 150+ countries discover and buy notes on StudyRift daily."
     ],
     "collector": "web:yahoo",
-    "category": "pricing"
+    "category": "pricing",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S8",
@@ -114,7 +135,10 @@
       "Sell Study Notes and Class Notes Online (2026) | RichTactic Skip to main content Selling Study Notes: Complete Guide (2026) Last updated: April 1, 2026 | By RichTactic Editorial Team TL;DR: Selling Study Notes costs $0-$50 to start."
     ],
     "collector": "web:yahoo",
-    "category": "pricing"
+    "category": "pricing",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S9",
@@ -130,7 +154,10 @@
       "Selling study notes online is now one of the easiest ways for students to make extra money."
     ],
     "collector": "web:yahoo",
-    "category": "pricing"
+    "category": "pricing",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   },
   {
     "key": "S10",
@@ -146,6 +173,9 @@
       "Grades Challenge report Case Studies and User Stories Read our user stories and case studies 88% of students find studying less stressful with Genio Notes."
     ],
     "collector": "web:yahoo",
-    "category": "pricing"
+    "category": "pricing",
+    "published": null,
+    "published_from": "",
+    "passage_origins": []
   }
 ]

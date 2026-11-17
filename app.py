@@ -39,8 +39,149 @@ orchestrator.OUTPUTS.mkdir(exist_ok=True)   # read orchestrator.OUTPUTS at reque
 
 
 # ---------------------------------------------------------------------------
-# HTML helpers
+# HTML helpers — Hatch visual identity (yolk yellow, shell white, warm ink; see static/hatch-logo.jpg)
 # ---------------------------------------------------------------------------
+
+import html as _h
+import re as _re
+
+STATIC = pathlib.Path(__file__).resolve().parent / "static"
+
+CSS = """
+:root{
+  --yolk:#FFD000; --yolk-deep:#E8B800; --yolk-tint:#FFF6CC; --shell:#FFFFFF; --ink:#2A1E0F;
+  --ink-soft:#5E4E37; --line:#EADFB8; --go:#1E7A4A; --repeat:#2457C5; --pivot:#7442C8; --stop:#C0322B;
+  --radius-egg:50% 50% 50% 50% / 60% 60% 42% 42%;
+  --display:'Fredoka',ui-rounded,'Arial Rounded MT Bold',system-ui,sans-serif;
+  --body:'Atkinson Hyperlegible',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--yolk-tint);color:var(--ink);font:16px/1.6 var(--body)}
+a{color:var(--ink);text-decoration-color:var(--yolk-deep);text-decoration-thickness:2px;text-underline-offset:3px}
+a:hover{text-decoration-color:var(--ink)}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:6px}
+code,pre{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.88em}
+code{background:#FFF0A8;padding:.1em .35em;border-radius:5px}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.15;margin:0 0 .5em}
+h1{font-size:clamp(2rem,4.6vw,3.1rem);letter-spacing:-.01em}
+h2{font-size:1.5rem} h3{font-size:1.15rem}
+p{margin:0 0 1em}
+
+.top{background:var(--yolk);border-bottom:3px solid var(--ink)}
+.top .wrap{display:flex;align-items:center;gap:20px;min-height:76px;flex-wrap:wrap}
+.logo{display:block;width:170px;height:62px;background:url(/static/hatch-logo.jpg) -11px -66px/199px auto no-repeat;
+  border-radius:8px;flex:none}
+.top nav{margin-left:auto;display:flex;gap:18px;font-weight:700}
+.top nav a{text-decoration:none;padding:6px 2px;border-bottom:2px solid transparent}
+.top nav a:hover{border-bottom-color:var(--ink)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+main.wrap{padding-top:36px;padding-bottom:64px}
+
+.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:40px;align-items:start}
+.lede{font-size:1.15rem;color:var(--ink-soft);max-width:34em}
+.panel{background:var(--shell);border:2px solid var(--ink);border-radius:22px;padding:26px}
+.panel.flat{border-color:var(--line)}
+.field{margin-bottom:16px}
+.field label{display:block;font-weight:700;margin-bottom:6px}
+.field small{display:block;color:var(--ink-soft);font-size:.85rem;margin-top:4px}
+input,textarea{width:100%;font:inherit;color:var(--ink);background:#FFFDF2;border:2px solid var(--line);
+  border-radius:12px;padding:11px 13px}
+input:focus,textarea:focus{border-color:var(--ink);outline:none;background:#fff}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 1rem var(--display);
+  border:2px solid var(--ink);border-radius:999px;padding:11px 20px;cursor:pointer;background:var(--shell);
+  color:var(--ink);text-decoration:none;transition:transform .12s ease}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--yolk);box-shadow:0 4px 0 var(--ink)}
+.btn.primary:hover{background:#FFDA33}
+.btn.wide{width:100%;font-size:1.15rem;padding:14px 20px}
+.btn.go{background:var(--go);color:#fff;border-color:var(--go)}
+.btn.repeat{background:var(--repeat);color:#fff;border-color:var(--repeat)}
+.btn.pivot{background:var(--pivot);color:#fff;border-color:var(--pivot)}
+.btn.stop{background:var(--shell);color:var(--stop);border-color:var(--stop)}
+.btn.quiet{background:transparent}
+
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:12px;padding:10px 0;
+  border-bottom:1px dashed var(--line)}
+.steps li:last-child{border-bottom:0}
+.steps li::before{content:counter(s);width:30px;height:36px;border-radius:var(--radius-egg);background:var(--yolk);
+  border:2px solid var(--ink);display:grid;place-items:center;font:600 .95rem var(--display)}
+.steps b{display:block}
+.steps span{color:var(--ink-soft);font-size:.92rem}
+.muted{color:var(--ink-soft)}
+.note{font-size:.9rem;color:var(--ink-soft)}
+.examples{margin-top:28px}
+.examples ul{margin:.4em 0 0;padding-left:1.1em}
+
+/* Signature: the six phases as eggs, gates as diamonds between them */
+.track{display:flex;align-items:flex-start;gap:0;margin:8px 0 30px;overflow-x:auto;padding:10px 4px 4px}
+.egg{flex:none;display:flex;flex-direction:column;align-items:center;gap:8px;width:92px;text-align:center}
+.egg i{display:block;width:46px;height:58px;border-radius:var(--radius-egg);border:3px solid var(--ink);
+  background:var(--shell);position:relative}
+.egg.done i{background:radial-gradient(circle at 50% 58%,var(--yolk) 0 46%,var(--shell) 47%)}
+.egg.done i::after{content:"";position:absolute;left:4px;right:4px;top:15px;height:8px;
+  background:linear-gradient(135deg,transparent 33%,var(--ink) 34% 42%,transparent 43%) 0 0/12px 8px repeat-x}
+.egg.now i{background:var(--yolk);animation:wobble 1.6s ease-in-out 1}
+.egg.halt i{background:#F4D9D6;border-color:var(--stop)}
+.egg small{font-size:.8rem;line-height:1.25;font-weight:700}
+.egg em{font-style:normal;font-weight:400;color:var(--ink-soft);display:block}
+.gem{flex:1 1 18px;min-width:18px;height:3px;background:var(--line);position:relative;margin-top:28px}
+.gem b{position:absolute;left:50%;top:50%;width:14px;height:14px;transform:translate(-50%,-50%) rotate(45deg);
+  background:var(--line);border:2px solid var(--shell)}
+.gem.go b{background:var(--go)} .gem.repeat b{background:var(--repeat)} .gem.pivot b{background:var(--pivot)}
+.gem.stop b{background:var(--stop)} .gem.go,.gem.repeat,.gem.pivot{background:var(--ink)}
+@keyframes wobble{0%,100%{transform:rotate(0)}20%{transform:rotate(-7deg)}40%{transform:rotate(6deg)}
+  60%{transform:rotate(-4deg)}80%{transform:rotate(2deg)}}
+@media (prefers-reduced-motion:reduce){.egg.now i{animation:none}.btn{transition:none}}
+
+.runhead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.pill{display:inline-block;border:2px solid var(--ink);border-radius:999px;padding:2px 12px;font:600 .85rem var(--display);
+  background:var(--shell)}
+.pill.completed{background:var(--go);border-color:var(--go);color:#fff}
+.pill.stopped,.pill.failed{background:var(--stop);border-color:var(--stop);color:#fff}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;align-items:start}
+.grid>*,.hero>*{min-width:0}
+.doc,.verdict,.panel{overflow-wrap:anywhere}
+.verdict{border-radius:22px;border:3px solid var(--ink);background:var(--shell);padding:26px;margin-bottom:24px}
+.verdict .word{font:600 clamp(2.6rem,7vw,4.2rem)/1 var(--display);margin:4px 0 12px}
+.verdict.go .word{color:var(--go)} .verdict.repeat .word{color:var(--repeat)}
+.verdict.pivot .word{color:var(--pivot)} .verdict.stop .word{color:var(--stop)}
+.scores{display:flex;gap:26px;flex-wrap:wrap;margin:14px 0 18px}
+.scores div{font-size:.9rem;color:var(--ink-soft)}
+.scores strong{display:block;font:600 1.6rem var(--display);color:var(--ink)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.override{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+.override input{flex:1 1 260px}
+.banner{border-radius:16px;padding:14px 18px;margin-bottom:20px;border:2px solid var(--ink);background:var(--shell)}
+.banner.ok{background:#E2F3E9;border-color:var(--go)} .banner.bad{background:#FBE4E2;border-color:var(--stop)}
+.banner.wait{background:var(--yolk)}
+.side h3{margin-top:4px}
+.files{list-style:none;margin:0;padding:0;font-size:.9rem}
+.files li{padding:5px 0;border-bottom:1px dashed var(--line);overflow-wrap:anywhere}
+.files li.memo a{font-weight:700}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--display);font-weight:600}
+.tablebox{overflow-x:auto}
+.doc{background:var(--shell);border:2px solid var(--line);border-radius:22px;padding:28px;max-width:900px}
+.doc h1{font-size:1.9rem} .doc h2{font-size:1.3rem;margin-top:1.4em} .doc h3{font-size:1.05rem;margin-top:1.2em}
+.doc blockquote{margin:0 0 1em;padding:10px 14px;background:var(--yolk-tint);border-left:4px solid var(--yolk-deep);
+  border-radius:0 10px 10px 0;color:var(--ink-soft);font-size:.92rem}
+.doc ul{padding-left:1.2em} .doc li{margin:.3em 0}
+.doc pre{background:var(--ink);color:#FFF6CC;padding:14px;border-radius:12px;overflow-x:auto}
+.memo-box{margin-bottom:24px}
+.memo-box .doc{max-width:none;padding:22px}
+details summary{cursor:pointer;font:600 1.05rem var(--display)}
+@media (max-width:860px){.hero,.grid{grid-template-columns:1fr}.logo{width:150px;height:51px;
+  background-size:176px auto;background-position:-10px -63px}}
+"""
+
+
+def _e(x) -> str:
+    return _h.escape(str(x if x is not None else ""))
+
 
 def _html(content: str, title: str = "HatchAI") -> HTMLResponse:
     return HTMLResponse(f"""<!DOCTYPE html>
@@ -48,34 +189,125 @@ def _html(content: str, title: str = "HatchAI") -> HTMLResponse:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} — HatchAI</title>
-<link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-<style>
-  body {{ background:#f8f9fa; }}
-  .badge-mocked {{ background:#ffc107; color:#000; }}
-  .badge-working {{ background:#198754; color:#fff; }}
-  .badge-stubbed {{ background:#6c757d; color:#fff; }}
-  pre {{ background:#1e1e1e; color:#d4d4d4; padding:1rem; border-radius:6px; overflow-x:auto; }}
-  .gate-card {{ border-left: 4px solid #0d6efd; }}
-  .gate-stop {{ border-left-color: #dc3545 !important; }}
-  .gate-go {{ border-left-color: #198754 !important; }}
-  .gate-repeat {{ border-left-color: #ffc107 !important; }}
-</style>
+<title>{_e(title)} · Hatch</title>
+<link rel="icon" href="/static/hatch-logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fredoka:wght@500;600&display=swap">
+<style>{CSS}</style>
 </head>
 <body>
-<nav class="navbar navbar-dark bg-dark mb-4">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="/">🚀 HatchAI</a>
-    <span class="text-white-50 small">Evidence-gated venture builder · offline-capable</span>
-    <a href="/api/runs" class="text-white-50 small">All runs</a>
-  </div>
-</nav>
-<div class="container pb-5">
+<header class="top"><div class="wrap">
+  <a class="logo" href="/" aria-label="Hatch home"></a>
+  <nav aria-label="Main"><a href="/">New idea</a><a href="/demo">Example runs</a><a href="/api/runs">All runs (JSON)</a></nav>
+</div></header>
+<main class="wrap">
 {content}
-</div>
+</main>
 </body>
 </html>""")
+
+
+def _inline(t: str) -> str:
+    t = _re.sub(r"`([^`]+)`", r"<code>\1</code>", t)
+    t = _re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", t)
+    t = _re.sub(r"(?<![\w*])\*([^*\n]+)\*(?!\w)", r"<em>\1</em>", t)
+    t = _re.sub(r"\[([^\]]+)\]\((https?://[^)\s]+|/[^)\s]*)\)", r'<a href="\2" rel="noopener">\1</a>', t)
+    return t
+
+
+def md_to_html(text: str) -> str:
+    """Small, safe Markdown renderer for our own output files (escape first, then format)."""
+    out, para, items, quote, rows, code = [], [], [], [], [], None
+
+    def flush():
+        nonlocal para, items, quote, rows
+        if para:
+            out.append("<p>" + _inline(" ".join(para)) + "</p>"); para = []
+        if items:
+            out.append("<ul>" + "".join(f"<li>{_inline(i)}</li>" for i in items) + "</ul>"); items = []
+        if quote:
+            out.append("<blockquote>" + "<br>".join(_inline(q) for q in quote) + "</blockquote>"); quote = []
+        if rows:
+            body = [r for r in rows if not _re.fullmatch(r"\|?[\s:|-]+\|?", r)]
+            cells = [[c.strip() for c in r.strip().strip("|").split("|")] for r in body]
+            if cells:
+                head = "".join(f"<th>{_inline(c)}</th>" for c in cells[0])
+                trs = "".join("<tr>" + "".join(f"<td>{_inline(c)}</td>" for c in r) + "</tr>" for r in cells[1:])
+                out.append(f'<div class="tablebox"><table><thead><tr>{head}</tr></thead><tbody>{trs}</tbody></table></div>')
+            rows = []
+
+    for raw in _h.escape(text).splitlines():
+        line = raw.rstrip()
+        if line.startswith("```"):
+            if code is None:
+                flush(); code = []
+            else:
+                out.append("<pre>" + "\n".join(code) + "</pre>"); code = None
+            continue
+        if code is not None:
+            code.append(raw); continue
+        m = _re.match(r"(#{1,4}) (.*)", line)
+        if m:
+            flush(); n = min(len(m.group(1)), 3)
+            out.append(f"<h{n}>{_inline(m.group(2))}</h{n}>"); continue
+        if line.startswith("&gt;"):
+            if not quote:
+                flush()
+            quote.append(line[4:].strip()); continue
+        if line.startswith("|"):
+            if not rows:
+                flush()
+            rows.append(line); continue
+        m = _re.match(r"\s*(?:[-*]|\d+\.) (.*)", line)
+        if m:
+            if para or quote or rows:
+                flush()
+            items.append(m.group(1)); continue
+        if not line.strip():
+            flush(); continue
+        if items and raw.startswith("  "):
+            items[-1] += " " + line.strip(); continue
+        para.append(line.strip())
+    flush()
+    if code is not None:
+        out.append("<pre>" + "\n".join(code) + "</pre>")
+    return "\n".join(out)
+
+
+PHASES = [("Discover", "live research"), ("Validate", "critique, canvas"), ("Build", "tested MVP"),
+          ("Commercial", "pricing; policies MOCKED"), ("Sell", "payments MOCKED"), ("Operate", "real metrics")]
+
+
+def _track(run_id: str, status: str, phase: int) -> str:
+    """Six eggs (phases) with a gate diamond after each of the first five."""
+    hist = orchestrator._counters(run_id).get("history", []) if run_id else []
+    last = {}
+    for h in hist:
+        last[h["gate"]] = h["outcome"]
+    parts = []
+    for i, (name, sub) in enumerate(PHASES, 1):
+        if status == "completed" or i < phase:
+            cls, state = "done", "done"
+        elif i == phase and status in ("stopped", "failed"):
+            cls, state = "halt", "stopped here"
+        elif i == phase:
+            cls, state = "now", "now"
+        else:
+            cls, state = "", "not started"
+        parts.append(f'<div class="egg {cls}"><i aria-hidden="true"></i><small>{i}. {name}<em>{sub}</em></small>'
+                     f'<span class="sr-only" style="position:absolute;left:-9999px">{state}</span></div>')
+        if i < 6:
+            o = last.get(i, "")
+            label = f"Gate {i}: {o.upper()}" if o else f"Gate {i}: not reached"
+            parts.append(f'<div class="gem {o}" title="{label}" aria-label="{label}"><b></b></div>')
+    return f'<div class="track" role="list" aria-label="Six phases and five gates">{"".join(parts)}</div>'
+
+
+@app.get("/static/hatch-logo.jpg")
+def logo():
+    from fastapi.responses import FileResponse
+    return FileResponse(STATIC / "hatch-logo.jpg", media_type="image/jpeg")
 
 
 # ---------------------------------------------------------------------------
@@ -84,68 +316,87 @@ def _html(content: str, title: str = "HatchAI") -> HTMLResponse:
 
 @app.get("/", response_class=HTMLResponse)
 def index():
-    return _html("""
-<div class="row justify-content-center">
-  <div class="col-lg-8">
-    <h1 class="mb-1">Turn your idea into a validated digital product</h1>
-    <p class="text-muted mb-4">
-      Six evidence-gated phases · Founder approval at every gate ·
-      Works offline with no API keys · All mocked parts clearly labelled.
-    </p>
-    <div class="card shadow-sm">
-      <div class="card-body p-4">
-        <form action="/api/runs" method="post">
-          <div class="mb-3">
-            <label class="form-label fw-semibold">Your idea *</label>
-            <textarea name="idea" class="form-control" rows="3" required
-              placeholder="e.g. An Arabic-first spaced-repetition study app for Egyptian university students"></textarea>
-          </div>
-          <div class="row g-3 mb-3">
-            <div class="col-md-6">
-              <label class="form-label">Target user</label>
-              <input name="target_user" class="form-control"
-                placeholder="e.g. University students aged 18-25">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Geography</label>
-              <input name="geography" class="form-control" placeholder="e.g. Egypt">
-            </div>
-          </div>
-          <div class="row g-3 mb-3">
-            <div class="col-md-4">
-              <label class="form-label">Your skills</label>
-              <input name="skills" class="form-control" placeholder="e.g. web development">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">Budget (USD)</label>
-              <input name="budget_usd" type="number" class="form-control" value="500" min="0">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">Hours / week</label>
-              <input name="hours_per_week" type="number" class="form-control" value="10" min="1">
-            </div>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Values / constraints</label>
-            <input name="values" class="form-control"
-              placeholder="e.g. accessibility, affordable pricing, no dark patterns">
-          </div>
-          <button type="submit" class="btn btn-primary btn-lg w-100">
-            Start Analysis →
-          </button>
-        </form>
+    mode = llm_gateway.current_mode()
+    label = llm_gateway.active_model_label()
+    return _html(f"""
+<section class="hero">
+  <div>
+    <h1>Hatch an idea only when the evidence holds.</h1>
+    <p class="lede">Describe a digital product. Hatch researches it on the live web, checks every quote against
+    its source, and stops at a gate after each phase. You decide every gate; nothing is published, sent or
+    spent without you.</p>
+    <form class="panel" action="/api/runs" method="post">
+      <div class="field">
+        <label for="idea">Your idea</label>
+        <textarea id="idea" name="idea" rows="3" required
+          placeholder="A spaced-repetition study app for university students in Egypt, in Arabic and English"></textarea>
+        <small>Say who it is for, where, and what problem it solves. Vague ideas get a STOP.</small>
       </div>
-    </div>
-    <div class="mt-4 small text-muted">
-      <strong>No API keys required.</strong> An optional local open-weight model on any OpenAI-compatible
-      endpoint (<code>HATCHAI_LLM_BASE_URL</code>, <code>HATCHAI_LLM_MODEL</code>) drafts only the MVP's name and
-      tagline and suggests template synonyms; it never writes code or changes scores or gates.
-      Everything else is deterministic. Research uses live, cited web sources.
-      LLM mode right now: <code>""" + llm_gateway.current_mode() + (f" ({llm_gateway.active_model_label()})" if llm_gateway.active_model_label() else "") + """</code>.
-    </div>
+      <div class="row">
+        <div class="field"><label for="tu">Who it's for</label>
+          <input id="tu" name="target_user" placeholder="University students"></div>
+        <div class="field"><label for="geo">Country</label>
+          <input id="geo" name="geography" placeholder="Egypt"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="sk">Your skills</label>
+          <input id="sk" name="skills" placeholder="Web development"></div>
+        <div class="field"><label for="bud">Budget (USD)</label>
+          <input id="bud" name="budget_usd" type="number" value="500" min="0"></div>
+        <div class="field"><label for="hrs">Hours a week</label>
+          <input id="hrs" name="hours_per_week" type="number" value="10" min="1"></div>
+      </div>
+      <div class="field"><label for="val">Values or limits</label>
+        <input id="val" name="values" placeholder="Affordable pricing, no dark patterns"></div>
+      <button type="submit" class="btn primary wide">Start research</button>
+    </form>
+    <p class="note" style="margin-top:14px">Free and keyless: web search, Reddit, Hacker News, Wikipedia and
+    World Bank data. Local model: <code>{_e(mode)}{(' · ' + _e(label)) if label else ''}</code>. It only drafts the
+    MVP's name, tagline and an optional advisor summary; it never sets a score or a gate.</p>
   </div>
-</div>
-""", "New Run")
+  <aside class="panel flat">
+    <h2>What happens next</h2>
+    <ol class="steps">
+      <li><div><b>Discover</b><span>Live sources, every quote re-checked, each source dated and labelled by who is speaking.</span></div></li>
+      <li><div><b>Validate</b><span>Red-team critique, Lean Canvas, and a demand test with thresholds fixed in advance.</span></div></li>
+      <li><div><b>Build</b><span>A runnable MVP that must pass its own tests and boot before the gate opens.</span></div></li>
+      <li><div><b>Commercial</b><span>Prices from cited competitors, capped by local income data. Policies are MOCKED drafts.</span></div></li>
+      <li><div><b>Sell</b><span>Launch drafts wait for your approval. Checkout, refund and reconciliation are a MOCKED simulation.</span></div></li>
+      <li><div><b>Operate</b><span>Decides on real visitors only. Test traffic is labelled and never counted.</span></div></li>
+    </ol>
+    <p class="note" style="margin:14px 0 0">After gates 1–3 an Advisor memo explains what the evidence means:
+    the pain, whether the plan addresses it, the weakest assumption and the cheapest test this week.</p>
+  </aside>
+</section>
+""", "New idea")
+
+
+@app.get("/demo", response_class=HTMLResponse)
+def demo_index():
+    groups = [
+        ("Headline: flashcards for students in Egypt, live research under the strict rule",
+         "-headline-v2", "REPEAT → PIVOT → GO, then an MVP that passes 23/23 tests."),
+        ("Original strong brief (older, looser relevance rule)", "", "GO at every gate; the Advisor shows the MVP covers 0 of 1 verified pains."),
+        ("Weak brief: generic study notes, no user, no country", "-weak-idea", "STOP at Gate 1, before any build or spend."),
+        ("Arabic calligraphy workshop booking, Jordan", "-replay-scenario", "REPEAT, then GO after a broader second round."),
+    ]
+    files = sorted(p.name for p in orchestrator.OUTPUTS.glob("*") if p.is_file())
+    suffixes = sorted({v for v in orchestrator.DEMO_RUNS.values() if v}, key=len, reverse=True)
+
+    def suffix_of(name: str) -> str:
+        stem = name.rsplit(".", 1)[0]
+        return next((x for x in suffixes if stem.endswith(x)), "")
+
+    blocks = []
+    for title, suf, what in groups:
+        mine = [f for f in files if suffix_of(f) == suf]
+        items = "".join(f'<li class="{"memo" if "advisor-memo" in f else ""}"><a href="/outputs/{_e(f)}">{_e(f)}</a></li>'
+                        for f in mine)
+        blocks.append(f'<section class="panel flat" style="margin-bottom:20px"><h2>{_e(title)}</h2>'
+                      f'<p class="muted">{_e(what)}</p><details><summary>{len(mine)} files</summary>'
+                      f'<ul class="files" style="margin-top:10px">{items}</ul></details></section>')
+    return _html("<h1>Example runs</h1><p class='lede'>Committed demo outputs, replayed offline from evidence "
+                 "captured on the live web. Advisor memos are in bold.</p>" + "".join(blocks), "Example runs")
 
 
 # ---------------------------------------------------------------------------
@@ -186,6 +437,9 @@ def create_run(
 # Status page
 # ---------------------------------------------------------------------------
 
+_MEMO_STEP = {1: 5, 2: 4, 3: 4}
+
+
 @app.get("/runs/{run_id}", response_class=HTMLResponse)
 def run_status_page(run_id: str, request: Request):
     run = db.get_run(run_id)
@@ -195,66 +449,52 @@ def run_status_page(run_id: str, request: Request):
     status = run["status"]
     phase = run["phase"] or 0
     is_founder = approval.verify_token(run_id, request.cookies.get(f"hatchai_{run_id}", ""))
+    running = status.endswith("_running") or status == "running"
 
-    # Phase progress
-    phase_names = [
-        "Discover (live sources)",
-        "Validate (demand test: STUBBED execution)",
-        "Build (generated + tested MVP)",
-        "Commercial (policies: MOCKED)",
-        "Launch (payments: MOCKED, posting: STUBBED)",
-        "Operate & Learn (analytics: STUBBED)",
-    ]
-    progress_html = ""
-    for i, name in enumerate(phase_names, 1):
-        active = "fw-bold text-primary" if i == phase else ""
-        done = "text-success" if i < phase or status == "completed" else ""
-        cls = active or done or "text-muted"
-        icon = "✓" if (i < phase or status == "completed") else ("▶" if i == phase else "○")
-        progress_html += f'<li class="list-group-item {cls}">{icon} Phase {i}: {name}</li>'
-
-    # Gate decision card
-    gate_html = ""
+    gate_html, memo_html = "", ""
     if "gate_" in status and "pending" in status:
         gate_id = int(status.split("_")[1])
         gate = db.get_gate_result(run_id, gate_id)
         if gate:
             outcome = gate["outcome"]
-            color_cls = {"go": "gate-go", "stop": "gate-stop", "repeat": "gate-repeat", "pivot": "gate-repeat"}.get(outcome, "")
             allowed = approval.ALLOWED.get(outcome, set())
             labels = {
-                "approve": ("btn-success", f"Approve: proceed to Phase {gate_id + 1}"),
-                "repeat": ("btn-warning", "Repeat (as recommended)"),
-                "pivot": ("btn-info", "Pivot to suggested angle"),
-                "stop": ("btn-danger", "Stop this run"),
+                "approve": ("go", f"Approve: proceed to Phase {gate_id + 1}"),
+                "repeat": ("repeat", "Repeat research (recommended)"),
+                "pivot": ("pivot", "Pivot to the suggested angle"),
+                "stop": ("stop", "Stop this run"),
             }
             buttons = "".join(
-                f'<button class="btn {labels[d][0]} btn-sm" onclick="decide(&quot;{d}&quot;, &quot;&quot;)">{labels[d][1]}</button>'
+                f'<button class="btn {labels[d][0]}" onclick="decide(&quot;{d}&quot;, &quot;&quot;)">{labels[d][1]}</button>'
                 for d in ("approve", "repeat", "pivot", "stop") if d in allowed)
+            override = ""
             if "override_stop" in allowed:
-                buttons += """
-<input id="override_reason" class="form-control form-control-sm" style="max-width:360px"
-       placeholder="Written reason required to proceed against the recommendation">
-<button class="btn btn-outline-secondary btn-sm"
-  onclick="decide('override_stop', document.getElementById('override_reason').value)">
-  Proceed anyway (override)
-</button>"""
-            pivot_html = f"<p class='small'><b>Suggested pivot:</b> {gate.get('pivot_to')}</p>" if gate.get("pivot_to") else ""
+                override = """
+<div class="override">
+  <input id="override_reason" aria-label="Reason for going against the recommendation"
+         placeholder="Write why you are going against the recommendation (required)">
+  <button class="btn quiet" onclick="decide('override_stop', document.getElementById('override_reason').value)">
+    Proceed anyway</button>
+</div>"""
             if not is_founder:
-                buttons = "<span class='small text-muted'>Only the founder's browser (token cookie) can decide this gate.</span>"
+                buttons, override = ("<p class='muted' style='margin:0'>Only the founder's browser (token cookie) "
+                                     "can decide this gate.</p>"), ""
+            pivot_html = (f"<p><strong>Suggested pivot:</strong> {_e(gate.get('pivot_to'))}</p>"
+                          if gate.get("pivot_to") else "")
             gate_html = f"""
-<div class="card gate-card {color_cls} mb-4">
-  <div class="card-body">
-    <h5 class="card-title">Gate {gate_id}: recommendation <strong>{outcome.upper()}</strong></h5>
-    <p class="card-text small">{gate['reason']}</p>
-    {pivot_html}
-    <p class="small text-muted">
-      Evidence score: {gate['evidence_score']} &nbsp;|&nbsp;
-      Viability score: {gate['viability_score']} &nbsp;|&nbsp; computed by code, not by an LLM
-    </p>
-    <div class="d-flex gap-2 flex-wrap align-items-center">{buttons}</div>
+<section class="verdict {outcome}" aria-live="polite">
+  <div class="muted">Gate {gate_id} recommends</div>
+  <div class="word">{outcome.upper()}</div>
+  <p>{_e(gate['reason'])}</p>
+  {pivot_html}
+  <div class="scores">
+    <div><strong>{gate['evidence_score']}</strong>Evidence score, of 100</div>
+    <div><strong>{gate['viability_score'] or '–'}</strong>Viability, of 5</div>
+    <div><strong>Code</strong>decided this, not a model</div>
   </div>
-</div>
+  <div class="actions">{buttons}</div>
+  {override}
+</section>
 <script>
 function decide(choice, override_reason) {{
   fetch("/api/runs/{run_id}/gates/{gate_id}/decide", {{
@@ -263,93 +503,75 @@ function decide(choice, override_reason) {{
     body: JSON.stringify({{choice, override_reason}})
   }}).then(r => r.json()).then(d => {{
     if (d.ok) location.reload();
-    else alert("Error: " + d.error);
+    else alert("Not recorded: " + d.error);
   }});
 }}
 </script>"""
+            step = _MEMO_STEP.get(gate_id)
+            if step:
+                mp = orchestrator.out_dir(run_id) / orchestrator.out_name(run_id, f"phase{gate_id}_step{step}_advisor-memo.md")
+                if mp.exists():
+                    memo_html = (f'<section class="memo-box"><details open><summary>Advisor memo for Gate {gate_id}: '
+                                 f'what the evidence means</summary><div class="doc" style="margin-top:12px">'
+                                 f'{md_to_html(mp.read_text(encoding="utf-8"))}</div></details></section>')
 
-    # Output files
-    outputs_html = ""
     files = orchestrator.list_outputs(run_id)
-    if files:
-        outputs_html = "<h6 class='mt-3'>Output Files</h6><ul class='list-unstyled'>"
-        for f in files:
-            outputs_html += f'<li><a href="/runs/{run_id}/outputs/{f.name}" class="small">{f.name}</a></li>'
-        outputs_html += "</ul>"
+    file_items = "".join(
+        f'<li class="{"memo" if "advisor-memo" in f.name else ""}"><a href="/runs/{run_id}/outputs/{_e(f.name)}">{_e(f.name)}</a></li>'
+        for f in files)
     app_state = orchestrator._load(run_id, "app", default={}) or {}
+    mvp_html = ""
     if app_state.get("app_dir"):
         rel = pathlib.Path(app_state["app_dir"]).relative_to(orchestrator.ROOT).as_posix()
-        outputs_html += (f"<p class='small mt-2'><b>Generated MVP:</b> {app_state['product_name']}<br>"
-                         f"<code>cd {rel} &amp;&amp; python server.py --port 8080</code></p>")
+        mvp_html = (f"<div class='panel flat' style='margin-top:18px'><h3>Your MVP: {_e(app_state['product_name'])}</h3>"
+                    f"<p class='note' style='margin:0'>Run it on your machine:<br><code>cd {_e(rel)} &amp;&amp; "
+                    f"python server.py --port 8080</code></p></div>")
 
-    # Decision log
     log_entries = db.get_log_entries(run_id=run_id, limit=500)[-25:]
     log_rows = "".join(
-        f"<tr><td class='text-muted small'>{e['timestamp'][:19]}</td>"
-        f"<td class='small'>{e['agent']}</td>"
-        f"<td class='small'>{e['action']}</td>"
-        f"<td class='small'>{e.get('outcome') or ''}</td></tr>"
-        for e in log_entries
-    )
+        f"<tr><td class='muted'>{_e(e['timestamp'][11:19])}</td><td>{_e(e['agent'])}</td>"
+        f"<td>{_e(e['action'])}</td><td>{_e(e.get('outcome') or '')}</td></tr>"
+        for e in reversed(log_entries))
 
-    status_badge = {
-        "completed": "bg-success",
-        "stopped": "bg-danger",
-        "failed": "bg-danger",
-    }.get(status, "bg-primary")
+    banner = ""
+    if running:
+        banner = '<div class="banner wait" role="status">Working on this phase. The page refreshes by itself.</div>'
+    elif status == "completed":
+        banner = '<div class="banner ok" role="status">All six phases are done. Read the files on the right, starting with the Advisor memos.</div>'
+    elif status == "stopped":
+        banner = f'<div class="banner bad" role="status">Run stopped: {_e(run.get("error") or "founder decision")}</div>'
+    elif status == "failed":
+        banner = f'<div class="banner bad" role="alert">Run failed: {_e(run.get("error") or "unknown error")}</div>'
 
     content = f"""
-<div class="row">
-  <div class="col-md-3">
-    <div class="card mb-3">
-      <div class="card-body">
-        <h6 class="card-title">Run ID</h6>
-        <code class="small">{run_id}</code>
-        <div class="mt-2">
-          <span class="badge {status_badge}">{status.replace('_', ' ')}</span>
-        </div>
-        <p class="small text-muted mt-2">
-          {"You are the founder of this run." if is_founder else "Viewer (no founder token)."}
-        </p>
-      </div>
-    </div>
-    <ul class="list-group list-group-flush small">
-      {progress_html}
-    </ul>
-    {outputs_html}
-  </div>
-  <div class="col-md-9">
-    {"" if status not in ("running", "phase_1_running", "phase_2_running", "phase_3_running",
-                           "phase_4_running", "phase_5_running", "phase_6_running")
-       else '<div class="alert alert-info">Pipeline running… <span id="dots">.</span></div>'}
-    {"<div class='alert alert-success'>✓ All phases complete!</div>" if status == "completed" else ""}
-    {"<div class='alert alert-danger'>Run stopped: " + (run.get('error') or 'founder decision') + "</div>" if status == "stopped" else ""}
-    {"<div class='alert alert-danger'>Run failed: " + (run.get('error') or 'unknown error') + "</div>" if status == "failed" else ""}
+<div class="runhead"><h1 style="margin:0">Run {_e(run_id)}</h1>
+  <span class="pill {status}">{_e(status.replace('_', ' '))}</span></div>
+<p class="muted">{"You are the founder of this run; only you can decide its gates." if is_founder else "You are viewing this run. Only the founder's browser can decide gates."}</p>
+{_track(run_id, status, phase)}
+<div class="grid">
+  <div>
+    {banner}
     {gate_html}
-    <div class="card">
-      <div class="card-header small">Decision Log (last 25 entries)</div>
-      <div class="card-body p-0">
-        <table class="table table-sm mb-0">
-          <thead><tr>
-            <th class="small">Time</th><th class="small">Agent</th>
-            <th class="small">Action</th><th class="small">Outcome</th>
-          </tr></thead>
-          <tbody>{log_rows or '<tr><td colspan=4 class="text-muted small p-2">No entries yet</td></tr>'}</tbody>
-        </table>
-      </div>
-    </div>
+    {memo_html}
+    <section class="panel flat">
+      <h2>Decision log</h2>
+      <p class="note">Every agent action, newest first (last 25).</p>
+      <div class="tablebox"><table>
+        <thead><tr><th>Time</th><th>Agent</th><th>Action</th><th>Outcome</th></tr></thead>
+        <tbody>{log_rows or '<tr><td colspan=4 class="muted">No entries yet. The researcher starts in a moment.</td></tr>'}</tbody>
+      </table></div>
+    </section>
   </div>
+  <aside class="side">
+    <section class="panel flat">
+      <h3>Output files</h3>
+      {('<ul class="files">' + file_items + '</ul>') if file_items else '<p class="note" style="margin:0">Files appear here as each phase finishes.</p>'}
+    </section>
+    {mvp_html}
+  </aside>
 </div>
 <script>
-// Auto-refresh while pipeline is running
-const status = "{status}";
-if (!["completed","stopped","failed"].includes(status)) {{
-  let dots = 0;
-  setInterval(() => {{
-    dots = (dots + 1) % 4;
-    const el = document.getElementById("dots");
-    if (el) el.textContent = ".".repeat(dots + 1);
-  }}, 500);
+if ({'true' if running or ("gate_" not in status and status not in ("completed", "stopped", "failed")) else 'false'}) {{
   setTimeout(() => location.reload(), 3000);
 }}
 </script>
@@ -428,15 +650,13 @@ def _render_file(base: pathlib.Path, filename: str):
     if filename.endswith(".html"):
         return PlainTextResponse(content)
 
-    # Render Markdown-ish text in a simple pre block
-    escaped = content.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    back = "/demo" if base == orchestrator.OUTPUTS else "javascript:history.back()"
+    body = (md_to_html(content) if filename.endswith(".md") else
+            "<pre>" + content.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;") + "</pre>")
     return _html(f"""
-<div class="row justify-content-center">
-  <div class="col-lg-10">
-    <h5 class="mb-3"><a href="javascript:history.back()">← back</a> &nbsp; {filename}</h5>
-    <pre>{escaped}</pre>
-  </div>
-</div>
+<p><a href="{back}">Back</a></p>
+<p class="note" style="margin-bottom:10px"><code>{_e(filename)}</code></p>
+<article class="doc">{body}</article>
 """, filename)
 
 

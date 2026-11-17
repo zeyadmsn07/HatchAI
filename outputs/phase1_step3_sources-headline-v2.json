@@ -1,0 +1,454 @@
+[
+  {
+    "key": "S1",
+    "url": "https://news.ycombinator.com/item?id=35576335",
+    "title": "HN: Ask HN: US-based non-enterprise programming conferences?",
+    "domain": "news.ycombinator.com",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "8572358a96a982fb",
+    "passages": [
+      "Ask HN: US-based non-enterprise programming conferences? — Hacker News thread with 3 points and 6 comments, posted 2023-04-15."
+    ],
+    "collector": "hn",
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "api"
+    ]
+  },
+  {
+    "key": "S2",
+    "url": "https://news.ycombinator.com/item?id=41130993",
+    "title": "HN: Show HN: Telescope – Find the right people in seconds",
+    "domain": "news.ycombinator.com",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "5ee882300a987afa",
+    "passages": [
+      "Show HN: Telescope – Find the right people in seconds — Hacker News thread with 8 points and 0 comments, posted 2024-08-01."
+    ],
+    "collector": "hn",
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "api"
+    ]
+  },
+  {
+    "key": "S3",
+    "url": "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+    "title": "World Bank — Individuals using the Internet (% of population), Egypt, Arab Rep.",
+    "domain": "data.worldbank.org",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "faf656f908089c33",
+    "passages": [
+      "Individuals using the Internet (% of population) for Egypt, Arab Rep. in 2024: 74.6."
+    ],
+    "collector": "worldbank",
+    "category": "local_constraints",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "api"
+    ]
+  },
+  {
+    "key": "S4",
+    "url": "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+    "title": "World Bank — GDP per capita (current US$), Egypt, Arab Rep.",
+    "domain": "data.worldbank.org",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "a517d2c9627f30b0",
+    "passages": [
+      "GDP per capita (current US$) for Egypt, Arab Rep. in 2025: 3,085.8."
+    ],
+    "collector": "worldbank",
+    "category": "local_constraints",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "api"
+    ]
+  },
+  {
+    "key": "S5",
+    "url": "https://www.researchgate.net/publication/390306214_The_Development_of_Higher_Education_in_Egypt",
+    "title": "(PDF) The Development of Higher Education in Egypt - ResearchGate",
+    "domain": "researchgate.net",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "cd1c4e97c54087a2",
+    "passages": [
+      "Mar 30, 2025 · This study examines the common challenges of strategic planning for Higher Education in Egypt. Semi-structured interviews were undertaken with 13 academic leaders in Egyptian universities."
+    ],
+    "collector": "web:yahoo",
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "search-snippet"
+    ]
+  },
+  {
+    "key": "S6",
+    "url": "https://www.ijnrd.org/papers/IJNRD2504556.pdf",
+    "title": "Egyptian Higher Education System: Core Challenges and Reform ...",
+    "domain": "ijnrd.org",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "2880fe0676c8d59d",
+    "passages": [
+      "By 1957, Egypt had five state universities located in prominent cities such as Cairo, Alexandria, and Asyut, in addition to one private university, the American University in Cairo. Until the 1950s, Egypt upheld worldwide norms in higher education and scientific research."
+    ],
+    "collector": "web:yahoo",
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "search-snippet"
+    ]
+  },
+  {
+    "key": "S7",
+    "url": "https://papers.iafor.org/wp-content/uploads/papers/ece2024/ECE2024_82382.pdf",
+    "title": "The Development of Higher Education in Egypt",
+    "domain": "papers.iafor.org",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "44d6b5e014aae927",
+    "passages": [
+      "In the 19th Century, reform of higher education began under the reign of Muhammad Ali Pasha, who ruled Egypt in the early 19th Century and implemented a number of educational reforms. He sent students abroad to study in Europe and established schools and colleges in Egypt. His efforts laid the foundation for a more modern education system. In the early 20th Century, Cairo University was ..."
+    ],
+    "collector": "web:yahoo",
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "search-snippet"
+    ]
+  },
+  {
+    "key": "S8",
+    "url": "https://www.hrw.org/news/2025/01/27/egypt-declining-funding-undermines-education",
+    "title": "Egypt: Declining Funding Undermines Education | Human Rights ...",
+    "domain": "hrw.org",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "fe28de802eb61dca",
+    "passages": [
+      "Jan 27, 2025 · Egyptian authorities have severely undermined the right to education in recent years by failing to allocate sufficient budgetary resources."
+    ],
+    "collector": "web:yahoo",
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "search-snippet"
+    ]
+  },
+  {
+    "key": "S9",
+    "url": "https://www.reddit.com/r/Egypt/comments/szb3p4/studying_in_egypt/",
+    "title": "Studying in Egypt : r/Egypt - Reddit",
+    "domain": "reddit.com",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "e3d79dcffaacba3e",
+    "passages": [
+      "I would suggest searching social media and/or LinkedIn for current foreign students in Egypt in general, and AlAzhar more specifically to have the most relevant insights that everyday Egyptians can miss. Listening to someone with similar background to yours is really helpful, and I personally did this when I was studying abroad. Good luck!"
+    ],
+    "collector": "web:yahoo",
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "search-snippet"
+    ]
+  },
+  {
+    "key": "S10",
+    "url": "https://www.reddit.com/r/Egypt/comments/p13ywx/coming_to_study_in_egypt/",
+    "title": "Coming to study in Egypt : r/Egypt - Reddit",
+    "domain": "reddit.com",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "ef1df83334307e48",
+    "passages": [
+      "Whether you are a current student, staff member, alumnus, or simply interested in the university, this subreddit is for you. This community serves as a platform for discussion on a variety of topics, from academic discussions, campus life experiences, and event updates to news and research insights."
+    ],
+    "collector": "web:yahoo",
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "search-snippet"
+    ]
+  },
+  {
+    "key": "S11",
+    "url": "https://www.reuters.com/investigates/special-report/egypt-students/",
+    "title": "After university crackdown, Egyptian students fear for their ...",
+    "domain": "reuters.com",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "ad8f45486ec78b4c",
+    "passages": [
+      "Jun 1, 2016 · Young dissidents in Egypt say the government has expelled hundreds of university students, torturing some of them and hurting their chances of studying elsewhere."
+    ],
+    "collector": "web:yahoo",
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "search-snippet"
+    ]
+  },
+  {
+    "key": "S12",
+    "url": "https://mena.org.eg/en/news/egypt-steps-preuniversity-education-reform-8d66b432-4e89-4bf6-89c4-ab0f287930de",
+    "title": "Egypt steps up pre-university education reform, expands ...",
+    "domain": "mena.org.eg",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "4c7685f77b7294f3",
+    "passages": [
+      "8 hours ago · The study noted that students enrolled in pre-university education account for more than 25% of Egypt's population, ranging from kindergarten to general secondary education and its equivalents. This reflects the scale of the state's responsibility to provide adequate educational opportunities for such a large number of students."
+    ],
+    "collector": "web:yahoo",
+    "category": "demand",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "search-snippet"
+    ]
+  },
+  {
+    "key": "S13",
+    "url": "https://www.memmo.org/en/magazine/studyapps",
+    "title": "Best study apps for university students (2026) - memmo.org",
+    "domain": "memmo.org",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "b5616b2950f51516",
+    "passages": [
+      "Apr 16, 2026 · The best study apps for university students in 2026 — compared. From AI-powered platforms and flashcard tools to note-taking apps and focus timers.",
+      "The best study apps for university students in 2026 are Memmo (all-in-one with textbooks and AI), Anki (spaced repetition), Notion (notes), Quizlet (ready-made flashcards), Forest (focus) and Google Scholar (sources).",
+      "We've tested and compared the most popular study apps for university students in 2026 – from flashcard tools and AI assistants to note-taking apps and focus timers – so you can find the right combination for how you study.",
+      "Best study apps for university students (2026) Published: April 16, 2026 Best study apps for university students (2026) The best study apps for university students in 2026 — compared."
+    ],
+    "collector": "web:yahoo",
+    "category": "competitors",
+    "published": "2026-04-16",
+    "published_from": "page-meta",
+    "passage_origins": [
+      "search-snippet",
+      "page",
+      "page",
+      "page"
+    ]
+  },
+  {
+    "key": "S14",
+    "url": "https://liners.com/best/edtech/egypt",
+    "title": "24 Best Education Apps in Egypt (2026) – Liners",
+    "domain": "liners.com",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "d182bccbb29ddef4",
+    "passages": [
+      "Discover and compare the top 24 EdTech startups and products in Egypt, ranked by user ratings, reviews, and features on Liners."
+    ],
+    "collector": "web:yahoo",
+    "category": "competitors",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "search-snippet"
+    ]
+  },
+  {
+    "key": "S15",
+    "url": "https://www.mindomax.com/best-study-apps-for-students",
+    "title": "Best Study Apps in 2026: 24 Tested, Every Price Dated",
+    "domain": "mindomax.com",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "e57f0f459e221405",
+    "passages": [
+      "Jun 7, 2026 · Twenty-four study apps compared on price, free-tier limits and platforms, with every figure checked on 16 September 2026 and one honest flaw named for each"
+    ],
+    "collector": "web:yahoo",
+    "category": "competitors",
+    "published": "2026-06-07",
+    "published_from": "page-meta",
+    "passage_origins": [
+      "search-snippet"
+    ]
+  },
+  {
+    "key": "S16",
+    "url": "https://notehive.app/blog/best-study-apps-for-college-students-2026",
+    "title": "Best Study Apps for College Students in 2026 - notehive.app",
+    "domain": "notehive.app",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "47f28eddf72c31e9",
+    "passages": [
+      "Apr 5, 2026 · The best AI study apps for college students in 2026: for lecture notes, flashcards, focus, and STEM. See which are free and which actually save time.",
+      "The best AI study apps for college students in 2026 include NoteHive AI for lecture recording, notes, flashcards, and quizzes in one place; Anki for spaced repetition; Forest for focus sessions; and Wolfram Alpha for STEM coursework.",
+      "Best Study Apps for College Students in 2026 Finding the right study app feels overwhelming when there are hundreds of options.",
+      "This guide covers the best study apps for college students in 2026, organized by what you're trying to do."
+    ],
+    "collector": "web:yahoo",
+    "category": "competitors",
+    "published": "2026-04-05",
+    "published_from": "page-meta",
+    "passage_origins": [
+      "search-snippet",
+      "page",
+      "page",
+      "page"
+    ]
+  },
+  {
+    "key": "S17",
+    "url": "https://www.techbloat.com/software/narrow/pricing/",
+    "title": "Narrow pricing — TechBloat",
+    "domain": "techbloat.com",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "996a7f440248ba86",
+    "passages": [
+      "Narrow publishes 4 plans; paid plans start at $1,500/mo."
+    ],
+    "collector": "web:yahoo",
+    "category": "pricing",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "search-snippet"
+    ]
+  },
+  {
+    "key": "S18",
+    "url": "https://www.notion.com/pricing",
+    "title": "Notion Pricing Plans: Free, Plus, Business, & Enterprise.",
+    "domain": "notion.com",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "0f040a4712c37708",
+    "passages": [
+      "Learn more about our different pricing plans. We support everyone, from free personal accounts to enterprise businesses."
+    ],
+    "collector": "web:yahoo",
+    "category": "pricing",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "search-snippet"
+    ]
+  },
+  {
+    "key": "S19",
+    "url": "https://www.idea.edu/",
+    "title": "Home - IDEA - An Online Higher Education Alliance",
+    "domain": "idea.edu",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "e3851cc058d06d45",
+    "passages": [
+      "IDEA offers a single, affordable price per credit hour, eliminating out-of-state or distance delivery fees. This streamlined pricing system eliminates confusion, enabling you to confidently build a program that aligns with your schedule and goals.",
+      "Meet the IDEA faculty 10 Average Class Size 20 Accredited Universities 12,000 Total Graduates 50 Students From All States 26 Years of Learning Online I am a...",
+      "Instead of only hearing a perspective from one university, I was able to gain perspectives from faculty and students from several different institutions."
+    ],
+    "collector": "web:yahoo",
+    "category": "pricing",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "search-snippet",
+      "page",
+      "page"
+    ]
+  },
+  {
+    "key": "S20",
+    "url": "https://www.jetbrains.com/academy/student-pack/",
+    "title": "Free JetBrains Student Pack",
+    "domain": "jetbrains.com",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "9fc2a07a49edda79",
+    "passages": [
+      "Requirements: University email address, ISIC/ITIC card, or GitHub Student Developer Pack. Full-time student in a program lasting one year or more."
+    ],
+    "collector": "web:yahoo",
+    "category": "pricing",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "search-snippet"
+    ]
+  },
+  {
+    "key": "S21",
+    "url": "https://xpay.app/blog/epayments-education-sector-egypt",
+    "title": "E-Payments in Egypt's Education Sector (2026 Guide) | XPay",
+    "domain": "xpay.app",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "3b8cf2b0d3d4fff8",
+    "passages": [
+      "Apr 16, 2026 · Blog / Industry E-Payments in Egypt's Education Sector (2026 Guide) How Egyptian schools, universities, and training centers are moving from cash to digital payments in 2026: the drivers, benefits, and right first setup.",
+      "World Bank data on Egypt's education spending places the country among the larger education economies in the region by both public and household expenditure, and UNESCO's Egypt education profile tracks more than 25 million students across primary, preparatory, secondary, and tertiary levels."
+    ],
+    "collector": "web:yahoo",
+    "category": "local_constraints",
+    "published": "2026-04-16",
+    "published_from": "page-meta",
+    "passage_origins": [
+      "search-snippet",
+      "page"
+    ]
+  },
+  {
+    "key": "S22",
+    "url": "https://www3.aucegypt.edu/OnlinePayment/Default.aspx",
+    "title": "Welcome to Online Payment Tool - aucegypt.edu",
+    "domain": "www3.aucegypt.edu",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "b5e6e5e0bec730f2",
+    "passages": [
+      "Active Sites: Click on a site below to pay for it online"
+    ],
+    "collector": "web:yahoo",
+    "category": "local_constraints",
+    "published": null,
+    "published_from": "",
+    "passage_origins": [
+      "search-snippet"
+    ]
+  },
+  {
+    "key": "S23",
+    "url": "https://www.aucegypt.edu/academics/registrar/steps-e-payment",
+    "title": "Steps for E-Payment - The American University in Cairo",
+    "domain": "aucegypt.edu",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "a1c17176e73bc371",
+    "passages": [
+      "Jan 22, 2025 · Non-Egyptian students seeking student visa/residence in Egypt through AUC, are not to select the enrollment letter option; they are to refer to the Business Support Services at business.support@aucegypt.edu. For e-payment technical problems, email support@aucegypt.edu.",
+      "Non-Egyptian students seeking student visa/residence in Egypt through AUC, are not to select the enrollment letter option; they are to refer to the Business Support Services at business.support@aucegypt.edu ."
+    ],
+    "collector": "web:yahoo",
+    "category": "local_constraints",
+    "published": "2016-02-25",
+    "published_from": "page-meta",
+    "passage_origins": [
+      "search-snippet",
+      "page"
+    ]
+  },
+  {
+    "key": "S24",
+    "url": "https://www.aucegypt.edu/services/communications/marketing",
+    "title": "Marketing and Social Media Consulting | The American ...",
+    "domain": "aucegypt.edu",
+    "fetch_time": "2026-11-17T20:51:45+00:00",
+    "text_hash": "0c5a133d5d375930",
+    "passages": [
+      "Reach out to us for consultations on marketing strategies and social media activity on your pages, and we will direct your efforts so that you can achieve your goals more efficiently and ensure you are abiding by University guidelines and following social media best practices."
+    ],
+    "collector": "web:yahoo",
+    "category": "channels",
+    "published": "2015-09-09",
+    "published_from": "page-meta",
+    "passage_origins": [
+      "search-snippet"
+    ]
+  }
+]

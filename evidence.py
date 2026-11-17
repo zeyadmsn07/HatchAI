@@ -23,7 +23,7 @@ import logging
 import os
 import re
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from urllib.parse import quote_plus, urlparse
 
 from models import Claim, Source
@@ -233,18 +233,171 @@ def worldbank_indicators(iso2: str) -> list[dict]:
 
 
 def enrich_with_page_text(item: dict, terms: list[str]) -> dict:
-    """Fetch the page and add up to 3 keyword-ranked sentences as extra passages."""
+    """Fetch the page; add up to 3 keyword-ranked sentences as extra passages and record the page's
+    own publication date (HTML metadata) when it states one. Passage origins are tracked so that a
+    search-engine snippet is never presented as text read from the page."""
+    if item["collector"].startswith("web"):
+        item["origins"] = ["search-snippet"] * len([p for p in item["passages"] if p])
+    else:
+        item["origins"] = ["api"] * len([p for p in item["passages"] if p])
     if offline() or not item["collector"].startswith("web"):
         return item
     try:
         import httpx
         r = httpx.get(item["url"], headers={"User-Agent": UA}, timeout=6, follow_redirects=True)
         if r.status_code == 200 and "html" in r.headers.get("content-type", ""):
-            sents = [sanitise(s) for s in _sentences(_clean_html(r.text[:400_000]))]
-            item["passages"] = [p for p in item["passages"] if p] + [s for s in rank_sentences(sents, terms) if s]
+            raw = r.text[:400_000]
+            pub = published_from_html(raw)
+            if pub:
+                item["published"], item["published_from"] = pub, "page-meta"
+            sents = [sanitise(s) for s in _sentences(_clean_html(raw))]
+            page = [s for s in rank_sentences(sents, terms) if s]
+            item["passages"] = [p for p in item["passages"] if p] + page
+            item["origins"] = item["origins"] + ["page"] * len(page)
     except Exception:
         pass
     return item
+
+
+# ---------------------------------------------------------------------------
+# Freshness and source credibility (reported to the founder and in every findings file;
+# not part of the E score, so replays of earlier captures keep their exact gate outcomes)
+# ---------------------------------------------------------------------------
+
+_MONTHS = {m: i for i, m in enumerate(("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep",
+                                       "oct", "nov", "dec"), start=1)}
+_META_DATE = re.compile(
+    r"""(?is)(?:property|name|itemprop)\s*=\s*["'](?:article:published_time|og:published_time|datePublished|"""
+    r"""date|dc\.date|pubdate|publish-date|article:modified_time|dateModified)["'][^>]*?content\s*=\s*["']"""
+    r"""(\d{4}-\d{2}-\d{2})""")
+_META_DATE_REV = re.compile(
+    r"""(?is)content\s*=\s*["'](\d{4}-\d{2}-\d{2})[^"']*["'][^>]*?(?:property|name|itemprop)\s*=\s*["']"""
+    r"""(?:article:published_time|datePublished|date|pubdate|dateModified)["']""")
+_JSONLD_DATE = re.compile(r'"date(?:Published|Modified)"\s*:\s*"(\d{4}-\d{2}-\d{2})')
+_TIME_TAG = re.compile(r'(?is)<time[^>]+datetime\s*=\s*["\'](\d{4}-\d{2}-\d{2})')
+_SNIPPET_DATE = re.compile(r"^\s*(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.? (\d{1,2}), (\d{4})\b")
+_RELATIVE_DATE = re.compile(r"^\s*(\d{1,3}) (minute|hour|day|week|month|year)s? ago\b", re.I)
+_HN_DATE = re.compile(r"posted (\d{4}-\d{2}-\d{2})")
+_WB_YEAR = re.compile(r" in (\d{4}): ")
+
+
+def published_from_html(raw: str) -> str | None:
+    for rx in (_META_DATE, _META_DATE_REV, _JSONLD_DATE, _TIME_TAG):
+        m = rx.search(raw)
+        if m:
+            return m.group(1)
+    return None
+
+
+def source_date(s: Source) -> tuple[str | None, str]:
+    """(date, how it was found). Uses the stored page date, else what the stored text itself states."""
+    if s.published:
+        return s.published, s.published_from or "page-meta"
+    first = s.passages[0] if s.passages else ""
+    if s.collector == "hn":
+        m = _HN_DATE.search(first)
+        return (m.group(1), "api") if m else (None, "")
+    if s.collector == "worldbank":
+        m = _WB_YEAR.search(first)
+        return (m.group(1), "api (data year)") if m else (None, "")
+    m = _RELATIVE_DATE.match(first)
+    if m:   # "8 hours ago · …": relative to when the snippet was fetched
+        n, unit = int(m.group(1)), m.group(2).lower()
+        days = n * {"minute": 0, "hour": 0, "day": 1, "week": 7, "month": 30, "year": 365}[unit]
+        try:
+            fetched = datetime.fromisoformat(s.fetch_time.replace("Z", "+00:00")).date()
+            return (fetched - timedelta(days=days)).isoformat(), "snippet-date (relative)"
+        except ValueError:
+            return None, ""
+    m = _SNIPPET_DATE.match(first)
+    if m:
+        mon, day, year = _MONTHS[m.group(1).lower()[:3]], int(m.group(2)), int(m.group(3))
+        return f"{year:04d}-{mon:02d}-{day:02d}", "snippet-date"
+    return None, ""
+
+
+def freshness(s: Source) -> tuple[str, int | None]:
+    """('fresh' ≤ 18 months | 'aging' ≤ 36 | 'stale' | 'undated', age in days at fetch time)."""
+    d, _ = source_date(s)
+    if not d:
+        return "undated", None
+    try:
+        fetched = datetime.fromisoformat(s.fetch_time.replace("Z", "+00:00")).date()
+        pub = datetime.strptime(d if len(d) == 10 else f"{d}-12-31", "%Y-%m-%d").date()
+    except ValueError:
+        return "undated", None
+    age = max(0, (fetched - pub).days)
+    return ("fresh" if age <= 548 else "aging" if age <= 1096 else "stale"), age
+
+
+_COMMUNITY = ("news.ycombinator.com", "reddit.com", "facebook.com", "quora.com", "stackexchange.com",
+              "stackoverflow.com", "x.com", "twitter.com", "linkedin.com", "youtube.com", "tiktok.com")
+_ACADEMIC = ("arxiv.org", "doi.org", "ncbi.nlm.nih.gov", "sciencedirect.com", "springer.com",
+             "researchgate.net", "jstor.org", "nature.com", "frontiersin.org", "mdpi.com", "eric.ed.gov")
+_OFFICIAL = ("worldbank.org", "data.worldbank.org", "oecd.org", "un.org", "unesco.org", "itu.int",
+             "imf.org", "statista.com", "pewresearch.org", "gsma.com", "datareportal.com")
+
+
+def credibility(s: Source) -> str:
+    """Who is speaking. 'vendor' = the site sells a product it is writing about (self-interested)."""
+    d = s.domain
+    if s.collector == "worldbank" or any(d == o or d.endswith("." + o) for o in _OFFICIAL) \
+            or re.search(r"\.(gov|gob|gouv)(\.[a-z]{2})?$", d):
+        return "official-statistics"
+    if s.collector == "wikipedia":
+        return "reference"
+    if any(d == a or d.endswith("." + a) for a in _ACADEMIC) or re.search(r"\.(edu|ac)(\.[a-z]{2})?$", d):
+        return "academic"
+    if s.collector == "hn" or any(d == c or d.endswith("." + c) for c in _COMMUNITY):
+        return "community"
+    brand = re.sub(r"[^a-z0-9]", "", d.split(".")[-2] if d.count(".") >= 1 else d)
+    text = re.sub(r"[^a-z0-9]", "", (s.title + " " + " ".join(s.passages)).lower())
+    if "/pricing" in s.url.lower() or (len(brand) >= 4 and brand in text):
+        return "vendor (self-interested)"
+    return "independent-web"
+
+
+def quality_report(sources: list[Source], claims: list[Claim]) -> dict:
+    """Freshness, credibility and passage-origin summary of the evidence the claims actually rely on."""
+    by_key = {s.key: s for s in sources}
+    rows, warnings = [], []
+    strong_cats: set[str] = set()
+    for c in claims:
+        if not c.verified:
+            continue
+        for k in c.source_keys:
+            s = by_key.get(k)
+            if not s:
+                continue
+            fresh, age = freshness(s)
+            cred = credibility(s)
+            idx = next((i for i, p in enumerate(s.passages) if quote_matches(c.quote, p)), 0)
+            origin = (s.passage_origins[idx] if idx < len(s.passage_origins) else
+                      "api" if s.collector in ("hn", "worldbank", "wikipedia") else
+                      "search-snippet" if idx == 0 else "page")
+            date, how = source_date(s)
+            rows.append({"category": c.category, "key": k, "domain": s.domain, "credibility": cred,
+                         "published": date, "date_from": how, "freshness": fresh, "age_days": age,
+                         "origin": origin})
+            if not cred.startswith("vendor") and fresh != "stale":
+                strong_cats.add(c.category)
+            if cred.startswith("vendor") and c.category in ("demand", "pricing"):
+                warnings.append(f"{c.category}: {k} ({s.domain}) is a vendor writing about its own market — "
+                                "treat as a claim, not independent evidence.")
+            if fresh == "stale":
+                warnings.append(f"{c.category}: {k} ({s.domain}) is older than 3 years ({date}).")
+    cited = {r["key"]: r for r in rows}.values()
+    n = len(cited) or 1
+    summary = {
+        "cited_sources": len(cited),
+        "dated_share": round(sum(1 for r in cited if r["freshness"] != "undated") / n, 2),
+        "fresh_share": round(sum(1 for r in cited if r["freshness"] == "fresh") / n, 2),
+        "independent_share": round(sum(1 for r in cited if not r["credibility"].startswith("vendor")) / n, 2),
+        "snippet_quote_share": round(sum(1 for r in rows if r["origin"] == "search-snippet") / (len(rows) or 1), 2),
+        "categories_with_independent_non_stale_evidence": sorted(strong_cats),
+        "categories_only_vendor_or_stale": sorted({r["category"] for r in rows} - strong_cats),
+    }
+    return {"rows": rows, "warnings": sorted(set(warnings)), "summary": summary}
 
 
 # ---------------------------------------------------------------------------
@@ -258,9 +411,14 @@ def plan_queries(idea: str, target_user: str, geography: str, round_no: int = 1)
     geo = "" if geography.upper().startswith(("ASSUMPTION", "UNKNOWN")) else geography
     if round_no == 1:
         plan = {
-            "demand": [("web", f"{kw} {user} problem need {geo}"), ("hn", " ".join(keywords(idea, 2)))],
+            # Demand: a first-hand community query (Reddit threads are people describing their own
+            # problem) plus a problem query that names the user and the place.
+            "demand": [("web", f"{kw} {user} problem need {geo}"), ("hn", " ".join(keywords(idea, 2))),
+                       ("web", f"reddit {' '.join(keywords(idea, 3))} {user} {geo}".strip())],
             "competitors": [("web", f"best {kw} apps alternatives"), ("wikipedia", kw)],
-            "pricing": [("web", f"{kw} app pricing per month subscription")],
+            # Pricing: vendor pricing pages state real prices (they are labelled vendor sources).
+            "pricing": [("web", f"{kw} app pricing per month subscription"),
+                        ("web", f"{' '.join(keywords(idea, 3))} pricing plans free premium")],
             "local_constraints": [("web", f"{user} {geo} digital tools online payments")],
             "channels": [("web", f"how to reach {user} {geo} marketing community")],
         }
@@ -319,7 +477,7 @@ def collect(idea: str, target_user: str, geography: str, round_no: int = 1,
             raw.append((cat, it))
 
     with ThreadPoolExecutor(max_workers=6) as pool:
-        enriched = list(pool.map(lambda ci: (ci[0], enrich_with_page_text(ci[1], terms)), raw[:20]))
+        enriched = list(pool.map(lambda ci: (ci[0], enrich_with_page_text(ci[1], terms)), raw[:24]))
 
     for cat, it in enriched:
         passages = [p for p in it["passages"] if p]
@@ -327,9 +485,12 @@ def collect(idea: str, target_user: str, geography: str, round_no: int = 1,
             continue
         key = f"S{len(sources) + 1}"
         text = " ".join(passages)
+        origins = (it.get("origins") or [])[:len(passages)]
         sources.append(Source(key=key, url=it["url"], title=it["title"][:160], domain=domain_of(it["url"]),
                               fetch_time=now_iso(), text_hash=_hash(text), passages=passages[:5],
-                              collector=it["collector"], category=cat))
+                              collector=it["collector"], category=cat,
+                              published=it.get("published"), published_from=it.get("published_from", ""),
+                              passage_origins=origins[:5]))
         category_of[key] = cat
     return sources, category_of
 
@@ -583,3 +744,43 @@ def extractive_claims_v1(sources: list[Source], idea: str, target_user: str) -> 
             if len(used) >= 2:
                 break
     return claims
+
+
+# ---------------------------------------------------------------------------
+# Pain signals: what the verified evidence says hurts (input to the Advisor's gap analysis)
+# ---------------------------------------------------------------------------
+
+PAIN_CUES = ("burden", "struggl", "difficult", "hard to", "time-consuming", "spend", "spending", "frustrat",
+             "overwhelm", "stress", "expensive", "can't afford", "cannot afford", "lack", "waste", "deter",
+             "problem", "challenge", "barrier", "pain", "tedious", "confus", "forget", "drop out", "abandon")
+_PAIN_STOP = STOPWORDS | set("""than more such so very even still being been were was there these those when
+while because whether through across within reported recent found study studies report percent""".split())
+
+
+def pain_signals(claims: list[Claim], idea: str = "", target_user: str = "") -> list[dict]:
+    """Pull the problem wording out of verified demand claims.
+
+    For every pain cue ('burden', 'struggle', 'spend', ...) in a verified demand quote, keep the clause
+    around it and its content words. Words that only restate the idea or the target user (e.g.
+    'flashcards', 'students') are removed, so what is left describes the pain, not the product.
+    Returns [{"key", "cue", "phrase", "terms"}], deterministic and in claim order."""
+    known = set(keywords(f"{idea} {target_user}", 30))
+    out: list[dict] = []
+    for c in claims:
+        if c.category != "demand" or not c.verified or c.is_assumption or not c.quote:
+            continue
+        low = c.quote.lower()
+        for clause in re.split(r"[.;:!?()]|\s[—–-]\s", low):
+            cue = next((q for q in PAIN_CUES if q in clause), None)
+            if not cue:
+                continue
+            words = re.findall(r"[a-z][a-z\-]{3,}", clause)
+            terms = [w for w in words if w not in _PAIN_STOP and w not in known
+                     and not any(w.startswith(k[:6]) for k in known if len(k) >= 6)]
+            terms = list(dict.fromkeys(terms))[:8]
+            if not terms:
+                continue
+            phrase = " ".join(clause.split()[:28]).strip(" ,")
+            out.append({"key": c.source_keys[0], "cue": cue, "phrase": phrase, "terms": terms})
+            break                                   # one pain per claim keeps the memo readable
+    return out

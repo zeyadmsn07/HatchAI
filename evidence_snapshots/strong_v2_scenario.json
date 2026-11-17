@@ -1,0 +1,1519 @@
+{
+  "snapshot_version": 1,
+  "label": "strong-v2-live",
+  "captured_at": "2026-11-17T20:51:46+00:00",
+  "captured_from_run": "cap-strong-v2",
+  "brief": "I want to build an AI-powered flashcard and spaced-repetition study tool for university students in Egypt, focused on STEM subjects. It should support Arabic and English. I have web development skills, USD 500 budget, and 10 hours per week. I value accessibility and affordable pricing.",
+  "note": "Evidence captured from a live HatchAI run (real web/HN/Wikipedia/World Bank fetches). Replaying it re-runs verification, scoring and gates without any network access.",
+  "capture_metadata": {
+    "capture_date": "2026-11-17",
+    "search_method": {
+      "collectors_used": [
+        "hn",
+        "web:yahoo",
+        "wikipedia",
+        "worldbank"
+      ],
+      "web_search": "ddgs metasearch, backends tried in order: yahoo, duckduckgo, brave, mojeek, startpage",
+      "other_sources": "Hacker News Algolia API, Wikipedia MediaWiki API, World Bank Indicators API",
+      "page_fetch": "httpx GET of each web result; up to 3 keyword-ranked sentences kept per page",
+      "query_planner": "evidence.plan_queries (round 1: category queries; round 2: broadened)",
+      "synthesis_model": null,
+      "text_hash": "first 16 hex chars of SHA-256 over ' '.join(passages) as stored"
+    },
+    "code_state": {
+      "commit": "9d197fda3bcc4a5e7da3b4a7fc6a31feba51956c",
+      "uncommitted_changes": true
+    }
+  },
+  "scoring_version": "v2",
+  "rounds": [
+    {
+      "round": 1,
+      "idea": "An AI-powered flashcard and spaced-repetition study tool for university students in Egypt, focused on STEM subjects.",
+      "target_user": "university students",
+      "geography": "Egypt",
+      "synthesis_mode": "extractive",
+      "model": null,
+      "queries": {
+        "demand": [
+          [
+            "web",
+            "ai-powered flashcard spaced-repetition study university university students problem need Egypt"
+          ],
+          [
+            "hn",
+            "ai-powered flashcard"
+          ],
+          [
+            "web",
+            "reddit ai-powered flashcard spaced-repetition university students Egypt"
+          ]
+        ],
+        "competitors": [
+          [
+            "web",
+            "best ai-powered flashcard spaced-repetition study university apps alternatives"
+          ],
+          [
+            "wikipedia",
+            "ai-powered flashcard spaced-repetition study university"
+          ]
+        ],
+        "pricing": [
+          [
+            "web",
+            "ai-powered flashcard spaced-repetition study university app pricing per month subscription"
+          ],
+          [
+            "web",
+            "ai-powered flashcard spaced-repetition pricing plans free premium"
+          ]
+        ],
+        "local_constraints": [
+          [
+            "web",
+            "university students Egypt digital tools online payments"
+          ]
+        ],
+        "channels": [
+          [
+            "web",
+            "how to reach university students Egypt marketing community"
+          ]
+        ]
+      },
+      "sources": [
+        {
+          "key": "S1",
+          "url": "https://news.ycombinator.com/item?id=40626452",
+          "title": "HN: Show HN: I Tried Coolify to Self-Host My AI-Powered Anki Flashcard Generator",
+          "domain": "news.ycombinator.com",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "66e7e5d12dc3caa3",
+          "passages": [
+            "Show HN: I Tried Coolify to Self-Host My AI-Powered Anki Flashcard Generator — Hacker News thread with 4 points and 1 comments, posted 2024-06-09."
+          ],
+          "collector": "hn",
+          "category": "demand",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "api"
+          ]
+        },
+        {
+          "key": "S2",
+          "url": "https://news.ycombinator.com/item?id=44491043",
+          "title": "HN: Show HN: Keepmind – AI-powered flashcards and quizzes from your notes",
+          "domain": "news.ycombinator.com",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "33586c8a190f1e79",
+          "passages": [
+            "Show HN: Keepmind – AI-powered flashcards and quizzes from your notes — Hacker News thread with 3 points and 2 comments, posted 2025-07-07."
+          ],
+          "collector": "hn",
+          "category": "demand",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "api"
+          ]
+        },
+        {
+          "key": "S3",
+          "url": "https://en.wikipedia.org/wiki/Duolingo",
+          "title": "Wikipedia: Duolingo",
+          "domain": "en.wikipedia.org",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "0e4d997168cc4436",
+          "passages": [
+            "is an American educational technology company that produces learning apps and provides language certification.",
+            "Duolingo offers courses on 42 languages, ranging from English, French, and Spanish to less commonly studied languages such as Hawaiian, Scottish Gaelic, and Navajo, and even constructed languages such as Esperanto, Klingon and High Valyrian It also offers courses on music, math, and chess.",
+            "The learning method incorporates gamification to motivate users with points, rewards and interactive lessons featuring spaced repetition.",
+            "The app promotes short, daily lessons for consistent, phased practice."
+          ],
+          "collector": "wikipedia",
+          "category": "competitors",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "api",
+            "api",
+            "api",
+            "api"
+          ]
+        },
+        {
+          "key": "S4",
+          "url": "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+          "title": "World Bank — Individuals using the Internet (% of population), Egypt, Arab Rep.",
+          "domain": "data.worldbank.org",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "faf656f908089c33",
+          "passages": [
+            "Individuals using the Internet (% of population) for Egypt, Arab Rep. in 2024: 74.6."
+          ],
+          "collector": "worldbank",
+          "category": "local_constraints",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "api"
+          ]
+        },
+        {
+          "key": "S5",
+          "url": "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+          "title": "World Bank — GDP per capita (current US$), Egypt, Arab Rep.",
+          "domain": "data.worldbank.org",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "a517d2c9627f30b0",
+          "passages": [
+            "GDP per capita (current US$) for Egypt, Arab Rep. in 2025: 3,085.8."
+          ],
+          "collector": "worldbank",
+          "category": "local_constraints",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "api"
+          ]
+        },
+        {
+          "key": "S6",
+          "url": "https://arxiv.org/pdf/2607.25096",
+          "title": "Memdora: Designing Cognitively-Grounded Flashcard ...",
+          "domain": "arxiv.org",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "5f3b8882ec81d6ed",
+          "passages": [
+            "This preparation burden deters sustained adoption: a recent study found that students reported spending more energy preparing cards than actually studying them [17]. We present Memdora, an AI-powered spaced repetition system (Figure 1) that addresses both limitations through four primary contributions:"
+          ],
+          "collector": "web:yahoo",
+          "category": "demand",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S7",
+          "url": "https://arxiv.org/html/2607.25096",
+          "title": "Memdora: Designing Cognitively-Grounded Flashcard ...",
+          "domain": "arxiv.org",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "86e78e393034ce5a",
+          "passages": [
+            "Aug 4, 2026 · The study involved 6 students using a research prototype with a single basic card type. Bachiri et al. (2) demonstrated comparable quality between AI-generated and human-created flashcards in MOOC contexts.",
+            "This preparation burden deters sustained adoption: a recent study found that students reported spending more energy preparing cards than actually studying them ( 17 ) .",
+            "(4) An effort-based behavioral reward system that incentivizes actual cognitive engagement (5 minutes of study time, 100 cards reviewed) rather than mere app presence.",
+            "The study involved 6 students using a research prototype with a single basic card type."
+          ],
+          "collector": "web:yahoo",
+          "category": "demand",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S8",
+          "url": "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
+          "title": "Active Recall & Spaced Repetition: Evidence & Effectiveness",
+          "domain": "studycardsai.com",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "b8656f9530e6d883",
+          "passages": [
+            "Apr 12, 2026 · Discover how AI-powered flashcards use spaced repetition science to ensure you study the right material at precisely the right time-maximizing retention while minimizing time spent.",
+            "Retention Improvement Comparative research from Johns Hopkins University demonstrated that students using AI-optimized spaced repetition retained 92% of material after 6 months, compared to 23% for traditional study methods.",
+            "Impact: Students report 40% less study-related stress and anxiety when using AI-optimized systems.",
+            "Discover how AI-powered flashcards use spaced repetition science to ensure you study the right material at precisely the right time-maximizing retention while minimizing time spent."
+          ],
+          "collector": "web:yahoo",
+          "category": "demand",
+          "published": "2026-04-12",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S9",
+          "url": "https://notiq.study/blog/flashcards-spaced-repetition-science",
+          "title": "The Science Behind AI-Generated Flashcards - notiq.study",
+          "domain": "notiq.study",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "1ea4d378bee56554",
+          "passages": [
+            "May 29, 2026 · AI flashcards and spaced repetition are two of the most evidence-backed tools in the study science toolkit — and combining them produces results that look almost implausible until you understand the mechanisms. Medical students using spaced repetition have demonstrated retention rates above 90% on board exam material six months after studying.",
+            "Connecting This to Your Broader Study System Spaced repetition and AI flashcards are one component of a complete learning system.",
+            "Medical students using spaced repetition have demonstrated retention rates above 90% on board exam material six months after studying.",
+            "For medical students using Anki, a 2020 study published in Medical Education found that consistent spaced repetition users scored significantly higher on Step 1 board exams than non-users, controlling for baseline metrics."
+          ],
+          "collector": "web:yahoo",
+          "category": "demand",
+          "published": "2026-05-29",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S10",
+          "url": "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+          "title": "7 Best Spaced Repetition Apps in 2026: Hands-On Comparison",
+          "domain": "laxuai.com",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "04e5d148dd3bc418",
+          "passages": [
+            "Aug 26, 2026 · A hands-on comparison of 7 spaced repetition apps. Laxu AI, Anki, Quizlet, Brainscape, RemNote, StudyFetch, and Knowt on SRS algorithm, free-tier limits, platforms, and price — every figure checked against each vendor's own site in August 2026.",
+            "Related guides: How spaced repetition works (complete guide) · Active recall study method · How to make effective flashcards · Best study apps for students 2026 · Best flashcard apps 2026 · PDF to flashcards guide In this article What is spaced repetition and why does it work?",
+            "Laxu AI is the best spaced repetition app for most students in 2026, combining AI-powered flashcard generation from PDFs, images, and audio with a built-in SM-2-adapted scheduling algorithm at $4.99/month or $39.99/year.",
+            "Study Techniques 16 min read 5 Best Flashcard Apps for Students in 2026 Study Techniques 13 min read Mind Mapping for Studying: When and How to Use It Put these techniques into practice Upload your study materials and let Laxu AI create flashcards, notes, and quizzes automatically."
+          ],
+          "collector": "web:yahoo",
+          "category": "pricing",
+          "published": "2026-03-22",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S11",
+          "url": "https://studyboost.org/blog/best-spaced-repetition-app/",
+          "title": "Best AI Spaced Repetition Flashcard App | Studyboost",
+          "domain": "studyboost.org",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "edb3827588791f1a",
+          "passages": [
+            "Feb 28, 2026 · Studyboost makes AI flashcards from your PDFs and slides and schedules them with FSRS spaced repetition for $10/mo. Start with a 3-day free Pro trial.",
+            "Start your 3-day free trial of Studyboost Pro Which AI flashcard apps with spaced repetition are worth paying for?",
+            "Start your 3-day free trial of Studyboost Pro AI Study Platform Turn Notes Into A's Upload your course materials and get AI-generated flashcards, quizzes, and answers with source citations.",
+            "Best AI Spaced Repetition Flashcard App | Studyboost The best AI flashcard app with spaced repetition worth paying for is Studyboost."
+          ],
+          "collector": "web:yahoo",
+          "category": "pricing",
+          "published": "2026-02-28",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S12",
+          "url": "https://www.remnote.com/pricing",
+          "title": "RemNote Pricing - Free, Pro, and EDU Plans",
+          "domain": "remnote.com",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "69b1615a4b3e1bb4",
+          "passages": [
+            "Explore RemNote pricing plans from free to pro and find the right fit for your learning needs.",
+            "The Johns Hopkins University School of Medicine All my notes and flashcards in one place.",
+            "The Johns Hopkins University School of Medicine All my notes and flashcards in one place.",
+            "Stanford Medicine - Stanford University Imported my notes from Notion and flashcards from Anki and it was surprisingly smooth."
+          ],
+          "collector": "web:yahoo",
+          "category": "pricing",
+          "published": "2020-01-01",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S13",
+          "url": "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
+          "title": "5 Best Flashcard Apps for Students in 2026 | Laxu AI",
+          "domain": "laxuai.com",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "720d5cdaa201b682",
+          "passages": [
+            "Oct 18, 2026 · The best flashcard app depends on who writes the cards. If you will write your own, Anki is free and has the strongest review scheduler. If you want the app to turn your PDFs and photos into cards, Quizlet Plus ($35.99 a year), Laxu AI ($4.99 a month) and StudyFetch ($19.99 a month) all do it, at very different prices. Laxu AI publishes this guide and is one of the apps in it, so check our row ...",
+            "5 Best Flashcard Apps for Students in 2026 | Laxu AI The best flashcard app depends on who writes the cards.",
+            "Here is the number we can measure, from our own logs: in the 30 days to October 13, 2026, a PDF or Word upload produced a median of 39 flashcards, and the card-writing step took a median of 24 seconds (915 uploads from 650 students).",
+            "Turbo AI - Another $20/month option Turbo AI is similar to StudyFetch: AI flashcards, quizzes and a lecture notetaker in one app."
+          ],
+          "collector": "web:yahoo",
+          "category": "pricing",
+          "published": "2026-01-13",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S14",
+          "url": "https://www.aucegypt.edu/services/communications/marketing",
+          "title": "Marketing and Social Media Consulting | The American ...",
+          "domain": "aucegypt.edu",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "0c5a133d5d375930",
+          "passages": [
+            "Reach out to us for consultations on marketing strategies and social media activity on your pages, and we will direct your efforts so that you can achieve your goals more efficiently and ensure you are abiding by University guidelines and following social media best practices."
+          ],
+          "collector": "web:yahoo",
+          "category": "channels",
+          "published": "2015-09-09",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S15",
+          "url": "https://www.facebook.com/SchoolOfMarketing.CO/",
+          "title": "School of Marketing - FacebookStudent Acquisition Strategy in Egypt - 23HubLabHigher Education Marketing: The Complete 2026 Guide - LeadSquaredWhy You Should Ma",
+          "domain": "facebook.com",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "ec52e884b2897589",
+          "passages": [
+            "School of Marketing. 164,395 followers · 366 talking about this. Our mission is to enhance the marketing culture in Egypt and to help youth to grow their Modern Marketing background.... Location-based educational search in Egypt: the prospective student who searches “جامعة في مدينة نصر” (university in Nasr City) or “مدارس دولية في التجمع الخامس” (international schools in Fifth Settlement) is expressing geographic preference that the institution within that catchment area should ... Oct 23, 2026 · This Higher Education Marketing Guide is designed for anyone involved in branding and marketing within the higher education sector. Whether you work at a 2-year or 4-year institution, focus on traditional or non-traditional students, serve in-house or at an agency specializing in education marketing, or hold a role as a university administrator or enrollment professional—this guide is for ... May 18, 2026 · College students are a specific demographic who require authentic and value-driven marketing. Here is how you can use digital content to reach Gen Z consumers. Feb 13, 2023 · In higher education marketing, it's essential to captivate the attention of university students. This guide equips higher education professionals with 15 practical strategies to resonate with their target audience. Sep 19, 2025 · Learn how to market to college students with channels, timing, ambassadors, and activations that reach students without feeling like an ad."
+          ],
+          "collector": "web:yahoo",
+          "category": "channels",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S16",
+          "url": "https://23hublab.com/student-acquisition-strategy-in-egypt/",
+          "title": "Student Acquisition Strategy in Egypt - 23HubLab",
+          "domain": "23hublab.com",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "fb03d20f89a3d64c",
+          "passages": [
+            "Location-based educational search in Egypt: the prospective student who searches “جامعة في مدينة نصر” (university in Nasr City) or “مدارس دولية في التجمع الخامس” (international schools in Fifth Settlement) is expressing geographic preference that the institution within that catchment area should ..."
+          ],
+          "collector": "web:yahoo",
+          "category": "channels",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S17",
+          "url": "https://www.leadsquared.com/industries/education/higher-education-marketing-guide/",
+          "title": "Higher Education Marketing: The Complete 2026 Guide - LeadSquared",
+          "domain": "leadsquared.com",
+          "fetch_time": "2026-11-17T20:51:17+00:00",
+          "text_hash": "026fbf4dddc4bae2",
+          "passages": [
+            "Oct 23, 2026 · This Higher Education Marketing Guide is designed for anyone involved in branding and marketing within the higher education sector. Whether you work at a 2-year or 4-year institution, focus on traditional or non-traditional students, serve in-house or at an agency specializing in education marketing, or hold a role as a university administrator or enrollment professional—this guide is for ..."
+          ],
+          "collector": "web:yahoo",
+          "category": "channels",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        }
+      ],
+      "raw_claims": [],
+      "raw_angles": [],
+      "verified_claims_at_capture": [
+        {
+          "category": "competitors",
+          "text": "7 Best Spaced Repetition Apps in 2026: Hands-On Comparison reports: \"Aug 26, 2026 · A hands-on comparison of 7 spaced repetition apps. Laxu AI, Anki, Quizlet, Brainscape, RemNote, StudyFetch, and Knowt on SRS algorithm, free-tier limits, platforms, and price — every figure checked against each vendor's own s\"",
+          "source_keys": [
+            "S10"
+          ],
+          "quote": "Aug 26, 2026 · A hands-on comparison of 7 spaced repetition apps. Laxu AI, Anki, Quizlet, Brainscape, RemNote, StudyFetch, and Knowt on SRS algorithm, free-tier limits, platforms, and price — every figure checked against each vendor's own s",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "competitors",
+          "text": "5 Best Flashcard Apps for Students in 2026 | Laxu AI reports: \"Oct 18, 2026 · The best flashcard app depends on who writes the cards. If you will write your own, Anki is free and has the strongest review scheduler. If you want the app to turn your PDFs and photos into cards, Quizlet Plus ($35.99 a year\"",
+          "source_keys": [
+            "S13"
+          ],
+          "quote": "Oct 18, 2026 · The best flashcard app depends on who writes the cards. If you will write your own, Anki is free and has the strongest review scheduler. If you want the app to turn your PDFs and photos into cards, Quizlet Plus ($35.99 a year",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "pricing",
+          "text": "7 Best Spaced Repetition Apps in 2026: Hands-On Comparison reports: \"Laxu AI is the best spaced repetition app for most students in 2026, combining AI-powered flashcard generation from PDFs, images, and audio with a built-in SM-2-adapted scheduling algorithm at $4.99/month or $39.99/year.\"",
+          "source_keys": [
+            "S10"
+          ],
+          "quote": "Laxu AI is the best spaced repetition app for most students in 2026, combining AI-powered flashcard generation from PDFs, images, and audio with a built-in SM-2-adapted scheduling algorithm at $4.99/month or $39.99/year.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "pricing",
+          "text": "Best AI Spaced Repetition Flashcard App | Studyboost reports: \"Feb 28, 2026 · Studyboost makes AI flashcards from your PDFs and slides and schedules them with FSRS spaced repetition for $10/mo. Start with a 3-day free Pro trial.\"",
+          "source_keys": [
+            "S11"
+          ],
+          "quote": "Feb 28, 2026 · Studyboost makes AI flashcards from your PDFs and slides and schedules them with FSRS spaced repetition for $10/mo. Start with a 3-day free Pro trial.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "local_constraints",
+          "text": "World Bank — Individuals using the Internet (% of population), Egypt, Arab Rep. reports: \"Individuals using the Internet (% of population) for Egypt, Arab Rep. in 2024: 74.6.\"",
+          "source_keys": [
+            "S4"
+          ],
+          "quote": "Individuals using the Internet (% of population) for Egypt, Arab Rep. in 2024: 74.6.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "local_constraints",
+          "text": "World Bank — GDP per capita (current US$), Egypt, Arab Rep. reports: \"GDP per capita (current US$) for Egypt, Arab Rep. in 2025: 3,085.8.\"",
+          "source_keys": [
+            "S5"
+          ],
+          "quote": "GDP per capita (current US$) for Egypt, Arab Rep. in 2025: 3,085.8.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "channels",
+          "text": "School of Marketing - FacebookStudent Acquisition Strategy in Egypt - 23HubLabHigher Education Marketing: The Complete 2026 Guide - LeadSquaredWhy You Should Ma reports: \"School of Marketing. 164,395 followers · 366 talking about this. Our mission is to enhance the marketing culture in Egypt and to help youth to grow their Modern Marketing background.... Location-based educational search in Egypt: the prospe\"",
+          "source_keys": [
+            "S15"
+          ],
+          "quote": "School of Marketing. 164,395 followers · 366 talking about this. Our mission is to enhance the marketing culture in Egypt and to help youth to grow their Modern Marketing background.... Location-based educational search in Egypt: the prospe",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "channels",
+          "text": "Marketing and Social Media Consulting | The American ... reports: \"Reach out to us for consultations on marketing strategies and social media activity on your pages, and we will direct your efforts so that you can achieve your goals more efficiently and ensure you are abiding by University guidelines and f\"",
+          "source_keys": [
+            "S14"
+          ],
+          "quote": "Reach out to us for consultations on marketing strategies and social media activity on your pages, and we will direct your efforts so that you can achieve your goals more efficiently and ensure you are abiding by University guidelines and f",
+          "verified": true,
+          "is_assumption": false
+        }
+      ],
+      "evidence_score_at_capture": 84.2
+    },
+    {
+      "round": 2,
+      "idea": "An AI-powered flashcard and spaced-repetition study tool for university students in Egypt, focused on STEM subjects.",
+      "target_user": "university students",
+      "geography": "Egypt",
+      "synthesis_mode": "extractive",
+      "model": null,
+      "queries": {
+        "demand": [
+          [
+            "web",
+            "ai-powered flashcard spaced-repetition survey statistics university students"
+          ],
+          [
+            "hn",
+            "ai-powered flashcard spaced-repetition university students"
+          ]
+        ],
+        "competitors": [
+          [
+            "web",
+            "ai-powered flashcard spaced-repetition software comparison review"
+          ]
+        ],
+        "pricing": [
+          [
+            "web",
+            "ai-powered flashcard spaced-repetition subscription price comparison"
+          ]
+        ],
+        "local_constraints": [
+          [
+            "web",
+            "Egypt ai-powered flashcard spaced-repetition market adoption"
+          ]
+        ],
+        "channels": [
+          [
+            "web",
+            "university students online communities forums Egypt"
+          ]
+        ]
+      },
+      "sources": [
+        {
+          "key": "S18",
+          "url": "https://study-genius-ai.hatolabs.com/blog/best-spaced-repetition-software-2026",
+          "title": "Best Spaced Repetition Software 2026 (Tested & Ranked)",
+          "domain": "study-genius-ai.hatolabs.com",
+          "fetch_time": "2026-11-17T20:51:29+00:00",
+          "text_hash": "4e2e766c72861319",
+          "passages": [
+            "Jun 3, 2026 · Back to Blog App Reviews Best Spaced Repetition Software 2026 (Tested & Ranked) We tested 7 spaced repetition apps head-to-head — Anki, RemNote, Mochi & Study Genius AI — ranked by algorithm quality, AI features and price.",
+            "Study Genius AI — Best for AI-Powered Card Creation + SRS Study Genius AI combines genuine spaced repetition scheduling with AI-powered flashcard generation.",
+            "For more on building an effective study system, see our guide on active recall study techniques and how to create effective flashcards .",
+            "Algorithm: Proprietary adaptive algorithm (not true FSRS-style SRS) Card creation: Manual, AI-assisted (paywalled), image import Platforms: Web, iOS, Android Free tier: Yes — reduced since 2023; AI features require a paid plan Best for: Students in study groups who want to share and find pre-made decks quickly."
+          ],
+          "collector": "web:yahoo",
+          "category": "competitors",
+          "published": "2026-06-03",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S19",
+          "url": "https://studyglen.com/guides/best-spaced-repetition-apps",
+          "title": "Best Spaced Repetition Apps 2026: FSRS vs SM-2 Ranked",
+          "domain": "studyglen.com",
+          "fetch_time": "2026-11-17T20:51:29+00:00",
+          "text_hash": "6fc03b230acfe9b0",
+          "passages": [
+            "Nov 3, 2026 · Best Spaced Repetition Apps in 2026 A deep dive into FSRS, SM-2, and Leitner — the algorithms powering modern flashcard apps. Learn how each one works and which apps (Anki, RemNote, StudyGlen, Brainscape) implement them best.",
+            "This guide explains how FSRS, SM-2, and the classic Leitner box system work — and which flashcard apps implement each.",
+            "StudyGlen : Default algorithm for all AI-generated flashcard decks — no manual configuration required.",
+            "Open tool Text to Flashcards Paste your study notes, textbook content, or any text."
+          ],
+          "collector": "web:yahoo",
+          "category": "competitors",
+          "published": "2026-04-04",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S20",
+          "url": "https://www.mindomax.com/best-ai-flashcard-apps-with-spaced-repetition-2026",
+          "title": "Best AI Flashcard Apps with Spaced Repetition 2026",
+          "domain": "mindomax.com",
+          "fetch_time": "2026-11-17T20:51:29+00:00",
+          "text_hash": "55aabc5e76d0a408",
+          "passages": [
+            "Apr 20, 2026 · A practical guide to six AI-powered flashcard apps, plus the enterprise platforms and cognitive science behind what actually works in 2026.",
+            "StudyFetch — All-in-One AI Tutor With Voice StudyFetch has grown to roughly six million students since its 2023 launch, raised $11.5 million Series A from Owl Ventures and The College Board in mid-2025, and signed a workforce-readiness partnership with NVIDIA.",
+            "Mindomax — AI Flashcards From PDFs, Audio, and Images Mindomax addresses the main reason students stop using spaced repetition: card creation takes too long.",
+            "Are AI-generated flashcards accurate enough to study from?"
+          ],
+          "collector": "web:yahoo",
+          "category": "competitors",
+          "published": "2026-04-20",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S21",
+          "url": "https://activerecalling.com/blog/spaced-repetition-apps-compared",
+          "title": "10 Best Spaced Repetition Apps in 2026 (Free and Paid)",
+          "domain": "activerecalling.com",
+          "fetch_time": "2026-11-17T20:51:29+00:00",
+          "text_hash": "b044d8eb7eb9da2c",
+          "passages": [
+            "Nov 24, 2025 · We compared 10 spaced repetition apps, including Anki, RemNote, Mochi and Quizlet, on scheduling, free plan and price (checked Oct 2026), and who each suits.",
+            "Quizlet's homepage, with cards for lecture recording, study guides, flashcards, and games.",
+            "How to choose a study app with flashcards and quizzes A feature list won't tell you which app suits you.",
+            "Is there one study app with flashcards and quizzes?"
+          ],
+          "collector": "web:yahoo",
+          "category": "pricing",
+          "published": "2025-11-24",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S22",
+          "url": "https://www.mintdeck.app/blog/best-spaced-repetition-apps-2026",
+          "title": "Best Spaced Repetition Apps (2026) · Free Anki Alternatives",
+          "domain": "mintdeck.app",
+          "fetch_time": "2026-11-17T20:51:29+00:00",
+          "text_hash": "2ea4059571e16695",
+          "passages": [
+            "Jan 8, 2026 · The best spaced repetition flashcard apps in 2026, compared — Anki, Quizlet, RemNote, Brainscape & MintDeck. Free, ad-free picks ranked by FSRS, features & price.",
+            "Brainscape uses a confidence‑based repetition system , where you rate each flashcard from 1–5 and the scheduler focuses on material you feel least confident about.",
+            "Spaced repetition has gone mainstream, and there are now more flashcard apps than ever – from old‑school power tools like Anki to modern AI‑powered options like StudyFetch and MintDeck.",
+            "StudyFetch offers AI‑heavy subscriptions targeted at students who want lecture‑to‑quiz automation."
+          ],
+          "collector": "web:yahoo",
+          "category": "pricing",
+          "published": "2026-01-08",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S23",
+          "url": "https://www.getsticky.ai/learn/best-spaced-repetition-apps",
+          "title": "Best Spaced Repetition Apps in 2026 Compared | Sticky",
+          "domain": "getsticky.ai",
+          "fetch_time": "2026-11-17T20:51:29+00:00",
+          "text_hash": "70e3d1d5f5814dd7",
+          "passages": [
+            "Mar 8, 2026 · Comparing the best spaced repetition apps in 2026: Sticky, Anki, Quizlet, Noji, Memrise, and Mochi. Features, real pricing, and who each app is best for."
+          ],
+          "collector": "web:yahoo",
+          "category": "pricing",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S24",
+          "url": "https://apps.ankiweb.net/",
+          "title": "Anki - powerful, intelligent flashcards",
+          "domain": "apps.ankiweb.net",
+          "fetch_time": "2026-11-17T20:51:29+00:00",
+          "text_hash": "bdcfd68cb712c4c3",
+          "passages": [
+            "Anki is a flashcard program that helps you spend more time on challenging material, and less on what you already know.",
+            "Decks Decks are groups of flashcards that allow you to study specific parts of your collection instead of everything all at once."
+          ],
+          "collector": "web:yahoo",
+          "category": "local_constraints",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet",
+            "page"
+          ]
+        },
+        {
+          "key": "S25",
+          "url": "https://flashlearns.com/",
+          "title": "FlashLearn - Free AI-Powered Flashcard Study App | Spaced ...",
+          "domain": "flashlearns.com",
+          "fetch_time": "2026-11-17T20:51:29+00:00",
+          "text_hash": "64904f28bf722db4",
+          "passages": [
+            "Create and study flashcards with AI. Use spaced repetition and active recall to learn faster. Free flashcard maker with match games, tests, and multiplayer modes.",
+            "FlashLearn - Free AI-Powered Flashcard Study App | Spaced Repetition Learning"
+          ],
+          "collector": "web:yahoo",
+          "category": "local_constraints",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet",
+            "page"
+          ]
+        },
+        {
+          "key": "S26",
+          "url": "https://anki-ai.app/",
+          "title": "Flashtar — AI-Powered Flashcard Generation",
+          "domain": "anki-ai.app",
+          "fetch_time": "2026-11-17T20:51:29+00:00",
+          "text_hash": "5ba1982c523b4a76",
+          "passages": [
+            "Generate complete, high-quality flashcard decks with AI. Create, edit, and study in seconds.",
+            "Flashtar — AI-Powered Flashcard Generation AI-powered flashcard generation Turn any topic into Anki decks in seconds Generate complete, high-quality flashcard decks with AI.",
+            "AI-Powered Generation Describe any topic and get a complete, structured flashcard deck in seconds."
+          ],
+          "collector": "web:yahoo",
+          "category": "local_constraints",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S27",
+          "url": "https://www.anyflashcards.com/",
+          "title": "AnyFlashcards — AI-Powered Flashcard Learning",
+          "domain": "anyflashcards.com",
+          "fetch_time": "2026-11-17T20:51:29+00:00",
+          "text_hash": "814c8b94a30abc37",
+          "passages": [
+            "Generate flashcards instantly from any content: notes, PDFs, images, lectures. AI-powered spaced repetition for effortless learning.",
+            "The mitochondria Study-ready flashcards Edit, review, and ace your exams Simple, student-friendly pricing Free gets you full AI decks.",
+            "AnyFlashcards uses AI to generate cards from your actual study materials in seconds."
+          ],
+          "collector": "web:yahoo",
+          "category": "local_constraints",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page"
+          ]
+        }
+      ],
+      "raw_claims": [],
+      "raw_angles": [],
+      "verified_claims_at_capture": [
+        {
+          "category": "competitors",
+          "text": "Best Spaced Repetition Apps (2026) · Free Anki Alternatives reports: \"Jan 8, 2026 · The best spaced repetition flashcard apps in 2026, compared — Anki, Quizlet, RemNote, Brainscape & MintDeck. Free, ad-free picks ranked by FSRS, features & price.\"",
+          "source_keys": [
+            "S22"
+          ],
+          "quote": "Jan 8, 2026 · The best spaced repetition flashcard apps in 2026, compared — Anki, Quizlet, RemNote, Brainscape & MintDeck. Free, ad-free picks ranked by FSRS, features & price.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "competitors",
+          "text": "7 Best Spaced Repetition Apps in 2026: Hands-On Comparison reports: \"Aug 26, 2026 · A hands-on comparison of 7 spaced repetition apps. Laxu AI, Anki, Quizlet, Brainscape, RemNote, StudyFetch, and Knowt on SRS algorithm, free-tier limits, platforms, and price — every figure checked against each vendor's own s\"",
+          "source_keys": [
+            "S10"
+          ],
+          "quote": "Aug 26, 2026 · A hands-on comparison of 7 spaced repetition apps. Laxu AI, Anki, Quizlet, Brainscape, RemNote, StudyFetch, and Knowt on SRS algorithm, free-tier limits, platforms, and price — every figure checked against each vendor's own s",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "pricing",
+          "text": "7 Best Spaced Repetition Apps in 2026: Hands-On Comparison reports: \"Laxu AI is the best spaced repetition app for most students in 2026, combining AI-powered flashcard generation from PDFs, images, and audio with a built-in SM-2-adapted scheduling algorithm at $4.99/month or $39.99/year.\"",
+          "source_keys": [
+            "S10"
+          ],
+          "quote": "Laxu AI is the best spaced repetition app for most students in 2026, combining AI-powered flashcard generation from PDFs, images, and audio with a built-in SM-2-adapted scheduling algorithm at $4.99/month or $39.99/year.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "pricing",
+          "text": "Best AI Spaced Repetition Flashcard App | Studyboost reports: \"Feb 28, 2026 · Studyboost makes AI flashcards from your PDFs and slides and schedules them with FSRS spaced repetition for $10/mo. Start with a 3-day free Pro trial.\"",
+          "source_keys": [
+            "S11"
+          ],
+          "quote": "Feb 28, 2026 · Studyboost makes AI flashcards from your PDFs and slides and schedules them with FSRS spaced repetition for $10/mo. Start with a 3-day free Pro trial.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "local_constraints",
+          "text": "World Bank — Individuals using the Internet (% of population), Egypt, Arab Rep. reports: \"Individuals using the Internet (% of population) for Egypt, Arab Rep. in 2024: 74.6.\"",
+          "source_keys": [
+            "S4"
+          ],
+          "quote": "Individuals using the Internet (% of population) for Egypt, Arab Rep. in 2024: 74.6.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "local_constraints",
+          "text": "World Bank — GDP per capita (current US$), Egypt, Arab Rep. reports: \"GDP per capita (current US$) for Egypt, Arab Rep. in 2025: 3,085.8.\"",
+          "source_keys": [
+            "S5"
+          ],
+          "quote": "GDP per capita (current US$) for Egypt, Arab Rep. in 2025: 3,085.8.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "channels",
+          "text": "School of Marketing - FacebookStudent Acquisition Strategy in Egypt - 23HubLabHigher Education Marketing: The Complete 2026 Guide - LeadSquaredWhy You Should Ma reports: \"School of Marketing. 164,395 followers · 366 talking about this. Our mission is to enhance the marketing culture in Egypt and to help youth to grow their Modern Marketing background.... Location-based educational search in Egypt: the prospe\"",
+          "source_keys": [
+            "S15"
+          ],
+          "quote": "School of Marketing. 164,395 followers · 366 talking about this. Our mission is to enhance the marketing culture in Egypt and to help youth to grow their Modern Marketing background.... Location-based educational search in Egypt: the prospe",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "channels",
+          "text": "Marketing and Social Media Consulting | The American ... reports: \"Reach out to us for consultations on marketing strategies and social media activity on your pages, and we will direct your efforts so that you can achieve your goals more efficiently and ensure you are abiding by University guidelines and f\"",
+          "source_keys": [
+            "S14"
+          ],
+          "quote": "Reach out to us for consultations on marketing strategies and social media activity on your pages, and we will direct your efforts so that you can achieve your goals more efficiently and ensure you are abiding by University guidelines and f",
+          "verified": true,
+          "is_assumption": false
+        }
+      ],
+      "evidence_score_at_capture": 84.2
+    },
+    {
+      "round": 1,
+      "idea": "Narrow the idea to university students in Egypt: An AI-powered flashcard and spaced-repetition study tool for university students in Egypt,",
+      "target_user": "university students",
+      "geography": "Egypt",
+      "synthesis_mode": "extractive",
+      "model": null,
+      "queries": {
+        "demand": [
+          [
+            "web",
+            "narrow idea university students egypt university students problem need Egypt"
+          ],
+          [
+            "hn",
+            "narrow idea"
+          ],
+          [
+            "web",
+            "reddit narrow idea university university students Egypt"
+          ]
+        ],
+        "competitors": [
+          [
+            "web",
+            "best narrow idea university students egypt apps alternatives"
+          ],
+          [
+            "wikipedia",
+            "narrow idea university students egypt"
+          ]
+        ],
+        "pricing": [
+          [
+            "web",
+            "narrow idea university students egypt app pricing per month subscription"
+          ],
+          [
+            "web",
+            "narrow idea university pricing plans free premium"
+          ]
+        ],
+        "local_constraints": [
+          [
+            "web",
+            "university students Egypt digital tools online payments"
+          ]
+        ],
+        "channels": [
+          [
+            "web",
+            "how to reach university students Egypt marketing community"
+          ]
+        ]
+      },
+      "sources": [
+        {
+          "key": "S1",
+          "url": "https://news.ycombinator.com/item?id=35576335",
+          "title": "HN: Ask HN: US-based non-enterprise programming conferences?",
+          "domain": "news.ycombinator.com",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "8572358a96a982fb",
+          "passages": [
+            "Ask HN: US-based non-enterprise programming conferences? — Hacker News thread with 3 points and 6 comments, posted 2023-04-15."
+          ],
+          "collector": "hn",
+          "category": "demand",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "api"
+          ]
+        },
+        {
+          "key": "S2",
+          "url": "https://news.ycombinator.com/item?id=41130993",
+          "title": "HN: Show HN: Telescope – Find the right people in seconds",
+          "domain": "news.ycombinator.com",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "5ee882300a987afa",
+          "passages": [
+            "Show HN: Telescope – Find the right people in seconds — Hacker News thread with 8 points and 0 comments, posted 2024-08-01."
+          ],
+          "collector": "hn",
+          "category": "demand",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "api"
+          ]
+        },
+        {
+          "key": "S3",
+          "url": "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+          "title": "World Bank — Individuals using the Internet (% of population), Egypt, Arab Rep.",
+          "domain": "data.worldbank.org",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "faf656f908089c33",
+          "passages": [
+            "Individuals using the Internet (% of population) for Egypt, Arab Rep. in 2024: 74.6."
+          ],
+          "collector": "worldbank",
+          "category": "local_constraints",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "api"
+          ]
+        },
+        {
+          "key": "S4",
+          "url": "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+          "title": "World Bank — GDP per capita (current US$), Egypt, Arab Rep.",
+          "domain": "data.worldbank.org",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "a517d2c9627f30b0",
+          "passages": [
+            "GDP per capita (current US$) for Egypt, Arab Rep. in 2025: 3,085.8."
+          ],
+          "collector": "worldbank",
+          "category": "local_constraints",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "api"
+          ]
+        },
+        {
+          "key": "S5",
+          "url": "https://www.researchgate.net/publication/390306214_The_Development_of_Higher_Education_in_Egypt",
+          "title": "(PDF) The Development of Higher Education in Egypt - ResearchGate",
+          "domain": "researchgate.net",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "cd1c4e97c54087a2",
+          "passages": [
+            "Mar 30, 2025 · This study examines the common challenges of strategic planning for Higher Education in Egypt. Semi-structured interviews were undertaken with 13 academic leaders in Egyptian universities."
+          ],
+          "collector": "web:yahoo",
+          "category": "demand",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S6",
+          "url": "https://www.ijnrd.org/papers/IJNRD2504556.pdf",
+          "title": "Egyptian Higher Education System: Core Challenges and Reform ...",
+          "domain": "ijnrd.org",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "2880fe0676c8d59d",
+          "passages": [
+            "By 1957, Egypt had five state universities located in prominent cities such as Cairo, Alexandria, and Asyut, in addition to one private university, the American University in Cairo. Until the 1950s, Egypt upheld worldwide norms in higher education and scientific research."
+          ],
+          "collector": "web:yahoo",
+          "category": "demand",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S7",
+          "url": "https://papers.iafor.org/wp-content/uploads/papers/ece2024/ECE2024_82382.pdf",
+          "title": "The Development of Higher Education in Egypt",
+          "domain": "papers.iafor.org",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "44d6b5e014aae927",
+          "passages": [
+            "In the 19th Century, reform of higher education began under the reign of Muhammad Ali Pasha, who ruled Egypt in the early 19th Century and implemented a number of educational reforms. He sent students abroad to study in Europe and established schools and colleges in Egypt. His efforts laid the foundation for a more modern education system. In the early 20th Century, Cairo University was ..."
+          ],
+          "collector": "web:yahoo",
+          "category": "demand",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S8",
+          "url": "https://www.hrw.org/news/2025/01/27/egypt-declining-funding-undermines-education",
+          "title": "Egypt: Declining Funding Undermines Education | Human Rights ...",
+          "domain": "hrw.org",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "fe28de802eb61dca",
+          "passages": [
+            "Jan 27, 2025 · Egyptian authorities have severely undermined the right to education in recent years by failing to allocate sufficient budgetary resources."
+          ],
+          "collector": "web:yahoo",
+          "category": "demand",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S9",
+          "url": "https://www.reddit.com/r/Egypt/comments/szb3p4/studying_in_egypt/",
+          "title": "Studying in Egypt : r/Egypt - Reddit",
+          "domain": "reddit.com",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "e3d79dcffaacba3e",
+          "passages": [
+            "I would suggest searching social media and/or LinkedIn for current foreign students in Egypt in general, and AlAzhar more specifically to have the most relevant insights that everyday Egyptians can miss. Listening to someone with similar background to yours is really helpful, and I personally did this when I was studying abroad. Good luck!"
+          ],
+          "collector": "web:yahoo",
+          "category": "demand",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S10",
+          "url": "https://www.reddit.com/r/Egypt/comments/p13ywx/coming_to_study_in_egypt/",
+          "title": "Coming to study in Egypt : r/Egypt - Reddit",
+          "domain": "reddit.com",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "ef1df83334307e48",
+          "passages": [
+            "Whether you are a current student, staff member, alumnus, or simply interested in the university, this subreddit is for you. This community serves as a platform for discussion on a variety of topics, from academic discussions, campus life experiences, and event updates to news and research insights."
+          ],
+          "collector": "web:yahoo",
+          "category": "demand",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S11",
+          "url": "https://www.reuters.com/investigates/special-report/egypt-students/",
+          "title": "After university crackdown, Egyptian students fear for their ...",
+          "domain": "reuters.com",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "ad8f45486ec78b4c",
+          "passages": [
+            "Jun 1, 2016 · Young dissidents in Egypt say the government has expelled hundreds of university students, torturing some of them and hurting their chances of studying elsewhere."
+          ],
+          "collector": "web:yahoo",
+          "category": "demand",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S12",
+          "url": "https://mena.org.eg/en/news/egypt-steps-preuniversity-education-reform-8d66b432-4e89-4bf6-89c4-ab0f287930de",
+          "title": "Egypt steps up pre-university education reform, expands ...",
+          "domain": "mena.org.eg",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "4c7685f77b7294f3",
+          "passages": [
+            "8 hours ago · The study noted that students enrolled in pre-university education account for more than 25% of Egypt's population, ranging from kindergarten to general secondary education and its equivalents. This reflects the scale of the state's responsibility to provide adequate educational opportunities for such a large number of students."
+          ],
+          "collector": "web:yahoo",
+          "category": "demand",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S13",
+          "url": "https://www.memmo.org/en/magazine/studyapps",
+          "title": "Best study apps for university students (2026) - memmo.org",
+          "domain": "memmo.org",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "b5616b2950f51516",
+          "passages": [
+            "Apr 16, 2026 · The best study apps for university students in 2026 — compared. From AI-powered platforms and flashcard tools to note-taking apps and focus timers.",
+            "The best study apps for university students in 2026 are Memmo (all-in-one with textbooks and AI), Anki (spaced repetition), Notion (notes), Quizlet (ready-made flashcards), Forest (focus) and Google Scholar (sources).",
+            "We've tested and compared the most popular study apps for university students in 2026 – from flashcard tools and AI assistants to note-taking apps and focus timers – so you can find the right combination for how you study.",
+            "Best study apps for university students (2026) Published: April 16, 2026 Best study apps for university students (2026) The best study apps for university students in 2026 — compared."
+          ],
+          "collector": "web:yahoo",
+          "category": "competitors",
+          "published": "2026-04-16",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S14",
+          "url": "https://liners.com/best/edtech/egypt",
+          "title": "24 Best Education Apps in Egypt (2026) – Liners",
+          "domain": "liners.com",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "d182bccbb29ddef4",
+          "passages": [
+            "Discover and compare the top 24 EdTech startups and products in Egypt, ranked by user ratings, reviews, and features on Liners."
+          ],
+          "collector": "web:yahoo",
+          "category": "competitors",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S15",
+          "url": "https://www.mindomax.com/best-study-apps-for-students",
+          "title": "Best Study Apps in 2026: 24 Tested, Every Price Dated",
+          "domain": "mindomax.com",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "e57f0f459e221405",
+          "passages": [
+            "Jun 7, 2026 · Twenty-four study apps compared on price, free-tier limits and platforms, with every figure checked on 16 September 2026 and one honest flaw named for each"
+          ],
+          "collector": "web:yahoo",
+          "category": "competitors",
+          "published": "2026-06-07",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S16",
+          "url": "https://notehive.app/blog/best-study-apps-for-college-students-2026",
+          "title": "Best Study Apps for College Students in 2026 - notehive.app",
+          "domain": "notehive.app",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "47f28eddf72c31e9",
+          "passages": [
+            "Apr 5, 2026 · The best AI study apps for college students in 2026: for lecture notes, flashcards, focus, and STEM. See which are free and which actually save time.",
+            "The best AI study apps for college students in 2026 include NoteHive AI for lecture recording, notes, flashcards, and quizzes in one place; Anki for spaced repetition; Forest for focus sessions; and Wolfram Alpha for STEM coursework.",
+            "Best Study Apps for College Students in 2026 Finding the right study app feels overwhelming when there are hundreds of options.",
+            "This guide covers the best study apps for college students in 2026, organized by what you're trying to do."
+          ],
+          "collector": "web:yahoo",
+          "category": "competitors",
+          "published": "2026-04-05",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S17",
+          "url": "https://www.techbloat.com/software/narrow/pricing/",
+          "title": "Narrow pricing — TechBloat",
+          "domain": "techbloat.com",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "996a7f440248ba86",
+          "passages": [
+            "Narrow publishes 4 plans; paid plans start at $1,500/mo."
+          ],
+          "collector": "web:yahoo",
+          "category": "pricing",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S18",
+          "url": "https://www.notion.com/pricing",
+          "title": "Notion Pricing Plans: Free, Plus, Business, & Enterprise.",
+          "domain": "notion.com",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "0f040a4712c37708",
+          "passages": [
+            "Learn more about our different pricing plans. We support everyone, from free personal accounts to enterprise businesses."
+          ],
+          "collector": "web:yahoo",
+          "category": "pricing",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S19",
+          "url": "https://www.idea.edu/",
+          "title": "Home - IDEA - An Online Higher Education Alliance",
+          "domain": "idea.edu",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "e3851cc058d06d45",
+          "passages": [
+            "IDEA offers a single, affordable price per credit hour, eliminating out-of-state or distance delivery fees. This streamlined pricing system eliminates confusion, enabling you to confidently build a program that aligns with your schedule and goals.",
+            "Meet the IDEA faculty 10 Average Class Size 20 Accredited Universities 12,000 Total Graduates 50 Students From All States 26 Years of Learning Online I am a...",
+            "Instead of only hearing a perspective from one university, I was able to gain perspectives from faculty and students from several different institutions."
+          ],
+          "collector": "web:yahoo",
+          "category": "pricing",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet",
+            "page",
+            "page"
+          ]
+        },
+        {
+          "key": "S20",
+          "url": "https://www.jetbrains.com/academy/student-pack/",
+          "title": "Free JetBrains Student Pack",
+          "domain": "jetbrains.com",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "9fc2a07a49edda79",
+          "passages": [
+            "Requirements: University email address, ISIC/ITIC card, or GitHub Student Developer Pack. Full-time student in a program lasting one year or more."
+          ],
+          "collector": "web:yahoo",
+          "category": "pricing",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S21",
+          "url": "https://xpay.app/blog/epayments-education-sector-egypt",
+          "title": "E-Payments in Egypt's Education Sector (2026 Guide) | XPay",
+          "domain": "xpay.app",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "3b8cf2b0d3d4fff8",
+          "passages": [
+            "Apr 16, 2026 · Blog / Industry E-Payments in Egypt's Education Sector (2026 Guide) How Egyptian schools, universities, and training centers are moving from cash to digital payments in 2026: the drivers, benefits, and right first setup.",
+            "World Bank data on Egypt's education spending places the country among the larger education economies in the region by both public and household expenditure, and UNESCO's Egypt education profile tracks more than 25 million students across primary, preparatory, secondary, and tertiary levels."
+          ],
+          "collector": "web:yahoo",
+          "category": "local_constraints",
+          "published": "2026-04-16",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet",
+            "page"
+          ]
+        },
+        {
+          "key": "S22",
+          "url": "https://www3.aucegypt.edu/OnlinePayment/Default.aspx",
+          "title": "Welcome to Online Payment Tool - aucegypt.edu",
+          "domain": "www3.aucegypt.edu",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "b5e6e5e0bec730f2",
+          "passages": [
+            "Active Sites: Click on a site below to pay for it online"
+          ],
+          "collector": "web:yahoo",
+          "category": "local_constraints",
+          "published": null,
+          "published_from": "",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        },
+        {
+          "key": "S23",
+          "url": "https://www.aucegypt.edu/academics/registrar/steps-e-payment",
+          "title": "Steps for E-Payment - The American University in Cairo",
+          "domain": "aucegypt.edu",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "a1c17176e73bc371",
+          "passages": [
+            "Jan 22, 2025 · Non-Egyptian students seeking student visa/residence in Egypt through AUC, are not to select the enrollment letter option; they are to refer to the Business Support Services at business.support@aucegypt.edu. For e-payment technical problems, email support@aucegypt.edu.",
+            "Non-Egyptian students seeking student visa/residence in Egypt through AUC, are not to select the enrollment letter option; they are to refer to the Business Support Services at business.support@aucegypt.edu ."
+          ],
+          "collector": "web:yahoo",
+          "category": "local_constraints",
+          "published": "2016-02-25",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet",
+            "page"
+          ]
+        },
+        {
+          "key": "S24",
+          "url": "https://www.aucegypt.edu/services/communications/marketing",
+          "title": "Marketing and Social Media Consulting | The American ...",
+          "domain": "aucegypt.edu",
+          "fetch_time": "2026-11-17T20:51:45+00:00",
+          "text_hash": "0c5a133d5d375930",
+          "passages": [
+            "Reach out to us for consultations on marketing strategies and social media activity on your pages, and we will direct your efforts so that you can achieve your goals more efficiently and ensure you are abiding by University guidelines and following social media best practices."
+          ],
+          "collector": "web:yahoo",
+          "category": "channels",
+          "published": "2015-09-09",
+          "published_from": "page-meta",
+          "passage_origins": [
+            "search-snippet"
+          ]
+        }
+      ],
+      "raw_claims": [],
+      "raw_angles": [],
+      "verified_claims_at_capture": [
+        {
+          "category": "demand",
+          "text": "Egypt steps up pre-university education reform, expands ... reports: \"8 hours ago · The study noted that students enrolled in pre-university education account for more than 25% of Egypt's population, ranging from kindergarten to general secondary education and its equivalents. This reflects the scale of the s\"",
+          "source_keys": [
+            "S12"
+          ],
+          "quote": "8 hours ago · The study noted that students enrolled in pre-university education account for more than 25% of Egypt's population, ranging from kindergarten to general secondary education and its equivalents. This reflects the scale of the s",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "competitors",
+          "text": "Best study apps for university students (2026) - memmo.org reports: \"Apr 16, 2026 · The best study apps for university students in 2026 — compared. From AI-powered platforms and flashcard tools to note-taking apps and focus timers.\"",
+          "source_keys": [
+            "S13"
+          ],
+          "quote": "Apr 16, 2026 · The best study apps for university students in 2026 — compared. From AI-powered platforms and flashcard tools to note-taking apps and focus timers.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "competitors",
+          "text": "Best Study Apps for College Students in 2026 - notehive.app reports: \"The best AI study apps for college students in 2026 include NoteHive AI for lecture recording, notes, flashcards, and quizzes in one place; Anki for spaced repetition; Forest for focus sessions; and Wolfram Alpha for STEM coursework.\"",
+          "source_keys": [
+            "S16"
+          ],
+          "quote": "The best AI study apps for college students in 2026 include NoteHive AI for lecture recording, notes, flashcards, and quizzes in one place; Anki for spaced repetition; Forest for focus sessions; and Wolfram Alpha for STEM coursework.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "local_constraints",
+          "text": "World Bank — Individuals using the Internet (% of population), Egypt, Arab Rep. reports: \"Individuals using the Internet (% of population) for Egypt, Arab Rep. in 2024: 74.6.\"",
+          "source_keys": [
+            "S3"
+          ],
+          "quote": "Individuals using the Internet (% of population) for Egypt, Arab Rep. in 2024: 74.6.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "local_constraints",
+          "text": "World Bank — GDP per capita (current US$), Egypt, Arab Rep. reports: \"GDP per capita (current US$) for Egypt, Arab Rep. in 2025: 3,085.8.\"",
+          "source_keys": [
+            "S4"
+          ],
+          "quote": "GDP per capita (current US$) for Egypt, Arab Rep. in 2025: 3,085.8.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "channels",
+          "text": "Marketing and Social Media Consulting | The American ... reports: \"Reach out to us for consultations on marketing strategies and social media activity on your pages, and we will direct your efforts so that you can achieve your goals more efficiently and ensure you are abiding by University guidelines and f\"",
+          "source_keys": [
+            "S24"
+          ],
+          "quote": "Reach out to us for consultations on marketing strategies and social media activity on your pages, and we will direct your efforts so that you can achieve your goals more efficiently and ensure you are abiding by University guidelines and f",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "channels",
+          "text": "Studying in Egypt : r/Egypt - Reddit reports: \"I would suggest searching social media and/or LinkedIn for current foreign students in Egypt in general, and AlAzhar more specifically to have the most relevant insights that everyday Egyptians can miss. Listening to someone with similar ba\"",
+          "source_keys": [
+            "S9"
+          ],
+          "quote": "I would suggest searching social media and/or LinkedIn for current foreign students in Egypt in general, and AlAzhar more specifically to have the most relevant insights that everyday Egyptians can miss. Listening to someone with similar ba",
+          "verified": true,
+          "is_assumption": false
+        }
+      ],
+      "evidence_score_at_capture": 83.9
+    }
+  ],
+  "gate_outcomes_at_capture": [
+    {
+      "gate": 1,
+      "outcome": "repeat",
+      "round": 1,
+      "E": 84.2,
+      "V": 0.0
+    },
+    {
+      "gate": 1,
+      "outcome": "pivot",
+      "round": 2,
+      "E": 84.2,
+      "V": 0.0
+    },
+    {
+      "gate": 1,
+      "outcome": "go",
+      "round": 1,
+      "E": 83.9,
+      "V": 0.0
+    },
+    {
+      "gate": 2,
+      "outcome": "go",
+      "round": 1,
+      "E": 83.9,
+      "V": 4.0
+    },
+    {
+      "gate": 3,
+      "outcome": "go",
+      "round": 1,
+      "E": 0.0,
+      "V": 0.0
+    },
+    {
+      "gate": 4,
+      "outcome": "go",
+      "round": 1,
+      "E": 0.0,
+      "V": 0.0
+    },
+    {
+      "gate": 5,
+      "outcome": "go",
+      "round": 1,
+      "E": 0.0,
+      "V": 0.0
+    }
+  ],
+  "final_status_at_capture": "completed"
+}

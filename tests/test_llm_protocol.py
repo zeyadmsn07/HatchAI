@@ -113,7 +113,7 @@ def test_request_format_and_live_result(stub):
     method, path, body = stub.chats()[0]
     assert (method, path) == ("POST", "/v1/chat/completions")
     assert body["model"] == MODEL and body["stream"] is False and body["max_tokens"] == 99
-    assert body["response_format"] == {"type": "json_object"} and body["temperature"] == 0.3
+    assert body["response_format"]["type"] == "json_schema" and "schema" in body["response_format"]["json_schema"] and body["temperature"] == 0.3
     assert [m["role"] for m in body["messages"]] == ["system", "user"]
     assert "sys prompt" in body["messages"][0]["content"] and "JSON schema" in body["messages"][0]["content"]
     assert ("GET", "/v1/models", None) in stub.requests

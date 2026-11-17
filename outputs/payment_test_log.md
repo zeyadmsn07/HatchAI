@@ -8,7 +8,7 @@
 > No payment processor SDK is installed. HMAC secret is a local mock.
 
 ## Checkout
-- Order ID: `ord_663fe24b5ce3`
+- Order ID: `ord_03be258e64c1`
 - Status: `paid`
 
 ## Idempotency (replay test)
@@ -16,7 +16,7 @@
 - IDEMPOTENCY: PASS
 
 ## Refund
-- Order: `ord_663fe24b5ce3`
+- Order: `ord_03be258e64c1`
 - Token revoked: `True`
 - REVOCATION: PASS
 

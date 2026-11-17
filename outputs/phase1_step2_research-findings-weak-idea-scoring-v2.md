@@ -32,15 +32,44 @@
 | domain diversity | 16.0 |
 | source type triangulation | 5.0 |
 
+## Evidence quality audit (advisory: shown to the founder, not part of the E score)
+
+A quote that matches its source proves **where** a sentence came from, not that it is **true**. This audit
+shows who is speaking, how old the source is, and whether the quote came from the fetched page or only from
+the search engine's snippet. Freshness: fresh ≤ 18 months, aging ≤ 36 months, stale > 36 months (age measured
+at fetch time).
+
+| Metric | Value |
+|---|---|
+| Cited sources | 4 |
+| Dated (publication date found) | 75% |
+| Fresh (≤ 18 months) | 75% |
+| Independent (not a vendor writing about its own market) | 25% |
+| Quotes taken from a search snippet rather than the page | 75% |
+| Categories backed by independent, non-stale evidence | competitors |
+| Categories backed only by vendor or stale evidence | pricing |
+
+| Category | Source | Domain | Who is speaking | Published | Freshness | Quote origin |
+|---|---|---|---|---|---|---|
+| competitors | S3 | screensnap.pro | independent-web | 2026-06-02 (snippet-date) | fresh (168 d) | search-snippet |
+| competitors | S5 | goodnotes.com | vendor (self-interested) | 2026-09-11 (snippet-date) | fresh (67 d) | page |
+| pricing | S8 | richtactic.com | vendor (self-interested) | 2026-04-01 (snippet-date) | fresh (230 d) | search-snippet |
+| pricing | S10 | genio.co | vendor (self-interested) | undated | undated | search-snippet |
+
+**Warnings**
+
+- ⚠ pricing: S10 (genio.co) is a vendor writing about its own market — treat as a claim, not independent evidence.
+- ⚠ pricing: S8 (richtactic.com) is a vendor writing about its own market — treat as a claim, not independent evidence.
+
 ## Source ledger (10 sources, 9 domains)
 
-- `S1` [HN: Maker of EpiPen to Sell Generic Version for Half the Price](https://news.ycombinator.com/item?id=12382737) — hn, demand, fetched 2026-11-17T15:53:00+00:00, sha256:8a7fb949e4c422bf
-- `S2` [HN: Mylan to Sell Generic EpiPen at Half the Price of Original](https://news.ycombinator.com/item?id=13195588) — hn, demand, fetched 2026-11-17T15:53:00+00:00, sha256:d353c165c9ae593e
-- `S3` [Best Study Notes App 2026: 11 Tools for Students Compared](https://www.screensnap.pro/blog/best-study-notes-app) — web:yahoo, competitors, fetched 2026-11-17T15:53:00+00:00, sha256:79ffc32cc879d406
-- `S4` [8 Best Note-Taking Apps for Students 2026 - savemyexams.com](https://www.savemyexams.com/learning-hub/useful-resources/best-note-taking-apps-for-students/) — web:yahoo, competitors, fetched 2026-11-17T15:53:00+00:00, sha256:728ddabb17eb8ac3
-- `S5` [The 15 best free note-taking apps for students in 2026](https://www.goodnotes.com/blog/best-free-note-taking-apps-for-students-2026) — web:yahoo, competitors, fetched 2026-11-17T15:53:00+00:00, sha256:91e920ec0e978688
-- `S6` [Best Study Apps in 2026: 24 Tested, Every Price Dated](https://www.mindomax.com/best-study-apps-for-students) — web:yahoo, competitors, fetched 2026-11-17T15:53:00+00:00, sha256:3df91af4ab7e0052
-- `S7` [Studyrift — High-quality Study Notes, Summaries & Exam Prep](https://studyrift.com/) — web:yahoo, pricing, fetched 2026-11-17T15:53:00+00:00, sha256:f620d7aaeb49654a
-- `S8` [Sell Study Notes and Class Notes Online (2026) | RichTactic](https://richtactic.com/tactic/study-notes-selling) — web:yahoo, pricing, fetched 2026-11-17T15:53:00+00:00, sha256:53d5b58e94ef06ae
-- `S9` [Sell Study Notes Online: 5 Best Platforms (2026)](https://www.researchprospect.com/platforms-to-sell-study-notes-online/) — web:yahoo, pricing, fetched 2026-11-17T15:53:00+00:00, sha256:e12baaebd13138e3
-- `S10` [Pricing for Individuals - Compare plans and unlock better ...](https://genio.co/pricing/individuals) — web:yahoo, pricing, fetched 2026-11-17T15:53:00+00:00, sha256:bd3c64aa97feb446
+- `S1` [HN: Maker of EpiPen to Sell Generic Version for Half the Price](https://news.ycombinator.com/item?id=12382737) — hn, demand, community, published 2016-08-29, fetched 2026-11-17T15:53:00+00:00, sha256:8a7fb949e4c422bf
+- `S2` [HN: Mylan to Sell Generic EpiPen at Half the Price of Original](https://news.ycombinator.com/item?id=13195588) — hn, demand, community, published 2016-12-16, fetched 2026-11-17T15:53:00+00:00, sha256:d353c165c9ae593e
+- `S3` [Best Study Notes App 2026: 11 Tools for Students Compared](https://www.screensnap.pro/blog/best-study-notes-app) — web:yahoo, competitors, independent-web, published 2026-06-02, fetched 2026-11-17T15:53:00+00:00, sha256:79ffc32cc879d406
+- `S4` [8 Best Note-Taking Apps for Students 2026 - savemyexams.com](https://www.savemyexams.com/learning-hub/useful-resources/best-note-taking-apps-for-students/) — web:yahoo, competitors, vendor (self-interested), published 2026-09-08, fetched 2026-11-17T15:53:00+00:00, sha256:728ddabb17eb8ac3
+- `S5` [The 15 best free note-taking apps for students in 2026](https://www.goodnotes.com/blog/best-free-note-taking-apps-for-students-2026) — web:yahoo, competitors, vendor (self-interested), published 2026-09-11, fetched 2026-11-17T15:53:00+00:00, sha256:91e920ec0e978688
+- `S6` [Best Study Apps in 2026: 24 Tested, Every Price Dated](https://www.mindomax.com/best-study-apps-for-students) — web:yahoo, competitors, independent-web, published 2026-06-07, fetched 2026-11-17T15:53:00+00:00, sha256:3df91af4ab7e0052
+- `S7` [Studyrift — High-quality Study Notes, Summaries & Exam Prep](https://studyrift.com/) — web:yahoo, pricing, vendor (self-interested), published undated, fetched 2026-11-17T15:53:00+00:00, sha256:f620d7aaeb49654a
+- `S8` [Sell Study Notes and Class Notes Online (2026) | RichTactic](https://richtactic.com/tactic/study-notes-selling) — web:yahoo, pricing, vendor (self-interested), published 2026-04-01, fetched 2026-11-17T15:53:00+00:00, sha256:53d5b58e94ef06ae
+- `S9` [Sell Study Notes Online: 5 Best Platforms (2026)](https://www.researchprospect.com/platforms-to-sell-study-notes-online/) — web:yahoo, pricing, independent-web, published 2026-02-24, fetched 2026-11-17T15:53:00+00:00, sha256:e12baaebd13138e3
+- `S10` [Pricing for Individuals - Compare plans and unlock better ...](https://genio.co/pricing/individuals) — web:yahoo, pricing, vendor (self-interested), published undated, fetched 2026-11-17T15:53:00+00:00, sha256:bd3c64aa97feb446

@@ -29,3 +29,5 @@ Required before anything proceeds — see `decision_log.json` (`gate_3_decision`
 | 1 | 2 | GO | 100.0 | 0.0 |
 | 2 | 2 | GO | 100.0 | 4.5 |
 | 3 | 2 | GO | 0.0 | 0.0 |
+
+> **Advisory, not part of the gate:** no verified pain was found in the demand evidence, so feature fit is untested. See `phase3_step4_advisor-memo.md`.
