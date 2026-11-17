@@ -1,0 +1,36 @@
+[
+  {
+    "key": "WB1",
+    "url": "https://data.worldbank.org/indicator/SE.TER.ENRL?locations=EG",
+    "title": "World Bank \u2014 Tertiary enrolment Egypt",
+    "domain": "data.worldbank.org",
+    "fetch_time": "2026-11-17T09:00:00Z",
+    "text_hash": "2f1b85f0bf4c0734",
+    "passages": [
+      "tertiary enrolment Egypt exceeded 3 million students",
+      "internet penetration among youth in Egypt has grown to over 70%"
+    ]
+  },
+  {
+    "key": "WB2",
+    "url": "https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.CD?locations=EG",
+    "title": "World Bank \u2014 GDP per capita PPP Egypt",
+    "domain": "data.worldbank.org",
+    "fetch_time": "2026-11-17T09:00:00Z",
+    "text_hash": "17fa0270645be73f",
+    "passages": [
+      "GDP per capita PPP Egypt 2023: approximately USD 15,000"
+    ]
+  },
+  {
+    "key": "STAT1",
+    "url": "https://www.statista.com/statistics/mena-edtech-market",
+    "title": "Statista \u2014 ASSUMPTION: MENA EdTech market size (not fetched in offline mode)",
+    "domain": "statista.com",
+    "fetch_time": "2026-11-17T09:00:00Z",
+    "text_hash": "e517abc027c97734",
+    "passages": [
+      "ASSUMPTION: MENA EdTech market projected to reach USD 2.2B by 2027"
+    ]
+  }
+]

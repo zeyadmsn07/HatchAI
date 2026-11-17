@@ -1,0 +1,62 @@
+gate_1:
+  evidence_score_go: 40
+  evidence_score_stop: 25
+  min_distinct_domains: 3
+  require_target_market: true
+  require_geography: true
+
+gate_2:
+  evidence_score_go: 55
+  evidence_score_stop: 35
+  viability_score_go: 3.0
+  viability_score_stop: 2.0
+  max_unresolved_kill_assumptions: 0
+
+gate_3:
+  require_prd_sections: true
+
+gate_4:
+  require_pricing: true
+  require_terms: true
+  require_privacy: true
+  require_refund_policy: true
+
+gate_5:
+  require_idempotency_pass: true
+  require_revocation_pass: true
+  require_reconciliation_pass: true
+
+evidence_score:
+  category_weight: 40
+  verified_ratio_weight: 25
+  domain_diversity_weight: 20
+  recency_weight: 15
+  max_domains: 5
+
+excluded_terms:
+  - physical goods
+  - financial advice
+  - investment advice
+  - crypto
+  - cryptocurrency
+  - bitcoin
+  - health advice
+  - medical advice
+  - legal advice
+
+trick_intents:
+  - create fake
+  - fake reviews
+  - fake testimonials
+  - impersonate
+  - pose as
+  - fake sign-up
+  - fake urgency
+  - collect passwords
+  - store card numbers
+  - guaranteed income
+  - guaranteed profit
+  - guaranteed return
+  - hold money
+  - move money
+  - countdown timer

@@ -1,12 +1,13 @@
-google-adk
-litellm
 fastapi
 uvicorn[standard]
-pydantic
+pydantic>=2.0
 python-multipart
 httpx
+litellm
 ddgs
 trafilatura
 rank_bm25
-markitdown[pdf,docx]
+rapidfuzz
+pyyaml
 pytest
+pytest-asyncio

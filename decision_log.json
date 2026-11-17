@@ -1,0 +1,12 @@
+[
+  {
+    "timestamp": "2026-11-17T11:55:03.384295+00:00",
+    "agent": "founder",
+    "action": "gate_1_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "approve"
+  }
+]

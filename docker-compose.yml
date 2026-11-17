@@ -3,6 +3,11 @@ services:
     build: .
     ports:
       - "8000:8000"
+    volumes:
+      - ./outputs:/app/outputs
+      - ./decision_log.json:/app/decision_log.json
     env_file:
       - path: .env
         required: false
+    environment:
+      - DB_PATH=/app/hatchai.db
