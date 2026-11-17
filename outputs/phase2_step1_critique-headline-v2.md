@@ -34,6 +34,10 @@ Skills: web development; 10.0 h/week; budget USD 500.0. Founder-fit points: 0.75
 
 | Assumption | Risk | Kill criterion | Evidence gaps |
 |---|---|---|---|
-| Target users will pay a recurring price | high | If fewer than 3% of landing-page visitors click a priced plan, stop or pivot pricing. | No primary willingness-to-pay data (demand test NOT_RUN) |
+| ASSUMPTION: university students will pay a recurring price; no verified source states a price for this kind of product | high | If fewer than 3% of landing-page visitors click a priced plan, stop or pivot pricing. | No verified price in the source ledger; No primary willingness-to-pay data (demand test NOT_RUN) |
+| university students feel the problem behind S12, which describes the market, not a pain strongly enough to switch tools | high | If fewer than 5 of 10 university students describe a recent, concrete instance of it, stop. | Demand rests on one source (S12); No verified quote names a pain |
+| university students will choose a focused tool over the incumbents in S13, S16 ('Apr 16, 2026 · The best study apps for university students in 2026 —…') | medium | If 7 of 10 university students say an incumbent from S13, S16 already does the job well enough, pivot to the gap the Strategist ranks first. | — |
+| What S3, S4 say about local access and payment still holds for university students today ('Individuals using the Internet (% of population) for Egypt,…') | low | If no local payment method is supported by an available sandbox processor, pivot channel. | — |
+| What S9, S24 say about the channel still holds for university students today ('Reach out to us for consultations on marketing strategies…') | low | If two community posts produce fewer than 100 landing-page visits, change channel. | — |
 
 **Gate 2 recommendation:** GO

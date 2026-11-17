@@ -21,7 +21,7 @@
 
 **Captured under v1:** G1:REPEAT(E=46.5,V=0.0) → G1:GO(E=100.0,V=0.0) → G2:GO(E=100.0,V=4.5) → G3:GO(E=0.0,V=0.0) → G4:GO(E=0.0,V=0.0) → G5:GO(E=0.0,V=0.0)
 
-**Replayed under v2:** G1:REPEAT(E=25.3,V=0.0) → G1:PIVOT(E=67.9,V=0.0) (run stopped: replay under scoring v2 needs evidence the snapshot does not contain (captured under v1): snapshot has no captured evidence for round 1 of idea 'Narrow the idea to a narrower, named user group in Jordan: A booking app for Ara')
+**Replayed under v2:** G1:REPEAT(E=25.3,V=0.0) → G1:PIVOT(E=67.9,V=0.0) (run stopped: replay under scoring v2 needs evidence the snapshot does not contain (captured under v1): snapshot has no captured evidence for round 1 of idea 'Narrow the idea to adult hobbyists in Jordan: A booking app for Arabic calligrap')
 
 ## Gate outcomes: capture vs. this replay — SCORING-VERSION DIFFERENCE: expected when the relevance rule changes, not a failure
 

@@ -19,9 +19,9 @@
 
 ## Opportunity angles
 
-- Narrow the idea to a narrower, named user group in Jordan: A booking app for Arabic calligraphy workshops for adult hobbyists in Jordan.
-- ASSUMPTION: differentiate from the incumbents in the competitor evidence via Arabic localisation for a narrower, named user group
-- ASSUMPTION: B2B version — sell to institutions that serve a narrower, named user group
+- Narrow the idea to adult hobbyists in Jordan: A booking app for Arabic calligraphy workshops for adult hobbyists in Jordan.
+- ASSUMPTION: differentiate from the incumbents in the competitor evidence via Arabic localisation for adult hobbyists
+- ASSUMPTION: B2B version — sell to institutions that serve adult hobbyists
 
 ## Evidence score: 67.9 / 100
 

@@ -47,7 +47,7 @@ at fetch time).
 | Cited sources | 9 |
 | Dated (publication date found) | 100% |
 | Fresh (≤ 18 months) | 89% |
-| Independent (not a vendor writing about its own market) | 44% |
+| Independent (not a vendor writing about its own market) | 33% |
 | Quotes taken from a search snippet rather than the page | 40% |
 | Categories backed by independent, non-stale evidence | demand, local_constraints |
 | Categories backed only by vendor or stale evidence | channels, competitors, pricing |
@@ -55,7 +55,7 @@ at fetch time).
 | Category | Source | Domain | Who is speaking | Published | Freshness | Quote origin |
 |---|---|---|---|---|---|---|
 | demand | S6 | arxiv.org | academic | 2026-07-27 (snippet-date) | fresh (113 d) | page |
-| demand | S7 | studycardsai.com | independent-web | 2026-04-12 (snippet-date) | fresh (219 d) | page |
+| demand | S7 | studycardsai.com | vendor (self-interested) | 2026-04-12 (snippet-date) | fresh (219 d) | page |
 | competitors | S11 | motownai.com | vendor (self-interested) | 2026-07-29 (snippet-date) | fresh (111 d) | search-snippet |
 | competitors | S9 | laxuai.com | vendor (self-interested) | 2026-08-26 (snippet-date) | fresh (83 d) | search-snippet |
 | pricing | S9 | laxuai.com | vendor (self-interested) | 2026-08-26 (snippet-date) | fresh (83 d) | page |
@@ -67,6 +67,7 @@ at fetch time).
 
 **Warnings**
 
+- ⚠ demand: S7 (studycardsai.com) is a vendor writing about its own market — treat as a claim, not independent evidence.
 - ⚠ pricing: S15 (laxuai.com) is a vendor writing about its own market — treat as a claim, not independent evidence.
 - ⚠ pricing: S9 (laxuai.com) is a vendor writing about its own market — treat as a claim, not independent evidence.
 
@@ -78,7 +79,7 @@ at fetch time).
 - `S4` [World Bank — GDP per capita (current US$), Egypt, Arab Rep.](https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG) — worldbank, local_constraints, official-statistics, published 2025, fetched 2026-11-17T15:52:51+00:00, sha256:a517d2c9627f30b0
 - `S5` [Memdora: Designing Cognitively-Grounded Flashcard ...](https://arxiv.org/pdf/2607.25096) — web:yahoo, demand, academic, published undated, fetched 2026-11-17T15:52:51+00:00, sha256:01f51d3060616694
 - `S6` [Memdora: Designing Cognitively-Grounded Flashcard ...](https://arxiv.org/html/2607.25096v1) — web:yahoo, demand, academic, published 2026-07-27, fetched 2026-11-17T15:52:51+00:00, sha256:e4c59da47594adab
-- `S7` [Active Recall & Spaced Repetition: Evidence & Effectiveness](https://studycardsai.com/blog/spaced-repetition-science-ai-optimization) — web:yahoo, demand, independent-web, published 2026-04-12, fetched 2026-11-17T15:52:51+00:00, sha256:b8656f9530e6d883
+- `S7` [Active Recall & Spaced Repetition: Evidence & Effectiveness](https://studycardsai.com/blog/spaced-repetition-science-ai-optimization) — web:yahoo, demand, vendor (self-interested), published 2026-04-12, fetched 2026-11-17T15:52:51+00:00, sha256:b8656f9530e6d883
 - `S8` [The Science Behind AI-Generated Flashcards - notiq.study](https://notiq.study/blog/flashcards-spaced-repetition-science) — web:yahoo, demand, vendor (self-interested), published 2026-05-29, fetched 2026-11-17T15:52:51+00:00, sha256:dd37c93efc5283eb
 - `S9` [7 Best Spaced Repetition Apps in 2026: Hands-On Comparison](https://laxuai.com/blog/best-spaced-repetition-apps-2026) — web:yahoo, competitors, vendor (self-interested), published 2026-08-26, fetched 2026-11-17T15:52:51+00:00, sha256:04e5d148dd3bc418
 - `S10` [Best Spaced Repetition Apps (2026) · Free Anki Alternatives](https://www.mintdeck.app/blog/best-spaced-repetition-apps-2026) — web:yahoo, competitors, vendor (self-interested), published 2026-01-08, fetched 2026-11-17T15:52:51+00:00, sha256:c9529c858fea86b7

@@ -10,6 +10,7 @@ GO: enough verified, diverse evidence to start validation. E=95.0 (GO ≥ 55, ST
 
 ## Checks
 
+- ✓ research tools available
 - ✓ brief defines target user and geography
 - ✓ evidence score at least go
 - ✓ evidence score above stop

@@ -6,7 +6,7 @@
 
 > Flashcards that schedule each review for you (SM-2), for university students in Egypt.
 
-**Status:** generated, tested and booted by the pipeline — 23 tests, 0 failures,
+**Status:** generated, tested and booted by the pipeline — 25 tests, 0 failures,
 0 errors; smoke test passed. Build attempt 1.
 
 ## Archetype
@@ -17,10 +17,13 @@
 
 | Feature | What it does | API action | Traces to |
 |---|---|---|---|
-| Due-today review queue | Shows only the cards due today, oldest first. | `due` | university students lack an adequate AI-powered flashcard and spaced-repetition study tool. |
-| SM-2 adaptive scheduling | Grades 0–5 reschedule each card (1, 6, then ×ease days). | `review` | university students lack an adequate AI-powered flashcard and spaced-repetition study tool. |
-| Retention stats | Reviews, average ease and recall rate per user. | `stats` | Key metric: Demand-test sign-up rate; weekly active users; riskiest: Target users will pay a recurring price. |
-| Consented waitlist (demand test) | Email + explicit consent; feeds the pre-registered demand test. Nothing is sent automatically. | `waitlist` | Riskiest assumption: Target users will pay a recurring price |
+| Due-today review queue | Shows only the cards due today, oldest first. | `due` | ASSUMPTION (job to be done): university students forget material between study sessions and cram before exams |
+| SM-2 adaptive scheduling | Grades 0–5 reschedule each card (1, 6, then ×ease days). | `review` | ASSUMPTION (job to be done): university students forget material between study sessions and cram before exams |
+| Retention stats | Reviews, average ease and recall rate per user. | `stats` | Key metric: Demand-test sign-up rate; weekly active users; riskiest: university students will pay a recurring pr |
+| Consented waitlist (demand test) | Email + explicit consent; feeds the pre-registered demand test. Nothing is sent automatically. | `waitlist` | Riskiest assumption: university students will pay a recurring price in the USD 4.99–20/month range that S9, S13, S15 quo |
+| Pain question on the waitlist (S6) | The waitlist form asks visitors about the pain S6 names, so the demand test collects their own words about it. No template feature solves it yet. | `waitlist` | Verified pain S6 (measured, not yet solved): 'this preparation burden is so significant that it deters sustained adoptio |
+
+**Pain question on the waitlist** (the evidence names a pain no feature solves yet; the demand test asks about it): Optional: the research found people describing this problem: "this preparation burden is so significant that it deters sustained adoption". When did it last happen to you, and what did you do about it?
 
 ## LLM use (bounded; never code, scores or gate decisions)
 

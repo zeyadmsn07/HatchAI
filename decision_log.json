@@ -1,6 +1,6 @@
 [
   {
-    "timestamp": "2026-11-17T21:10:52.825008+00:00",
+    "timestamp": "2026-11-17T21:37:07.905362+00:00",
     "agent": "orchestrator",
     "action": "llm_mode_at_start",
     "sources": [],
@@ -12,7 +12,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:52.848023+00:00",
+    "timestamp": "2026-11-17T21:37:07.924930+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -23,7 +23,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:52.854824+00:00",
+    "timestamp": "2026-11-17T21:37:07.930017+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_1",
     "sources": [
@@ -55,7 +55,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:52.877313+00:00",
+    "timestamp": "2026-11-17T21:37:07.942028+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -76,7 +76,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:52.925469+00:00",
+    "timestamp": "2026-11-17T21:37:07.968282+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_1",
     "sources": [
@@ -98,7 +98,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:52.967012+00:00",
+    "timestamp": "2026-11-17T21:37:07.992869+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -110,7 +110,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:52.984113+00:00",
+    "timestamp": "2026-11-17T21:37:08.010288+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -122,7 +122,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:52.995292+00:00",
+    "timestamp": "2026-11-17T21:37:08.021317+00:00",
     "agent": "validator",
     "action": "red_team_critique",
     "sources": [
@@ -143,7 +143,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.000997+00:00",
+    "timestamp": "2026-11-17T21:37:08.026537+00:00",
     "agent": "validator",
     "action": "build_lean_canvas",
     "sources": [
@@ -164,7 +164,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.006185+00:00",
+    "timestamp": "2026-11-17T21:37:08.031189+00:00",
     "agent": "validator",
     "action": "design_demand_test",
     "sources": [],
@@ -175,7 +175,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.021068+00:00",
+    "timestamp": "2026-11-17T21:37:08.044088+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_2",
     "sources": [
@@ -197,7 +197,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.032816+00:00",
+    "timestamp": "2026-11-17T21:37:08.056324+00:00",
     "agent": "gate",
     "action": "gate_2_evaluation",
     "sources": [],
@@ -209,7 +209,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.049964+00:00",
+    "timestamp": "2026-11-17T21:37:08.072839+00:00",
     "agent": "founder",
     "action": "gate_2_decision",
     "sources": [],
@@ -221,7 +221,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.065792+00:00",
+    "timestamp": "2026-11-17T21:37:08.083868+00:00",
     "agent": "builder",
     "action": "select_template",
     "sources": [],
@@ -233,7 +233,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.071699+00:00",
+    "timestamp": "2026-11-17T21:37:08.088779+00:00",
     "agent": "builder",
     "action": "llm_spec_text",
     "sources": [],
@@ -245,7 +245,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.078054+00:00",
+    "timestamp": "2026-11-17T21:37:08.093561+00:00",
     "agent": "builder",
     "action": "design_app_spec",
     "sources": [],
@@ -256,7 +256,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.088998+00:00",
+    "timestamp": "2026-11-17T21:37:08.102035+00:00",
     "agent": "builder",
     "action": "generate_mvp_code_spaced_repetition",
     "sources": [],
@@ -267,19 +267,19 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.849121+00:00",
+    "timestamp": "2026-11-17T21:37:08.767293+00:00",
     "agent": "builder",
     "action": "run_generated_tests",
     "sources": [],
     "model": null,
     "cost": 0.0,
     "approved_by": null,
-    "outcome": "ran=23 failed=0 errors=0 smoke=True",
+    "outcome": "ran=25 failed=0 errors=0 smoke=True",
     "run_id": "demo-strong",
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.863821+00:00",
+    "timestamp": "2026-11-17T21:37:08.788380+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_3",
     "sources": [
@@ -301,7 +301,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.877029+00:00",
+    "timestamp": "2026-11-17T21:37:08.799541+00:00",
     "agent": "gate",
     "action": "gate_3_evaluation",
     "sources": [],
@@ -313,7 +313,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.895191+00:00",
+    "timestamp": "2026-11-17T21:37:08.814665+00:00",
     "agent": "founder",
     "action": "gate_3_decision",
     "sources": [],
@@ -325,7 +325,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.906354+00:00",
+    "timestamp": "2026-11-17T21:37:08.825155+00:00",
     "agent": "commercial",
     "action": "evidence_anchored_pricing",
     "sources": [
@@ -341,7 +341,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.911609+00:00",
+    "timestamp": "2026-11-17T21:37:08.829728+00:00",
     "agent": "commercial",
     "action": "draft_policy_templates",
     "sources": [],
@@ -352,7 +352,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.923500+00:00",
+    "timestamp": "2026-11-17T21:37:08.840912+00:00",
     "agent": "gate",
     "action": "gate_4_evaluation",
     "sources": [],
@@ -364,7 +364,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.941310+00:00",
+    "timestamp": "2026-11-17T21:37:08.856992+00:00",
     "agent": "founder",
     "action": "gate_4_decision",
     "sources": [],
@@ -376,7 +376,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.952070+00:00",
+    "timestamp": "2026-11-17T21:37:08.866759+00:00",
     "agent": "launch",
     "action": "draft_launch_copy",
     "sources": [],
@@ -388,7 +388,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:53.989578+00:00",
+    "timestamp": "2026-11-17T21:37:08.900701+00:00",
     "agent": "payments",
     "action": "sale_to_cash_simulation_mocked",
     "sources": [],
@@ -399,7 +399,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.001486+00:00",
+    "timestamp": "2026-11-17T21:37:08.911858+00:00",
     "agent": "gate",
     "action": "gate_5_evaluation",
     "sources": [],
@@ -411,7 +411,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.018192+00:00",
+    "timestamp": "2026-11-17T21:37:08.927990+00:00",
     "agent": "founder",
     "action": "gate_5_decision",
     "sources": [],
@@ -423,7 +423,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.028790+00:00",
+    "timestamp": "2026-11-17T21:37:08.938507+00:00",
     "agent": "operate",
     "action": "read_metrics_and_apply_preregistered_rule",
     "sources": [],
@@ -435,7 +435,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.041186+00:00",
+    "timestamp": "2026-11-17T21:37:08.948427+00:00",
     "agent": "orchestrator",
     "action": "run_completed",
     "sources": [],
@@ -447,7 +447,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.046727+00:00",
+    "timestamp": "2026-11-17T21:37:08.953553+00:00",
     "agent": "orchestrator",
     "action": "replay_check",
     "sources": [],
@@ -459,7 +459,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.068547+00:00",
+    "timestamp": "2026-11-17T21:37:08.973557+00:00",
     "agent": "orchestrator",
     "action": "llm_mode_at_start",
     "sources": [],
@@ -471,7 +471,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.088631+00:00",
+    "timestamp": "2026-11-17T21:37:08.989569+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -482,7 +482,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.094951+00:00",
+    "timestamp": "2026-11-17T21:37:08.995385+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_1",
     "sources": [
@@ -505,7 +505,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.106521+00:00",
+    "timestamp": "2026-11-17T21:37:09.009671+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -524,7 +524,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.124570+00:00",
+    "timestamp": "2026-11-17T21:37:09.030219+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_1",
     "sources": [
@@ -544,7 +544,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.139271+00:00",
+    "timestamp": "2026-11-17T21:37:09.043080+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -556,7 +556,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.157087+00:00",
+    "timestamp": "2026-11-17T21:37:09.060296+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -568,7 +568,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.168453+00:00",
+    "timestamp": "2026-11-17T21:37:09.070417+00:00",
     "agent": "orchestrator",
     "action": "run_stopped",
     "sources": [],
@@ -580,7 +580,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.174139+00:00",
+    "timestamp": "2026-11-17T21:37:09.075727+00:00",
     "agent": "orchestrator",
     "action": "replay_check",
     "sources": [],
@@ -592,7 +592,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.197805+00:00",
+    "timestamp": "2026-11-17T21:37:09.097202+00:00",
     "agent": "orchestrator",
     "action": "llm_mode_at_start",
     "sources": [],
@@ -604,7 +604,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.214148+00:00",
+    "timestamp": "2026-11-17T21:37:09.113589+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -615,7 +615,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.219783+00:00",
+    "timestamp": "2026-11-17T21:37:09.119667+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_1",
     "sources": [
@@ -640,7 +640,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.225626+00:00",
+    "timestamp": "2026-11-17T21:37:09.125179+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -655,7 +655,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.233973+00:00",
+    "timestamp": "2026-11-17T21:37:09.132601+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_1",
     "sources": [
@@ -671,7 +671,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.247033+00:00",
+    "timestamp": "2026-11-17T21:37:09.142395+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -683,7 +683,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.264138+00:00",
+    "timestamp": "2026-11-17T21:37:09.158477+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -695,7 +695,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.276715+00:00",
+    "timestamp": "2026-11-17T21:37:09.169591+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_2",
     "sources": [
@@ -720,7 +720,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.285287+00:00",
+    "timestamp": "2026-11-17T21:37:09.177489+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -740,7 +740,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.297517+00:00",
+    "timestamp": "2026-11-17T21:37:09.188686+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_1",
     "sources": [
@@ -761,7 +761,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.309794+00:00",
+    "timestamp": "2026-11-17T21:37:09.201088+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -773,7 +773,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.325894+00:00",
+    "timestamp": "2026-11-17T21:37:09.217191+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -785,7 +785,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.337876+00:00",
+    "timestamp": "2026-11-17T21:37:09.228576+00:00",
     "agent": "validator",
     "action": "red_team_critique",
     "sources": [
@@ -805,7 +805,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.343090+00:00",
+    "timestamp": "2026-11-17T21:37:09.234740+00:00",
     "agent": "validator",
     "action": "build_lean_canvas",
     "sources": [
@@ -825,7 +825,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.348304+00:00",
+    "timestamp": "2026-11-17T21:37:09.240046+00:00",
     "agent": "validator",
     "action": "design_demand_test",
     "sources": [],
@@ -836,7 +836,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.359484+00:00",
+    "timestamp": "2026-11-17T21:37:09.249620+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_2",
     "sources": [
@@ -857,7 +857,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.372606+00:00",
+    "timestamp": "2026-11-17T21:37:09.260214+00:00",
     "agent": "gate",
     "action": "gate_2_evaluation",
     "sources": [],
@@ -869,7 +869,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.390338+00:00",
+    "timestamp": "2026-11-17T21:37:09.276236+00:00",
     "agent": "founder",
     "action": "gate_2_decision",
     "sources": [],
@@ -881,7 +881,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.402059+00:00",
+    "timestamp": "2026-11-17T21:37:09.288664+00:00",
     "agent": "builder",
     "action": "select_template",
     "sources": [],
@@ -893,7 +893,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.407738+00:00",
+    "timestamp": "2026-11-17T21:37:09.293665+00:00",
     "agent": "builder",
     "action": "llm_spec_text",
     "sources": [],
@@ -905,7 +905,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.413032+00:00",
+    "timestamp": "2026-11-17T21:37:09.298523+00:00",
     "agent": "builder",
     "action": "design_app_spec",
     "sources": [],
@@ -916,7 +916,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:54.422116+00:00",
+    "timestamp": "2026-11-17T21:37:09.306580+00:00",
     "agent": "builder",
     "action": "generate_mvp_code_booking",
     "sources": [],
@@ -927,19 +927,19 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.106581+00:00",
+    "timestamp": "2026-11-17T21:37:09.996013+00:00",
     "agent": "builder",
     "action": "run_generated_tests",
     "sources": [],
     "model": null,
     "cost": 0.0,
     "approved_by": null,
-    "outcome": "ran=23 failed=0 errors=0 smoke=True",
+    "outcome": "ran=24 failed=0 errors=0 smoke=True",
     "run_id": "demo-replay",
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.121335+00:00",
+    "timestamp": "2026-11-17T21:37:10.011233+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_3",
     "sources": [
@@ -960,7 +960,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.132611+00:00",
+    "timestamp": "2026-11-17T21:37:10.021600+00:00",
     "agent": "gate",
     "action": "gate_3_evaluation",
     "sources": [],
@@ -972,7 +972,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.148634+00:00",
+    "timestamp": "2026-11-17T21:37:10.036491+00:00",
     "agent": "founder",
     "action": "gate_3_decision",
     "sources": [],
@@ -984,7 +984,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.159026+00:00",
+    "timestamp": "2026-11-17T21:37:10.047785+00:00",
     "agent": "commercial",
     "action": "evidence_anchored_pricing",
     "sources": [
@@ -997,7 +997,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.164347+00:00",
+    "timestamp": "2026-11-17T21:37:10.052220+00:00",
     "agent": "commercial",
     "action": "draft_policy_templates",
     "sources": [],
@@ -1008,7 +1008,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.175220+00:00",
+    "timestamp": "2026-11-17T21:37:10.062800+00:00",
     "agent": "gate",
     "action": "gate_4_evaluation",
     "sources": [],
@@ -1020,7 +1020,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.192613+00:00",
+    "timestamp": "2026-11-17T21:37:10.078365+00:00",
     "agent": "founder",
     "action": "gate_4_decision",
     "sources": [],
@@ -1032,7 +1032,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.202811+00:00",
+    "timestamp": "2026-11-17T21:37:10.089009+00:00",
     "agent": "launch",
     "action": "draft_launch_copy",
     "sources": [],
@@ -1044,7 +1044,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.235456+00:00",
+    "timestamp": "2026-11-17T21:37:10.119493+00:00",
     "agent": "payments",
     "action": "sale_to_cash_simulation_mocked",
     "sources": [],
@@ -1055,7 +1055,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.247434+00:00",
+    "timestamp": "2026-11-17T21:37:10.130972+00:00",
     "agent": "gate",
     "action": "gate_5_evaluation",
     "sources": [],
@@ -1067,7 +1067,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.264674+00:00",
+    "timestamp": "2026-11-17T21:37:10.148310+00:00",
     "agent": "founder",
     "action": "gate_5_decision",
     "sources": [],
@@ -1079,7 +1079,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.275384+00:00",
+    "timestamp": "2026-11-17T21:37:10.160175+00:00",
     "agent": "operate",
     "action": "read_metrics_and_apply_preregistered_rule",
     "sources": [],
@@ -1091,7 +1091,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.285899+00:00",
+    "timestamp": "2026-11-17T21:37:10.171400+00:00",
     "agent": "orchestrator",
     "action": "run_completed",
     "sources": [],
@@ -1103,7 +1103,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.291686+00:00",
+    "timestamp": "2026-11-17T21:37:10.176792+00:00",
     "agent": "orchestrator",
     "action": "replay_check",
     "sources": [],
@@ -1115,7 +1115,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.323516+00:00",
+    "timestamp": "2026-11-17T21:37:10.204789+00:00",
     "agent": "orchestrator",
     "action": "llm_mode_at_start",
     "sources": [],
@@ -1127,7 +1127,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.338866+00:00",
+    "timestamp": "2026-11-17T21:37:10.219660+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -1138,7 +1138,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.344720+00:00",
+    "timestamp": "2026-11-17T21:37:10.225223+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_1",
     "sources": [
@@ -1168,7 +1168,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.357718+00:00",
+    "timestamp": "2026-11-17T21:37:10.240206+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -1187,7 +1187,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.368101+00:00",
+    "timestamp": "2026-11-17T21:37:10.251150+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_1",
     "sources": [
@@ -1207,7 +1207,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.378125+00:00",
+    "timestamp": "2026-11-17T21:37:10.261813+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -1219,7 +1219,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.397119+00:00",
+    "timestamp": "2026-11-17T21:37:10.281890+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -1231,7 +1231,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.410475+00:00",
+    "timestamp": "2026-11-17T21:37:10.294465+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_2",
     "sources": [
@@ -1254,7 +1254,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.428569+00:00",
+    "timestamp": "2026-11-17T21:37:10.312486+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -1273,7 +1273,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.440228+00:00",
+    "timestamp": "2026-11-17T21:37:10.324356+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_1",
     "sources": [
@@ -1293,7 +1293,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.451294+00:00",
+    "timestamp": "2026-11-17T21:37:10.334473+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -1305,7 +1305,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.468301+00:00",
+    "timestamp": "2026-11-17T21:37:10.351086+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -1317,7 +1317,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.474211+00:00",
+    "timestamp": "2026-11-17T21:37:10.356884+00:00",
     "agent": "orchestrator",
     "action": "pivot",
     "sources": [],
@@ -1329,7 +1329,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.485175+00:00",
+    "timestamp": "2026-11-17T21:37:10.368285+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_1",
     "sources": [
@@ -1366,7 +1366,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.497031+00:00",
+    "timestamp": "2026-11-17T21:37:10.380014+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -1385,7 +1385,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.507845+00:00",
+    "timestamp": "2026-11-17T21:37:10.391410+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_1",
     "sources": [
@@ -1405,7 +1405,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.521019+00:00",
+    "timestamp": "2026-11-17T21:37:10.401536+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -1417,7 +1417,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.536896+00:00",
+    "timestamp": "2026-11-17T21:37:10.417958+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -1429,7 +1429,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.549653+00:00",
+    "timestamp": "2026-11-17T21:37:10.428336+00:00",
     "agent": "validator",
     "action": "red_team_critique",
     "sources": [
@@ -1448,7 +1448,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.556339+00:00",
+    "timestamp": "2026-11-17T21:37:10.435754+00:00",
     "agent": "validator",
     "action": "build_lean_canvas",
     "sources": [
@@ -1467,7 +1467,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.561090+00:00",
+    "timestamp": "2026-11-17T21:37:10.440672+00:00",
     "agent": "validator",
     "action": "design_demand_test",
     "sources": [],
@@ -1478,7 +1478,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.572463+00:00",
+    "timestamp": "2026-11-17T21:37:10.452070+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_2",
     "sources": [
@@ -1498,7 +1498,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.584424+00:00",
+    "timestamp": "2026-11-17T21:37:10.463710+00:00",
     "agent": "gate",
     "action": "gate_2_evaluation",
     "sources": [],
@@ -1510,7 +1510,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.600861+00:00",
+    "timestamp": "2026-11-17T21:37:10.480190+00:00",
     "agent": "founder",
     "action": "gate_2_decision",
     "sources": [],
@@ -1522,7 +1522,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.611646+00:00",
+    "timestamp": "2026-11-17T21:37:10.491752+00:00",
     "agent": "builder",
     "action": "select_template",
     "sources": [],
@@ -1534,7 +1534,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.616902+00:00",
+    "timestamp": "2026-11-17T21:37:10.497461+00:00",
     "agent": "builder",
     "action": "llm_spec_text",
     "sources": [],
@@ -1546,7 +1546,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.621624+00:00",
+    "timestamp": "2026-11-17T21:37:10.502288+00:00",
     "agent": "builder",
     "action": "design_app_spec",
     "sources": [],
@@ -1557,7 +1557,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:55.629356+00:00",
+    "timestamp": "2026-11-17T21:37:10.508881+00:00",
     "agent": "builder",
     "action": "generate_mvp_code_spaced_repetition",
     "sources": [],
@@ -1568,19 +1568,19 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.303245+00:00",
+    "timestamp": "2026-11-17T21:37:11.176533+00:00",
     "agent": "builder",
     "action": "run_generated_tests",
     "sources": [],
     "model": null,
     "cost": 0.0,
     "approved_by": null,
-    "outcome": "ran=23 failed=0 errors=0 smoke=True",
+    "outcome": "ran=24 failed=0 errors=0 smoke=True",
     "run_id": "demo-headline",
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.313042+00:00",
+    "timestamp": "2026-11-17T21:37:11.193855+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_3",
     "sources": [
@@ -1600,7 +1600,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.324418+00:00",
+    "timestamp": "2026-11-17T21:37:11.205136+00:00",
     "agent": "gate",
     "action": "gate_3_evaluation",
     "sources": [],
@@ -1612,7 +1612,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.340167+00:00",
+    "timestamp": "2026-11-17T21:37:11.220780+00:00",
     "agent": "founder",
     "action": "gate_3_decision",
     "sources": [],
@@ -1624,7 +1624,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.351007+00:00",
+    "timestamp": "2026-11-17T21:37:11.231668+00:00",
     "agent": "commercial",
     "action": "evidence_anchored_pricing",
     "sources": [
@@ -1637,7 +1637,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.356306+00:00",
+    "timestamp": "2026-11-17T21:37:11.236879+00:00",
     "agent": "commercial",
     "action": "draft_policy_templates",
     "sources": [],
@@ -1648,7 +1648,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.367596+00:00",
+    "timestamp": "2026-11-17T21:37:11.247953+00:00",
     "agent": "gate",
     "action": "gate_4_evaluation",
     "sources": [],
@@ -1660,7 +1660,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.384309+00:00",
+    "timestamp": "2026-11-17T21:37:11.265197+00:00",
     "agent": "founder",
     "action": "gate_4_decision",
     "sources": [],
@@ -1672,7 +1672,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.394861+00:00",
+    "timestamp": "2026-11-17T21:37:11.275053+00:00",
     "agent": "launch",
     "action": "draft_launch_copy",
     "sources": [],
@@ -1684,7 +1684,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.426232+00:00",
+    "timestamp": "2026-11-17T21:37:11.305613+00:00",
     "agent": "payments",
     "action": "sale_to_cash_simulation_mocked",
     "sources": [],
@@ -1695,7 +1695,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.437419+00:00",
+    "timestamp": "2026-11-17T21:37:11.316605+00:00",
     "agent": "gate",
     "action": "gate_5_evaluation",
     "sources": [],
@@ -1707,7 +1707,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.453547+00:00",
+    "timestamp": "2026-11-17T21:37:11.331985+00:00",
     "agent": "founder",
     "action": "gate_5_decision",
     "sources": [],
@@ -1719,7 +1719,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.463435+00:00",
+    "timestamp": "2026-11-17T21:37:11.342465+00:00",
     "agent": "operate",
     "action": "read_metrics_and_apply_preregistered_rule",
     "sources": [],
@@ -1731,7 +1731,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.474861+00:00",
+    "timestamp": "2026-11-17T21:37:11.352704+00:00",
     "agent": "orchestrator",
     "action": "run_completed",
     "sources": [],
@@ -1743,7 +1743,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.480460+00:00",
+    "timestamp": "2026-11-17T21:37:11.358613+00:00",
     "agent": "orchestrator",
     "action": "replay_check",
     "sources": [],
@@ -1755,7 +1755,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.526528+00:00",
+    "timestamp": "2026-11-17T21:37:11.407796+00:00",
     "agent": "orchestrator",
     "action": "llm_mode_at_start",
     "sources": [],
@@ -1767,7 +1767,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.542677+00:00",
+    "timestamp": "2026-11-17T21:37:11.422898+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -1778,7 +1778,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.549467+00:00",
+    "timestamp": "2026-11-17T21:37:11.429018+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_1",
     "sources": [
@@ -1810,7 +1810,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.564096+00:00",
+    "timestamp": "2026-11-17T21:37:11.445433+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -1829,7 +1829,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.575552+00:00",
+    "timestamp": "2026-11-17T21:37:11.456628+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_1",
     "sources": [
@@ -1849,7 +1849,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.589814+00:00",
+    "timestamp": "2026-11-17T21:37:11.468840+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -1861,7 +1861,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.607054+00:00",
+    "timestamp": "2026-11-17T21:37:11.485032+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -1873,7 +1873,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.626865+00:00",
+    "timestamp": "2026-11-17T21:37:11.495810+00:00",
     "agent": "orchestrator",
     "action": "replay_round_not_captured",
     "sources": [],
@@ -1885,7 +1885,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.651882+00:00",
+    "timestamp": "2026-11-17T21:37:11.505504+00:00",
     "agent": "orchestrator",
     "action": "replay_check",
     "sources": [],
@@ -1897,7 +1897,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.723316+00:00",
+    "timestamp": "2026-11-17T21:37:11.560129+00:00",
     "agent": "orchestrator",
     "action": "llm_mode_at_start",
     "sources": [],
@@ -1909,7 +1909,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.742876+00:00",
+    "timestamp": "2026-11-17T21:37:11.577596+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -1920,7 +1920,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.748309+00:00",
+    "timestamp": "2026-11-17T21:37:11.584308+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_1",
     "sources": [
@@ -1943,7 +1943,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.759807+00:00",
+    "timestamp": "2026-11-17T21:37:11.593917+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -1959,7 +1959,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.775200+00:00",
+    "timestamp": "2026-11-17T21:37:11.607387+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_1",
     "sources": [
@@ -1976,7 +1976,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.787873+00:00",
+    "timestamp": "2026-11-17T21:37:11.618402+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -1988,7 +1988,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.808676+00:00",
+    "timestamp": "2026-11-17T21:37:11.634820+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -2000,7 +2000,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.822538+00:00",
+    "timestamp": "2026-11-17T21:37:11.645066+00:00",
     "agent": "orchestrator",
     "action": "run_stopped",
     "sources": [],
@@ -2012,7 +2012,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.829092+00:00",
+    "timestamp": "2026-11-17T21:37:11.650232+00:00",
     "agent": "orchestrator",
     "action": "replay_check",
     "sources": [],
@@ -2024,7 +2024,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.906226+00:00",
+    "timestamp": "2026-11-17T21:37:11.706669+00:00",
     "agent": "orchestrator",
     "action": "llm_mode_at_start",
     "sources": [],
@@ -2036,7 +2036,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.929752+00:00",
+    "timestamp": "2026-11-17T21:37:11.722704+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -2047,7 +2047,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.935674+00:00",
+    "timestamp": "2026-11-17T21:37:11.728164+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_1",
     "sources": [
@@ -2072,7 +2072,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.942541+00:00",
+    "timestamp": "2026-11-17T21:37:11.735326+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -2086,7 +2086,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.949886+00:00",
+    "timestamp": "2026-11-17T21:37:11.747952+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_1",
     "sources": [
@@ -2101,7 +2101,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.962532+00:00",
+    "timestamp": "2026-11-17T21:37:11.772673+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -2113,7 +2113,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.981436+00:00",
+    "timestamp": "2026-11-17T21:37:11.827880+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -2125,7 +2125,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:56.994539+00:00",
+    "timestamp": "2026-11-17T21:37:11.840792+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_2",
     "sources": [
@@ -2150,7 +2150,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:57.007775+00:00",
+    "timestamp": "2026-11-17T21:37:11.851025+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -2167,7 +2167,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:57.019751+00:00",
+    "timestamp": "2026-11-17T21:37:11.862596+00:00",
     "agent": "advisor",
     "action": "advisor_memo_gate_1",
     "sources": [
@@ -2185,7 +2185,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:57.032155+00:00",
+    "timestamp": "2026-11-17T21:37:11.877459+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -2197,7 +2197,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:57.059129+00:00",
+    "timestamp": "2026-11-17T21:37:11.896918+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -2209,31 +2209,31 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:57.067323+00:00",
+    "timestamp": "2026-11-17T21:37:11.904109+00:00",
     "agent": "orchestrator",
     "action": "pivot",
     "sources": [],
     "model": null,
     "cost": 0.0,
     "approved_by": null,
-    "outcome": "Narrow the idea to a narrower, named user group in Jordan: A booking app for Arabic calligraphy workshops for adult hobb",
+    "outcome": "Narrow the idea to adult hobbyists in Jordan: A booking app for Arabic calligraphy workshops for adult hobbyists in Jord",
     "run_id": "demo-replay-v2",
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:57.079548+00:00",
+    "timestamp": "2026-11-17T21:37:11.917874+00:00",
     "agent": "orchestrator",
     "action": "replay_round_not_captured",
     "sources": [],
     "model": null,
     "cost": 0.0,
     "approved_by": null,
-    "outcome": "replay under scoring v2 needs evidence the snapshot does not contain (captured under v1): snapshot has no captured evidence for round 1 of idea 'Narrow the idea to a narrower, named user group in Jordan: A booking app for Ara'",
+    "outcome": "replay under scoring v2 needs evidence the snapshot does not contain (captured under v1): snapshot has no captured evidence for round 1 of idea 'Narrow the idea to adult hobbyists in Jordan: A booking app for Arabic calligrap'",
     "run_id": "demo-replay-v2",
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:57.091978+00:00",
+    "timestamp": "2026-11-17T21:37:11.930483+00:00",
     "agent": "orchestrator",
     "action": "replay_check",
     "sources": [],
@@ -2245,7 +2245,7 @@
     "scoring_version": "v2"
   },
   {
-    "timestamp": "2026-11-17T21:10:59.244059+00:00",
+    "timestamp": "2026-11-17T21:37:14.732481+00:00",
     "agent": "demo_script",
     "action": "send_labelled_test_traffic",
     "sources": [],
@@ -2257,7 +2257,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:59.249436+00:00",
+    "timestamp": "2026-11-17T21:37:14.737720+00:00",
     "agent": "orchestrator",
     "action": "remeasure_phase_6",
     "sources": [],
@@ -2268,7 +2268,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:59.256837+00:00",
+    "timestamp": "2026-11-17T21:37:14.745168+00:00",
     "agent": "operate",
     "action": "read_metrics_and_apply_preregistered_rule",
     "sources": [],
@@ -2280,7 +2280,7 @@
     "scoring_version": "v1"
   },
   {
-    "timestamp": "2026-11-17T21:10:59.261858+00:00",
+    "timestamp": "2026-11-17T21:37:14.754170+00:00",
     "agent": "operate",
     "action": "pipeline_check_on_test_traffic",
     "sources": [],

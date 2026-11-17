@@ -31,7 +31,7 @@ World Bank: GDP per capita for Jordan = USD 5,348/year (https://data.worldbank.o
 | Plus | 4.00 / month | Higher limits, export |
 | Team / institution | 20.00 / month | 5 seats, shared content |
 
-Target user: UNKNOWN (not stated by founder). Geography: Jordan. Local-currency display at checkout is an ASSUMPTION to verify with the chosen processor.
+Target user: adult hobbyists. Geography: Jordan. Local-currency display at checkout is an ASSUMPTION to verify with the chosen processor.
 
 ## Kill criterion (from Phase 2)
 

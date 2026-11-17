@@ -10,6 +10,7 @@ GO: enough verified, diverse evidence to start validation. E=83.9 (GO ≥ 55, ST
 
 ## Checks
 
+- ✓ research tools available
 - ✓ brief defines target user and geography
 - ✓ evidence score at least go
 - ✓ evidence score above stop
@@ -27,5 +28,7 @@ Required before anything proceeds — see `decision_log.json` (`gate_1_decision`
 | 1 | 1 | REPEAT | 84.2 | 0.0 |
 | 1 | 2 | PIVOT | 84.2 | 0.0 |
 | 1 | 1 | GO | 83.9 | 0.0 |
+
+> **Advisory, not part of the gate: this GO is fragile.** Removing S12 alone would change Gate 1 from GO to REPEAT (E 83.9 → 75.4). Treat the cheapest test in the Advisor memo as a precondition, not an afterthought.
 
 > **Evidence mode: REPLAY** of snapshot evidence_snapshots/strong_v2_scenario.json (captured 2026-11-17T20:51:46+00:00). No new evidence was collected in this run; the gate re-scored the captured sources with the current code.

@@ -10,6 +10,7 @@ REPEAT: evidence is incomplete — run another, broader research round. E=84.2 (
 
 ## Checks
 
+- ✓ research tools available
 - ✓ brief defines target user and geography
 - ✓ evidence score at least go
 - ✓ evidence score above stop

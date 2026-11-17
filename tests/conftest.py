@@ -42,7 +42,7 @@ class FakeCollector:
         self.rounds = rounds
         self.calls = []
 
-    def __call__(self, idea, target_user, geography, round_no=1, existing=None):
+    def __call__(self, idea, target_user, geography, round_no=1, existing=None, health=None):
         self.calls.append((idea, round_no))
         spec = self.rounds[min(round_no, len(self.rounds)) - 1]
         existing = list(existing or [])

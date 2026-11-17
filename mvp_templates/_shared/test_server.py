@@ -74,6 +74,13 @@ class ServerTest(unittest.TestCase):
         code, body = call(self.base, "/api/waitlist/count")
         self.assertEqual(body["signups"], 1)
 
+    def test_waitlist_stores_optional_pain_answer(self):
+        code, body = call(self.base, "/api/waitlist", {"email": "pain@example.com", "consent": True,
+                                                       "answer": "  x" * 300})
+        self.assertEqual((code, body["status"]), (201, "joined"))
+        code, cfg = call(self.base, "/api/config")
+        self.assertIn("pain_question", cfg)
+
     def test_page_visits_are_counted_with_unique_visitors(self):
         before = call(self.base, "/api/metrics")[1]["real"]
         call(self.base, "/", headers={"Cookie": "hatchai_vid=visitor-a"})

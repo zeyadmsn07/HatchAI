@@ -21,7 +21,6 @@ from __future__ import annotations
 
 import os
 import re
-import statistics
 from pathlib import Path
 from typing import List
 
@@ -36,11 +35,15 @@ from models import Critique, FounderBrief, ResearchFindings
 
 ROOT = Path(__file__).resolve().parent.parent
 PROMPT = ROOT / "prompts" / "advisor.md"
-_INSTITUTION = re.compile(r"\b(universit(y|ies) administrat\w*|institution\w*|schools?|enterprise\w*|employers?|b2b)\b", re.I)
 
 
 _LABEL = {"demand": "Demand evidence", "pricing": "Pricing evidence", "competitors": "Competitor evidence",
           "local_constraints": "Local-constraint evidence", "channels": "Channel evidence"}
+
+
+_CONSEQUENCE = {"demand": "whether anyone has the problem", "pricing": "the price users would accept",
+                "competitors": "how crowded the market is", "local_constraints": "whether users can access and pay",
+                "channels": "the plan to reach users"}
 
 
 class AdvisorText(BaseModel):
@@ -94,7 +97,10 @@ def _plan_section(gate_id, brief, pains, features) -> tuple[list[str], dict | No
         cov = coverage(features, pains)
         lines = [f"{r['key']}: the MVP addresses '{_q(r['phrase'], 90)}' with {', '.join(r['features'])}."
                  if r["features"] else
-                 f"{r['key']}: no MVP feature addresses '{_q(r['phrase'], 90)}'."
+                 (f"{r['key']}: no MVP feature solves '{_q(r['phrase'], 90)}' yet, so the builder added a pain "
+                  "question to the waitlist; the demand test collects visitors' own words about it."
+                  if r.get("measured_by") else
+                  f"{r['key']}: no MVP feature addresses '{_q(r['phrase'], 90)}'.")
                  for r in cov["rows"]]
         lines.append(f"The MVP covers {cov['covered']} of {cov['total']} verified pains "
                      f"({_keys(r['key'] for r in cov['rows'])}).")
@@ -129,7 +135,8 @@ def _risks(findings, audit, critique) -> tuple[list[str], list[str], str]:
     only_weak = sorted(audit["summary"]["categories_only_vendor_or_stale"], key=order.index)
     for cat in only_weak:
         ks = [r["key"] for r in rows if r["category"] == cat]
-        weak.append(f"{_LABEL[cat]} rests only on vendor or stale sources ({_keys(ks)}).")
+        weak.append(f"{_LABEL[cat]} rests only on vendor or stale sources ({_keys(ks)}), so "
+                    f"{_CONSEQUENCE[cat]} is untested today; confirm it with one independent, current source.")
         weakest = weakest or cat
 
     vendor_pricing = [r["key"] for r in rows if r["category"] == "pricing" and r["credibility"].startswith("vendor")]
@@ -212,58 +219,50 @@ def _counterfactuals(gate_id, gate, findings, brief, critique, round_no, pivots)
 
 
 def _angles(findings, brief, pains) -> list[str]:
-    from agents.commercial import price_evidence
-    bt = evidence.brief_terms(brief.idea, brief.target_user, brief.geography, brief.language)
-    comp = _verified(findings, "competitors")
-    comp_keys = sorted({c.source_keys[0] for c in comp})
-    by_key = {s.key: s for s in findings.sources}
-    comp_text = " ".join(" ".join(by_key[k].passages) for k in comp_keys if k in by_key).lower()
-    out = []
-    for p in pains:
-        if comp_keys and not any(t[:6] in comp_text for t in p["terms"]):
-            out.append(f"{p['key']} names '{_q(p['phrase'], 80)}', and none of the verified competitor sources "
-                       f"({_keys(comp_keys)}) mention it: build the product around that pain.")
-    local = [t for t in bt["local"] if t]
-    if comp_keys and local:
-        missing = [t for t in local if t not in comp_text]
-        loc_keys = sorted({c.source_keys[0] for c in _verified(findings)
-                           if any(t in c.quote.lower() for t in missing)} - set(comp_keys))
-        if missing and loc_keys:
-            out.append(f"The verified competitor sources ({_keys(comp_keys)}) never mention "
-                       f"{' or '.join(m.title() for m in missing)}, while {_keys(loc_keys)} {'does' if len(loc_keys) == 1 else 'do'}: a localised "
-                       "version is an underserved segment.")
-    prices, gdp = price_evidence(findings)
-    url_key = {s.url: s.key for s in findings.sources}
-    pk = sorted({url_key[u] for _, u in prices if u in url_key})
-    if prices and gdp and gdp[2] in url_key:
-        med = round(statistics.median(v for v, _ in prices), 2)
-        cap = round(gdp[0] / 12 * 0.01, 2)
-        if med > cap:
-            out.append(f"Competitor prices in {_keys(pk)} have a median of USD {med}/month, against a local "
-                       f"affordability cap of USD {cap}/month from {url_key[gdp[2]]} "
-                       "(ASSUMPTION: cap = 1% of monthly GDP per capita): a free core with a low-cost tier is the "
-                       "price gap.")
-    inst = sorted({c.source_keys[0] for c in _verified(findings) if _INSTITUTION.search(c.quote)})
-    if inst:
-        out.append(f"{_keys(inst)} {'mentions' if len(inst) == 1 else 'mention'} institutions, so selling to them is an evidence-based option.")
+    """Evidence-based angles, ranked by the Strategist (same list the gate's pivot is drawn from)."""
+    from agents.strategist import candidates
+    out = [c["angle"] for c in candidates(findings, brief)]
     if not out:
         out.append("ASSUMPTION: the verified evidence shows no gap that competitors leave open; no angle "
                    "is proposed rather than inventing one.")
     return out
 
 
-def _llm_summary(findings, sections_text: str) -> tuple[list[str], list[str], dict]:
+def _llm_summary(findings, sections_text: str, max_rounds: int = 2) -> tuple[list[str], list[str], dict]:
+    """Generate -> verify -> revise. The model drafts sentences from the verified quotes only; the
+    code citation check (`insight_check`) rejects any sentence without a verified source key or an
+    ASSUMPTION label; rejected sentences go back to the model once, with the reason, for a rewrite.
+    Only sentences that pass the code check are ever shown."""
     claims = _verified(findings)
     if not claims:
         return [], [], {"mode": "not_needed (no verified claims)", "model": None}
+    allowed = insight_check.verified_keys(claims)
     quotes = "\n".join(f"[{c.source_keys[0]}] ({c.category}) {_q(c.quote, 160)}" for c in claims[:8])
-    res = llm_gateway.complete_json(PROMPT.read_text(encoding="utf-8"),
-                                    f"/no_think\nVerified quotes:\n{quotes}\n\nAnalysis computed by code:\n{sections_text[:300]}\n\nWrite 3 to 5 sentences.",
-                                    AdvisorText, temperature=0.2, max_tokens=700)
-    if not res.live:
-        return [], [], {"mode": res.mode, "model": None, "error": res.error}
-    kept, removed = insight_check.check_lines(res.value.sentences[:6], insight_check.verified_keys(claims))
-    return kept, removed, {"mode": res.mode, "model": res.model, "tokens": res.tokens}
+    system = PROMPT.read_text(encoding="utf-8")
+    user = (f"/no_think\nVerified quotes:\n{quotes}\n\nAnalysis computed by code:\n{sections_text[:600]}\n\n"
+            "Write 3 to 5 sentences.")
+    kept: list[str] = []
+    removed: list[str] = []
+    meta = {"mode": llm_gateway.LLM_FALLBACK, "model": None, "tokens": 0, "rounds": 0}
+    for rnd in range(max_rounds):
+        res = llm_gateway.complete_json(system, user, AdvisorText, temperature=0.2, max_tokens=700)
+        if not res.live:
+            if rnd == 0:
+                return [], [], {"mode": res.mode, "model": None, "error": res.error}
+            break
+        meta.update(mode=res.mode, model=res.model, tokens=meta["tokens"] + (res.tokens or 0), rounds=rnd + 1)
+        k, r = insight_check.check_lines(res.value.sentences[:6], allowed)
+        kept += [x for x in k if x not in kept]
+        if not r or len(kept) >= 5:
+            break
+        removed = r
+        user = (f"/no_think\nVerified quotes:\n{quotes}\n\nThese sentences were REJECTED by the citation "
+                "checker because they cite no verified source key in square brackets and are not labelled "
+                "ASSUMPTION:\n" + "\n".join(f"- {x}" for x in r[:6]) +
+                f"\n\nAllowed source keys: {', '.join(sorted(allowed))}. Rewrite each rejected sentence so it "
+                "states one specific point and ends with the key of the quote it rests on, e.g. [S3], or "
+                "starts with 'ASSUMPTION:'. Do not add new facts.")
+    return kept[:6], removed, meta
 
 
 # ---------------------------------------------------------------------------
@@ -300,10 +299,12 @@ def run(run_id: str, gate_id: int, gate, brief: FounderBrief, findings: Research
     def bullets(xs):
         return "\n".join(f"- {x}" for x in xs) or "- (nothing passed the citation check)"
 
-    llm_block = (f"*Written by `{llm['model']}` from the verified quotes only; every sentence re-checked "
-                 f"({len(llm_kept)} kept, {len(llm_removed)} removed).*\n\n{bullets(llm_kept)}"
+    llm_block = (f"*Written by `{llm['model']}` from the verified quotes only; every sentence re-checked by "
+                 f"code, rejected ones sent back once for a rewrite ({llm.get('rounds', 1)} round(s); "
+                 f"{len(llm_kept)} kept, {len(llm_removed)} still removed).*\n\n{bullets(llm_kept)}"
                  if llm.get("model") else
-                 (f"Not produced (LLM mode: {llm['mode']}; enable with HATCHAI_ADVISOR_LLM=1 and a local model). "
+                 (f"Not produced (LLM mode: {llm['mode']}; enable with HATCHAI_ADVISOR_LLM=1 and a local or free-tier "
+                  "open-weight model). "
                   "The sections above are rule-based and complete without it."))
     gate_word = gate.outcome.value.upper()
     memo = f"""# Phase {gate_id} — Advisor memo (after Gate {gate_id}: {gate_word})
@@ -354,4 +355,5 @@ Other gaps:
                   cost=0, phase=gate_id, tokens=llm.get("tokens"),
                   outcome=(f"pains={len(pains)}; coverage={cov['covered']}/{cov['total']}; " if cov else
                            f"pains={len(pains)}; ") + f"removed_sentences={len(removed_all)}")
-    return {"memo": memo, "pains": pains, "coverage": cov, "removed": removed_all, "llm": llm}
+    return {"memo": memo, "pains": pains, "coverage": cov, "removed": removed_all, "llm": llm,
+            "flips": [f for f in flips if f.startswith("Removing")]}

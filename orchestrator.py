@@ -274,6 +274,16 @@ def _advise(run_id: str, gate_id: int, gate: GateResult, step: int, features=Non
         return None
 
 
+def _fragility_note(gate: GateResult, adv: dict | None) -> str:
+    """Advisory line under a GO that one removed source would overturn (computed by the Advisor's
+    counterfactuals). It never changes the outcome; it tells the founder how much weight the GO bears."""
+    flips = (adv or {}).get("flips") or []
+    if gate.outcome != GateOutcome.GO or not flips:
+        return ""
+    return ("\n> **Advisory, not part of the gate: this GO is fragile.** " + " ".join(flips) +
+            " Treat the cheapest test in the Advisor memo as a precondition, not an afterthought.\n")
+
+
 def _gate(run_id: str, gate: GateResult, phase: int, extra: str = "") -> None:
     c = _counters(run_id)
     c["history"].append({"gate": gate.gate_id, "outcome": gate.outcome.value, "round": c["round"],
@@ -366,10 +376,10 @@ def _run_phase_1(run_id: str):
         _write(run_id, "phase1_step2_research-findings.md", _format_findings(findings))
         _write(run_id, "phase1_step3_sources.json", json.dumps(
             [s.model_dump() for s in findings.sources], indent=2, ensure_ascii=False))
-        _advise(run_id, 1, gate, 5)
-        replay_note = ""
+        adv = _advise(run_id, 1, gate, 5)
+        replay_note = _fragility_note(gate, adv)
         if findings.evidence_mode == "replay":
-            replay_note = (f"\n> **Evidence mode: REPLAY** of snapshot {findings.snapshot}. No new evidence was "
+            replay_note += (f"\n> **Evidence mode: REPLAY** of snapshot {findings.snapshot}. No new evidence was "
                            "collected in this run; the gate re-scored the captured sources with the current code.\n")
         _gate(run_id, gate, 1, replay_note)
     except Exception as exc:
@@ -398,8 +408,8 @@ def _run_phase_2(run_id: str):
         _write(run_id, "phase2_step1_critique.md", _format_critique(critique))
         _write(run_id, "phase2_step2_lean-canvas.md", _format_canvas(canvas, findings))
         _write(run_id, "phase2_step3_demand-test-plan.md", _format_demand_test(demand_test))
-        _advise(run_id, 2, gate, 4)
-        _gate(run_id, gate, 2)
+        adv = _advise(run_id, 2, gate, 4)
+        _gate(run_id, gate, 2, _fragility_note(gate, adv))
     except Exception as exc:
         _fail(run_id, 2, exc)
 
@@ -414,8 +424,12 @@ def _run_phase_3(run_id: str):
         critique = _load(run_id, "critique", Critique)
         c = _counters(run_id)
 
+        import evidence as evidence_mod
+        findings = _load(run_id, "findings", ResearchFindings)
+        target = brief.target_user if not str(brief.target_user).upper().startswith(("UNKNOWN", "ASSUMPTION")) else ""
+        pains = evidence_mod.pain_signals(findings.claims, brief.idea, target) if findings else []
         report = build_run(run_id, brief, canvas, critique, attempt=c["build_attempt"],
-                           ref_date=_reference_date(run_id))
+                           ref_date=_reference_date(run_id), pains=pains)
         llm_state = _load(run_id, "llm", default={}) or {}
         llm_state["tasks"] = llm_state.get("tasks", []) + report.get("llm_tasks", [])
         _store(run_id, "llm", llm_state)
@@ -634,6 +648,8 @@ def _format_gate(g: GateResult, history: list) -> str:
     checks = "\n".join(f"- {'✓' if v else '✗'} {k.replace('_', ' ')}" for k, v in g.checks.items())
     hist = "\n".join(f"| {h['gate']} | {h['round']} | {h['outcome'].upper()} | {h['E']} | {h['V']} |" for h in history)
     pivot = f"\n**Suggested pivot:** {g.pivot_to}\n" if g.pivot_to else ""
+    if g.pivot_to and g.pivot_evidence:
+        pivot += f"\n**Why this pivot (Strategist, from the evidence):** {g.pivot_evidence}\n"
     return f"""# Gate {g.gate_id} decision
 
 **Recommendation (computed by code): {g.outcome.value.upper()}**
@@ -739,7 +755,7 @@ def _format_mvp_spec(r: dict, canvas: LeanCanvas) -> str:
 | Feature | What it does | API action | Traces to |
 |---|---|---|---|
 {feats}
-
+{chr(10) + "**Pain question on the waitlist** (the evidence names a pain no feature solves yet; the demand test asks about it): " + s.pain_question + chr(10) if s.pain_question else ""}
 ## LLM use (bounded; never code, scores or gate decisions)
 
 {_format_llm_tasks(r.get("llm_tasks", []))}

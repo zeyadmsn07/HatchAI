@@ -24,14 +24,15 @@
 Other gaps:
 
 - ASSUMPTION: pricing has no verified source.
-- Competitor evidence rests only on vendor or stale sources (S13, S16).
+- Competitor evidence rests only on vendor or stale sources (S13, S16), so how crowded the market is is untested today; confirm it with one independent, current source.
 
 ### Evidence-specific risks (from the evidence audit)
 
 - ASSUMPTION: no verified price exists, so the price is an estimate. ASSUMPTION (kill criterion): fewer than 3 of 10 target users accept the entry price when asked directly.
 - S24 (channels) dates from 2015-09-09, so the plan built on it is untested today. ASSUMPTION (kill criterion): the channel or fact cannot be confirmed by one current source.
 - 57% of verified quotes (S9, S12, S13, S24) come from search snippets, not the page. ASSUMPTION (cheapest test): open those pages and confirm the sentence is there in context.
-- ASSUMPTION (from the Phase 2 critique): Target users will pay a recurring price; kill criterion: If fewer than 3% of landing-page visitors click a priced plan, stop or pivot pricing.
+- ASSUMPTION (from the Phase 2 critique): ASSUMPTION: university students will pay a recurring price; no verified source states a price for this kind of product; kill criterion: If fewer than 3% of landing-page visitors click a priced plan, stop or pivot pricing.
+- ASSUMPTION (from the Phase 2 critique): university students feel the problem behind S12, which describes the market, not a pain strongly enough to switch tools; kill criterion: If fewer than 5 of 10 university students describe a recent, concrete instance of it, stop.
 
 ## 4. Cheapest test this week
 
@@ -50,4 +51,4 @@ Other gaps:
 
 ## Model-written summary (optional)
 
-Not produced (LLM mode: LLM_DISABLED; enable with HATCHAI_ADVISOR_LLM=1 and a local model). The sections above are rule-based and complete without it.
+Not produced (LLM mode: LLM_DISABLED; enable with HATCHAI_ADVISOR_LLM=1 and a local or free-tier open-weight model). The sections above are rule-based and complete without it.

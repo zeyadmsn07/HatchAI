@@ -128,14 +128,17 @@ def rank_sentences(sentences: list[str], terms: list[str], k: int = 3) -> list[s
 # Collectors — each returns a list of raw dicts {url,title,passages,collector}
 # ---------------------------------------------------------------------------
 
-def search_web(query: str, max_results: int = 4) -> list[dict]:
+def search_web(query: str, max_results: int = 4, errors: list | None = None) -> list[dict]:
     if offline():
         return []
     try:
         from ddgs import DDGS  # type: ignore
     except ImportError:
         log.warning("ddgs not installed; web search skipped")
+        if errors is not None:
+            errors.append("web: ddgs not installed")
         return []
+    failures = []
     for backend in _WEB_BACKENDS:
         try:
             with DDGS() as d:
@@ -148,10 +151,15 @@ def search_web(query: str, max_results: int = 4) -> list[dict]:
                 ]
         except Exception as exc:
             log.debug("ddgs backend %s failed: %s", backend, exc)
+            if "no results" in str(exc).lower():
+                continue                            # ddgs raises on an empty result page: not a tool failure
+            failures.append(f"web:{backend}: {type(exc).__name__}: {str(exc)[:80]}")
+    if errors is not None and failures and len(failures) == len(_WEB_BACKENDS):
+        errors.append(failures[-1])                 # every backend raised: a tool failure, not "no results"
     return []
 
 
-def search_hn(query: str, max_results: int = 3) -> list[dict]:
+def search_hn(query: str, max_results: int = 3, errors: list | None = None) -> list[dict]:
     if offline():
         return []
     try:
@@ -172,10 +180,12 @@ def search_hn(query: str, max_results: int = 3) -> list[dict]:
         return out
     except Exception as exc:
         log.warning("HN search failed: %s", exc)
+        if errors is not None:
+            errors.append(f"hn: {type(exc).__name__}: {str(exc)[:80]}")
         return []
 
 
-def search_wikipedia(query: str, max_results: int = 1) -> list[dict]:
+def search_wikipedia(query: str, max_results: int = 1, errors: list | None = None) -> list[dict]:
     if offline():
         return []
     try:
@@ -202,10 +212,12 @@ def search_wikipedia(query: str, max_results: int = 1) -> list[dict]:
         return out
     except Exception as exc:
         log.warning("Wikipedia search failed: %s", exc)
+        if errors is not None:
+            errors.append(f"wikipedia: {type(exc).__name__}: {str(exc)[:80]}")
         return []
 
 
-def worldbank_indicators(iso2: str) -> list[dict]:
+def worldbank_indicators(iso2: str, errors: list | None = None) -> list[dict]:
     if offline():
         return []
     out = []
@@ -229,6 +241,8 @@ def worldbank_indicators(iso2: str) -> list[dict]:
                         "collector": "worldbank"})
     except Exception as exc:
         log.warning("World Bank API failed: %s", exc)
+        if errors is not None:
+            errors.append(f"worldbank: {type(exc).__name__}: {str(exc)[:80]}")
     return out
 
 
@@ -354,7 +368,30 @@ def credibility(s: Source) -> str:
     text = re.sub(r"[^a-z0-9]", "", (s.title + " " + " ".join(s.passages)).lower())
     if "/pricing" in s.url.lower() or (len(brand) >= 4 and brand in text):
         return "vendor (self-interested)"
+    if _product_brand(brand, text) and re.search(r"/(blog|features?|product|app|learn|resources)\b", s.url.lower()):
+        # e.g. studycardsai.com/blog/...: a domain made of the product's own words, writing on its blog
+        return "vendor (self-interested)"
     return "independent-web"
+
+
+_BRAND_SUFFIX = ("ai", "app", "hq", "io", "ly", "go")
+
+
+def _product_brand(brand: str, text: str) -> bool:
+    """True when the domain label splits into 2+ words that all occur in the page text (each 4+ letters,
+    or a common product suffix such as 'ai' / 'app'), e.g. 'studycardsai' -> study + cards + ai."""
+    if len(brand) < 6:
+        return False
+
+    def split(rest: str, parts: int) -> bool:
+        if not rest:
+            return parts >= 2
+        for i in range(len(rest), 1, -1):
+            seg = rest[:i]
+            if (seg in _BRAND_SUFFIX or (len(seg) >= 4 and seg in text)) and split(rest[i:], parts + 1):
+                return True
+        return False
+    return split(brand, 0)
 
 
 def quality_report(sources: list[Source], claims: list[Claim]) -> dict:
@@ -435,8 +472,13 @@ def plan_queries(idea: str, target_user: str, geography: str, round_no: int = 1)
 
 
 def collect(idea: str, target_user: str, geography: str, round_no: int = 1,
-            existing: list[Source] | None = None) -> tuple[list[Source], dict[str, str]]:
-    """Run all collectors and return (sources, category_by_source_key)."""
+            existing: list[Source] | None = None,
+            health: dict | None = None) -> tuple[list[Source], dict[str, str]]:
+    """Run all collectors and return (sources, category_by_source_key).
+
+    health: optional dict filled with how the research tools behaved this round
+    ({"jobs", "ok", "empty", "failed", "errors", "new_sources"}). A job "failed" when its tool raised
+    (HTTP 429, timeout, DNS...), which is different from a search that worked and found nothing."""
     existing = existing or []
     sources: list[Source] = list(existing)
     category_of: dict[str, str] = {}
@@ -448,17 +490,25 @@ def collect(idea: str, target_user: str, geography: str, round_no: int = 1,
         for collector, q in qs:
             jobs.append((cat, collector, q))
 
+    status: list[tuple[str, int, list]] = []          # (collector, n_results, errors) per job
+
     def run_job(job):
         cat, collector, q = job
         fn = {"web": search_web, "hn": search_hn, "wikipedia": search_wikipedia}[collector]
-        return cat, fn(q)
+        errs: list = []
+        items = fn(q, errors=errs)
+        status.append((collector, len(items), errs))
+        return cat, items
 
     with ThreadPoolExecutor(max_workers=3) as pool:
         results = list(pool.map(run_job, jobs))
 
     country = detect_country(geography)
     if country and round_no == 1:
-        results.append(("local_constraints", worldbank_indicators(country[1])))
+        errs: list = []
+        wb = worldbank_indicators(country[1], errors=errs)
+        status.append(("worldbank", len(wb), errs))
+        results.append(("local_constraints", wb))
 
     raw: list[tuple[str, dict]] = []
     per_domain: dict[str, int] = {}
@@ -492,7 +542,22 @@ def collect(idea: str, target_user: str, geography: str, round_no: int = 1,
                               published=it.get("published"), published_from=it.get("published_from", ""),
                               passage_origins=origins[:5]))
         category_of[key] = cat
+    if health is not None:
+        health.update(tool_health(status, len(sources) - len(existing)))
     return sources, category_of
+
+
+def tool_health(status: list[tuple[str, int, list]], new_sources: int) -> dict:
+    """Summarise collector outcomes. `outage` is True when most research calls raised errors and too
+    little came back to judge the market: Gate 1 then says 'research tools unavailable, retry' instead
+    of scoring the (missing) evidence as weak."""
+    jobs = len(status)
+    failed = sum(1 for _, n, e in status if e and n == 0)
+    ok = sum(1 for _, n, _ in status if n > 0)
+    errors = sorted({e for _, _, es in status for e in es})[:8]
+    outage = jobs > 0 and (failed / jobs >= 0.5) and new_sources < 6
+    return {"jobs": jobs, "ok": ok, "empty": jobs - ok - failed, "failed": failed,
+            "new_sources": new_sources, "errors": errors, "outage": outage}
 
 
 # ---------------------------------------------------------------------------

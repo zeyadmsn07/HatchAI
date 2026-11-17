@@ -4,9 +4,9 @@
 > LLM mode: LLM_DISABLED (no LLM was called in this run)
 > Scoring version: v1 (relevance: any idea keyword + category vocabulary)
 
-> Book sessions without double-bookings or clashes, for early users in Jordan.
+> Book sessions without double-bookings or clashes, for adult hobbyists in Jordan.
 
-**Status:** generated, tested and booted by the pipeline — 23 tests, 0 failures,
+**Status:** generated, tested and booted by the pipeline — 24 tests, 0 failures,
 0 errors; smoke test passed. Build attempt 1.
 
 ## Archetype
@@ -17,10 +17,10 @@
 
 | Feature | What it does | API action | Traces to |
 |---|---|---|---|
-| Live availability | Remaining seats per session. | `availability` | UNKNOWN (not stated by founder) lack an adequate booking app. |
-| Safe booking | Capacity, duplicate and time-clash checks. | `book` | UNKNOWN (not stated by founder) lack an adequate booking app. |
-| Self-service cancellation | Frees the seat immediately. | `cancel` | Key metric: Demand-test sign-up rate; weekly active users; riskiest: Target users will pay a recurring price. |
-| Consented waitlist (demand test) | Email + explicit consent; feeds the pre-registered demand test. Nothing is sent automatically. | `waitlist` | Riskiest assumption: Target users will pay a recurring price |
+| Live availability | Remaining seats per session. | `availability` | ASSUMPTION (job to be done): adult hobbyists lose time arranging sessions by message and end up with double bookings or  |
+| Safe booking | Capacity, duplicate and time-clash checks. | `book` | ASSUMPTION (job to be done): adult hobbyists lose time arranging sessions by message and end up with double bookings or  |
+| Self-service cancellation | Frees the seat immediately. | `cancel` | Key metric: Demand-test sign-up rate; weekly active users; riskiest: ASSUMPTION: adult hobbyists will pay a recu |
+| Consented waitlist (demand test) | Email + explicit consent; feeds the pre-registered demand test. Nothing is sent automatically. | `waitlist` | Riskiest assumption: ASSUMPTION: adult hobbyists will pay a recurring price; no verified source states a price for this  |
 
 ## LLM use (bounded; never code, scores or gate decisions)
 

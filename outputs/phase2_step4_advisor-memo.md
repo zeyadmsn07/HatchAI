@@ -19,17 +19,18 @@
 
 ## 3. Weakest assumption
 
-- Pricing evidence rests only on vendor or stale sources (S9, S15).
+- Pricing evidence rests only on vendor or stale sources (S9, S15), so the price users would accept is untested today; confirm it with one independent, current source.
 
 Other gaps:
 
-- Competitor evidence rests only on vendor or stale sources (S9, S11).
-- Channel evidence rests only on vendor or stale sources (S13, S19).
+- Competitor evidence rests only on vendor or stale sources (S9, S11), so how crowded the market is is untested today; confirm it with one independent, current source.
+- Channel evidence rests only on vendor or stale sources (S13, S19), so the plan to reach users is untested today; confirm it with one independent, current source.
 
 ### Evidence-specific risks (from the evidence audit)
 
 - Pricing rests on vendor sources (S9, S15), which quote their own prices. ASSUMPTION (kill criterion): fewer than 3 of 10 target users say they would pay the entry price. ASSUMPTION (cheapest test): ask them before building any paid tier.
-- ASSUMPTION (from the Phase 2 critique): Target users will pay a recurring price; kill criterion: If fewer than 3% of landing-page visitors click a priced plan, stop or pivot pricing.
+- ASSUMPTION (from the Phase 2 critique): university students will pay a recurring price in the USD 4.99–20/month range that S9, S13, S15 quote; those are competitor or vendor prices, not what this segment has agreed to pay; kill criterion: If fewer than 3 of 10 university students accept the entry price when asked directly, or fewer than 3% of landing-page visitors click a priced plan, stop or re-price.
+- ASSUMPTION (from the Phase 2 critique): university students feel the pain S6 names ('this preparation burden is so significant that it deters sustained…') strongly enough to switch tools; kill criterion: If fewer than 5 of 10 university students describe a recent, concrete instance of it, stop.
 
 ## 4. Cheapest test this week
 
@@ -57,11 +58,11 @@ Each row re-runs the Gate 2 function with one cited source removed (computed by 
 
 ## Evidence-based angles
 
-- S6 names 'this preparation burden is so significant that it deters sustained adoption', and none of the verified competitor sources (S9, S11) mention it: build the product around that pain.
+- S6 names 'this preparation burden is so significant that it deters sustained…', and none of the verified competitor sources (S9, S11) mention it: build the product around that pain.
 - The verified competitor sources (S9, S11) never mention Egypt or Arabic, while S3, S4 do: a localised version is an underserved segment.
 - Competitor prices in S9, S13, S15 have a median of USD 8.75/month, against a local affordability cap of USD 2.57/month from S4 (ASSUMPTION: cap = 1% of monthly GDP per capita): a free core with a low-cost tier is the price gap.
 - S19 mentions institutions, so selling to them is an evidence-based option.
 
 ## Model-written summary (optional)
 
-Not produced (LLM mode: LLM_DISABLED; enable with HATCHAI_ADVISOR_LLM=1 and a local model). The sections above are rule-based and complete without it.
+Not produced (LLM mode: LLM_DISABLED; enable with HATCHAI_ADVISOR_LLM=1 and a local or free-tier open-weight model). The sections above are rule-based and complete without it.

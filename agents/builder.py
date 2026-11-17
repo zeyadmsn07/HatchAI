@@ -205,32 +205,78 @@ def _seeds(archetype: str, brief: FounderBrief, topic: str, ref_date: date | Non
              "body": "Sample lesson — replace with your content."}]
 
 
-def _features(archetype: str, canvas: LeanCanvas, critique: Critique) -> list[FeatureSpec]:
-    problem = canvas.problem.content.split(" Evidence:")[0][:140]
+# The job each template does, stated as a hypothesis about the user (not a restatement of the idea).
+_JOB = {
+    "spaced_repetition": "forget material between study sessions and cram before exams",
+    "booking": "lose time arranging sessions by message and end up with double bookings or no-shows",
+    "habit_tracker": "drop a routine after a few days without a visible record of progress",
+    "directory": "cannot quickly find a trustworthy provider that fits their place and budget",
+    "course": "start learning but lose track of what comes next and do not finish",
+}
+
+
+def _trace(name: str, desc: str, pains: list[dict], job: str) -> str:
+    """Trace a feature to the verified pain it shares terms with, else to the job hypothesis."""
+    words = {_stem(w) for w in re.findall(r"[a-zA-Z]{4,}", f"{name} {desc}")}
+    for p in pains:
+        if {_stem(t) for t in p["terms"]} & words:
+            return f"Verified pain {p['key']}: '{_q(p['phrase'])}'"
+    return job
+
+
+def _q(text: str, n: int = 90) -> str:
+    t = re.sub(r"[.!?]+\s+", "; ", text.strip()).rstrip(".!? ").replace('"', "'")
+    return (t[:n].rsplit(" ", 1)[0] + "…") if len(t) > n else t
+
+
+def _features(archetype: str, canvas: LeanCanvas, critique: Critique, pains: list[dict] | None = None,
+              target: str = "users") -> list[FeatureSpec]:
+    pains = pains or []
+    job = f"ASSUMPTION (job to be done): {target} {_JOB[archetype]}"
     metric = "Key metric: " + canvas.key_metrics.content[:100]
     risk = critique.riskiest_assumptions[0].assumption if critique.riskiest_assumptions else "core demand"
+    P = None  # placeholder: traced per feature below
     table = {
-        "spaced_repetition": [("Due-today review queue", "Shows only the cards due today, oldest first.", problem, "due"),
-                              ("SM-2 adaptive scheduling", "Grades 0–5 reschedule each card (1, 6, then ×ease days).", problem, "review"),
+        "spaced_repetition": [("Due-today review queue", "Shows only the cards due today, oldest first.", P, "due"),
+                              ("SM-2 adaptive scheduling", "Grades 0–5 reschedule each card (1, 6, then ×ease days).", P, "review"),
                               ("Retention stats", "Reviews, average ease and recall rate per user.", metric, "stats")],
-        "booking": [("Live availability", "Remaining seats per session.", problem, "availability"),
-                    ("Safe booking", "Capacity, duplicate and time-clash checks.", problem, "book"),
+        "booking": [("Live availability", "Remaining seats per session.", P, "availability"),
+                    ("Safe booking", "Capacity, duplicate and time-clash checks.", P, "book"),
                     ("Self-service cancellation", "Frees the seat immediately.", metric, "cancel")],
-        "habit_tracker": [("One-tap daily check-in", "Idempotent per day.", problem, "check_in"),
+        "habit_tracker": [("One-tap daily check-in", "Idempotent per day.", P, "check_in"),
                           ("Streaks", "Consecutive-day streak, forgiving until end of day.", metric, "streak"),
                           ("Weekly targets", "Progress vs. weekly target per habit.", metric, "weekly_progress")],
-        "directory": [("Ranked search with filters", "Title matches rank first; category/location/price filters.", problem, "search"),
-                      ("Rate-limited inquiries", "Contact a listing owner; 3/day/listing anti-spam.", problem, "inquire"),
+        "directory": [("Ranked search with filters", "Title matches rank first; category/location/price filters.", P, "search"),
+                      ("Rate-limited inquiries", "Contact a listing owner; 3/day/listing anti-spam.", P, "inquire"),
                       ("Category browsing", "Counts per category.", metric, "categories")],
-        "course": [("Ordered lessons + next step", "Always shows the next unfinished lesson.", problem, "progress"),
+        "course": [("Ordered lessons + next step", "Always shows the next unfinished lesson.", P, "progress"),
                    ("Completion tracking", "Per-learner, idempotent completions.", metric, "complete"),
                    ("Completion certificate", "Issued only at 100%.", metric, "certificate")],
     }[archetype]
-    feats = [FeatureSpec(name=n, description=d, traces_to=t, action=a) for n, d, t, a in table]
+    feats = [FeatureSpec(name=n, description=d, traces_to=t if t else _trace(n, d, pains, job), action=a)
+             for n, d, t, a in table]
     feats.append(FeatureSpec(name="Consented waitlist (demand test)", description="Email + explicit consent; feeds the "
                              "pre-registered demand test. Nothing is sent automatically.",
                              traces_to=f"Riskiest assumption: {risk}", action="waitlist"))
+    uncovered = [p for p in pains if not coverage(feats, [p])["covered"]]
+    if uncovered:
+        p = uncovered[0]
+        feats.append(FeatureSpec(
+            name=f"Pain question on the waitlist ({p['key']})",
+            description=(f"The waitlist form asks visitors about the pain {p['key']} names, so the demand test "
+                         "collects their own words about it. No template feature solves it yet."),
+            traces_to=f"Verified pain {p['key']} (measured, not yet solved): '{_q(p['phrase'])}'",
+            action="waitlist"))
     return feats
+
+
+def pain_question(pains: list[dict], features: list[FeatureSpec]) -> str:
+    """Question shown on the MVP waitlist for the first verified pain no feature solves ('' if none)."""
+    uncovered = [p for p in pains if not coverage(features, [p])["covered"]]
+    if not uncovered:
+        return ""
+    return (f"Optional: the research found people describing this problem: \"{_q(uncovered[0]['phrase'], 110)}\". "
+            "When did it last happen to you, and what did you do about it?")
 
 
 def _load_core(archetype: str):
@@ -243,7 +289,8 @@ def _load_core(archetype: str):
 
 def build_spec(run_id: str, brief: FounderBrief, canvas: LeanCanvas, critique: Critique,
                use_llm: bool = True, selection: dict | None = None,
-               ref_date: date | None = None) -> tuple[AppSpec, dict, str | None, int, dict]:
+               ref_date: date | None = None,
+               pains: list[dict] | None = None) -> tuple[AppSpec, dict, str | None, int, dict]:
     selection = selection or select_template(_selection_text(brief, canvas))
     if not selection["supported"]:
         raise ValueError(selection["reason"])
@@ -262,9 +309,10 @@ def build_spec(run_id: str, brief: FounderBrief, canvas: LeanCanvas, critique: C
                            "directory": "Listings", "course": "Lessons"}[archetype],
         fields=[FieldSpec(**f) for f in core.FIELDS],
         seed_items=_seeds(archetype, brief, topic, ref_date),
-        features=_features(archetype, canvas, critique),
+        features=_features(archetype, canvas, critique, pains, target),
         languages=langs, free_tier_limit=200, target_user=target,
     )
+    spec.pain_question = pain_question(pains or [], spec.features)
     model, tokens = None, 0
     task = {"task": "spec_text", "mode": "not_used (rebuild attempt)", "model": None, "error": "", "applied": False}
     if use_llm:
@@ -533,7 +581,7 @@ def unsupported_report(selection: dict, attempt: int, llm_tasks: list | None = N
 
 
 def run(run_id: str, brief: FounderBrief, canvas: LeanCanvas, critique: Critique, attempt: int = 1,
-        ref_date: date | None = None) -> dict:
+        ref_date: date | None = None, pains: list[dict] | None = None) -> dict:
     text = _selection_text(brief, canvas)
     det = select_template(text)
     llm_tasks = []
@@ -548,7 +596,7 @@ def run(run_id: str, brief: FounderBrief, canvas: LeanCanvas, critique: Critique
     if not selection["supported"]:
         return unsupported_report(selection, attempt, llm_tasks)
     spec, scores, model, tokens, t2 = build_spec(run_id, brief, canvas, critique, use_llm=(attempt == 1),
-                                                 selection=selection, ref_date=ref_date)
+                                                 selection=selection, ref_date=ref_date, pains=pains)
     llm_tasks.append(t2)
     _log_llm_task(run_id, t2)
     callbacks.log(run_id=run_id, agent="builder", action="design_app_spec", sources=[], model=None,
@@ -583,13 +631,17 @@ def _stem(w: str) -> str:
 
 def coverage(features: list, pains: list[dict]) -> dict:
     """Match each verified pain signal to the MVP features whose name/description share a pain term
-    (6-letter stem match). `features`: FeatureSpec objects or dicts with name/description."""
+    (6-letter stem match). `features`: FeatureSpec objects or dicts with name/description.
+    Waitlist features (action 'waitlist') only *measure* a pain through the demand test; they are
+    reported under 'measured_by' and never count as addressing it."""
     feats = [f if isinstance(f, dict) else f.model_dump() for f in features]
     rows = []
     for p in pains:
         stems = {_stem(t) for t in p["terms"]}
-        hits = [f["name"] for f in feats
-                if stems & {_stem(w) for w in re.findall(r"[a-zA-Z]{4,}", f"{f['name']} {f['description']}")}]
-        rows.append({**p, "features": hits})
+        match = [f for f in feats
+                 if stems & {_stem(w) for w in re.findall(r"[a-zA-Z]{4,}", f"{f['name']} {f['description']}")}]
+        rows.append({**p, "features": [f["name"] for f in match if f.get("action") != "waitlist"],
+                     "measured_by": [f["name"] for f in feats if f.get("action") == "waitlist"
+                                     and p["key"] in f["name"]]})
     covered = sum(1 for r in rows if r["features"])
     return {"rows": rows, "covered": covered, "total": len(rows)}

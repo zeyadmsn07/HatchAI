@@ -81,6 +81,12 @@ class ResearchFindings(BaseModel):
     evidence_mode: str = "live"  # "live" (collected in this run) or "replay" (loaded from a snapshot)
     snapshot: str = ""           # snapshot file + capture time when evidence_mode == "replay"
     scoring_version: str = "v1"  # relevance rule used to classify E's inputs (evidence.SCORING_VERSIONS)
+    # Evidence-based angles (a pain competitors ignore, a localisation gap, a price gap, institutions),
+    # each citing source keys. Computed by code from the verified claims; never invented.
+    evidence_angles: List[str] = Field(default_factory=list)
+    # Per-round health of the research tools in a LIVE run: {"jobs", "ok", "empty", "failed", "errors"}.
+    # Lets Gate 1 tell "the search tools failed" apart from "the evidence is weak".
+    tool_health: Dict[str, Any] = Field(default_factory=dict)
 
 
 class KillAssumption(BaseModel):
@@ -144,6 +150,7 @@ class GateResult(BaseModel):
     founder_override: bool = False
     override_reason: str = ""
     pivot_to: str = ""           # suggested new direction when outcome == pivot
+    pivot_evidence: str = ""     # the evidence-based angle (with source keys) behind the pivot, if any
 
 
 class DecisionLogEntry(BaseModel):
@@ -189,6 +196,9 @@ class AppSpec(BaseModel):
     languages: List[str] = Field(default_factory=lambda: ["en"])
     free_tier_limit: int = 50
     target_user: str = ""
+    # Shown on the waitlist form when the evidence names a pain no feature solves yet, so the
+    # demand test collects the visitors' own words about that pain (optional field).
+    pain_question: str = ""
 
 
 class SynonymMatch(BaseModel):

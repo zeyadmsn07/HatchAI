@@ -24,7 +24,7 @@
 Other gaps:
 
 - ASSUMPTION: pricing has no verified source.
-- Competitor evidence rests only on vendor or stale sources (S13, S16).
+- Competitor evidence rests only on vendor or stale sources (S13, S16), so how crowded the market is is untested today; confirm it with one independent, current source.
 
 ### Evidence-specific risks (from the evidence audit)
 
@@ -59,4 +59,4 @@ Each row re-runs the Gate 1 function with one cited source removed (computed by 
 
 ## Model-written summary (optional)
 
-Not produced (LLM mode: LLM_DISABLED; enable with HATCHAI_ADVISOR_LLM=1 and a local model). The sections above are rule-based and complete without it.
+Not produced (LLM mode: LLM_DISABLED; enable with HATCHAI_ADVISOR_LLM=1 and a local or free-tier open-weight model). The sections above are rule-based and complete without it.

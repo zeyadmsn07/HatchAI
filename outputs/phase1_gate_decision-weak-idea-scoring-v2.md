@@ -10,6 +10,7 @@ STOP: the brief names neither a target user nor a geography, so no market can be
 
 ## Checks
 
+- ✓ research tools available
 - ✗ brief defines target user and geography
 - ✗ evidence score at least go
 - ✓ evidence score above stop

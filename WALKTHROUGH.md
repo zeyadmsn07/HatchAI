@@ -3,8 +3,9 @@
 **What it is.** A six-phase pipeline (Discover → Validate → Build → Commercial → Sell/deliver/get paid
 → Operate) that takes a founder's brief, collects cited evidence, computes GO / REPEAT / PIVOT / STOP
 in code, waits for a founder decision at every gate, and builds and tests a runnable MVP when the
-evidence allows. Almost everything is deterministic code; an optional local open-weight LLM drafts two
-small text fields in Phase 3. Payments are a local simulation (MOCKED). Cost: $0.
+evidence allows. Almost everything is deterministic code; an optional open-weight LLM (local, or
+Groq's free tier on opt-in) drafts two small text fields in Phase 3 and, if switched on, a
+citation-checked Advisor summary. Payments are a local simulation (MOCKED). Cost: $0.
 
 ## Commands (Python 3.12, `pip install -r requirements.txt`; or `docker compose up` for the web UI)
 
@@ -15,7 +16,8 @@ small text fields in Phase 3. Payments are a local simulation (MOCKED). Cost: $0
 | Replay one scenario; exit 0 if gates match the capture (or the difference is a labelled scoring-version difference) | `python orchestrator.py replay evidence_snapshots/repeat_scenario.json [--scoring v1\|v2]` | none / `LLM_DISABLED` |
 | Capture a new live scenario | `python orchestrator.py capture "<brief>" evidence_snapshots/<name>.json` | web |
 | Check a local open-weight model | `python scripts/verify_llm.py` (set `HATCHAI_LLM_BASE_URL`, `HATCHAI_LLM_MODEL`, `HATCHAI_NO_LLM=0`) | local only |
-| Tests | `python -m pytest` (135, all passing on 2026-11-17, including 24 LLM protocol tests against a stub server, 4 evidence-audit tests and 4 Advisor tests; tests never touch `outputs/`, `decision_log.json` or `evidence_snapshots/`) | none |
+| Check the free-tier hosted open-weight model | `HATCHAI_LLM_PROVIDER=groq GROQ_API_KEY=… HATCHAI_NO_LLM=0 python scripts/verify_llm.py` | Groq (open-weight only) |
+| Tests | `python -m pytest` (142, all passing on 2026-11-17, including 24 LLM protocol tests against a stub server, 4 evidence-audit tests, 4 Advisor tests and 7 Strategist / tool-health / provider tests; tests never touch `outputs/`, `decision_log.json` or `evidence_snapshots/`) | none |
 
 Outputs go to `outputs/` (one file per phase and step; `-weak-idea` and `-replay-scenario` suffixes),
 the log to `decision_log.json`. Every text output starts with its **Evidence mode** (REPLAY + snapshot
@@ -39,7 +41,7 @@ v2 results are in `outputs/*-scoring-v2.*`. A v2 replay stops where it would nee
 |---|---|---|---|
 | Strong (STEM flashcards, Egypt) | G1–G5 **GO**; E = 95.0; V = 4.5 | G1 **REPEAT**; E = 84.2; V not reached. Replay stops: round 2 was never captured | No passage names university students + the flashcard/STEM problem + Egypt/Arabic, so demand is unverified |
 | Weak ("generic study notes") | G1 **STOP**; E = 95.0 | G1 **STOP**; E = 51.3 | Still STOP on the **brief rule**; the HN EpiPen threads and the local-constraint passages no longer count |
-| REPEAT → GO (calligraphy booking, Jordan) | G1 REPEAT (E = 46.5) → G1 GO (E = 100.0) → G2–G5 GO; V = 4.5 | G1 REPEAT (E = 25.3) → G1 **PIVOT** (E = 67.9); V not reached. Replay stops: the pivot idea was never captured | Demand can never verify: the intake recorded no target user (it does not recognise "adult hobbyists"); generic booking statistics no longer count |
+| REPEAT → GO (calligraphy booking, Jordan) | G1 REPEAT (E = 46.5) → G1 GO (E = 100.0) → G2–G5 GO; V = 4.5 | G1 REPEAT (E = 25.3) → G1 **PIVOT** (E = 67.9); V not reached. Replay stops: the pivot idea was never captured | Intake now records "adult hobbyists", but no captured passage names them together with the problem and Jordan, so demand stays unverified; generic booking statistics no longer count |
 
 ## Advisor memos (after Gates 1–3)
 
@@ -48,7 +50,19 @@ verified evidence names, whether the plan or the MVP addresses it, the weakest a
 criteria, the cheapest test this week, a table that re-runs the gate with each cited source removed, and evidence-based angles.
 Every sentence cites a verified source key or says ASSUMPTION; `insight_check.py` deletes the rest and the memo reports how many
 were deleted. Key findings on the committed scenarios: the headline GO hinges on one source (removing S12 → REPEAT); the original
-strong scenario's MVP covers 0 of 1 verified pains (card preparation, S6), a pain no competitor source mentions.
+strong scenario's MVP covers 0 of 1 verified pains (card preparation, S6), a pain no competitor source mentions. The builder
+now responds to that gap: the generated MVP's waitlist asks visitors about the S6 pain, so the demand test measures it (the memo
+reports it as measured, not solved), and the Gate 1 file of the headline run carries an advisory "this GO is fragile" note.
+
+## Strategist and research-tool health
+
+* `agents/strategist.py` ranks pivot directions from evidence gaps (pain no competitor mentions, missing language or place,
+  price above the local cap, institutions named by a source), each with its source keys. In live runs the best one becomes the
+  pivot; the gate file prints the angle behind it. The committed headline snapshot was captured before the Strategist existed,
+  so its replay keeps the captured pivot text (its pivot round was collected for that text).
+* Each live research round records how many research calls returned, came back empty or failed. A rate-limited or offline
+  search (e.g. Wikipedia HTTP 429) makes Gate 1 say "research tools unavailable, retry", or STOP **INCONCLUSIVE** once the
+  round budget is used, never a STOP on the idea.
 
 ## What is and is not verified
 

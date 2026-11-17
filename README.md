@@ -6,10 +6,12 @@ HatchAI is an open-source team of cooperating agents that takes a founder's idea
 
 - **Grounded research, audited.** Live, keyless sources (web metasearch, Reddit and Hacker News threads, Wikipedia, World Bank). Every claim is a verbatim quote that code re-matches to its source; anything unmatched is labelled `ASSUMPTION`. Every cited source is then **audited**: its publication date and age, who is speaking (official statistics, academic, community, independent, or a **vendor writing about its own market**), and whether the quote came from the fetched page or only from a search snippet.
 - **An Advisor interprets the results.** After Gates 1, 2 and 3 an Advisor agent writes a memo: what the evidence says the pain is, whether the plan addresses it, the weakest assumption, the cheapest test this week, and what would change the recommendation. "What would change it" is computed: it re-runs the gate with each cited source removed. Every sentence must cite a verified source or say `ASSUMPTION`, or code deletes it.
+- **A Strategist proposes evidence-backed pivots.** A PIVOT no longer just narrows the brief: `agents/strategist.py` ranks candidate directions from gaps the verified evidence shows (a pain no competitor source mentions, a missing language or place, a price above the local affordability cap, institutions named by a source), each citing its source keys. The gate shows the angle behind every pivot.
+- **A failed search is not weak evidence.** Each live research round records how the search tools behaved. If most calls fail (HTTP 429, timeouts, offline), Gate 1 says *"research tools unavailable, retry"*, or ends **INCONCLUSIVE**, instead of scoring the missing evidence as a STOP on the idea.
 - **Code decides; the founder approves.** Evidence score (E, 0–100), viability score (V, 1–5) and GO / REPEAT / PIVOT / STOP are computed in Python. No model can touch them. Nothing proceeds, is published, sent, spent or signed without a founder decision enforced in `approval.py`.
 - **Real software out of Phase 3.** 5 tested archetypes (SM-2 flashcards, booking, habit tracker, directory, course). The generated app gets its own tests, which must pass and the server must boot before Gate 3 can say GO. Ideas no template fits get a written spec and an honest STOP.
 - **Reproducible.** Live research is captured into evidence snapshots. `python orchestrator.py demo` replays them offline and gives the same gates, scores and files on every run.
-- **$0, local, open.** No paid service or API key. An optional local open-weight model (`qwen3` via Ollama) does two small text tasks.
+- **$0, open-weight models only.** No paid service or API key is needed. An optional open-weight model handles small text tasks: run it locally (`qwen3` via Ollama), or opt in to Groq's free tier for a 120B open-weight model (`openai/gpt-oss-120b`).
 
 ### Headline result: a live run under the strict evidence rule (captured 2026-11-17)
 
@@ -35,6 +37,13 @@ Brief: *an AI-powered flashcard and spaced-repetition study tool for university 
 - **REPEAT → GO** (Arabic calligraphy workshop booking, Jordan): too thin in round 1 (E = 46.5), GO after a broader second round.
 - **Before/after:** the first captures were scored with an older, looser relevance rule (v1). The original strong scenario got E = 95 and all-GO under v1. Replayed under the strict rule (v2), it gets **REPEAT** instead, and the new audit flags 56% of its cited sources as vendors writing about their own market. The comparison is in [`WALKTHROUGH.md`](WALKTHROUGH.md).
 
+**Where to look first:**
+- `outputs/*-headline-v2.*`: the headline run, with gate decisions in `phase<N>_gate_decision-headline-v2.md` and the Advisor memos in `phase1_step5_advisor-memo-headline-v2.md`, `phase2_step4_…`, `phase3_step4_…`
+- `outputs/phase1_gate_decision-weak-idea.md`: the system recommending **STOP** on a weak idea
+- `outputs/phase1_gate_decision-replay-scenario.md`: **REPEAT**, then GO after a second research round
+- `outputs/payment_test_log.md`: sale to cash (MOCKED) with idempotency, refund revocation and reconciliation
+- `decision_log.json`: one entry per agent action of the demo runs
+
 ## Quickstart
 
 ```bash
@@ -56,7 +65,7 @@ Then open **http://localhost:8000** in your browser (verified 2026-11-17: `/heal
 pip install -r requirements.txt
 uvicorn app:app                           # web UI on http://localhost:8000
 python orchestrator.py demo               # reproducible demo: replays the 4 committed snapshots offline
-python -m pytest                          # 135 tests, all passing (run 2026-11-17)
+python -m pytest                          # 142 tests, all passing (run 2026-11-17)
 ```
 
 **More commands:**
@@ -85,15 +94,18 @@ A step-by-step guide with the full verification status is in [`WALKTHROUGH.md`](
 | 1.5 Evidence quality audit | **Working** (advisory) | Publication date (page metadata, snippet date, relative dates such as "8 hours ago", API dates); freshness (fresh ≤ 18 months / aging ≤ 36 / stale); who is speaking (official, academic, reference, community, independent, vendor); share of snippet-only quotes; warnings. Shown in every findings file; **not part of the E score**, so replays of older captures stay exact |
 | 1.6 / 2.4 / 3.4 Advisor memo | **Working** (rule-based) | After Gates 1–3: pain, plan fit, weakest assumption, evidence-specific risks with kill criteria, cheapest test, counterfactual gate re-runs, evidence-based angles (unaddressed pain, underserved place or language, price gap). `insight_check.py` deletes any sentence without a verified source key or `ASSUMPTION`. Advisory: never changes E, V, a gate or the pivot |
 | Gap analysis | **Working** (advisory) | `evidence.pain_signals` extracts the pain wording from verified demand quotes; `builder.coverage` matches it to MVP features. Gate 3 shows "the MVP covers X of Y verified pains" without affecting the gate |
-| Model-written memo summary | **Working**, optional (`HATCHAI_ADVISOR_LLM=1`) | Local model sees only the verified quotes; the same citation check runs on its sentences. Off by default and in replays |
+| Strategist (pivot candidates) | **Working** | `agents/strategist.py`: ranked, source-cited pivot directions from evidence gaps; feeds the gate's pivot in live runs. Replays of snapshots captured before it existed keep their captured pivot text, with the Strategist's angle shown beside it |
+| Research-tool health | **Working** | Per-round count of research calls that returned, came back empty or failed. Gate 1 answers a tool outage with REPEAT ("research tools unavailable, retry") or STOP (INCONCLUSIVE), never with a verdict on the idea |
+| MVP responds to the uncovered pain | **Working** | When the evidence names a pain no template feature solves, the builder adds a pain question to the MVP's waitlist (stored with the consented sign-up), so the demand test measures that pain. It is reported as *measured*, never as *solved* |
+| Model-written memo summary | **Working**, optional (`HATCHAI_ADVISOR_LLM=1`) | The model sees only the verified quotes. The code citation check runs on its sentences, and rejected sentences go back to the model once with the reason (generate → verify → revise). Off by default and in replays |
 | Web UI | **Working** | Hatch identity (yolk yellow, shell white); six-egg phase track; gate verdict with the Advisor memo beside the decision buttons; Markdown output viewer; example-runs page; phone layout |
 | Evidence capture / replay | **Working** | Snapshots of live evidence; replay re-runs checks, scores and gates offline, labelled REPLAY |
 | Gate 1 | **Working** | E score; GO / REPEAT (2nd research round) / PIVOT / STOP. All four outcomes appear on real captured evidence |
-| 2.1 Red-team critique + viability | **Working** | Rule-based critique; V computed in code |
+| 2.1 Red-team critique + viability | **Working** | Rule-based critique written from the evidence (cited prices, the demand source and its pain, the named incumbents), with kill criteria; V computed in code |
 | 2.2 Lean Canvas | **Working** | Blocks cite source keys or say `ASSUMPTION` |
 | 2.3 Demand test | **Working** design / **STUBBED** execution | Pre-registered thresholds; `NOT_RUN` until the founder runs it |
 | Gate 2 | **Working** | GO / REPEAT / PIVOT / STOP |
-| 3.1 MVP spec + template choice | **Working** | Template only above a compatibility score and margin; features traced to problems and risks |
+| 3.1 MVP spec + template choice | **Working** | Template only above a compatibility score and margin; each feature is traced to a verified pain (S…) or to a labelled `ASSUMPTION (job to be done)`, never to a restatement of the idea |
 | 3.2 MVP code generation | **Working** for 5 templates / **STUBBED** otherwise | Stdlib Python app: API, UI (Arabic RTL), consented waitlist, SQLite. Unfitting ideas get a spec-only document and Gate 3 STOP |
 | 3.3 MVP verification | **Working** | Runs the generated tests (~23) and boots the server |
 | Gate 3 | **Working** | Tests must pass; REPEAT rebuilds once; then STOP |
@@ -128,9 +140,10 @@ flowchart LR
 | Model | Weights | How to run free | Used for |
 |---|---|---|---|
 | `qwen3:0.6b` (verified; the compose default), larger models such as `qwen3:8b`, or any open-weight model on a local OpenAI-compatible server | Open | Ollama (`ollama pull qwen3:0.6b`), `docker compose --profile llm up`, llama.cpp `llama-server`, vLLM or LM Studio | Phase 3: (1) template-synonym suggestion when no template clears the threshold, (2) MVP name + tagline. Optional (`HATCHAI_ADVISOR_LLM=1`): (3) a citation-checked Advisor summary after Gates 1–3 |
+| `openai/gpt-oss-120b` (default), `llama-3.3-70b-versatile` or `qwen/qwen3-32b` via **Groq** (opt-in) | Open | Free tier: set `HATCHAI_LLM_PROVIDER=groq` and `GROQ_API_KEY` in `.env` (untracked). Override the model with `HATCHAI_LLM_HOSTED_MODEL` | The same tasks, with a much larger open-weight model. Off unless configured. The founder's brief and verified quotes are sent to Groq when it is on |
 | none | n/a | Default. Replays and the default demo always run `LLM_DISABLED` | Deterministic name, tagline and template choice |
 
-All research APIs (`ddgs` metasearch, Hacker News Algolia, Wikipedia, World Bank) are free and need no keys. `llm_gateway.is_open_weight` rejects closed-weight model names (`gpt-*`, `gemini-*`, `claude-*`).
+All research APIs (`ddgs` metasearch, Hacker News Algolia, Wikipedia, World Bank) are free and need no keys. `llm_gateway.is_open_weight` rejects closed-weight model names (`gpt-4*`, `gemini-*`, `claude-*`) on every provider, the hosted one included. Strict structured output is used everywhere: `llm_gateway.strict_schema` adds `additionalProperties: false` to every object so that strict servers such as Groq accept the schema.
 
 **What the model may and may not do.** It never writes code, claims or evidence, and never sets a score or gate. A suggested template synonym counts only if its phrase appears verbatim in the idea and maps to an existing keyword of a template that already matched (at most +1). Name and tagline are length-checked, scanned for forbidden phrases and rejected if they look like code or URLs. Bad, empty or slow answers fall back to deterministic text with the label `LLM_UNAVAILABLE_FALLBACK`. Every output file carries an `LLM mode:` line.
 
@@ -144,9 +157,11 @@ python scripts/verify_llm.py      # exit 0 = VERIFIED round trip with a real mod
 
 **Verified with a real open-weight model (2026-11-17).** `qwen3:0.6b` (522 MB) served by Ollama 0.11.4 on the build machine: `scripts/verify_llm.py` reports `VERIFIED` (schema-valid answer in 0.4 s), and the Phase 3 name-and-tagline task returned `LLM_LIVE` and passed every code check. Requests use grammar-constrained JSON (`response_format: json_schema`), because without it this small model echoed the schema back instead of answering. The 24 protocol tests in `tests/test_llm_protocol.py` (stub server) cover timeouts, retries, schema validation, fallback and proof that model output leaves E, V and the gates unchanged. The optional Advisor summary was also run on `qwen3:0.6b`: 3 of 3 sentences cited a verified source and passed the check. Their quality is limited by the model's size (one sentence contradicted itself), which is why the summary is optional, labelled as model-written, and never replaces the rule-based memo. The committed demo runs `LLM_DISABLED` on purpose, so it is reproducible.
 
+**Verified with Groq's free tier (2026-11-17).** A full live run of the strong brief with `openai/gpt-oss-120b` (`HATCHAI_LLM_PROVIDER=groq`, `HATCHAI_ADVISOR_LLM=1`) went Gate 1 REPEAT → PIVOT → REPEAT → GO, then GO at Gates 2–5. The pivot was the Strategist's localisation gap ("the verified competitor sources never mention Egypt, while S2, S3, S17 do"), the MVP passed 24/24 of its own tests, and the Gate 1 file flagged the GO as fragile (it rested on one source, S23). The model-written Advisor summaries kept 4 of 4 sentences after the citation check at Gates 1 and 2. At Gate 3 the free tier returned HTTP 429 (rate limit), so that summary fell back to the rule-based memo and is labelled `LLM_UNAVAILABLE_FALLBACK`. That run's files stay in `runs/` (not committed); the committed demo is the offline replay.
+
 ## Cost per run
 
-About **$0.00 per run**. The research APIs are free and keyless, and the model (if used) runs on your own machine. A run makes at most 2 small LLM calls (Phase 3), each capped at 120–200 output tokens, plus 3 optional Advisor summaries (≤ 700 tokens each) when `HATCHAI_ADVISOR_LLM=1`; a live research run makes about 30 HTTP requests to free public APIs.
+About **$0.00 per run**. The research APIs are free and keyless, and the model (if used) runs on your own machine or on Groq's free tier (no payment method needed; free-tier rate limits apply). A run makes at most 2 small LLM calls (Phase 3), each capped at 120–200 output tokens, plus 3 optional Advisor summaries (≤ 700 tokens each) when `HATCHAI_ADVISOR_LLM=1`; a live research run makes about 30 HTTP requests to free public APIs.
 
 ## Demo video
 
@@ -166,6 +181,6 @@ Recording pending; the link will be added here.
 ## How the project stays alive after the hackathon
 
 - **Maintainers:** the founding team triages issues and reviews PRs weekly.
-- **Roadmap:** feed the evidence audit into the score (a v3 rule that discounts vendor-only and stale evidence); claim cross-checking across sources; more MVP archetypes and an LLM code-diff mode gated by the generated tests; connect the Phase 5 entitlement to the MVP's paid tier; a sandbox payment connector behind founder approval; Arabic-language regional sources; a CI benchmark of briefs with expected gate outcomes.
+- **Roadmap:** capture a new headline snapshot so its pivot round is collected for the Strategist's evidence-based direction; feed the evidence audit into the score (a v3 rule that discounts vendor-only and stale evidence); claim cross-checking across sources; more MVP archetypes and an LLM code-diff mode gated by the generated tests; connect the Phase 5 entitlement to the MVP's paid tier; a sandbox payment connector behind founder approval; Arabic-language regional sources; a CI benchmark of briefs with expected gate outcomes.
 - **Community:** MIT-licensed. Adding an archetype means one `core.py` plus its tests in `mvp_templates/`, a well-scoped first contribution. Adding a source type means one collector function in `evidence.py`.
 - **Funding:** no paid tier. It runs on free, keyless APIs and an optional model on the user's own machine; community sponsorship only if a public demo needs hosting.

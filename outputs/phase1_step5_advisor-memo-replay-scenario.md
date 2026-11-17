@@ -19,12 +19,12 @@
 
 ## 3. Weakest assumption
 
-- Demand evidence rests only on vendor or stale sources (S2, S14).
+- Demand evidence rests only on vendor or stale sources (S2, S14), so whether anyone has the problem is untested today; confirm it with one independent, current source.
 
 Other gaps:
 
-- Pricing evidence rests only on vendor or stale sources (S19).
-- Channel evidence rests only on vendor or stale sources (S14, S22).
+- Pricing evidence rests only on vendor or stale sources (S19), so the price users would accept is untested today; confirm it with one independent, current source.
+- Channel evidence rests only on vendor or stale sources (S14, S22), so the plan to reach users is untested today; confirm it with one independent, current source.
 
 ### Evidence-specific risks (from the evidence audit)
 
@@ -34,7 +34,7 @@ Other gaps:
 
 ## 4. Cheapest test this week
 
-- ASSUMPTION (proposed test, USD 0, 1 week): interview 5 target users in Jordan about the last time they had this problem and what they did about it, then share the MVP landing page and count consented waitlist sign-ups.
+- ASSUMPTION (proposed test, USD 0, 1 week): interview 5 adult hobbyists in Jordan about the last time they had this problem and what they did about it, then share the MVP landing page and count consented waitlist sign-ups.
 - Channels with verified evidence to start from: S14, S22.
 
 ## 5. What would change the recommendation
@@ -60,4 +60,4 @@ Each row re-runs the Gate 1 function with one cited source removed (computed by 
 
 ## Model-written summary (optional)
 
-Not produced (LLM mode: LLM_DISABLED; enable with HATCHAI_ADVISOR_LLM=1 and a local model). The sections above are rule-based and complete without it.
+Not produced (LLM mode: LLM_DISABLED; enable with HATCHAI_ADVISOR_LLM=1 and a local or free-tier open-weight model). The sections above are rule-based and complete without it.

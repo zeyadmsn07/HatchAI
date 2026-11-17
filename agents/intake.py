@@ -39,9 +39,12 @@ def parse_brief(raw: str) -> FounderBrief:
         m = re.search(r"\bfor ((?:[a-z0-9\-]+ ){0,5}(?:students|teachers|founders|freelancers|developers|"
                       r"designers|parents|owners|businesses|creators|tutors|clinics|shops|learners|"
                       r"professionals|employees|managers|writers|artists|musicians|coaches|families|"
-                      r"marketers|researchers|engineers|nurses|drivers|users|people|teams|agencies))",
+                      r"marketers|researchers|engineers|nurses|drivers|users|people|teams|agencies|hobbyists|enthusiasts|"
+                      r"beginners|adults|seniors|retirees|travell?ers|gamers|readers|photographers|athletes|"
+                      r"runners|makers|crafters|cooks|gardeners|collectors|volunteers|nonprofits|landlords|"
+                      r"consultants|startups|schools|job seekers))",
                       low)
-        tu = m.group(1).strip() if m else None
+        tu = m.group(1).strip().rsplit(" for ", 1)[-1] if m else None   # "workshops for adult hobbyists" -> "adult hobbyists"
     if tu:
         fields["target_user"] = tu
 

@@ -19,23 +19,24 @@
 
 ## 3. Weakest assumption
 
-- Demand evidence rests only on vendor or stale sources (S2, S14).
+- Demand evidence rests only on vendor or stale sources (S2, S14), so whether anyone has the problem is untested today; confirm it with one independent, current source.
 
 Other gaps:
 
-- Pricing evidence rests only on vendor or stale sources (S19).
-- Channel evidence rests only on vendor or stale sources (S14, S22).
+- Pricing evidence rests only on vendor or stale sources (S19), so the price users would accept is untested today; confirm it with one independent, current source.
+- Channel evidence rests only on vendor or stale sources (S14, S22), so the plan to reach users is untested today; confirm it with one independent, current source.
 
 ### Evidence-specific risks (from the evidence audit)
 
 - Pricing rests on vendor sources (S19), which quote their own prices. ASSUMPTION (kill criterion): fewer than 3 of 10 target users say they would pay the entry price. ASSUMPTION (cheapest test): ask them before building any paid tier.
 - S2 (demand) dates from 2023-06-14, so the plan built on it is untested today. ASSUMPTION (kill criterion): the channel or fact cannot be confirmed by one current source.
 - 55% of verified quotes (S14, S15, S19, S22) come from search snippets, not the page. ASSUMPTION (cheapest test): open those pages and confirm the sentence is there in context.
-- ASSUMPTION (from the Phase 2 critique): Target users will pay a recurring price; kill criterion: If fewer than 3% of landing-page visitors click a priced plan, stop or pivot pricing.
+- ASSUMPTION (from the Phase 2 critique): ASSUMPTION: adult hobbyists will pay a recurring price; no verified source states a price for this kind of product; kill criterion: If fewer than 3% of landing-page visitors click a priced plan, stop or pivot pricing.
+- ASSUMPTION (from the Phase 2 critique): adult hobbyists feel the problem behind S2, S14, which describe the market, not a pain strongly enough to switch tools; kill criterion: If fewer than 5 of 10 adult hobbyists describe a recent, concrete instance of it, stop.
 
 ## 4. Cheapest test this week
 
-- ASSUMPTION (proposed test, USD 0, 1 week): interview 5 target users in Jordan about the last time they had this problem and what they did about it, then share the MVP landing page and count consented waitlist sign-ups.
+- ASSUMPTION (proposed test, USD 0, 1 week): interview 5 adult hobbyists in Jordan about the last time they had this problem and what they did about it, then share the MVP landing page and count consented waitlist sign-ups.
 - Channels with verified evidence to start from: S14, S22.
 - ASSUMPTION: the pre-registered rule then decides in Phase 6 (at least 300 unique visitors; persevere at ≥ 10% sign-ups, stop below 3%).
 
@@ -62,4 +63,4 @@ Each row re-runs the Gate 2 function with one cited source removed (computed by 
 
 ## Model-written summary (optional)
 
-Not produced (LLM mode: LLM_DISABLED; enable with HATCHAI_ADVISOR_LLM=1 and a local model). The sections above are rule-based and complete without it.
+Not produced (LLM mode: LLM_DISABLED; enable with HATCHAI_ADVISOR_LLM=1 and a local or free-tier open-weight model). The sections above are rule-based and complete without it.

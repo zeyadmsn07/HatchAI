@@ -59,7 +59,13 @@ def join_waitlist(store: Store, body: dict, traffic: str = "real") -> dict:
         raise ValueError(f"TEST sign-ups must use the reserved {TEST_EMAIL_DOMAIN} domain")
     if any(e["email"] == email for e in store.events("waitlist")):
         return {"status": "already_joined"}
-    store.add_event("waitlist", None, {"email": email, "traffic": traffic})
+    event = {"email": email, "traffic": traffic}
+    answer = str(body.get("answer", "") or "").strip()
+    if answer:
+        # Optional reply to the pain question (config.pain_question): what the demand test learns
+        # about the verified pain, in the visitor's own words. Never shown publicly.
+        event["answer"] = answer[:500]
+    store.add_event("waitlist", None, event)
     return {"status": "joined", "traffic": traffic}
 
 

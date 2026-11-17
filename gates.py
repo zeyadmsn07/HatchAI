@@ -133,6 +133,17 @@ def _brief_undefined(brief: FounderBrief | None) -> bool:
     return bool(brief) and {"target_user", "geography"} <= set(brief.unknown_fields)
 
 
+def passed_all(checks: dict) -> bool:
+    """All checks except tool availability (which only explains a failure, never causes one)."""
+    return all(v for k, v in checks.items() if k != "research_tools_available")
+
+
+def _pivot_evidence(findings: ResearchFindings) -> str:
+    """The Strategist's best evidence-backed angle (cites source keys), shown next to the pivot."""
+    return findings.evidence_angles[0] if findings.evidence_angles else (
+        "ASSUMPTION: no evidence-backed angle was found; the pivot only narrows the brief.")
+
+
 # ---------------------------------------------------------------------------
 # Gate 1 — end of Phase 1 (Discover)
 # ---------------------------------------------------------------------------
@@ -147,7 +158,9 @@ def evaluate_gate_1(findings: ResearchFindings, brief: FounderBrief | None = Non
     can_repeat = round_no < cfg["max_research_rounds"]
     can_pivot = pivots_used < cfg["max_pivots"] and bool(findings.opportunity_angles)
 
+    outage = bool((findings.tool_health or {}).get("outage")) and findings.evidence_mode != "replay"
     checks = {
+        "research_tools_available": not outage,
         "brief_defines_target_user_and_geography": not _brief_undefined(brief),
         "evidence_score_at_least_go": e >= cfg["evidence_score_go"],
         "evidence_score_above_stop": e >= cfg["evidence_score_stop"],
@@ -159,16 +172,37 @@ def evaluate_gate_1(findings: ResearchFindings, brief: FounderBrief | None = Non
 
     def result(outcome, reason, pivot_to=""):
         return GateResult(gate_id=1, outcome=outcome, evidence_score=e, reason=f"{reason} {detail}",
-                          checks=checks, pivot_to=pivot_to)
+                          checks=checks, pivot_to=pivot_to,
+                          pivot_evidence=_pivot_evidence(findings) if pivot_to else "")
 
+    if outage:
+        h = findings.tool_health
+        tools = (f"{h.get('failed', 0)} of {h.get('jobs', 0)} research calls failed "
+                 f"({'; '.join(h.get('errors', [])[:3]) or 'errors'}), {h.get('new_sources', 0)} new sources.")
+        if can_repeat:
+            return result(GateOutcome.REPEAT, "REPEAT: research tools unavailable, retry. " + tools +
+                          " This is a tool failure, not a judgment on the idea; the evidence score below is "
+                          "incomplete.")
+        # Retry budget used: judge what earlier rounds did collect, but never call a tool failure a verdict.
+        tools_note = (" Research tools were unavailable in the last round (" + tools.rstrip(".") +
+                      "), so this rests on earlier rounds only.")
+    else:
+        tools_note = ""
     if _brief_undefined(brief):
         return result(GateOutcome.STOP, "STOP: the brief names neither a target user nor a geography, so "
                       "no market can be validated. Resubmit with a specific user and country.")
+    if outage and not passed_all(checks):
+        if can_pivot and e >= cfg["evidence_score_stop"]:
+            return result(GateOutcome.PIVOT, "PIVOT: retries exhausted without meeting GO; refocus on the "
+                          "best-evidenced opportunity angle." + tools_note, findings.opportunity_angles[0])
+        return result(GateOutcome.STOP, "STOP (INCONCLUSIVE): evidence did not reach GO and the research tools "
+                      "failed." + tools_note + " This is not a verdict on the idea: retry later or from another "
+                      "network.")
     if e < cfg["evidence_score_stop"] and not can_repeat:
         return result(GateOutcome.STOP, "STOP: evidence remains below the stop threshold after the retry budget.")
-    passed = all(checks.values())
+    passed = passed_all(checks)
     if passed:
-        return result(GateOutcome.GO, "GO: enough verified, diverse evidence to start validation.")
+        return result(GateOutcome.GO, "GO: enough verified, diverse evidence to start validation." + tools_note)
     if can_repeat:
         return result(GateOutcome.REPEAT, "REPEAT: evidence is incomplete — run another, broader research round.")
     if can_pivot and e >= cfg["evidence_score_stop"]:
@@ -200,7 +234,8 @@ def evaluate_gate_2(findings: ResearchFindings, critique: Critique, round_no: in
 
     def result(outcome, reason, pivot_to=""):
         return GateResult(gate_id=2, outcome=outcome, evidence_score=e, viability_score=v,
-                          reason=f"{reason} {detail}", checks=checks, pivot_to=pivot_to)
+                          reason=f"{reason} {detail}", checks=checks, pivot_to=pivot_to,
+                          pivot_evidence=_pivot_evidence(findings) if pivot_to else "")
 
     if e < cfg["evidence_score_stop"] or v < cfg["viability_score_stop"]:
         return result(GateOutcome.STOP, "STOP: hard-stop threshold hit — weak evidence or low viability.")

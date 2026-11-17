@@ -6,8 +6,8 @@ product: Narrow Recall
 archetype: spaced_repetition
 attempt: 1
 command: python -m unittest discover -s tests -v  (cwd=demo-headline)
-result: ran=23 failures=0 errors=0 ok=True (0.63 s)
-smoke: PASS — server booted on :32809; /health={'status': 'ok', 'product': 'Narrow Recall'}; /api/items returned 2 seeded items
+result: ran=24 failures=0 errors=0 ok=True (0.61 s)
+smoke: PASS — server booted on :34923; /health={'status': 'ok', 'product': 'Narrow Recall'}; /api/items returned 2 seeded items
 
 --- raw output ---
 test_ease_never_below_floor (test_core.SM2Test.test_ease_never_below_floor) ... ok
@@ -24,21 +24,22 @@ test_seeded_items_are_served (test_server.ServerTest.test_seeded_items_are_serve
 test_test_traffic_is_labelled_and_kept_apart (test_server.ServerTest.test_test_traffic_is_labelled_and_kept_apart) ... ok
 test_unknown_action_404 (test_server.ServerTest.test_unknown_action_404) ... ok
 test_waitlist_requires_consent_and_dedupes (test_server.ServerTest.test_waitlist_requires_consent_and_dedupes) ... ok
+test_waitlist_stores_optional_pain_answer (test_server.ServerTest.test_waitlist_stores_optional_pain_answer) ... ok
 test_all_2_seed_items_validate (test_spec.SpecTest.test_all_2_seed_items_validate) ... ok
 test_config_fields_match_domain_model (test_spec.SpecTest.test_config_fields_match_domain_model) ... ok
 test_every_feature_maps_to_an_implemented_action (test_spec.SpecTest.test_every_feature_maps_to_an_implemented_action) ... ok
 test_feature_consented_waitlist_demand_test (test_spec.SpecTest.test_feature_consented_waitlist_demand_test)
-Consented waitlist (demand test) - traces to: Riskiest assumption: Target users will pay a recurring price ... ok
+Consented waitlist (demand test) - traces to: Riskiest assumption: ASSUMPTION: university students will pay a recurring price; ... ok
 test_feature_due_today_review_queue (test_spec.SpecTest.test_feature_due_today_review_queue)
-Due-today review queue - traces to: university students lack an adequate Narrow the idea to university students. ... ok
+Due-today review queue - traces to: ASSUMPTION (job to be done): university students forget material between study s ... ok
 test_feature_retention_stats (test_spec.SpecTest.test_feature_retention_stats)
-Retention stats - traces to: Key metric: Demand-test sign-up rate; weekly active users; riskiest: Target user ... ok
+Retention stats - traces to: Key metric: Demand-test sign-up rate; weekly active users; riskiest: ASSUMPTION: ... ok
 test_feature_sm_2_adaptive_scheduling (test_spec.SpecTest.test_feature_sm_2_adaptive_scheduling)
-SM-2 adaptive scheduling - traces to: university students lack an adequate Narrow the idea to university students. ... ok
+SM-2 adaptive scheduling - traces to: ASSUMPTION (job to be done): university students forget material between study s ... ok
 test_free_tier_limit_enforced (test_spec.SpecTest.test_free_tier_limit_enforced) ... ok
 test_product_identity (test_spec.SpecTest.test_product_identity) ... ok
 
 ----------------------------------------------------------------------
-Ran 23 tests in 0.561s
+Ran 24 tests in 0.543s
 
 OK

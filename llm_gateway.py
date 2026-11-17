@@ -1,9 +1,15 @@
-"""LLM gateway — one small client for a LOCAL, OpenAI-compatible, open-weight model endpoint.
+"""LLM gateway — one small client for an OpenAI-compatible, open-weight model endpoint.
 
 Works with any server that speaks the OpenAI chat-completions protocol: Ollama (`/v1`),
-llama.cpp `llama-server`, vLLM, LM Studio. No paid APIs, no hosted services, no API keys.
+llama.cpp `llama-server`, vLLM, LM Studio. Optionally (opt-in, HATCHAI_LLM_PROVIDER=groq) it uses
+Groq's free tier, which serves the same open-weight families at 70B-120B scale (gpt-oss-120b,
+Llama 3.3 70B, Qwen3 32B). Only open-weight model names are accepted on any provider, and nothing
+requires payment: without a key the app runs on a local model or with no LLM at all.
 
 Configuration (environment):
+  HATCHAI_LLM_PROVIDER  local (default) | groq   groq = free-tier hosted open-weight models
+  GROQ_API_KEY          key for HATCHAI_LLM_PROVIDER=groq (or HATCHAI_LLM_API_KEY); never committed
+  HATCHAI_LLM_API_KEY   optional bearer token for any OpenAI-compatible endpoint
   HATCHAI_LLM_BASE_URL  base URL(s) ending in /v1, comma-separated   default http://localhost:11434/v1
                         (legacy OLLAMA_BASE_URL is accepted; "/v1" is appended if missing)
   HATCHAI_LLM_MODEL     open-weight model name served there           default qwen3:8b  (legacy OLLAMA_MODEL)
@@ -47,6 +53,10 @@ OPEN_WEIGHT_FAMILIES = (
 )
 _DEFAULT_MODEL = "qwen3:8b"
 _DEFAULT_BASE = "http://localhost:11434/v1"
+# Free-tier hosted provider for open-weight models (OpenAI-compatible).
+PROVIDERS = {
+    "groq": {"base": "https://api.groq.com/openai/v1", "model": "openai/gpt-oss-120b", "key_env": "GROQ_API_KEY"},
+}
 _probe_cache: dict = {"at": 0.0, "result": None}
 
 
@@ -97,7 +107,27 @@ def llm_disabled() -> bool:
     return os.environ.get("HATCHAI_NO_LLM", "").lower() in ("1", "true", "yes")
 
 
+def provider() -> str:
+    p = (os.environ.get("HATCHAI_LLM_PROVIDER") or "local").strip().lower()
+    return p if p in PROVIDERS else "local"
+
+
+def api_key() -> str:
+    p = provider()
+    if p in PROVIDERS:
+        return os.environ.get(PROVIDERS[p]["key_env"]) or os.environ.get("HATCHAI_LLM_API_KEY") or ""
+    return os.environ.get("HATCHAI_LLM_API_KEY") or ""
+
+
+def _headers() -> dict:
+    k = api_key()
+    return {"Authorization": f"Bearer {k}"} if k else {}
+
+
 def model_name() -> str:
+    p = provider()
+    if p in PROVIDERS:
+        return _require_open_weight(os.environ.get("HATCHAI_LLM_HOSTED_MODEL") or PROVIDERS[p]["model"])
     return _require_open_weight(os.environ.get("HATCHAI_LLM_MODEL") or os.environ.get("OLLAMA_MODEL")
                                 or _DEFAULT_MODEL)
 
@@ -106,6 +136,8 @@ ollama_model = model_name  # backwards-compatible alias
 
 
 def base_urls() -> list[str]:
+    if provider() in PROVIDERS:
+        return [PROVIDERS[provider()]["base"]]
     raw = os.environ.get("HATCHAI_LLM_BASE_URL") or os.environ.get("OLLAMA_BASE_URL") or _DEFAULT_BASE
     urls = []
     for u in raw.split(","):
@@ -147,9 +179,13 @@ def probe(max_age: float = 30.0) -> ProbeResult:
         return res
     errors = []
     res = None
+    if provider() in PROVIDERS and not api_key():
+        res = ProbeResult(False, error=f"HATCHAI_LLM_PROVIDER={provider()} but {PROVIDERS[provider()]['key_env']} is not set")
+        _probe_cache.update(at=now, result=res)
+        return res
     for base in base_urls():
         try:
-            r = httpx.get(f"{base}/models", timeout=min(3.0, timeout_s()))
+            r = httpx.get(f"{base}/models", headers=_headers(), timeout=min(5.0, timeout_s()))
             r.raise_for_status()
             ids = [m.get("id", "") for m in (r.json().get("data") or [])]
             if want in ids or f"{want}:latest" in ids:
@@ -188,7 +224,7 @@ def complete_json(system_prompt: str, user_prompt: str, response_model: Type[T],
     if not p.reachable:
         return LLMResult(LLM_FALLBACK, error=p.error or "no local LLM endpoint")
     import httpx
-    schema = response_model.model_json_schema()
+    schema = strict_schema(response_model.model_json_schema())
     body = {
         "model": p.model,
         "messages": [
@@ -208,7 +244,14 @@ def complete_json(system_prompt: str, user_prompt: str, response_model: Type[T],
     for attempt in range(1 + retries()):
         attempts = attempt + 1
         try:
-            r = httpx.post(f"{p.base_url}/chat/completions", json=body, timeout=timeout_s())
+            r = httpx.post(f"{p.base_url}/chat/completions", json=body, headers=_headers(), timeout=timeout_s())
+            if r.status_code == 400 and body["response_format"].get("type") == "json_schema":
+                # Some servers/models support only JSON mode, not schema-constrained output: degrade once.
+                body["response_format"] = {"type": "json_object"}
+                r = httpx.post(f"{p.base_url}/chat/completions", json=body, headers=_headers(), timeout=timeout_s())
+            if r.status_code == 429:
+                time.sleep(min(float(r.headers.get("retry-after", "2") or 2), 10))
+                raise RuntimeError("rate limited (HTTP 429)")
             r.raise_for_status()
             data = r.json()
             content = (data.get("choices") or [{}])[0].get("message", {}).get("content") or ""
@@ -232,6 +275,27 @@ def call_llm(system_prompt: str, user_prompt: str, response_model: Type[T],
     """Backwards-compatible wrapper: (value, model, tokens) when LLM_LIVE, else None."""
     res = complete_json(system_prompt, user_prompt, response_model, temperature)
     return (res.value, res.model, res.tokens) if res.live else None
+
+
+def strict_schema(schema: dict) -> dict:
+    """Make a pydantic JSON schema acceptable to strict structured-output servers (OpenAI-style strict
+    mode, Groq): every object gets additionalProperties:false and lists all its properties as required;
+    'default' values are dropped. The response is still validated by pydantic afterwards."""
+    import copy
+
+    def fix(node):
+        if isinstance(node, dict):
+            node.pop("default", None)
+            if node.get("type") == "object" or "properties" in node:
+                node["additionalProperties"] = False
+                node["required"] = list((node.get("properties") or {}).keys())
+            for v in node.values():
+                fix(v)
+        elif isinstance(node, list):
+            for v in node:
+                fix(v)
+        return node
+    return fix(copy.deepcopy(schema))
 
 
 def _parse_json(raw: str) -> dict:

@@ -8,10 +8,13 @@
 
 PIVOT: retries exhausted without meeting GO; refocus on the best-evidenced opportunity angle. E=67.9 (GO ≥ 55, STOP < 25); verified categories: ['channels', 'competitors', 'local_constraints']; cited domains: 4; research round 2.
 
-**Suggested pivot:** Narrow the idea to a narrower, named user group in Jordan: A booking app for Arabic calligraphy workshops for adult hobbyists in Jordan.
+**Suggested pivot:** Narrow the idea to adult hobbyists in Jordan: A booking app for Arabic calligraphy workshops for adult hobbyists in Jordan.
+
+**Why this pivot (Strategist, from the evidence):** ASSUMPTION: no evidence-backed angle was found; the pivot only narrows the brief.
 
 ## Checks
 
+- ✓ research tools available
 - ✓ brief defines target user and geography
 - ✓ evidence score at least go
 - ✓ evidence score above stop
