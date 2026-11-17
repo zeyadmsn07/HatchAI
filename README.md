@@ -30,13 +30,13 @@ Optional extras:
 docker compose --profile llm up          # also starts Ollama and pulls qwen3:8b (~5 GB, once)
 python orchestrator.py demo               # reproducible demo: replays the 3 committed snapshots, offline (no Docker)
 python orchestrator.py demo --live        # strong + weak scenarios do fresh live research instead (results vary)
-python orchestrator.py replay evidence_snapshots/repeat_scenario.json   # one scenario; exits 0 if gates match the capture
+python orchestrator.py replay evidence_snapshots/repeat_scenario.json [--scoring v1|v2]   # one scenario; v1 reproduces the capture
 python orchestrator.py capture "<brief>" evidence_snapshots/my.json     # live run that saves its evidence for replay
 python orchestrator.py run "<brief>"      # CLI run; you approve every gate at the prompt
 python demand_test_traffic.py generated_mvps/demo-strong --visitors 300 --signups 20   # labelled TEST traffic
 python orchestrator.py measure demo-strong # re-run Phase 6 on the MVP's stored counts
 cd generated_mvps/demo-strong && python server.py --port 8080   # run the generated MVP
-python -m pytest                          # 114 tests: 90 functional + 24 LLM protocol tests (stub server)
+python -m pytest                          # 126 tests: 102 functional + 24 LLM protocol tests (stub server)
 ```
 
 Without Docker: `pip install -r requirements.txt && uvicorn app:app` (Python 3.12).
@@ -49,7 +49,7 @@ Without Docker: `pip install -r requirements.txt && uvicorn app:app` (Python 3.1
 | 1.2 Guardrail 0 | **Working** | Excluded products and trick intents, fail-closed, no override; re-run on pivots |
 | Evidence capture / replay | **Working** | Snapshot of the evidence a live run collected; replay re-runs verification, scores and gates offline, labelled REPLAY. The default demo replays all three scenarios |
 | 1.3 Evidence collection | **Working** | `ddgs` web, HN Algolia, Wikipedia, World Bank API; ledger with URL + truncated SHA-256. Fetch times are recorded and displayed but **not scored**: source freshness is not verified |
-| 1.4 Synthesis + citation verifier | **Working** | Extractive (no LLM): claims are verbatim fetched passages, re-matched to the fetched text |
+| 1.4 Synthesis + citation verifier | **Working** | Extractive (no LLM): claims are verbatim fetched passages, re-matched to the fetched text. Relevance rule versioned: v1 (committed captures) is keyword-based and overrates thin evidence; v2 (new live runs) needs the brief's own user, problem and local terms. Before/after on the snapshots is in `WALKTHROUGH.md` |
 | Gate 1 | **Working** | E-score; GO / REPEAT (2nd research round) / PIVOT / STOP |
 | 2.1 Red-team critique + viability | **Working** | Rule-based critique; V-score computed in code (no LLM) |
 | 2.2 Lean Canvas | **Working** | Blocks cite source keys or say `ASSUMPTION` |

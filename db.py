@@ -75,6 +75,12 @@ def init_db():
             conn.execute("ALTER TABLE gate_results ADD COLUMN pivot_to TEXT DEFAULT ''")
         except Exception:
             pass
+        for stmt in ("ALTER TABLE runs ADD COLUMN scoring_version TEXT",
+                     "ALTER TABLE decision_log ADD COLUMN scoring_version TEXT"):
+            try:
+                conn.execute(stmt)
+            except Exception:
+                pass
 
 
 @contextmanager
@@ -154,16 +160,22 @@ def record_gate_decision(run_id, gate_id, decision, override_reason=""):
         )
 
 
+def set_run_scoring(run_id, version):
+    with get_conn() as conn:
+        conn.execute("UPDATE runs SET scoring_version=? WHERE run_id=?", (version, run_id))
+
+
 def log_action(run_id, agent, action, sources=None, model=None, cost=0, approved_by=None,
                phase=None, outcome=None, tokens=None):
     ts = now_iso()
     with get_conn() as conn:
+        row = conn.execute("SELECT scoring_version FROM runs WHERE run_id=?", (run_id,)).fetchone()
         conn.execute(
             "INSERT INTO decision_log "
-            "(run_id, timestamp, agent, action, sources_json, model, cost, approved_by, phase, outcome, tokens) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "(run_id, timestamp, agent, action, sources_json, model, cost, approved_by, phase, outcome, tokens, "
+            "scoring_version) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             (run_id, ts, agent, action, json.dumps(sources or []), model, cost or 0,
-             approved_by, phase, outcome, tokens),
+             approved_by, phase, outcome, tokens, row["scoring_version"] if row else None),
         )
     # decision_log.json is exported explicitly by the demo CLI (orchestrator.run_demo)
     # so that the committed file holds the demo runs only.
@@ -208,6 +220,8 @@ def export_decision_log(path="decision_log.json", run_ids=None):
                 entry["outcome"] = d["outcome"]
             if d.get("run_id"):
                 entry["run_id"] = d["run_id"]
+            if d.get("scoring_version"):
+                entry["scoring_version"] = d["scoring_version"]
             entries.append(entry)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(entries, f, indent=2)

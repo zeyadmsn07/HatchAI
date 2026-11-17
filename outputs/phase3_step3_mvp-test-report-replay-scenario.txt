@@ -1,12 +1,13 @@
 evidence mode: REPLAY of evidence_snapshots/repeat_scenario.json (captured 2026-11-17T15:31:37+00:00); no evidence was collected in this run
 LLM mode: LLM_DISABLED (no LLM was called in this run)
+Scoring version: v1 (relevance: any idea keyword + category vocabulary)
 HatchAI Phase 3 — generated MVP verification
 product: Arabic Book
 archetype: booking
 attempt: 1
 command: python -m unittest discover -s tests -v  (cwd=demo-replay)
-result: ran=23 failures=0 errors=0 ok=True (1.24 s)
-smoke: PASS — server booted on :60815; /health={'status': 'ok', 'product': 'Arabic Book'}; /api/items returned 2 seeded items
+result: ran=23 failures=0 errors=0 ok=True (1.3 s)
+smoke: PASS — server booted on :57706; /health={'status': 'ok', 'product': 'Arabic Book'}; /api/items returned 2 seeded items
 
 --- raw output ---
 test_availability_counts_seats (test_core.BookingTest.test_availability_counts_seats) ... ok
@@ -38,6 +39,6 @@ test_free_tier_limit_enforced (test_spec.SpecTest.test_free_tier_limit_enforced)
 test_product_identity (test_spec.SpecTest.test_product_identity) ... ok
 
 ----------------------------------------------------------------------
-Ran 23 tests in 0.867s
+Ran 23 tests in 0.898s
 
 OK

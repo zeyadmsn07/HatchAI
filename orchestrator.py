@@ -17,7 +17,9 @@ CLI:
   python orchestrator.py run "<brief>" --yes  # follow every gate recommendation automatically
   python orchestrator.py measure <run_id>     # re-run Phase 6 on the MVP's stored counts
   python orchestrator.py capture "<brief>" <snapshot.json>   # live run, save collected evidence
-  python orchestrator.py replay <snapshot.json> [run_id]     # reproduce a run from a snapshot (no network)
+  python orchestrator.py replay <snapshot.json> [run_id] [--scoring v1|v2]
+                                              # reproduce a run from a snapshot (no network); default: the
+                                              # snapshot's own scoring version (committed snapshots: v1)
 """
 from __future__ import annotations
 
@@ -42,7 +44,10 @@ ROOT = pathlib.Path(__file__).resolve().parent
 OUTPUTS = ROOT / "outputs"
 RUNS = ROOT / "runs"
 # Demo runs write to the committed outputs/ folder; the suffix keeps scenarios apart.
-DEMO_RUNS = {"demo-strong": "", "demo-weak": "-weak-idea", "demo-replay": "-replay-scenario"}
+DEMO_RUNS = {"demo-strong": "", "demo-weak": "-weak-idea", "demo-replay": "-replay-scenario",
+             # the same three snapshots replayed under scoring v2 (separate, labelled output files)
+             "demo-strong-v2": "-scoring-v2", "demo-weak-v2": "-weak-idea-scoring-v2",
+             "demo-replay-v2": "-replay-scenario-scoring-v2"}
 # Committed evidence snapshot for the reproducible REPEAT/PIVOT scenario (captured from a live run).
 SNAPSHOTS = ROOT / "evidence_snapshots"
 DEMO_SNAPSHOT = SNAPSHOTS / "repeat_scenario.json"
@@ -115,11 +120,23 @@ def llm_label(run_id: str) -> str:
     return f"{g.LLM_FALLBACK} (deterministic fallback used; {detail})"
 
 
+def scoring_version(run_id: str) -> str:
+    ecfg = _load(run_id, "evidence_config", default=None) or {}
+    return ecfg.get("scoring", "v1")
+
+
+def scoring_label(run_id: str) -> str:
+    v = scoring_version(run_id)
+    return {"v1": "v1 (relevance: any idea keyword + category vocabulary)",
+            "v2": "v2 (relevance: brief-specific user / problem / local terms)"}.get(v, v)
+
+
 def _with_label(run_id: str, filename: str, content: str) -> str:
     if not filename.endswith((".md", ".txt")) or "LLM mode:" in content[:800]:
         return content
     lines = [] if "Evidence mode" in content[:600] else [f"Evidence mode: {evidence_label(run_id)}"]
     lines.append(f"LLM mode: {llm_label(run_id)}")
+    lines.append(f"Scoring version: {scoring_label(run_id)}")
     if filename.endswith(".txt"):
         return "".join(l.replace("Evidence mode:", "evidence mode:") + "\n" for l in lines) + content
     block = "\n".join(f"> {l}" for l in lines)
@@ -141,9 +158,11 @@ def list_outputs(run_id: str) -> list[pathlib.Path]:
     files = sorted(p for p in d.iterdir() if p.is_file())
     if suffix is None:
         return files
+    stem = lambda p: p.name.rsplit(".", 1)[0]
     if suffix:
-        return [p for p in files if suffix in p.name]
-    return [p for p in files if not any(s and s in p.name for s in DEMO_RUNS.values())]
+        return [p for p in files if stem(p).endswith(suffix)
+                and not any(len(s) > len(suffix) and stem(p).endswith(s) for s in DEMO_RUNS.values())]
+    return [p for p in files if not any(s and stem(p).endswith(s) for s in DEMO_RUNS.values())]
 
 
 def _state_path(run_id: str, key: str) -> pathlib.Path:
@@ -187,7 +206,15 @@ def start_run(brief_text: str, run_id: str | None = None, auto_approve: bool = F
     run_id = run_id or secrets.token_hex(8)
     db.create_run(run_id, secrets.token_hex(16), json.dumps({"raw": brief_text}),
                   datetime.now(timezone.utc).isoformat(), auto_approve=auto_approve)
-    _store(run_id, "evidence_config", evidence_cfg or {"mode": "live", "capture": False})
+    import evidence as _ev
+    cfg = dict(evidence_cfg or {"mode": "live", "capture": False})
+    import os as _os
+    live_default = _os.environ.get("HATCHAI_SCORING") or _ev.DEFAULT_LIVE_SCORING   # new live runs: v2
+    cfg.setdefault("scoring", live_default if cfg.get("mode") != "replay" else "v1")
+    if cfg["scoring"] not in _ev.SCORING_VERSIONS:
+        raise ValueError(f"unknown scoring version {cfg['scoring']!r}")
+    db.set_run_scoring(run_id, cfg["scoring"])
+    _store(run_id, "evidence_config", cfg)
     _record_llm_mode(run_id)
     db.update_run_status(run_id, "phase_1_running", phase=1)
     _spawn(_run_phase_1, run_id)
@@ -279,6 +306,7 @@ def _run_phase_1(run_id: str):
             db.update_run_status(run_id, "stopped", error="Guardrail 0: " + reason)
             return
 
+        import evidence as evidence_mod
         from agents.intake import run as intake_run
         from agents.researcher import run as research_run
 
@@ -295,8 +323,18 @@ def _run_phase_1(run_id: str):
         ecfg = _load(run_id, "evidence_config", default={"mode": "live"}) or {"mode": "live"}
         snapshot = load_snapshot(ecfg["snapshot"]) if ecfg.get("mode") == "replay" else None
         captured = _load(run_id, "capture_rounds", default=[]) if ecfg.get("capture") else None
-        findings = research_run(run_id, brief, round_no=c["round"], previous=previous,
-                                replay=snapshot, capture=captured)
+        try:
+            findings = research_run(run_id, brief, round_no=c["round"], previous=previous,
+                                    replay=snapshot, capture=captured, scoring=ecfg.get("scoring", "v1"))
+        except evidence_mod.ReplayMissError as exc:
+            if snapshot is not None and ecfg.get("scoring", "v1") != snapshot.get("scoring_version", "v1"):
+                # The newer scoring asked for research the snapshot never captured: end honestly.
+                msg = (f"replay under scoring {ecfg['scoring']} needs evidence the snapshot does not contain "
+                       f"(captured under {snapshot.get('scoring_version', 'v1')}): {exc}")
+                callbacks.log(run_id, "orchestrator", "replay_round_not_captured", phase=1, outcome=msg[:300])
+                db.update_run_status(run_id, "stopped", error=msg)
+                return
+            raise
         gate = gates.evaluate_gate_1(findings, brief, round_no=c["round"], pivots_used=c["pivots"])
         _store(run_id, "findings", findings)
         if captured is not None:
@@ -904,6 +942,7 @@ def write_snapshot(run_id: str, path, label: str = "") -> dict:
         "note": ("Evidence captured from a live HatchAI run (real web/HN/Wikipedia/World Bank fetches). "
                  "Replaying it re-runs verification, scoring and gates without any network access."),
         "capture_metadata": _capture_metadata(rounds),
+        "scoring_version": scoring_version(run_id),
         "rounds": rounds,
         "gate_outcomes_at_capture": _counters(run_id)["history"],
         "final_status_at_capture": run["status"],
@@ -926,16 +965,23 @@ def _gate_signature(history: list) -> list:
     return [(h["gate"], h["outcome"], h["round"], h["E"], h["V"]) for h in history]
 
 
-def replay(path, run_id: str = "demo-replay") -> dict:
-    """Re-run a captured scenario from its snapshot: no network, no LLM, deterministic."""
+def replay(path, run_id: str = "demo-replay", scoring: str | None = None) -> dict:
+    """Re-run a captured scenario from its snapshot: no network, no LLM, deterministic.
+
+    scoring: relevance rule to apply (default: the version the snapshot was captured under, so the
+    captured outcomes are reproduced). A different version may legitimately give different outcomes;
+    that is reported as a labelled scoring-version difference, not as a mismatch."""
     import os
     snap = load_snapshot(path)
+    captured_v = snap.get("scoring_version", "v1")
+    scoring = scoring or captured_v
     saved = {k: os.environ.get(k) for k in ("HATCHAI_OFFLINE", "HATCHAI_NO_LLM")}
     os.environ.update(HATCHAI_OFFLINE="1", HATCHAI_NO_LLM="1")
     try:
         _reset_run(run_id)
         run = run_sync(snap["brief"], run_id, auto=True,
-                       evidence_cfg={"mode": "replay", "snapshot": str(path), "capture": False})
+                       evidence_cfg={"mode": "replay", "snapshot": str(path), "capture": False,
+                                     "scoring": scoring})
     finally:
         for k, v in saved.items():
             if v is None:
@@ -943,14 +989,27 @@ def replay(path, run_id: str = "demo-replay") -> dict:
             else:
                 os.environ[k] = v
     replayed = _counters(run_id)["history"]
-    match = _gate_signature(replayed) == _gate_signature(snap["gate_outcomes_at_capture"])
+    same = _gate_signature(replayed) == _gate_signature(snap["gate_outcomes_at_capture"])
+    version_diff = scoring != captured_v
+    match = same and not version_diff
+    verdict = ("MATCH" if match else
+               f"SCORING-VERSION DIFFERENCE (captured under {captured_v}, replayed under {scoring})"
+               if version_diff else "DIFFER FROM")
     callbacks.log(run_id, "orchestrator", "replay_check", phase=1,
-                  outcome=f"gate outcomes {'MATCH' if match else 'DIFFER FROM'} capture of {snap['captured_at']}")
-    _write(run_id, "phase1_step4_evidence-replay-check.md", _format_replay_check(snap, replayed, run, match))
-    return {"run": run, "match": match, "replayed": replayed, "captured": snap["gate_outcomes_at_capture"]}
+                  outcome=f"gate outcomes {verdict} capture of {snap['captured_at']}")
+    _write(run_id, "phase1_step4_evidence-replay-check.md",
+           _format_replay_check(snap, replayed, run, match, scoring, captured_v))
+    return {"run": run, "match": match, "replayed": replayed, "captured": snap["gate_outcomes_at_capture"],
+            "scoring": scoring, "captured_scoring": captured_v, "scoring_difference": version_diff,
+            "same_outcomes": same}
 
 
-def _format_replay_check(snap: dict, replayed: list, run: dict, match: bool) -> str:
+def _outcome_line(h: list) -> str:
+    return " → ".join(f"G{x['gate']}:{x['outcome'].upper()}(E={x['E']},V={x['V']})" for x in h) or "none"
+
+
+def _format_replay_check(snap: dict, replayed: list, run: dict, match: bool, scoring: str = "v1",
+                         captured_v: str = "v1") -> str:
     def rows(h):
         return "\n".join(f"| G{x['gate']} | {x['round']} | {x['outcome'].upper()} | {x['E']} | {x['V']} |" for x in h)
     rounds = "\n".join(
@@ -964,7 +1023,7 @@ def _format_replay_check(snap: dict, replayed: list, run: dict, match: bool) -> 
 > Replay reproduces the *decisions*; it does not make the captured evidence stronger or fresher.
 > Check the relevance of each verified claim in the research-findings file of this scenario.
 
-**Reproduce:** `python orchestrator.py replay {snap['_file']}`
+**Reproduce:** `python orchestrator.py replay {snap['_file']} --scoring {scoring}`
 
 ## Captured research rounds
 
@@ -972,7 +1031,11 @@ def _format_replay_check(snap: dict, replayed: list, run: dict, match: bool) -> 
 |---|---|---|---|---|---|
 {rounds}
 
-## Gate outcomes: capture vs. this replay — {'MATCH' if match else 'DIFFERENT'}
+**Captured under {captured_v}:** {_outcome_line(snap['gate_outcomes_at_capture'])}
+
+**Replayed under {scoring}:** {_outcome_line(replayed)}{(' (run ' + run['status'] + ': ' + run['error'] + ')') if run.get('error') else ''}
+
+## Gate outcomes: capture vs. this replay — {'MATCH' if match else ('SCORING-VERSION DIFFERENCE: expected when the relevance rule changes, not a failure' if scoring != captured_v else 'DIFFERENT')}
 
 At capture (live run `{snap['captured_from_run']}`, final status {snap['final_status_at_capture']}):
 
@@ -1043,6 +1106,16 @@ def run_demo(live: bool = False, log_path=None) -> dict:
         print(f"[{rid}] final status: {run['status']}  gates: "
               + " → ".join(f"G{h['gate']}:{h['outcome'].upper()}" for h in hist)
               + ("" if match is None else f"  (matches capture: {match})"))
+    if not live:
+        for rid, (brief, snap) in DEMO_SCENARIOS.items():
+            rid2 = f"{rid}-v2"
+            res = replay(snap, rid2, scoring="v2")
+            run = db.get_run(rid2)
+            results[rid2] = {"status": run["status"], "history": res["replayed"], "match": res["match"],
+                             "scoring_difference": res["scoring_difference"]}
+            print(f"[{rid2}] scoring v2 replay: {run['status']}  gates: "
+                  + (" → ".join(f"G{h['gate']}:{h['outcome'].upper()}" for h in res["replayed"]) or "none")
+                  + (f"  ({run['error'][:90]})" if run.get("error") else ""))
     _demo_test_traffic("demo-strong")
     db.export_decision_log(str(log_path or ROOT / "decision_log.json"), run_ids=list(DEMO_RUNS))
     print("decision_log.json and outputs/ updated.")
@@ -1067,9 +1140,19 @@ def main(argv: list[str]) -> int:
         return 0
     if args[0] == "replay" and len(args) >= 2:
         logging.basicConfig(level=logging.WARNING)
-        res = replay(args[1], args[2] if len(args) > 2 else "demo-replay")
-        print(" → ".join(f"G{h['gate']}:{h['outcome'].upper()}" for h in res["replayed"]),
-              f"| final status: {res['run']['status']} | gate outcomes match capture: {res['match']}")
+        scoring = args[args.index("--scoring") + 1] if "--scoring" in args else None
+        rest = [a for i, a in enumerate(args[2:], 2) if a != "--scoring" and args[i - 1] != "--scoring"]
+        res = replay(args[1], rest[0] if rest else "demo-replay", scoring=scoring)
+        print(f"captured under {res['captured_scoring']}: " + " → ".join(
+            f"G{h['gate']}:{h['outcome'].upper()}" for h in res["captured"]))
+        print(f"replayed under {res['scoring']}: " + (" → ".join(
+            f"G{h['gate']}:{h['outcome'].upper()}" for h in res["replayed"]) or "none")
+              + f" | final status: {res['run']['status']}"
+              + (f" ({res['run']['error']})" if res["run"].get("error") else ""))
+        if res["scoring_difference"]:
+            print("scoring-version difference (labelled, not a failure)")
+            return 0
+        print(f"gate outcomes match capture: {res['match']}")
         if res["run"]["run_id"] in DEMO_RUNS:
             db.export_decision_log(str(ROOT / "decision_log.json"), run_ids=list(DEMO_RUNS))
         return 0 if res["match"] else 2

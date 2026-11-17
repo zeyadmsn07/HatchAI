@@ -10,12 +10,12 @@ small text fields in Phase 3. Payments are a local simulation (MOCKED). Cost: $0
 
 | Goal | Command | Network / LLM |
 |---|---|---|
-| Reproducible demo (3 scenarios) | `python orchestrator.py demo` | none / `LLM_DISABLED` |
+| Reproducible demo (3 scenarios under scoring v1, plus the same 3 under v2) | `python orchestrator.py demo` | none / `LLM_DISABLED` |
 | Same, with fresh live research for strong + weak | `python orchestrator.py demo --live` | web / local LLM if running |
-| Replay one scenario; exit 0 if gates match the capture | `python orchestrator.py replay evidence_snapshots/repeat_scenario.json` | none / `LLM_DISABLED` |
+| Replay one scenario; exit 0 if gates match the capture (or the difference is a labelled scoring-version difference) | `python orchestrator.py replay evidence_snapshots/repeat_scenario.json [--scoring v1\|v2]` | none / `LLM_DISABLED` |
 | Capture a new live scenario | `python orchestrator.py capture "<brief>" evidence_snapshots/<name>.json` | web |
 | Check a local open-weight model | `python scripts/verify_llm.py` (set `HATCHAI_LLM_BASE_URL`, `HATCHAI_LLM_MODEL`, `HATCHAI_NO_LLM=0`) | local only |
-| Tests | `python -m pytest` (114: 90 functional + 24 LLM protocol tests against a stub server; tests never touch `outputs/`, `decision_log.json` or `evidence_snapshots/`) | none |
+| Tests | `python -m pytest` (126: 102 functional + 24 LLM protocol tests against a stub server; tests never touch `outputs/`, `decision_log.json` or `evidence_snapshots/`) | none |
 
 Outputs go to `outputs/` (one file per phase and step; `-weak-idea` and `-replay-scenario` suffixes),
 the log to `decision_log.json`. Every text output starts with its **Evidence mode** (REPLAY + snapshot
@@ -29,6 +29,17 @@ the log to `decision_log.json`. Every text output starts with its **Evidence mod
 | **Weak**: "generic study notes", no user, no country (`weak_scenario.json`) | G1 STOP | The system says STOP before any build or spend. |
 | **REPEAT → GO**: Arabic calligraphy workshop booking, Jordan (`repeat_scenario.json`) | G1 REPEAT → G1 GO → G2–G5 GO | Round 1 too thin (E = 46.5 < 55), so a broader second research round runs and reaches GO. |
 
+## Scoring v1 vs v2 on the frozen snapshots
+
+Same snapshots, same gate thresholds and logic; only the relevance rule differs (see `ARCHITECTURE.md`, "Relevance rule").
+v2 results are in `outputs/*-scoring-v2.*`. A v2 replay stops where it would need research the v1 capture never made.
+
+| Snapshot | v1 (as captured): gates, E, V | v2 (replayed): gates, E, V | Why v2 differs |
+|---|---|---|---|
+| Strong (STEM flashcards, Egypt) | G1–G5 **GO**; E = 95.0; V = 4.5 | G1 **REPEAT**; E = 84.2; V not reached. Replay stops: round 2 was never captured | No passage names university students + the flashcard/STEM problem + Egypt/Arabic, so demand is unverified |
+| Weak ("generic study notes") | G1 **STOP**; E = 95.0 | G1 **STOP**; E = 51.3 | Still STOP on the **brief rule**; the HN EpiPen threads and the local-constraint passages no longer count |
+| REPEAT → GO (calligraphy booking, Jordan) | G1 REPEAT (E = 46.5) → G1 GO (E = 100.0) → G2–G5 GO; V = 4.5 | G1 REPEAT (E = 25.3) → G1 **PIVOT** (E = 67.9); V not reached. Replay stops: the pivot idea was never captured | Demand can never verify: the intake recorded no target user (it does not recognise "adult hobbyists"); generic booking statistics no longer count |
+
 ## What is and is not verified
 
 | Claim | Status |
@@ -36,7 +47,7 @@ the log to `decision_log.json`. Every text output starts with its **Evidence mod
 | Gate outcomes, E and V are computed by code, and the demo reproduces them exactly | **Verified**: replays match the captures; two consecutive demo runs give identical outputs apart from random order ids, ports and durations |
 | Every quote in a VERIFIED claim appears in the fetched source text | **Verified** (citation checker + tests) |
 | Source freshness | **Not verified**: fetch times are recorded and displayed but **not scored**; publication dates are not extracted |
-| Evidence relevance | **Weak**: keyword-based, and it can overrate thin evidence (the strong and weak briefs both score E = 95.0; the REPEAT scenario's E = 100 rests partly on generic booking statistics) |
+| Evidence relevance | **v1 is weak; v2 is stricter, measured below.** v1 (the committed captures) is keyword-based and overrates thin evidence: the weak brief's "demand" was two Hacker News threads about generic EpiPens, and the strong and weak briefs both score E = 95.0. v2 (default for new live runs) needs the brief's own user, problem and local terms. On the same snapshots, the weak brief drops to E = 51.3, and **no snapshot has verified demand any more**. The weak scenario still stops on the brief rule: E = 51.3 alone would mean REPEAT, not STOP. |
 | Weak idea is stopped on weak evidence | **No**: the weak scenario stops on the **brief rule** (no target user and no geography), not on its evidence score |
 | REPEAT path | **Verified** end to end on real captured evidence (REPEAT → GO scenario) |
 | PIVOT path | **Only in fixture tests** (`tests/test_pipeline.py`); no committed real scenario |

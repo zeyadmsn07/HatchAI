@@ -109,6 +109,25 @@ Guardrail 0 blocks create no gate record, so they cannot be overridden.
 
 **Evidence score E (0–100), verified claims only:** category coverage 40, verified ratio 25, cited-domain diversity 20, source-type triangulation (web / HN / Wikipedia / World Bank) 15. There is **no recency component**: fetch times are recorded and displayed but not scored, and publication dates are not extracted, so source freshness is not verified.
 
+**Relevance rule: scoring versions.** E is computed the same way in both versions. The versions differ only in which fetched passages count as verified claims (`evidence.extractive_claims`). Gate thresholds and gate logic are identical. Every output shows `Scoring version: v1|v2`, every log entry carries `scoring_version`, and snapshots record the version they were captured under.
+
+* **v1** (committed snapshots; replays default to the snapshot's own version): a passage counts for a category if it contains any of the first 10 idea/target keywords (substring match) **and** any word from that category's vocabulary. This lets thin evidence through. Every Hacker News passage contains "points and", which was demand vocabulary, so a thread sharing one generic word with the idea counted as demand. Generic words such as "study", "booking" and "generic" were enough to match.
+* **v2** (default for new live runs; `HATCHAI_SCORING` overrides it): the passage must match the brief's own terms, using whole-word prefix matches.
+  * **User terms** come from the stated target user.
+  * **Local terms** come from the stated geography plus any non-English language in the brief.
+  * **Product/problem terms** are the idea's keywords minus generic product words (app, tool, platform, AI, sell, generic…) and minus the user and local terms.
+
+  | Category | v2 counts a passage only if… |
+  |---|---|
+  | demand | ≥1 user term, ≥1 product term, ≥1 local term and demand vocabulary (HN "points and" no longer counts); aggregate industry statistics (million/billion/statistics/market size/industry/global) never count as demand |
+  | competitors, pricing | category vocabulary, plus ≥2 product terms, or ≥1 product term and ≥1 user term ("about this product") |
+  | local constraints | World Bank rows for the brief's own country, or a local term plus local-constraint vocabulary |
+  | channels | channel vocabulary plus ≥1 user or local term |
+
+  A brief with no stated target user or geography can therefore never have verified demand.
+
+  The rule was written before it was run on the snapshots and has not been tuned to them. Replaying a v1 snapshot under v2 (`replay … --scoring v2`) is reported as a labelled scoring-version difference. If v2 needs a research round or pivot the snapshot never captured, the replay stops and says so; it does not invent evidence. Results are in `outputs/*-scoring-v2.*` and in the table in `WALKTHROUGH.md`.
+
 * **Gate 1:** **STOP** if the brief names neither a target user nor a geography, or if E < 25 after the retry budget. **GO** if E ≥ 55, demand is verified and ≥ 3 cited domains. **REPEAT** (broader, rephrased queries; the ledger is merged) while `round < 2`. **PIVOT** to the first opportunity angle once retries are exhausted and E ≥ 25 (max 1 pivot). Otherwise STOP.
 * **Gate 2:** **STOP** if E < 35 or V < 2. **GO** if E ≥ 55, V ≥ 3 and every high-risk assumption has a kill criterion. **PIVOT** when evidence is good but V < 3. **REPEAT** (another research round) while budget remains. Otherwise STOP.
 * **Gate 3:** **STOP** at once if no tested template fits the idea; a rebuild cannot change that. The founder may stop, or override with a written reason to continue planning without an MVP. Otherwise GO only if files were generated, ≥ 6 generated tests ran with 0 failures and 0 errors, every feature is traced, the server smoke test passes and no forbidden phrase appears. A failure means **REPEAT** (rebuild without LLM seed content); a second failure means **STOP**.

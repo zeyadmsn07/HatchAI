@@ -1,0 +1,276 @@
+[
+  {
+    "key": "S1",
+    "url": "https://news.ycombinator.com/item?id=40626452",
+    "title": "HN: Show HN: I Tried Coolify to Self-Host My AI-Powered Anki Flashcard Generator",
+    "domain": "news.ycombinator.com",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "66e7e5d12dc3caa3",
+    "passages": [
+      "Show HN: I Tried Coolify to Self-Host My AI-Powered Anki Flashcard Generator — Hacker News thread with 4 points and 1 comments, posted 2024-06-09."
+    ],
+    "collector": "hn",
+    "category": "demand"
+  },
+  {
+    "key": "S2",
+    "url": "https://news.ycombinator.com/item?id=44491043",
+    "title": "HN: Show HN: Keepmind – AI-powered flashcards and quizzes from your notes",
+    "domain": "news.ycombinator.com",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "33586c8a190f1e79",
+    "passages": [
+      "Show HN: Keepmind – AI-powered flashcards and quizzes from your notes — Hacker News thread with 3 points and 2 comments, posted 2025-07-07."
+    ],
+    "collector": "hn",
+    "category": "demand"
+  },
+  {
+    "key": "S3",
+    "url": "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
+    "title": "World Bank — Individuals using the Internet (% of population), Egypt, Arab Rep.",
+    "domain": "data.worldbank.org",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "faf656f908089c33",
+    "passages": [
+      "Individuals using the Internet (% of population) for Egypt, Arab Rep. in 2024: 74.6."
+    ],
+    "collector": "worldbank",
+    "category": "local_constraints"
+  },
+  {
+    "key": "S4",
+    "url": "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+    "title": "World Bank — GDP per capita (current US$), Egypt, Arab Rep.",
+    "domain": "data.worldbank.org",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "a517d2c9627f30b0",
+    "passages": [
+      "GDP per capita (current US$) for Egypt, Arab Rep. in 2025: 3,085.8."
+    ],
+    "collector": "worldbank",
+    "category": "local_constraints"
+  },
+  {
+    "key": "S5",
+    "url": "https://arxiv.org/pdf/2607.25096",
+    "title": "Memdora: Designing Cognitively-Grounded Flashcard ...",
+    "domain": "arxiv.org",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "01f51d3060616694",
+    "passages": [
+      "We present Memdora, an AI-powered spaced repetition system (Figure 1) that addresses both limitations through four primary contributions:"
+    ],
+    "collector": "web:yahoo",
+    "category": "demand"
+  },
+  {
+    "key": "S6",
+    "url": "https://arxiv.org/html/2607.25096v1",
+    "title": "Memdora: Designing Cognitively-Grounded Flashcard ...",
+    "domain": "arxiv.org",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "e4c59da47594adab",
+    "passages": [
+      "Jul 27, 2026 · We describe the design rationale for each interaction type, discuss how the system advances beyond prior AI flashcard systems including SmartFlash and KARL, and outline implications for educational technology design.",
+      "This preparation burden is so significant that it deters sustained adoption: a recent study of AI flashcard systems found that students reported spending more energy preparing cards than actually studying them ( 18 ) .",
+      "(4) An effort-based behavioral reward system that incentivizes actual cognitive engagement (5 minutes of study time, 100 cards reviewed) rather than mere app presence.",
+      "The study involved 6 students using a research prototype with a single basic card type."
+    ],
+    "collector": "web:yahoo",
+    "category": "demand"
+  },
+  {
+    "key": "S7",
+    "url": "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
+    "title": "Active Recall & Spaced Repetition: Evidence & Effectiveness",
+    "domain": "studycardsai.com",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "b8656f9530e6d883",
+    "passages": [
+      "Apr 12, 2026 · Discover how AI-powered flashcards use spaced repetition science to ensure you study the right material at precisely the right time-maximizing retention while minimizing time spent.",
+      "Retention Improvement Comparative research from Johns Hopkins University demonstrated that students using AI-optimized spaced repetition retained 92% of material after 6 months, compared to 23% for traditional study methods.",
+      "Impact: Students report 40% less study-related stress and anxiety when using AI-optimized systems.",
+      "Discover how AI-powered flashcards use spaced repetition science to ensure you study the right material at precisely the right time-maximizing retention while minimizing time spent."
+    ],
+    "collector": "web:yahoo",
+    "category": "demand"
+  },
+  {
+    "key": "S8",
+    "url": "https://notiq.study/blog/flashcards-spaced-repetition-science",
+    "title": "The Science Behind AI-Generated Flashcards - notiq.study",
+    "domain": "notiq.study",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "dd37c93efc5283eb",
+    "passages": [
+      "May 29, 2026 · AI flashcards and spaced repetition are two of the most evidence-backed tools in the study science toolkit — and combining them produces results that look almost implausible until you understand the mechanisms."
+    ],
+    "collector": "web:yahoo",
+    "category": "demand"
+  },
+  {
+    "key": "S9",
+    "url": "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+    "title": "7 Best Spaced Repetition Apps in 2026: Hands-On Comparison",
+    "domain": "laxuai.com",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "04e5d148dd3bc418",
+    "passages": [
+      "Aug 26, 2026 · A hands-on comparison of 7 spaced repetition apps. Laxu AI, Anki, Quizlet, Brainscape, RemNote, StudyFetch, and Knowt on SRS algorithm, free-tier limits, platforms, and price — every figure checked against each vendor's own site in August 2026.",
+      "Related guides: How spaced repetition works (complete guide) · Active recall study method · How to make effective flashcards · Best study apps for students 2026 · Best flashcard apps 2026 · PDF to flashcards guide In this article What is spaced repetition and why does it work?",
+      "Laxu AI is the best spaced repetition app for most students in 2026, combining AI-powered flashcard generation from PDFs, images, and audio with a built-in SM-2-adapted scheduling algorithm at $4.99/month or $39.99/year.",
+      "Study Techniques 16 min read 5 Best Flashcard Apps for Students in 2026 Study Techniques 13 min read Mind Mapping for Studying: When and How to Use It Put these techniques into practice Upload your study materials and let Laxu AI create flashcards, notes, and quizzes automatically."
+    ],
+    "collector": "web:yahoo",
+    "category": "competitors"
+  },
+  {
+    "key": "S10",
+    "url": "https://www.mintdeck.app/blog/best-spaced-repetition-apps-2026",
+    "title": "Best Spaced Repetition Apps (2026) · Free Anki Alternatives",
+    "domain": "mintdeck.app",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "c9529c858fea86b7",
+    "passages": [
+      "Jan 8, 2026 · Spaced repetition has gone mainstream, and there are now more flashcard apps than ever – from old‑school power tools like Anki to modern AI‑powered options like StudyFetch and MintDeck.",
+      "Brainscape uses a confidence‑based repetition system , where you rate each flashcard from 1–5 and the scheduler focuses on material you feel least confident about.",
+      "Spaced repetition has gone mainstream, and there are now more flashcard apps than ever – from old‑school power tools like Anki to modern AI‑powered options like StudyFetch and MintDeck.",
+      "StudyFetch offers AI‑heavy subscriptions targeted at students who want lecture‑to‑quiz automation."
+    ],
+    "collector": "web:yahoo",
+    "category": "competitors"
+  },
+  {
+    "key": "S11",
+    "url": "https://www.motownai.com/blog/best-flashcard-apps-university-students-2026",
+    "title": "Best Flashcard Apps for University Students in 2026 ...",
+    "domain": "motownai.com",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "8bc99d792e24a6fb",
+    "passages": [
+      "Jul 29, 2026 · Compare the best flashcard apps for university students in 2026: Motown AI, Anki, Quizlet, and more. Side-by-side feature comparison for active recall, spaced repetition, and exam prep.",
+      "Motown AI — AI-powered study packs with automatic card generation Best for: Students who want flashcards, quizzes, and audio summaries generated instantly from their lecture notes Motown AI is the only tool on this list that generates complete study packs — not just flashcards — from your actual course material.",
+      "Here are the best flashcard apps available in 2026, ranked by how well they serve real university students — with a side-by-side comparison of their core features so you can decide which one fits your workflow.",
+      "Brainscape — confidence-based repetition Best for: Students who want a simple, well-designed flashcard experience Brainscape uses a confidence-based repetition system: after each card, you rate how well you knew the answer on a 1–5 scale, and the platform schedules future reviews based on your rating."
+    ],
+    "collector": "web:yahoo",
+    "category": "competitors"
+  },
+  {
+    "key": "S12",
+    "url": "https://studyglen.com/guides/best-spaced-repetition-apps",
+    "title": "Best Spaced Repetition Apps 2026: FSRS vs SM-2 Ranked",
+    "domain": "studyglen.com",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "b69225e6dc48cb53",
+    "passages": [
+      "Nov 3, 2026 · Here are the five flashcard apps most commonly used for spaced repetition, grouped by which algorithm they run under the hood. The verdicts and pros/cons below help you compare them — but if you are still deciding between algorithms, jump back to the Which algorithm should you use section.",
+      "This guide explains how FSRS, SM-2, and the classic Leitner box system work — and which flashcard apps implement each.",
+      "StudyGlen : Default algorithm for all AI-generated flashcard decks — no manual configuration required.",
+      "Open tool Text to Flashcards Paste your study notes, textbook content, or any text."
+    ],
+    "collector": "web:yahoo",
+    "category": "competitors"
+  },
+  {
+    "key": "S13",
+    "url": "https://studyboost.org/blog/best-spaced-repetition-app/",
+    "title": "Best AI Spaced Repetition Flashcard App | Studyboost",
+    "domain": "studyboost.org",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "dd12a712028df757",
+    "passages": [
+      "Feb 28, 2026 · It generates flashcards from your own PDFs, slides, docs, YouTube lectures and audio, then schedules every review with FSRS, a modern spaced repetition algorithm. Studyboost Pro costs $10 a month or $90 a year ($7.50 a month), and new accounts get a 3-day free trial of Pro.",
+      "Start your 3-day free trial of Studyboost Pro Which AI flashcard apps with spaced repetition are worth paying for?",
+      "Start your 3-day free trial of Studyboost Pro AI Study Platform Turn Notes Into A's Upload your course materials and get AI-generated flashcards, quizzes, and answers with source citations.",
+      "Best AI Spaced Repetition Flashcard App | Studyboost The best AI flashcard app with spaced repetition worth paying for is Studyboost."
+    ],
+    "collector": "web:yahoo",
+    "category": "pricing"
+  },
+  {
+    "key": "S14",
+    "url": "https://www.remnote.com/pricing",
+    "title": "RemNote Pricing - Free, Pro, and EDU Plans",
+    "domain": "remnote.com",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "cb5735bb9c89e28c",
+    "passages": [
+      "Take notes, make flashcards, study efficiently. Explore RemNote pricing plans from free to pro and find the right fit for your learning needs.",
+      "The Johns Hopkins University School of Medicine All my notes and flashcards in one place.",
+      "The Johns Hopkins University School of Medicine All my notes and flashcards in one place.",
+      "Stanford Medicine - Stanford University Imported my notes from Notion and flashcards from Anki and it was surprisingly smooth."
+    ],
+    "collector": "web:yahoo",
+    "category": "pricing"
+  },
+  {
+    "key": "S15",
+    "url": "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
+    "title": "5 Best Flashcard Apps for Students in 2026 | Laxu AI",
+    "domain": "laxuai.com",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "c1d35cba3ebe4137",
+    "passages": [
+      "Oct 18, 2026 · If you want the app to turn your PDFs and photos into cards, Quizlet Plus ($35.99 a year), Laxu AI ($4.99 a month) and StudyFetch ($19.99 a month) all do it, at very different prices.",
+      "5 Best Flashcard Apps for Students in 2026 | Laxu AI The best flashcard app depends on who writes the cards.",
+      "Here is the number we can measure, from our own logs: in the 30 days to October 13, 2026, a PDF or Word upload produced a median of 39 flashcards, and the card-writing step took a median of 24 seconds (915 uploads from 650 students).",
+      "Turbo AI - Another $20/month option Turbo AI is similar to StudyFetch: AI flashcards, quizzes and a lecture notetaker in one app."
+    ],
+    "collector": "web:yahoo",
+    "category": "pricing"
+  },
+  {
+    "key": "S16",
+    "url": "https://www.aucegypt.edu/services/communications/marketing",
+    "title": "Marketing and Social Media Consulting | The American ...",
+    "domain": "aucegypt.edu",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "44eb9aa5d5e5676a",
+    "passages": [
+      "Our team will help you promote your academic achievements, research breakthroughs or special events and initiatives on the relevant AUC social media channels so you can reach the widest possible audience or target a specific group."
+    ],
+    "collector": "web:yahoo",
+    "category": "channels"
+  },
+  {
+    "key": "S17",
+    "url": "https://www.facebook.com/SchoolOfMarketing.CO/",
+    "title": "School of Marketing - FacebookStudent Acquisition Strategy in Egypt - 23HubLabHigher Education Marketing: The Complete 2026 Guide - LeadSquaredDigital marketing",
+    "domain": "facebook.com",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "74ab4789a3bd381c",
+    "passages": [
+      "سياسة الاسترجاع (Refund Policy) تقدّر School of Marketing ثقة المتدربين وتحرص على رضاهم الكامل عن الخدمات التعليمية المقدَّمة من خلال منصّتها الإلكترونية. لذلك، تم إعداد سياسة الاسترجاع التالية لتنظيم عملية استرداد الرسوم في حال وجود أسباب وجيهة. Egyptian education marketing has historically been organized around physical channels — enrollment fairs, campus open days, direct mail, and word-of-mouth through community networks. These channels remain important, but they are less commercially efficient than they were five years ago for two reasons: Oct 23, 2026 · Whether you work at a 2-year or 4-year institution, focus on traditional or non-traditional students, serve in-house or at an agency specializing in education marketing, or hold a role as a university administrator or enrollment professional—this guide is for you. Jun 9, 2023 · To stand out, universities must prioritise digital marketing strategies, using a targeted approach. There are a few simple steps that universities can take to ensure marketing efforts are reaching international students. First, universities must specify who their target audience is. May 18, 2026 · When marketing to college students, your chances of success can be higher if you keep the tips below in mind: 1. Profile your student targets. Decide what type of student you want to reach with your product or service before marketing it. Apr 6, 2026 · It's about time to get use of all our marketing efforts and to get to know each other well."
+    ],
+    "collector": "web:yahoo",
+    "category": "channels"
+  },
+  {
+    "key": "S18",
+    "url": "https://23hublab.com/student-acquisition-strategy-in-egypt/",
+    "title": "Student Acquisition Strategy in Egypt - 23HubLab",
+    "domain": "23hublab.com",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "5b932d0a8c3c2ff0",
+    "passages": [
+      "Egyptian education marketing has historically been organized around physical channels — enrollment fairs, campus open days, direct mail, and word-of-mouth through community networks. These channels remain important, but they are less commercially efficient than they were five years ago for two reasons:"
+    ],
+    "collector": "web:yahoo",
+    "category": "channels"
+  },
+  {
+    "key": "S19",
+    "url": "https://www.leadsquared.com/industries/education/higher-education-marketing-guide/",
+    "title": "Higher Education Marketing: The Complete 2026 Guide - LeadSquared",
+    "domain": "leadsquared.com",
+    "fetch_time": "2026-11-17T15:52:51+00:00",
+    "text_hash": "ae10d0a3d91922e6",
+    "passages": [
+      "Oct 23, 2026 · Whether you work at a 2-year or 4-year institution, focus on traditional or non-traditional students, serve in-house or at an agency specializing in education marketing, or hold a role as a university administrator or enrollment professional—this guide is for you."
+    ],
+    "collector": "web:yahoo",
+    "category": "channels"
+  }
+]

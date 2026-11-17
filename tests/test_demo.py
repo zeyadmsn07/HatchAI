@@ -45,10 +45,14 @@ def test_two_default_demo_runs_are_identical(monkeypatch, tmp_path):
     r2 = orchestrator.run_demo(log_path=tmp_path / "log2.json")
     out2 = _snapshot_outputs()
 
-    assert {k: v["status"] for k, v in r1.items()} == {"demo-strong": "completed", "demo-weak": "stopped",
-                                                       "demo-replay": "completed"}
+    v1_runs = {"demo-strong": "completed", "demo-weak": "stopped", "demo-replay": "completed"}
+    assert {k: r1[k]["status"] for k in v1_runs} == v1_runs
+    assert set(r1) == set(v1_runs) | {f"{k}-v2" for k in v1_runs}       # the same snapshots under scoring v2
     for rid in r1:
-        assert r1[rid]["match"] is True and r2[rid]["match"] is True
+        if rid in v1_runs:      # captured under v1, replayed under v1: must reproduce the capture exactly
+            assert r1[rid]["match"] is True and r2[rid]["match"] is True
+        else:                   # replayed under v2: a labelled scoring-version difference, not a match
+            assert r1[rid]["scoring_difference"] is True and r1[rid]["match"] is False
         assert orchestrator._gate_signature(r1[rid]["history"]) == orchestrator._gate_signature(r2[rid]["history"])
 
     assert sorted(out1) == sorted(out2)

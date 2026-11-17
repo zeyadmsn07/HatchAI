@@ -94,6 +94,10 @@ def isolated(tmp_path, monkeypatch):
     monkeypatch.setenv("DB_PATH", str(tmp_path / "test.db"))
     monkeypatch.setenv("HATCHAI_OFFLINE", "1")
     monkeypatch.setenv("HATCHAI_NO_LLM", "1")
+    # The synthetic fixture evidence below was written for the v1 relevance rule, and these tests check
+    # pipeline mechanics, not relevance. Live runs default to scoring v2 outside tests; v2 behaviour is
+    # tested explicitly in tests/test_scoring_v2.py (which sets HATCHAI_SCORING=v2 itself).
+    monkeypatch.setenv("HATCHAI_SCORING", "v1")
     import db
     import llm_gateway
     import orchestrator

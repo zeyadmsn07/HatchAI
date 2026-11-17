@@ -31,7 +31,7 @@ def _clean(v: str) -> str:
 
 def run(run_id: str, brief: FounderBrief, round_no: int = 1,
         previous: ResearchFindings | None = None, idea_override: str | None = None,
-        replay: dict | None = None, capture: list | None = None) -> ResearchFindings:
+        replay: dict | None = None, capture: list | None = None, scoring: str = "v1") -> ResearchFindings:
     """Research one round.
 
     replay:  a captured evidence snapshot; sources (and captured raw LLM claims, if any) are
@@ -69,7 +69,7 @@ def run(run_id: str, brief: FounderBrief, round_no: int = 1,
     claims = evidence.verify_claims(claims, sources)
     verified_cats = {c.category for c in claims if c.verified}
     # Fill categories the model missed (or all of them in no-LLM mode) with verbatim extracts.
-    for c in evidence.extractive_claims(sources, idea, target):
+    for c in evidence.extractive_claims(sources, idea, target, scoring, brief.geography, brief.language):
         if c.category not in verified_cats:
             claims.append(c)
     claims = evidence.verify_claims(claims, sources)
@@ -85,7 +85,7 @@ def run(run_id: str, brief: FounderBrief, round_no: int = 1,
     findings = ResearchFindings(
         claims=claims, opportunity_angles=angles, sources=sources,
         source_count=len(sources), domain_count=len({s.domain for s in sources}),
-        research_round=round_no, mode=mode,
+        research_round=round_no, mode=mode, scoring_version=scoring,
         evidence_mode="replay" if replay is not None else "live",
         snapshot=(f"{replay.get('_file', '?')} (captured {replay.get('captured_at', '?')})" if replay is not None else ""),
     )

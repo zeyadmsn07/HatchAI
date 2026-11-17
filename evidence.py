@@ -434,8 +434,120 @@ def passage_relevance(p: str, cat: str, terms: list[str], collector: str = "") -
     return sum(1 for t in terms if t in low), sum(1 for t in CATEGORY_TERMS[cat] if t in low)
 
 
-def extractive_claims(sources: list[Source], idea: str, target_user: str) -> list[Claim]:
-    """No-LLM synthesis: up to 2 verbatim passages per category, each a verified quote.
+SCORING_VERSIONS = ("v1", "v2")
+DEFAULT_LIVE_SCORING = "v2"           # new live runs; replays default to the snapshot's own version
+
+
+def extractive_claims(sources: list[Source], idea: str, target_user: str, scoring: str = "v1",
+                      geography: str = "", language: str = "") -> list[Claim]:
+    """Dispatch to the relevance rule of the given scoring version (v1 unchanged, v2 brief-specific)."""
+    if scoring == "v1":
+        return extractive_claims_v1(sources, idea, target_user)
+    if scoring == "v2":
+        return extractive_claims_v2(sources, idea, target_user, geography, language)
+    raise ValueError(f"unknown scoring version {scoring!r}; expected one of {SCORING_VERSIONS}")
+
+
+# ---------------------------------------------------------------------------
+# v2 relevance: a passage must match the brief's OWN terms, not just category vocabulary
+# ---------------------------------------------------------------------------
+
+# Words that describe "a product" in general and say nothing about this brief's problem.
+GENERIC_PRODUCT_WORDS = set("""ai ai-powered smart simple easy new best sells sell selling generic build
+built make want app apps tool tools platform service website web mobile online digital solution system
+software product products based focused""".split())
+# Aggregate market figures are background context, never demand evidence for this brief.
+AGGREGATE_STATS = re.compile(r"\b(million|billion|trillion|statistics|market size|industry|worldwide|global)\b", re.I)
+DEMAND_TERMS_V2 = tuple(t for t in CATEGORY_TERMS["demand"] if t != "points and")   # HN metadata is not demand
+
+
+def _known(v: str) -> str:
+    return "" if not v or v.upper().startswith(("UNKNOWN", "ASSUMPTION")) else v
+
+
+def brief_terms(idea: str, target_user: str, geography: str, language: str) -> dict[str, list[str]]:
+    """The brief's specific terms: user (stated target user), local (stated geography + non-English
+    language), product (idea keywords minus generic product words, user and local terms)."""
+    user = keywords(_known(target_user), 6)
+    local = keywords(_known(geography), 4)
+    for lang in re.split(r"[/,\s]+", _known(language).lower()):
+        if lang and lang != "english" and lang not in local:
+            local.append(lang)
+    product = [w for w in keywords(idea, 12)
+               if w not in GENERIC_PRODUCT_WORDS and w not in user and w not in local]
+    return {"user": user, "local": local, "product": product}
+
+
+def _hits(terms: list[str], low: str) -> int:
+    """Whole-word-prefix matches; hyphenated terms also match with a space ('spaced repetition')."""
+    n = 0
+    for t in terms:
+        pat = r"[- ]".join(re.escape(part) for part in t.split("-"))
+        if re.search(rf"\b{pat}", low):
+            n += 1
+    return n
+
+
+def _vocab(cat_terms: tuple, low: str) -> int:
+    return sum(1 for t in cat_terms if t in low)
+
+
+def relevant_v2(p: str, cat: str, s: Source, bt: dict[str, list[str]]) -> int:
+    """Return a ranking score > 0 if passage p counts for category `cat` under v2, else 0."""
+    low = p.lower()
+    u, loc, pr = _hits(bt["user"], low), _hits(bt["local"], low), _hits(bt["product"], low)
+    about_product = pr >= 2 or (pr >= 1 and u >= 1)
+    if s.collector == "worldbank":
+        # Indicator rows are fetched for the brief's own country only; they are local context.
+        return 4 if cat == "local_constraints" and bt["local"] and loc >= 1 else 0
+    if cat == "demand":
+        v = _vocab(DEMAND_TERMS_V2, low)
+        ok = u >= 1 and pr >= 1 and loc >= 1 and v >= 1 and not AGGREGATE_STATS.search(low)
+    elif cat == "competitors":
+        v = _vocab(CATEGORY_TERMS["competitors"], low)
+        ok = v >= 1 and about_product
+    elif cat == "pricing":
+        v = _vocab(CATEGORY_TERMS["pricing"], low)
+        ok = v >= 1 and about_product
+    elif cat == "local_constraints":
+        v = _vocab(CATEGORY_TERMS["local_constraints"], low)
+        ok = v >= 1 and loc >= 1
+    else:  # channels
+        v = _vocab(CATEGORY_TERMS["channels"], low)
+        ok = v >= 1 and (u >= 1 or loc >= 1)
+    return (u + loc + pr + v) if ok else 0
+
+
+def extractive_claims_v2(sources: list[Source], idea: str, target_user: str, geography: str,
+                         language: str) -> list[Claim]:
+    """v2: same verbatim-quote synthesis as v1 (top 2 per category), stricter relevance."""
+    bt = brief_terms(idea, target_user, geography, language)
+    claims: list[Claim] = []
+    for cat in CATEGORIES:
+        cands = []
+        for s in sources:
+            for p in s.passages:
+                if len(p) < 30 or _looks_like_navigation(p[:240]) or not _mostly_latin(p[:240]):
+                    continue
+                score = relevant_v2(p, cat, s, bt)
+                if score:
+                    cands.append((score + (1 if s.category == cat else 0), s, p))
+        cands.sort(key=lambda x: -x[0])
+        used = set()
+        for _, s, p in cands:
+            if s.key in used:
+                continue
+            used.add(s.key)
+            quote = p[:240]
+            claims.append(Claim(category=cat, text=f'{s.title} reports: "{quote}"', source_keys=[s.key],
+                                quote=quote, verified=True, is_assumption=False))
+            if len(used) >= 2:
+                break
+    return claims
+
+
+def extractive_claims_v1(sources: list[Source], idea: str, target_user: str) -> list[Claim]:
+    """v1 (unchanged): No-LLM synthesis: up to 2 verbatim passages per category, each a verified quote.
 
     A passage qualifies only if it mentions the idea/target user AND the category's
     vocabulary, and is not navigation chrome. World Bank indicator rows qualify for

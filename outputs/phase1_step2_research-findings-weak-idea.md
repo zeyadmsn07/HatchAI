@@ -1,6 +1,7 @@
 # Phase 1 — Research findings (round 1)
 
 > LLM mode: LLM_DISABLED (no LLM was called in this run)
+> Scoring version: v1 (relevance: any idea keyword + category vocabulary)
 
 > **Evidence mode: REPLAY** — sources loaded from snapshot evidence_snapshots/weak_scenario.json (captured 2026-11-17T15:53:01+00:00). Nothing was collected in this run; fetch times and hashes below are the ORIGINAL capture values.
 > Synthesis mode: **extractive** (no LLM: claims are verbatim passages from fetched sources).

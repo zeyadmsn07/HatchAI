@@ -75,6 +75,7 @@ class ResearchFindings(BaseModel):
     mode: str = "extractive"     # "llm" or "extractive" (no-LLM, verbatim quotes)
     evidence_mode: str = "live"  # "live" (collected in this run) or "replay" (loaded from a snapshot)
     snapshot: str = ""           # snapshot file + capture time when evidence_mode == "replay"
+    scoring_version: str = "v1"  # relevance rule used to classify E's inputs (evidence.SCORING_VERSIONS)
 
 
 class KillAssumption(BaseModel):
