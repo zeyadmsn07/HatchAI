@@ -8,7 +8,7 @@
 
 I'm building **STEM Recall** for university students in Egypt. It's an early, free MVP.
 I'd value honest feedback — what would make it worth using every week? There is a waitlist on the page
-if you want to hear when it improves. (Paid plan, if any, would be about USD 2.50/month; the core stays free.)
+if you want to hear when it improves. (Paid plan, if any, would be about USD 2.57/month; the core stays free.)
 
 ## Store / landing listing draft
 

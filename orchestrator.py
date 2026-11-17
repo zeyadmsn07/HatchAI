@@ -14,6 +14,7 @@ CLI:
   python orchestrator.py demo                 # committed demo: strong idea (full run) + weak idea (STOP)
   python orchestrator.py run "<brief>"        # interactive: you approve each gate at the prompt
   python orchestrator.py run "<brief>" --yes  # follow every gate recommendation automatically
+  python orchestrator.py measure <run_id>     # re-run Phase 6 on the MVP's stored counts
 """
 from __future__ import annotations
 
@@ -346,16 +347,31 @@ def _run_phase_6(run_id: str):
         db.update_run_status(run_id, "phase_6_running", phase=6)
         from agents.operate import run as operate_run
 
-        brief = _load(run_id, "brief", FounderBrief)
-        dt = _load(run_id, "demand_test", DemandTest)
-        app = _load(run_id, "app", default={})
-        memo = operate_run(run_id, brief, dt, pathlib.Path(app["app_dir"]) if app.get("app_dir") else None,
-                           _load(run_id, "payment", default={}))
-        _write(run_id, "phase6_step1_operate-memo.md", memo)
+        _write_operate_memo(run_id, operate_run)
         db.update_run_status(run_id, "completed", phase=6)
         callbacks.log(run_id, "orchestrator", "run_completed", phase=6, outcome="completed")
     except Exception as exc:
         _fail(run_id, 6, exc)
+
+
+def _write_operate_memo(run_id: str, operate_run) -> str:
+    brief = _load(run_id, "brief", FounderBrief)
+    dt = _load(run_id, "demand_test", DemandTest)
+    app = _load(run_id, "app", default={}) or {}
+    memo = operate_run(run_id, brief, dt, pathlib.Path(app["app_dir"]) if app.get("app_dir") else None,
+                       _load(run_id, "payment", default={}))
+    _write(run_id, "phase6_step1_operate-memo.md", memo)
+    return memo
+
+
+def measure(run_id: str) -> str:
+    """Re-run Phase 6 on a completed run: read the MVP's stored counts again."""
+    run = db.get_run(run_id)
+    if not run or run["status"] != "completed":
+        raise ValueError(f"run {run_id} must be completed before re-measuring (status: {run and run['status']})")
+    from agents.operate import run as operate_run
+    callbacks.log(run_id, "orchestrator", "remeasure_phase_6", phase=6)
+    return _write_operate_memo(run_id, operate_run)
 
 
 PHASES = {1: _run_phase_1, 2: _run_phase_2, 3: _run_phase_3, 4: _run_phase_4, 5: _run_phase_5, 6: _run_phase_6}
@@ -686,6 +702,21 @@ def _interactive(run_id: str):
         advance_after_gate(run_id, gid, choice)
 
 
+def _demo_test_traffic(run_id: str, visitors: int = 300, signups: int = 20) -> None:
+    """Demo only: verify the Phase 6 measurement path with clearly labelled TEST traffic."""
+    app = _load(run_id, "app", default={}) or {}
+    if db.get_run(run_id)["status"] != "completed" or not app.get("app_dir"):
+        return
+    from demand_test_traffic import send_test_traffic
+    res = send_test_traffic(app["app_dir"], visitors=visitors, signups=signups)
+    callbacks.log(run_id, "demo_script", "send_labelled_test_traffic", phase=6,
+                  outcome=f"TEST only: {visitors} visitors, {signups} sign-ups (X-HatchAI-Traffic: TEST, @example.com)")
+    measure(run_id)
+    t, r = res["metrics"]["test"], res["metrics"]["real"]
+    print(f"[{run_id}] TEST traffic sent and re-measured: TEST {t['unique_visitors']} visitors / {t['signups']} "
+          f"sign-ups; REAL {r['unique_visitors']} visitors / {r['signups']} sign-ups")
+
+
 def run_demo():
     logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
     db.init_db()
@@ -697,6 +728,7 @@ def run_demo():
         hist = _counters(rid)["history"]
         print(f"[{rid}] final status: {run['status']}  gates: "
               + " → ".join(f"G{h['gate']}:{h['outcome'].upper()}" for h in hist))
+    _demo_test_traffic("demo-strong")
     db.export_decision_log(str(ROOT / "decision_log.json"), run_ids=list(DEMO_RUNS))
     print("decision_log.json and outputs/ updated.")
 
@@ -710,6 +742,9 @@ if __name__ == "__main__":
         rid = secrets.token_hex(6)
         r = run_sync(args[1], rid, auto="--yes" in args)
         print(f"run {rid}: {r['status']} — outputs in {out_dir(rid)}")
+    elif args[0] == "measure" and len(args) == 2:
+        measure(args[1])
+        print(f"Phase 6 re-measured — see {out_dir(args[1]) / out_name(args[1], 'phase6_step1_operate-memo.md')}")
     else:
         print(__doc__)
         sys.exit(1)

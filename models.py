@@ -89,6 +89,10 @@ class DemandTest(BaseModel):
     duration_days: int
     cost_usd: float
     status: str = "NOT_RUN"
+    # Machine-readable decision rule (pre-registered in Phase 2, applied in Phase 6)
+    min_unique_visitors: int = 300
+    go_signup_rate: float = 0.10
+    stop_signup_rate: float = 0.03
 
 
 class CanvasBlock(BaseModel):

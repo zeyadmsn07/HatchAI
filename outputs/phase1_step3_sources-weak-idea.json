@@ -4,7 +4,7 @@
     "url": "https://news.ycombinator.com/item?id=12382737",
     "title": "HN: Maker of EpiPen to Sell Generic Version for Half the Price",
     "domain": "news.ycombinator.com",
-    "fetch_time": "2026-11-17T15:14:01+00:00",
+    "fetch_time": "2026-11-17T15:22:46+00:00",
     "text_hash": "8a7fb949e4c422bf",
     "passages": [
       "Maker of EpiPen to Sell Generic Version for Half the Price — Hacker News thread with 1 points and 1 comments, posted 2016-08-29."
@@ -17,7 +17,7 @@
     "url": "https://news.ycombinator.com/item?id=13195588",
     "title": "HN: Mylan to Sell Generic EpiPen at Half the Price of Original",
     "domain": "news.ycombinator.com",
-    "fetch_time": "2026-11-17T15:14:01+00:00",
+    "fetch_time": "2026-11-17T15:22:46+00:00",
     "text_hash": "d353c165c9ae593e",
     "passages": [
       "Mylan to Sell Generic EpiPen at Half the Price of Original — Hacker News thread with 1 points and 0 comments, posted 2016-12-16."
@@ -27,26 +27,10 @@
   },
   {
     "key": "S3",
-    "url": "https://answerins.com/",
-    "title": "Buy and Sell Study Notes and Resources | Answerins",
-    "domain": "answerins.com",
-    "fetch_time": "2026-11-17T15:14:01+00:00",
-    "text_hash": "58cab71f855269f9",
-    "passages": [
-      "Browse and sell study notes, summaries, and study resources for every subject and course. Join students worldwide on Answerins to learn more and earn more.",
-      "Buy and Sell Study Notes and Resources | Answerins The best study resources The best study resources The ultimate study resources Find the study notes, summaries, and past exams you need to prepare faster and score higher, all shared by real students on Answerins.",
-      "Find my subject Find Subjects on Answerins Discover study notes, summaries, and practice questions covering every subject and course level.",
-      "Find my subject Qualifications Prepare for professional certifications and qualifications with targeted study notes, practice exams, and revision guides."
-    ],
-    "collector": "web:yahoo",
-    "category": "demand"
-  },
-  {
-    "key": "S4",
     "url": "https://www.locklizard.com/document-security-blog/sell-study-notes-online/",
     "title": "How to sell study notes & guides online and prevent piracy",
     "domain": "locklizard.com",
-    "fetch_time": "2026-11-17T15:14:01+00:00",
+    "fetch_time": "2026-11-17T15:22:46+00:00",
     "text_hash": "7644aba3be742198",
     "passages": [
       "Learn where to sell study notes and class guides, what you can sell, how much to sell them for, and how to protect them from piracy.",
@@ -58,11 +42,40 @@
     "category": "demand"
   },
   {
+    "key": "S4",
+    "url": "https://www.scribbr.com/tips/make-and-sell-study-notes/",
+    "title": "How to Effectively Make and Sell Your Study Notes - ScribbrBuy and Sell Study Notes and Resources | AnswerinsNotes & Study Guides | Study Help | StudySoupFree S",
+    "domain": "scribbr.com",
+    "fetch_time": "2026-11-17T15:22:46+00:00",
+    "text_hash": "a9902e073e4a4f26",
+    "passages": [
+      "Before you even think about selling your notes, you need to understand why making them is so important. Making study notes during classes is the best way to remember the essential things you need to know to ace the exam, because writing is proven to be the best method to remember things. Also, after class, you probably check whether everything in y... See full list on scribbr.com Selling notes is an excellent way to earn some extra money. Basically, you get paid for the hard work you already executed. It’s more fun than the average student side job. If you become a top seller, you might even be able to quit your side job! On Stuvia, top sellers of study documents earn around $400 each month. Sounds good, right? Besidesthis,... See full list on scribbr.com Digital or handwritten notes? First, you have to decide for yourself whether you’d like to use your laptop or you prefer using a notebook. Note, however, that selling handwritten notes can be harder than selling well-structured digital notes. Digital notes are easier to restructure in terms of layout, structure and chronological order. Digital notes can also be uploaded more easily in order to sell them. Handwritten notes can be convenient if you want to use them yourself to study for the exam. Focus on key words and concepts Only the most important details should make the cut. This applies to taking notes during college as well summarizing books. In the end, only the key points – such as names, theories, definitions and dates – should be included. Keep in mind what you want to learn and what you need to remember. This helps you get a grip on the information. Taking notes from a textbook After your class, you want to combine the information that you received from the professor with the information from the textbook. It’s also handy to scan what you’re about to read. Now start reading and search for bold words, colored words and bullet points. Use a marker to highlight these, and start highlighting pieces of text that are important as well. See full list on scribbr.com To really stand out from the crowd, there are a few more steps you can take. 1. Offer a document for free People love free stuff, so make sure to offer at least one document for free. This way you give them a reason to take notice, and it will definitely boost your ratings! 2.Keep your prices affordable Most Stuvia users are students. It’s a well-k... See full list on scribbr.com Browse and sell study notes, summaries, and study resources for every subject and course. Join students worldwide on Answerins to learn more and earn more. Get prepared for your midterms and finals with our study tools! We have notes and study guides created by students, for students. We also have fundamentals videos that will help you remember the most important information that you’ll need for all of your exams! Generate a structured study guide from any topic, chapter, notes, or pasted text. Get key concepts, definitions, summaries, practice questions, and a quick review section—optimized for faster learning and better retention. Seeing my documents sold is very gratifying not only because I get paid for every document that’s sold, but it’s also helping out other fellow students that really benefit from having access to my notes. Earn money by selling your study notes on Edubirdie! Upload assignments, lecture notes, and more to support fellow students and get rewarded. Join contributors from select universities and monetize your study materials easily. Start sharing your knowledge and profit from your efforts today!"
+    ],
+    "collector": "web:yahoo",
+    "category": "demand"
+  },
+  {
     "key": "S5",
+    "url": "https://answerins.com/",
+    "title": "Buy and Sell Study Notes and Resources | Answerins",
+    "domain": "answerins.com",
+    "fetch_time": "2026-11-17T15:22:46+00:00",
+    "text_hash": "58cab71f855269f9",
+    "passages": [
+      "Browse and sell study notes, summaries, and study resources for every subject and course. Join students worldwide on Answerins to learn more and earn more.",
+      "Buy and Sell Study Notes and Resources | Answerins The best study resources The best study resources The ultimate study resources Find the study notes, summaries, and past exams you need to prepare faster and score higher, all shared by real students on Answerins.",
+      "Find my subject Find Subjects on Answerins Discover study notes, summaries, and practice questions covering every subject and course level.",
+      "Find my subject Qualifications Prepare for professional certifications and qualifications with targeted study notes, practice exams, and revision guides."
+    ],
+    "collector": "web:yahoo",
+    "category": "demand"
+  },
+  {
+    "key": "S6",
     "url": "https://studysoup.com/study_help/classes",
     "title": "Notes & Study Guides | Study Help | StudySoup",
     "domain": "studysoup.com",
-    "fetch_time": "2026-11-17T15:14:01+00:00",
+    "fetch_time": "2026-11-17T15:22:46+00:00",
     "text_hash": "26ae8085170b39e2",
     "passages": [
       "Get prepared for your midterms and finals with our study tools! We have notes and study guides created by students, for students. We also have fundamentals videos that will help you remember the most important information that you’ll need for all of your exams!",
@@ -72,71 +85,106 @@
     "category": "demand"
   },
   {
-    "key": "S6",
-    "url": "http://writingtools.ai/tools/study-guide-generator",
-    "title": "Free Study Guide Generator — Notes → Guide + Practice ...",
-    "domain": "writingtools.ai",
-    "fetch_time": "2026-11-17T15:14:01+00:00",
-    "text_hash": "b9ca583e78a737b9",
-    "passages": [
-      "Generate a structured study guide from any topic, chapter, notes, or pasted text. Get key concepts, definitions, summaries, practice questions, and a quick review section—optimized for faster learning and better retention.",
-      "For best accuracy, paste lecture notes or relevant text so the study guide reflects what you’re actually learning.",
-      "See It in Action See how raw notes become a structured, exam-ready study guide with key concepts and practice questions.",
-      "Instant AI Study Guide from Any Topic or Notes Paste notes or enter a topic to generate a complete study guide with summaries, key concepts, and a clear structure you can review quickly."
-    ],
-    "collector": "web:yahoo",
-    "category": "demand"
-  },
-  {
     "key": "S7",
-    "url": "https://www.upwork.com/resources/community-marketing",
-    "title": "Community Marketing 101: Basics, Strategies, and Examples",
-    "domain": "upwork.com",
-    "fetch_time": "2026-11-17T15:14:01+00:00",
-    "text_hash": "d4668a302ad78705",
+    "url": "https://studyrift.com/",
+    "title": "Studyrift — High-quality Study Notes, Summaries & Exam Prep",
+    "domain": "studyrift.com",
+    "fetch_time": "2026-11-17T15:22:46+00:00",
+    "text_hash": "f620d7aaeb49654a",
     "passages": [
-      "Sep 4, 2024 · Learn community marketing basics, strategies, and types. Boost engagement, foster loyalty, and drive growth through community-building techniques."
+      "Your notes are worth more than grades. Buy and sell the best university study notes, summaries and exam prep — verified by students who aced the class.",
+      "Swap it for free Written by students who passed Immediately available after payment Read online or as PDF 4.6 Trustpilot Trusted by 50,000+ Students Worldwide High-quality Study Notes, Summaries & Exam Prep Buy and sell the best university study notes, summaries and exam prep — verified by students who aced the class.",
+      "56 pages Start browsing 📚 Browse textbooks ❓ Homework Q&A 🎯 AI practice quizzes 💬 Community 💰 Sell study notes How it works → ✨ NEW — AI POWERED Practice Quizzes, Built by AI 20 exam-style questions per set, generated from real study documents.",
+      "🌍 Worldwide Reach Students from 150+ countries discover and buy notes on StudyRift daily."
     ],
     "collector": "web:yahoo",
-    "category": "channels"
+    "category": "pricing"
   },
   {
     "key": "S8",
-    "url": "https://www.lettrlabs.com/post/community-marketing-strategy",
-    "title": "Community-Based Marketing Strategy: How to Build Real ...",
-    "domain": "lettrlabs.com",
-    "fetch_time": "2026-11-17T15:14:01+00:00",
-    "text_hash": "45d34a902afc8374",
+    "url": "https://richtactic.com/tactic/study-notes-selling",
+    "title": "Sell Study Notes and Class Notes Online (2026) | RichTactic",
+    "domain": "richtactic.com",
+    "fetch_time": "2026-11-17T15:22:46+00:00",
+    "text_hash": "53d5b58e94ef06ae",
     "passages": [
-      "Discover how community-based marketing drives real engagement, trust, and loyalty—outperforming traditional tactics in 2025."
+      "Apr 1, 2026 · Selling Study Notes offers higher income potential (reported $300-$3K/month) and location freedom compared to most jobs, but requires self-motivation and involves more uncertainty.",
+      "A single study guide sells for $5 to $15, and a full course bundle of notes plus exam reviews goes for $20 to $40.",
+      "Content that sells your notes: Study-with-me videos.",
+      "Sell Study Notes and Class Notes Online (2026) | RichTactic Skip to main content Selling Study Notes: Complete Guide (2026) Last updated: April 1, 2026 | By RichTactic Editorial Team TL;DR: Selling Study Notes costs $0-$50 to start."
     ],
     "collector": "web:yahoo",
-    "category": "channels"
+    "category": "pricing"
   },
   {
     "key": "S9",
-    "url": "https://blog.hubspot.com/marketing/community-marketing",
-    "title": "Community marketing: How to use it to drive customer advocacy ...",
-    "domain": "blog.hubspot.com",
-    "fetch_time": "2026-11-17T15:14:01+00:00",
-    "text_hash": "a6a34323d8870730",
+    "url": "https://www.researchprospect.com/platforms-to-sell-study-notes-online/",
+    "title": "Sell Study Notes Online: 5 Best Platforms (2026)",
+    "domain": "researchprospect.com",
+    "fetch_time": "2026-11-17T15:22:46+00:00",
+    "text_hash": "e12baaebd13138e3",
     "passages": [
-      "Mar 10, 2026 · This guide breaks down what community marketing is, how it fits into modern lifecycle marketing, and how marketing teams can build and scale community programs that deliver measurable business impact."
+      "Feb 24, 2026 · Compare the 5 best platforms to sell your study notes online in 2026 — real payout rates, pros and cons, and how to start earning from your notes.",
+      "\"> --> Sell Study Notes Online: 5 Best Platforms (2026) --> --> --> Welcome --> Your content here...",
+      "The 7 Best Platforms to Sell Study Notes Online in 2026 1.",
+      "Selling study notes online is now one of the easiest ways for students to make extra money."
     ],
     "collector": "web:yahoo",
-    "category": "channels"
+    "category": "pricing"
   },
   {
     "key": "S10",
-    "url": "https://thebigmarketing.com/community-marketing/",
-    "title": "Community Marketing Explained with Examples - thebigmarketing.com",
-    "domain": "thebigmarketing.com",
-    "fetch_time": "2026-11-17T15:14:01+00:00",
-    "text_hash": "0c244c6cf02686df",
+    "url": "https://genio.co/pricing/individuals",
+    "title": "Pricing for Individuals - Compare plans and unlock better ...",
+    "domain": "genio.co",
+    "fetch_time": "2026-11-17T15:22:46+00:00",
+    "text_hash": "bd3c64aa97feb446",
     "passages": [
-      "Community marketing enables businesses to connect with local communities and establish authentic relationships. Grassroots campaigns, social media advocacy, and neighborhood activations are some of the strategies used in community marketing."
+      "Purchase Genio Notes for yourself or start out with our free trial. Start improving your learning experience with powerful, all-in-one study notes that are easy to learn from. Subscription flexibility to cancel anytime. Capture all of your classes, listen back at your own pace and create rich notes with our powerful note taking platform.",
+      "Monthly Subscribe to Genio Notes Annual Save up to 20% with multi-year plans Genio Notes for individuals From £12 per month Start improving your learning experience with powerful, all-in-one study notes that are easy to learn from.",
+      "It’s so easy.\" Missouri State University Case Studies and User Stories Read our user stories and case studies 78% of students reported less stress while studying, and 76% found exam prep easier after using Genio Notes.",
+      "Grades Challenge report Case Studies and User Stories Read our user stories and case studies 88% of students find studying less stressful with Genio Notes."
     ],
     "collector": "web:yahoo",
-    "category": "channels"
+    "category": "pricing"
+  },
+  {
+    "key": "S11",
+    "url": "https://techtidesolutions.com/rankings/online-payment-methods/",
+    "title": "Top 30 Online Payment Methods for Digital Businesses in 2026",
+    "domain": "techtidesolutions.com",
+    "fetch_time": "2026-11-17T15:22:46+00:00",
+    "text_hash": "6826873073749e12",
+    "passages": [
+      "Apr 14, 2026 · Discover the best online payment methods to streamline your transactions. Explore options that enhance security and convenience today!"
+    ],
+    "collector": "web:yahoo",
+    "category": "local_constraints"
+  },
+  {
+    "key": "S12",
+    "url": "https://thecfoclub.com/tools/best-digital-payment-solutions/",
+    "title": "10 Best Digital Payment Solutions in 2026 - thecfoclub.com",
+    "domain": "thecfoclub.com",
+    "fetch_time": "2026-11-17T15:22:46+00:00",
+    "text_hash": "161602523b823edb",
+    "passages": [
+      "Sep 14, 2026 · Discover the top digital payment solutions and find the best option for your team. Compare features, pros & cons, prices, and more in my complete guide."
+    ],
+    "collector": "web:yahoo",
+    "category": "local_constraints"
+  },
+  {
+    "key": "S13",
+    "url": "https://www.nerdwallet.com/business/software/best/online-payment-processing-services",
+    "title": "Best Online Payment Processing Services of 2026 - NerdWallet",
+    "domain": "nerdwallet.com",
+    "fetch_time": "2026-11-17T15:22:46+00:00",
+    "text_hash": "3cd6d0c550949bb7",
+    "passages": [
+      "May 15, 2026 · We looked at more than 25 processors to find the best options for online sales. All our picks let you customize the online checkout experience. Most combine free monthly plans with live support..."
+    ],
+    "collector": "web:yahoo",
+    "category": "local_constraints"
   }
 ]

@@ -58,7 +58,7 @@ graph TD
 * **Method:**
   1. **Template choice with a compatibility threshold.** Keywords score the idea against each template (strong keyword = 2, weak = 1, each counted once). A template is chosen only if it scores ≥ 2 and beats the runner-up by ≥ 1 (`config/gates.yaml`). Otherwise there is **no default**: no code is generated, `phase3_step1_mvp-spec.md` becomes an `UNSUPPORTED — spec only (STUBBED)` document explaining why, and Gate 3 recommends STOP. Ideas that fit two templates equally are treated as ambiguous and also rejected. Each archetype has real domain logic and unit tests: `spaced_repetition` (SM-2 scheduling, due queue, stats), `booking` (capacity, duplicate and clash checks, cancellation), `habit_tracker` (idempotent check-ins, streaks, weekly targets), `directory` (ranked search, filters, rate-limited inquiries), `course` (ordered lessons, minute-weighted progress, certificates).
   2. **AppSpec**: product name, fields, a feature list where each feature is traced to the canvas problem, a key metric or the riskiest assumption, and sample seed content derived from the brief (for example, bilingual Arabic/English STEM cards for an Arabic STEM brief). An LLM may write the name, tagline and seeds, **never code**, and every seed must pass the archetype's `validate()`.
-  3. **Render** to `generated_mvps/<run>/`: SQLite store, JSON API, web UI (with an RTL toggle when Arabic is requested), a consented waitlist that is the demand-test instrument, a free-tier item limit, and an **idea-specific `tests/test_spec.py`** with one test per feature.
+  3. **Render** to `generated_mvps/<run>/`: SQLite store, JSON API, web UI (with an RTL toggle when Arabic is requested), page-visit counting and a consented waitlist that are the demand-test instrument (REAL vs TEST traffic labelled), a free-tier item limit, and an **idea-specific `tests/test_spec.py`** with one test per feature.
   4. **Verify for real**: `python -m unittest discover` runs in a subprocess (about 20 tests: domain, HTTP integration, spec). Then `server.py` is booted on a free port and `/health` and `/api/items` are checked.
 * **Output:** `phase3_step1_mvp-spec.md`, `phase3_step2_mvp-source.md` (idea-specific source shown in full), `phase3_step3_mvp-test-report.txt` (raw test output).
 
@@ -76,7 +76,8 @@ graph TD
 ### Phase 6: Operate and learn
 
 * **Agent:** `agents/operate.py`.
-* **Method:** Reads **real** numbers only: waitlist sign-ups from the generated MVP's `app.db` (created when the founder runs it) and test-mode orders and refunds. It applies the rule pre-registered in Phase 2 (`decide()`: INSUFFICIENT_DATA / PERSEVERE / PIVOT / STOP). With no traffic yet it reports `INSUFFICIENT_DATA` and never invents results. A table labelled `SYNTHETIC` shows how the rule would decide on hypothetical inputs.
+* **Method:** Reads stored counts only, using the generated MVP's own `Store.metrics()` on its `app.db`: page visits, unique visitors (random `hatchai_vid` cookie) and consented waitlist sign-ups, plus test-mode orders and refunds. Thresholds (minimum unique visitors, GO and STOP sign-up rates) come from the `DemandTest` stored in Phase 2. `decide()` (INSUFFICIENT_DATA / PERSEVERE / PIVOT / STOP) is applied to **real traffic only**.
+* **TEST traffic:** `demand_test_traffic.py` starts an MVP and sends visits and sign-ups that carry `X-HatchAI-Traffic: TEST`, `test-` visitor ids and `@example.com` addresses; the MVP stores them as TEST events. Phase 6 shows them in a separate "pipeline check, NOT demand" section and never uses them in the decision. `python orchestrator.py measure <run>` re-runs Phase 6 on a completed run. The committed demo sends 300 TEST visitors and 20 TEST sign-ups: real counts stay 0, so the decision is `INSUFFICIENT_DATA`. A table labelled `SYNTHETIC` still shows how the rule decides on hypothetical inputs.
 * **Output:** `phase6_step1_operate-memo.md`.
 
 ## Gates
@@ -152,7 +153,7 @@ brief ─► intake (parser [+LLM]) ─► FounderBrief ────────
    launch drafts (held) + payments/delivery/refunds/reconcile ─► Gate 5
                                                         │
                                                         ▼
-   operate ─► app.db waitlist + test orders ─► pre-registered rule ─► memo
+   operate ─► app.db visits + sign-ups (REAL | TEST) + test orders ─► stored DemandTest rule (REAL only) ─► memo
 
 Every step: callbacks.log ─► SQLite decision_log ─► decision_log.json (demo runs)
 Every gate: founder decision via approval.py (token) ─► orchestrator.advance_after_gate
@@ -172,7 +173,7 @@ State per run: runs/<run>/state/*.json; outputs: runs/<run>/outputs/ (demo runs:
 | Policy templates | MOCKED (templates, not legal advice) |
 | Launch drafts | Working drafts; publishing STUBBED (never posted) |
 | Checkout, webhook, delivery, refund, reconciliation | MOCKED (local HMAC simulation) |
-| Waitlist sign-ups read in Phase 6 | Working; visitor analytics STUBBED |
+| Visit and sign-up measurement read in Phase 6 (REAL vs TEST) | Working; no real traffic in the committed demo |
 | Hosting or deployment of the generated MVP | STUBBED (founder runs it locally) |
 
 ## Roadmap

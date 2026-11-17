@@ -24,8 +24,10 @@ Optional extras:
 docker compose --profile llm up          # also starts Ollama and pulls qwen3:8b (~5 GB, once)
 python orchestrator.py demo               # regenerate outputs/ + decision_log.json (no Docker)
 python orchestrator.py run "<brief>"      # CLI run; you approve every gate at the prompt
+python demand_test_traffic.py generated_mvps/demo-strong --visitors 300 --signups 20   # labelled TEST traffic
+python orchestrator.py measure demo-strong # re-run Phase 6 on the MVP's stored counts
 cd generated_mvps/demo-strong && python server.py --port 8080   # run the generated MVP
-python -m pytest                          # 59 tests: gates, approval, evidence, builder, pipeline, web
+python -m pytest                          # 65 tests: gates, approval, evidence, builder, pipeline, web, measurement
 ```
 
 Without Docker: `pip install -r requirements.txt && uvicorn app:app` (Python 3.12).
@@ -51,8 +53,8 @@ Without Docker: `pip install -r requirements.txt && uvicorn app:app` (Python 3.1
 | 4.2 Terms / privacy / refund | **MOCKED** | Templates labelled "not legal advice" |
 | 5.1 Launch drafts | **Working** drafts / **STUBBED** posting | Held as `PENDING_FOUNDER_APPROVAL`; never posted |
 | 5.2 Checkout → delivery → refund → reconcile | **MOCKED** | Local HMAC simulation; idempotency, revocation, reconciliation tested |
-| 6.1 Metrics | **Working** sign-ups / **STUBBED** analytics | Reads the generated MVP's waitlist DB; no visitor analytics |
-| 6.2 Decision vs pre-registered rule | **Working** | Reports `INSUFFICIENT_DATA` instead of inventing numbers |
+| 6.1 Metrics | **Working** | Page visits, unique visitors (cookie) and consented sign-ups stored in the MVP's `app.db`; REAL and TEST traffic kept apart. The committed demo has only labelled TEST traffic, so its real counts are 0 |
+| 6.2 Decision vs pre-registered rule | **Working** | Thresholds read from the stored demand test; decides on REAL traffic only (`INSUFFICIENT_DATA` below the visitor minimum); TEST traffic shown separately as a pipeline check |
 | MVP hosting / deployment | **STUBBED** | Founder runs the generated app locally |
 | Founder approval + decision log | **Working** | Token in HttpOnly cookie; every action logged |
 

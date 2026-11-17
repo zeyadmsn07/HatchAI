@@ -2,7 +2,7 @@
 
 **Recommendation (computed by code): GO**
 
-GO: runnable MVP built and verified. 21 generated tests ran, 0 failed, 0 errors (attempt 1).
+GO: runnable MVP built and verified. 23 generated tests ran, 0 failed, 0 errors (attempt 1).
 
 ## Checks
 
@@ -21,6 +21,6 @@ Required before anything proceeds — see `decision_log.json` (`gate_3_decision`
 
 | Gate | Round | Outcome | E | V |
 |---|---|---|---|---|
-| 1 | 1 | GO | 90.0 | 0.0 |
-| 2 | 1 | GO | 90.0 | 4.5 |
+| 1 | 1 | GO | 100.0 | 0.0 |
+| 2 | 1 | GO | 100.0 | 4.5 |
 | 3 | 1 | GO | 0.0 | 0.0 |

@@ -141,15 +141,20 @@ def run_canvas(run_id: str, brief: FounderBrief, findings: ResearchFindings, cri
 
 def run_demand_test(run_id: str, brief: FounderBrief, canvas: LeanCanvas) -> DemandTest:
     cost = round(min(max(brief.budget_usd, 0) * 0.1, 50.0), 2)
+    min_visitors, go_rate, stop_rate = 300, 0.10, 0.03
     dt = DemandTest(
         channel=("Free posts in 2 communities where the target user gathers + the Phase 3 MVP landing page"
                  if cost == 0 else
                  f"Community posts + up to USD {cost} of targeted ads to the Phase 3 MVP landing page"),
         metric="Unique visitors who submit an email on the waitlist form (double opt-in)",
-        threshold="GO if >= 10% of >= 300 unique visitors sign up within 14 days; STOP if < 3%",
+        threshold=(f"GO if >= {go_rate:.0%} of >= {min_visitors} unique visitors sign up within 14 days; "
+                   f"STOP if < {stop_rate:.0%}"),
         duration_days=14,
         cost_usd=cost,
         status="NOT_RUN",
+        min_unique_visitors=min_visitors,
+        go_signup_rate=go_rate,
+        stop_signup_rate=stop_rate,
     )
     callbacks.log(run_id=run_id, agent="validator", action="design_demand_test", sources=[],
                   model=None, cost=0, phase=2)

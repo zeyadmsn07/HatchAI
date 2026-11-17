@@ -5,13 +5,18 @@
 
 ## Evidence
 
-Competitor monthly prices found in fetched sources (median = **USD 4.99**):
+Competitor monthly prices found in fetched sources (median = **USD 7.50**):
 
 | Price | Source |
 |---|---|
 | $4.99/month | https://laxuai.com/blog/best-spaced-repetition-apps-2026 |
+| $4.99/month | https://laxuai.com/blog/best-spaced-repetition-apps-2026 |
+| $10.00/month | https://studyboost.org/blog/best-spaced-repetition-app/ |
+| $7.50/month | https://studyboost.org/blog/best-spaced-repetition-app/ |
+| $4.99/month | https://laxuai.com/blog/best-flashcard-apps-for-students-2026 |
+| $19.99/month | https://laxuai.com/blog/best-flashcard-apps-for-students-2026 |
 
-ASSUMPTION: no income data fetched for this geography — no affordability cap applied.
+World Bank: GDP per capita for Egypt, Arab Rep. = USD 3,086/year (https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG). Affordability cap (ASSUMPTION: ≤ 1% of monthly GDP per capita) = **USD 2.57/month**.
 
 ## Method
 
@@ -24,8 +29,8 @@ ASSUMPTION: no income data fetched for this geography — no affordability cap a
 | Tier | Price (USD) | Includes |
 |---|---|---|
 | Free | 0 | All core features, up to the free item limit |
-| Plus | 2.50 / month | Higher limits, export |
-| Team / institution | 12.50 / month | 5 seats, shared content |
+| Plus | 2.57 / month | Higher limits, export |
+| Team / institution | 12.85 / month | 5 seats, shared content |
 
 Target user: university students. Geography: Egypt. Local-currency display at checkout is an ASSUMPTION to verify with the chosen processor.
 

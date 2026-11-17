@@ -2,7 +2,7 @@
 
 > Flashcards that schedule each review for you (SM-2), for university students in Egypt.
 
-**Status:** generated, tested and booted by the pipeline — 21 tests, 0 failures,
+**Status:** generated, tested and booted by the pipeline — 23 tests, 0 failures,
 0 errors; smoke test passed. Build attempt 1.
 
 ## Archetype

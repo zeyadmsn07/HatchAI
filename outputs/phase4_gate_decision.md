@@ -22,7 +22,7 @@ Required before anything proceeds — see `decision_log.json` (`gate_4_decision`
 
 | Gate | Round | Outcome | E | V |
 |---|---|---|---|---|
-| 1 | 1 | GO | 90.0 | 0.0 |
-| 2 | 1 | GO | 90.0 | 4.5 |
+| 1 | 1 | GO | 100.0 | 0.0 |
+| 2 | 1 | GO | 100.0 | 4.5 |
 | 3 | 1 | GO | 0.0 | 0.0 |
 | 4 | 1 | GO | 0.0 | 0.0 |

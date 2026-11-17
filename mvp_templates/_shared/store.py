@@ -70,6 +70,23 @@ class Store:
             self.conn.execute("UPDATE events SET data=? WHERE id=?", (json.dumps(data, ensure_ascii=False), int(event_id)))
             self.conn.commit()
 
+    def metrics(self) -> dict:
+        """Demand-test counts, with REAL and TEST traffic always kept apart.
+
+        Events without a traffic label (older databases) count as real.
+        """
+        out = {t: {"visits": 0, "unique_visitors": 0, "signups": 0} for t in ("real", "test")}
+        visitors: dict[str, set] = {"real": set(), "test": set()}
+        for e in self.events("visit"):
+            t = "test" if e.get("traffic") == "test" else "real"
+            out[t]["visits"] += 1
+            visitors[t].add(e.get("visitor"))
+        for t, ids in visitors.items():
+            out[t]["unique_visitors"] = len(ids)
+        for e in self.events("waitlist"):
+            out["test" if e.get("traffic") == "test" else "real"]["signups"] += 1
+        return out
+
     def events(self, kind: str, item_id: int | None = None) -> list[dict]:
         if item_id is None:
             rows = self.conn.execute("SELECT * FROM events WHERE kind=? ORDER BY id", (kind,)).fetchall()

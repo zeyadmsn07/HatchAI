@@ -12,9 +12,9 @@ import core  # noqa: E402
 import server  # noqa: E402
 
 
-def call(base, path, body=None):
+def call(base, path, body=None, headers=None):
     data = json.dumps(body).encode() if body is not None else None
-    req = urllib.request.Request(base + path, data=data, headers={"Content-Type": "application/json"},
+    req = urllib.request.Request(base + path, data=data, headers={"Content-Type": "application/json", **(headers or {})},
                                  method="POST" if body is not None else "GET")
     try:
         with urllib.request.urlopen(req, timeout=5) as r:
@@ -73,6 +73,29 @@ class ServerTest(unittest.TestCase):
         self.assertEqual(body["status"], "already_joined")
         code, body = call(self.base, "/api/waitlist/count")
         self.assertEqual(body["signups"], 1)
+
+    def test_page_visits_are_counted_with_unique_visitors(self):
+        before = call(self.base, "/api/metrics")[1]["real"]
+        call(self.base, "/", headers={"Cookie": "hatchai_vid=visitor-a"})
+        call(self.base, "/", headers={"Cookie": "hatchai_vid=visitor-a"})
+        call(self.base, "/", headers={"Cookie": "hatchai_vid=visitor-b"})
+        call(self.base, "/api/items")                      # API calls are not page visits
+        after = call(self.base, "/api/metrics")[1]["real"]
+        self.assertEqual(after["visits"] - before["visits"], 3)
+        self.assertEqual(after["unique_visitors"] - before["unique_visitors"], 2)
+
+    def test_test_traffic_is_labelled_and_kept_apart(self):
+        t = {"X-HatchAI-Traffic": "TEST"}
+        before = call(self.base, "/api/metrics")[1]
+        call(self.base, "/", headers={**t, "Cookie": "hatchai_vid=test-0001"})
+        code, body = call(self.base, "/api/waitlist", {"email": "test-0001@example.com", "consent": True}, t)
+        self.assertEqual((code, body["traffic"]), (201, "test"))
+        code, _ = call(self.base, "/api/waitlist", {"email": "someone@gmail.com", "consent": True}, t)
+        self.assertEqual(code, 400)                        # TEST sign-ups must use @example.com
+        after = call(self.base, "/api/metrics")[1]
+        self.assertEqual(after["test"]["visits"] - before["test"]["visits"], 1)
+        self.assertEqual(after["test"]["signups"] - before["test"]["signups"], 1)
+        self.assertEqual(after["real"], before["real"])    # real demand untouched
 
     def test_unknown_action_404(self):
         code, _ = call(self.base, "/api/actions/does_not_exist", {})

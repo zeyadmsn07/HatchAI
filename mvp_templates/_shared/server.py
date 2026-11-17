@@ -10,7 +10,13 @@ Routes:
   POST /api/items           create item (validated by core.validate)
   POST /api/actions/<name>  run a domain action from core.ACTIONS
   POST /api/waitlist        demand-test sign-up (email + explicit consent; nothing is sent)
-  GET  /api/waitlist/count  number of sign-ups (read by HatchAI Phase 6)
+  GET  /api/waitlist/count  real and TEST sign-up counts
+  GET  /api/metrics         demand-test counts (visits, unique visitors, sign-ups), REAL vs TEST
+
+Traffic labelling: a request carrying the header `X-HatchAI-Traffic: TEST` is stored as
+TEST traffic and is never counted as real demand. TEST sign-ups must use the reserved
+@example.com domain. Page visits (GET /) are counted; unique visitors use a random
+`hatchai_vid` cookie (no personal data).
 """
 from __future__ import annotations
 
@@ -19,6 +25,7 @@ import json
 import pathlib
 import re
 import threading
+import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import core
@@ -37,16 +44,27 @@ def seed(store: Store) -> None:
 EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[a-z]{2,}$", re.I)
 
 
-def join_waitlist(store: Store, body: dict) -> dict:
+TEST_HEADER = "X-HatchAI-Traffic"
+TEST_EMAIL_DOMAIN = "@example.com"
+VID = re.compile(r"hatchai_vid=([A-Za-z0-9\-]{1,64})")
+
+
+def join_waitlist(store: Store, body: dict, traffic: str = "real") -> dict:
     email = str(body.get("email", "")).strip().lower()
     if not EMAIL.match(email):
         raise ValueError("a valid email is required")
     if body.get("consent") is not True:
         raise ValueError("explicit consent is required")
+    if traffic == "test" and not email.endswith(TEST_EMAIL_DOMAIN):
+        raise ValueError(f"TEST sign-ups must use the reserved {TEST_EMAIL_DOMAIN} domain")
     if any(e["email"] == email for e in store.events("waitlist")):
         return {"status": "already_joined"}
-    store.add_event("waitlist", None, {"email": email})
-    return {"status": "joined"}
+    store.add_event("waitlist", None, {"email": email, "traffic": traffic})
+    return {"status": "joined", "traffic": traffic}
+
+
+def record_visit(store: Store, visitor: str, traffic: str, path: str) -> None:
+    store.add_event("visit", None, {"visitor": visitor, "traffic": traffic, "path": path})
 
 
 def make_handler(store: Store):
@@ -54,11 +72,16 @@ def make_handler(store: Store):
         def log_message(self, *args):  # keep test output quiet
             pass
 
-        def _send(self, code: int, body, ctype="application/json"):
+        def _traffic(self) -> str:
+            return "test" if (self.headers.get(TEST_HEADER) or "").strip().upper() == "TEST" else "real"
+
+        def _send(self, code: int, body, ctype="application/json", extra_headers=()):
             raw = body if isinstance(body, bytes) else json.dumps(body, ensure_ascii=False).encode("utf-8")
             self.send_response(code)
             self.send_header("Content-Type", f"{ctype}; charset=utf-8")
             self.send_header("Content-Length", str(len(raw)))
+            for k, v in extra_headers:
+                self.send_header(k, v)
             self.end_headers()
             self.wfile.write(raw)
 
@@ -70,7 +93,11 @@ def make_handler(store: Store):
 
         def do_GET(self):
             if self.path in ("/", "/index.html"):
-                return self._send(200, (HERE / "index.html").read_bytes(), "text/html")
+                m = VID.search(self.headers.get("Cookie") or "")
+                visitor = m.group(1) if m else uuid.uuid4().hex
+                record_visit(store, visitor, self._traffic(), self.path)
+                cookie = () if m else (("Set-Cookie", f"hatchai_vid={visitor}; Path=/; SameSite=Lax; HttpOnly"),)
+                return self._send(200, (HERE / "index.html").read_bytes(), "text/html", cookie)
             if self.path == "/health":
                 return self._send(200, {"status": "ok", "product": CONFIG["product_name"]})
             if self.path == "/api/config":
@@ -78,7 +105,10 @@ def make_handler(store: Store):
             if self.path == "/api/items":
                 return self._send(200, store.list())
             if self.path == "/api/waitlist/count":
-                return self._send(200, {"signups": len(store.events("waitlist"))})
+                m = store.metrics()
+                return self._send(200, {"signups": m["real"]["signups"], "test_signups": m["test"]["signups"]})
+            if self.path == "/api/metrics":
+                return self._send(200, store.metrics())
             return self._send(404, {"error": "not found"})
 
         def do_POST(self):
@@ -87,7 +117,7 @@ def make_handler(store: Store):
                 if self.path == "/api/items":
                     return self._send(201, store.add(core.validate(body)))
                 if self.path == "/api/waitlist":
-                    return self._send(201, join_waitlist(store, body))
+                    return self._send(201, join_waitlist(store, body, self._traffic()))
                 if self.path.startswith("/api/actions/"):
                     name = self.path.rsplit("/", 1)[-1]
                     if name not in core.ACTIONS:
