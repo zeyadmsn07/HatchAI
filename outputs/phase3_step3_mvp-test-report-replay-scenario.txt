@@ -1,0 +1,41 @@
+HatchAI Phase 3 — generated MVP verification
+product: Arabic Book
+archetype: booking
+attempt: 1
+command: python -m unittest discover -s tests -v  (cwd=demo-replay)
+result: ran=23 failures=0 errors=0 ok=True (1.24 s)
+smoke: PASS — server booted on :59269; /health={'status': 'ok', 'product': 'Arabic Book'}; /api/items returned 2 seeded items
+
+--- raw output ---
+test_availability_counts_seats (test_core.BookingTest.test_availability_counts_seats) ... ok
+test_cancel_frees_seat (test_core.BookingTest.test_cancel_frees_seat) ... ok
+test_capacity_enforced (test_core.BookingTest.test_capacity_enforced) ... ok
+test_clash_detection (test_core.BookingTest.test_clash_detection) ... ok
+test_no_double_booking_same_client (test_core.BookingTest.test_no_double_booking_same_client) ... ok
+test_validation (test_core.BookingTest.test_validation) ... ok
+test_create_item_and_reject_invalid (test_server.ServerTest.test_create_item_and_reject_invalid) ... ok
+test_every_action_runs_over_http (test_server.ServerTest.test_every_action_runs_over_http) ... ok
+test_health_and_ui (test_server.ServerTest.test_health_and_ui) ... ok
+test_page_visits_are_counted_with_unique_visitors (test_server.ServerTest.test_page_visits_are_counted_with_unique_visitors) ... ok
+test_seeded_items_are_served (test_server.ServerTest.test_seeded_items_are_served) ... ok
+test_test_traffic_is_labelled_and_kept_apart (test_server.ServerTest.test_test_traffic_is_labelled_and_kept_apart) ... ok
+test_unknown_action_404 (test_server.ServerTest.test_unknown_action_404) ... ok
+test_waitlist_requires_consent_and_dedupes (test_server.ServerTest.test_waitlist_requires_consent_and_dedupes) ... ok
+test_all_2_seed_items_validate (test_spec.SpecTest.test_all_2_seed_items_validate) ... ok
+test_config_fields_match_domain_model (test_spec.SpecTest.test_config_fields_match_domain_model) ... ok
+test_every_feature_maps_to_an_implemented_action (test_spec.SpecTest.test_every_feature_maps_to_an_implemented_action) ... ok
+test_feature_consented_waitlist_demand_test (test_spec.SpecTest.test_feature_consented_waitlist_demand_test)
+Consented waitlist (demand test) - traces to: Riskiest assumption: Target users will pay a recurring price ... ok
+test_feature_live_availability (test_spec.SpecTest.test_feature_live_availability)
+Live availability - traces to: UNKNOWN (not stated by founder) lack an adequate booking app. ... ok
+test_feature_safe_booking (test_spec.SpecTest.test_feature_safe_booking)
+Safe booking - traces to: UNKNOWN (not stated by founder) lack an adequate booking app. ... ok
+test_feature_self_service_cancellation (test_spec.SpecTest.test_feature_self_service_cancellation)
+Self-service cancellation - traces to: Key metric: Demand-test sign-up rate; weekly active users; riskiest: Target user ... ok
+test_free_tier_limit_enforced (test_spec.SpecTest.test_free_tier_limit_enforced) ... ok
+test_product_identity (test_spec.SpecTest.test_product_identity) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.869s
+
+OK

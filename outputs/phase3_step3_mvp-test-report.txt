@@ -3,8 +3,8 @@ product: STEM Recall
 archetype: spaced_repetition
 attempt: 1
 command: python -m unittest discover -s tests -v  (cwd=demo-strong)
-result: ran=23 failures=0 errors=0 ok=True (1.23 s)
-smoke: PASS — server booted on :55458; /health={'status': 'ok', 'product': 'STEM Recall'}; /api/items returned 9 seeded items
+result: ran=23 failures=0 errors=0 ok=True (1.94 s)
+smoke: PASS — server booted on :53902; /health={'status': 'ok', 'product': 'STEM Recall'}; /api/items returned 9 seeded items
 
 --- raw output ---
 test_ease_never_below_floor (test_core.SM2Test.test_ease_never_below_floor) ... ok
@@ -36,6 +36,6 @@ test_free_tier_limit_enforced (test_spec.SpecTest.test_free_tier_limit_enforced)
 test_product_identity (test_spec.SpecTest.test_product_identity) ... ok
 
 ----------------------------------------------------------------------
-Ran 23 tests in 0.816s
+Ran 23 tests in 0.998s
 
 OK

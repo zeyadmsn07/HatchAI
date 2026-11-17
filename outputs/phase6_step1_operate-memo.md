@@ -7,8 +7,8 @@
 | Unique visitors | 0 | demo-strong/app.db (read via the MVP's Store.metrics()) |
 | Page visits | 0 | same |
 | Waitlist sign-ups (consented) | 0 | same |
-| Test-mode orders (simulation) | 7 | sale-to-cash simulation, MOCKED |
-| Test-mode refunds (simulation) | 7 | sale-to-cash simulation, MOCKED |
+| Test-mode orders (simulation) | 9 | sale-to-cash simulation, MOCKED |
+| Test-mode refunds (simulation) | 9 | sale-to-cash simulation, MOCKED |
 
 ## Pre-registered rule (stored in Phase 2)
 

@@ -335,6 +335,36 @@ def collect(idea: str, target_user: str, geography: str, round_no: int = 1,
 
 
 # ---------------------------------------------------------------------------
+# Evidence replay (reproducible runs from a captured snapshot)
+# ---------------------------------------------------------------------------
+
+SNAPSHOT_VERSION = 1
+
+
+class ReplayMissError(LookupError):
+    """The snapshot has no captured round for this request. Replay never falls back to live search."""
+
+
+def replay_round(snapshot: dict, idea: str, round_no: int) -> dict:
+    for r in snapshot.get("rounds", []):
+        if r["round"] == round_no and r["idea"] == idea:
+            return r
+    raise ReplayMissError(f"snapshot has no captured evidence for round {round_no} of idea {idea[:80]!r}")
+
+
+def replay_collect(snapshot: dict, idea: str, round_no: int,
+                   existing: list[Source] | None = None) -> tuple[list[Source], dict]:
+    """Return (existing + captured sources for this round, round record). No network access."""
+    rnd = replay_round(snapshot, idea, round_no)
+    existing = list(existing or [])
+    new = [Source(**s) for s in rnd["sources"]]
+    expected = [f"S{len(existing) + i + 1}" for i in range(len(new))]
+    if [s.key for s in new] != expected:
+        raise ReplayMissError(f"snapshot source keys {[s.key for s in new]} do not continue the ledger {expected}")
+    return existing + new, rnd
+
+
+# ---------------------------------------------------------------------------
 # Citation verifier
 # ---------------------------------------------------------------------------
 

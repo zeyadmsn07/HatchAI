@@ -20,7 +20,7 @@
 
 ## Demand signal
 
-HN: Show HN: I Tried Coolify to Self-Host My AI-Powered Anki Flashcard Generator reports: "Show HN: I Tried Coolify to Self-Host My AI-Powered Anki Flashcard Generator — Hacker News thread with 4 poin [S1] | HN: Show HN: Keepmind – AI-powered flashcards and quizzes from your notes reports: "Show HN: Keepmind – AI-powered flashcards and quizzes from your notes — Hacker News thread with 3 points and 2 comme [S2]
+Memdora: Designing Cognitively-Grounded Flashcard ... reports: "This preparation burden is so significant that it deters sustained adoption: a recent study of AI flashcard systems found that students  [S6] | Active Recall & Spaced Repetition: Evidence & Effectiveness reports: "Retention Improvement Comparative research from Johns Hopkins University demonstrated that students using AI-optimized spaced repe [S7]
 
 ## Founder fit
 

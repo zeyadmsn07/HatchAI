@@ -15,6 +15,8 @@ CLI:
   python orchestrator.py run "<brief>"        # interactive: you approve each gate at the prompt
   python orchestrator.py run "<brief>" --yes  # follow every gate recommendation automatically
   python orchestrator.py measure <run_id>     # re-run Phase 6 on the MVP's stored counts
+  python orchestrator.py capture "<brief>" <snapshot.json>   # live run, save collected evidence
+  python orchestrator.py replay <snapshot.json> [run_id]     # reproduce a run from a snapshot (no network)
 """
 from __future__ import annotations
 
@@ -39,7 +41,10 @@ ROOT = pathlib.Path(__file__).resolve().parent
 OUTPUTS = ROOT / "outputs"
 RUNS = ROOT / "runs"
 # Demo runs write to the committed outputs/ folder; the suffix keeps scenarios apart.
-DEMO_RUNS = {"demo-strong": "", "demo-weak": "-weak-idea"}
+DEMO_RUNS = {"demo-strong": "", "demo-weak": "-weak-idea", "demo-replay": "-replay-scenario"}
+# Committed evidence snapshot for the reproducible REPEAT/PIVOT scenario (captured from a live run).
+SNAPSHOTS = ROOT / "evidence_snapshots"
+DEMO_SNAPSHOT = SNAPSHOTS / "repeat_scenario.json"
 
 _mode = threading.local()
 NEXT_PHASE = {1: 2, 2: 3, 3: 4, 4: 5, 5: 6}
@@ -57,7 +62,7 @@ def out_dir(run_id: str) -> pathlib.Path:
 
 def out_name(run_id: str, filename: str) -> str:
     suffix = DEMO_RUNS.get(run_id, "")
-    if not suffix or filename == "payment_test_log.md":
+    if not suffix:
         return filename
     stem, _, ext = filename.rpartition(".")
     return f"{stem}{suffix}.{ext}"
@@ -114,11 +119,14 @@ def _spawn(fn, *args):
 # Public API
 # ---------------------------------------------------------------------------
 
-def start_run(brief_text: str, run_id: str | None = None, auto_approve: bool = False) -> str:
+def start_run(brief_text: str, run_id: str | None = None, auto_approve: bool = False,
+              evidence_cfg: dict | None = None) -> str:
+    """evidence_cfg: {"mode": "live"|"replay", "snapshot": path, "capture": bool} (default: live)."""
     db.init_db()
     run_id = run_id or secrets.token_hex(8)
     db.create_run(run_id, secrets.token_hex(16), json.dumps({"raw": brief_text}),
                   datetime.now(timezone.utc).isoformat(), auto_approve=auto_approve)
+    _store(run_id, "evidence_config", evidence_cfg or {"mode": "live", "capture": False})
     db.update_run_status(run_id, "phase_1_running", phase=1)
     _spawn(_run_phase_1, run_id)
     return run_id
@@ -222,15 +230,26 @@ def _run_phase_1(run_id: str):
             _store(run_id, "brief", brief)
 
         previous = _load(run_id, "findings", ResearchFindings) if c["round"] > 1 else None
-        findings = research_run(run_id, brief, round_no=c["round"], previous=previous)
+        ecfg = _load(run_id, "evidence_config", default={"mode": "live"}) or {"mode": "live"}
+        snapshot = load_snapshot(ecfg["snapshot"]) if ecfg.get("mode") == "replay" else None
+        captured = _load(run_id, "capture_rounds", default=[]) if ecfg.get("capture") else None
+        findings = research_run(run_id, brief, round_no=c["round"], previous=previous,
+                                replay=snapshot, capture=captured)
         gate = gates.evaluate_gate_1(findings, brief, round_no=c["round"], pivots_used=c["pivots"])
         _store(run_id, "findings", findings)
+        if captured is not None:
+            captured[-1]["evidence_score_at_capture"] = gate.evidence_score
+            _store(run_id, "capture_rounds", captured)
 
         _write(run_id, "phase1_step1_intake.md", _format_brief(brief))
         _write(run_id, "phase1_step2_research-findings.md", _format_findings(findings))
         _write(run_id, "phase1_step3_sources.json", json.dumps(
             [s.model_dump() for s in findings.sources], indent=2, ensure_ascii=False))
-        _gate(run_id, gate, 1)
+        replay_note = ""
+        if findings.evidence_mode == "replay":
+            replay_note = (f"\n> **Evidence mode: REPLAY** of snapshot {findings.snapshot}. No new evidence was "
+                           "collected in this run; the gate re-scored the captured sources with the current code.\n")
+        _gate(run_id, gate, 1, replay_note)
     except Exception as exc:
         _fail(run_id, 1, exc)
 
@@ -407,9 +426,13 @@ def _format_findings(f: ResearchFindings) -> str:
         tag = f"VERIFIED — {cites}" if c.verified else "**ASSUMPTION**"
         lines.append(f"- **{c.category}** — {c.text} ({tag})")
     breakdown = gates.evidence_breakdown(f)
+    evidence_line = (f"> **Evidence mode: REPLAY** — sources loaded from snapshot {f.snapshot}. Nothing was collected "
+                     "in this run; fetch times and hashes below are the ORIGINAL capture values.\n"
+                     if f.evidence_mode == "replay" else
+                     "> Evidence mode: **live** — sources collected during this run.\n")
     return f"""# Phase 1 — Research findings (round {f.research_round})
 
-> Synthesis mode: **{f.mode}** ({'open-weight LLM, quotes re-verified by code' if f.mode == 'llm' else 'no LLM: claims are verbatim passages from fetched sources'}).
+{evidence_line}> Synthesis mode: **{f.mode}** ({'open-weight LLM, quotes re-verified by code' if f.mode == 'llm' else 'no LLM: claims are verbatim passages from fetched sources'}).
 > Every claim cites a fetched source whose text contains the quoted passage, or is labelled ASSUMPTION.
 
 ## Claims
@@ -670,12 +693,13 @@ def _reset_run(run_id: str):
             p.unlink()
 
 
-def run_sync(brief_text: str, run_id: str, auto: bool = True, interactive: bool = True) -> dict:
+def run_sync(brief_text: str, run_id: str, auto: bool = True, interactive: bool = True,
+             evidence_cfg: dict | None = None) -> dict:
     """Run a full pipeline in this thread (CLI/demo). Returns the final run row."""
     db.init_db()
     _mode.sync = True
     try:
-        start_run(brief_text, run_id=run_id, auto_approve=auto)
+        start_run(brief_text, run_id=run_id, auto_approve=auto, evidence_cfg=evidence_cfg)
         if not auto and interactive:
             _interactive(run_id)
     finally:
@@ -717,6 +741,117 @@ def _demo_test_traffic(run_id: str, visitors: int = 300, signups: int = 20) -> N
           f"sign-ups; REAL {r['unique_visitors']} visitors / {r['signups']} sign-ups")
 
 
+# ---------------------------------------------------------------------------
+# Evidence snapshots: capture a live run, replay it reproducibly
+# ---------------------------------------------------------------------------
+
+def load_snapshot(path) -> dict:
+    snap = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+    if snap.get("snapshot_version") != 1:
+        raise ValueError(f"unsupported snapshot version in {path}")
+    p = pathlib.Path(path).resolve()
+    snap["_file"] = p.relative_to(ROOT).as_posix() if p.is_relative_to(ROOT) else p.name
+    return snap
+
+
+def write_snapshot(run_id: str, path, label: str = "") -> dict:
+    """Save the evidence a live (capture-enabled) run actually collected, plus its gate outcomes."""
+    rounds = _load(run_id, "capture_rounds", default=None)
+    if not rounds:
+        raise ValueError(f"run {run_id} has no captured evidence (start it with capture enabled)")
+    run = db.get_run(run_id)
+    snap = {
+        "snapshot_version": 1,
+        "label": label or run_id,
+        "captured_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+        "captured_from_run": run_id,
+        "brief": json.loads(run["brief_json"])["raw"],
+        "note": ("Evidence captured from a live HatchAI run (real web/HN/Wikipedia/World Bank fetches). "
+                 "Replaying it re-runs verification, scoring and gates without any network access."),
+        "rounds": rounds,
+        "gate_outcomes_at_capture": _counters(run_id)["history"],
+        "final_status_at_capture": run["status"],
+    }
+    path = pathlib.Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(snap, indent=2, ensure_ascii=False), encoding="utf-8")
+    return snap
+
+
+def capture(brief_text: str, path, run_id: str | None = None, label: str = "") -> dict:
+    """Live run with capture enabled (gate recommendations followed), saved as a snapshot."""
+    run_id = run_id or "capture-" + secrets.token_hex(4)
+    _reset_run(run_id)
+    run_sync(brief_text, run_id, auto=True, evidence_cfg={"mode": "live", "capture": True})
+    return write_snapshot(run_id, path, label)
+
+
+def _gate_signature(history: list) -> list:
+    return [(h["gate"], h["outcome"], h["round"], h["E"], h["V"]) for h in history]
+
+
+def replay(path, run_id: str = "demo-replay") -> dict:
+    """Re-run a captured scenario from its snapshot: no network, no LLM, deterministic."""
+    import os
+    snap = load_snapshot(path)
+    saved = {k: os.environ.get(k) for k in ("HATCHAI_OFFLINE", "HATCHAI_NO_LLM")}
+    os.environ.update(HATCHAI_OFFLINE="1", HATCHAI_NO_LLM="1")
+    try:
+        _reset_run(run_id)
+        run = run_sync(snap["brief"], run_id, auto=True,
+                       evidence_cfg={"mode": "replay", "snapshot": str(path), "capture": False})
+    finally:
+        for k, v in saved.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+    replayed = _counters(run_id)["history"]
+    match = _gate_signature(replayed) == _gate_signature(snap["gate_outcomes_at_capture"])
+    callbacks.log(run_id, "orchestrator", "replay_check", phase=1,
+                  outcome=f"gate outcomes {'MATCH' if match else 'DIFFER FROM'} capture of {snap['captured_at']}")
+    _write(run_id, "phase1_step4_evidence-replay-check.md", _format_replay_check(snap, replayed, run, match))
+    return {"run": run, "match": match, "replayed": replayed, "captured": snap["gate_outcomes_at_capture"]}
+
+
+def _format_replay_check(snap: dict, replayed: list, run: dict, match: bool) -> str:
+    def rows(h):
+        return "\n".join(f"| G{x['gate']} | {x['round']} | {x['outcome'].upper()} | {x['E']} | {x['V']} |" for x in h)
+    rounds = "\n".join(
+        f"| {r['round']} | {r['idea'][:70]} | {len(r['sources'])} | {len(r['verified_claims_at_capture'])} | "
+        f"{r['synthesis_mode']} | {r['evidence_score_at_capture']} |" for r in snap["rounds"])
+    return f"""# Phase 1 — Evidence REPLAY check: {snap['label']}
+
+> This run used **replayed** evidence from `{snap['_file']}`. Nothing was fetched: the snapshot holds the
+> sources a live run collected on **{snap['captured_at']}** (original URLs, passages, fetch times, SHA-256).
+> Verification, scoring and all gates were re-computed from that snapshot with the current code.
+> Replay reproduces the *decisions*; it does not make the captured evidence stronger or fresher.
+> Check the relevance of each verified claim in the research-findings file of this scenario.
+
+**Reproduce:** `python orchestrator.py replay {snap['_file']}`
+
+## Captured research rounds
+
+| Round | Idea researched | New sources | Verified claims at capture | Synthesis | E at capture |
+|---|---|---|---|---|---|
+{rounds}
+
+## Gate outcomes: capture vs. this replay — {'MATCH' if match else 'DIFFERENT'}
+
+At capture (live run `{snap['captured_from_run']}`, final status {snap['final_status_at_capture']}):
+
+| Gate | Round | Outcome | E | V |
+|---|---|---|---|---|
+{rows(snap['gate_outcomes_at_capture'])}
+
+This replay (final status {run['status']}):
+
+| Gate | Round | Outcome | E | V |
+|---|---|---|---|---|
+{rows(replayed)}
+"""
+
+
 def run_demo():
     logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
     db.init_db()
@@ -729,6 +864,12 @@ def run_demo():
         print(f"[{rid}] final status: {run['status']}  gates: "
               + " → ".join(f"G{h['gate']}:{h['outcome'].upper()}" for h in hist))
     _demo_test_traffic("demo-strong")
+    if DEMO_SNAPSHOT.exists():
+        print("[demo-replay] replaying committed evidence snapshot (no network)…")
+        res = replay(DEMO_SNAPSHOT, "demo-replay")
+        print(f"[demo-replay] final status: {res['run']['status']}  gates: "
+              + " → ".join(f"G{h['gate']}:{h['outcome'].upper()}" for h in res["replayed"])
+              + f"  (matches capture: {res['match']})")
     db.export_decision_log(str(ROOT / "decision_log.json"), run_ids=list(DEMO_RUNS))
     print("decision_log.json and outputs/ updated.")
 
@@ -742,6 +883,19 @@ if __name__ == "__main__":
         rid = secrets.token_hex(6)
         r = run_sync(args[1], rid, auto="--yes" in args)
         print(f"run {rid}: {r['status']} — outputs in {out_dir(rid)}")
+    elif args[0] == "replay" and len(args) >= 2:
+        logging.basicConfig(level=logging.WARNING)
+        res = replay(args[1], args[2] if len(args) > 2 else "demo-replay")
+        print(" → ".join(f"G{h['gate']}:{h['outcome'].upper()}" for h in res["replayed"]),
+              f"| final status: {res['run']['status']} | gate outcomes match capture: {res['match']}")
+        if res["run"]["run_id"] in DEMO_RUNS:
+            db.export_decision_log(str(ROOT / "decision_log.json"), run_ids=list(DEMO_RUNS))
+        sys.exit(0 if res["match"] else 2)
+    elif args[0] == "capture" and len(args) >= 3:
+        logging.basicConfig(level=logging.WARNING)
+        snap = capture(args[1], args[2])
+        print(f"snapshot written to {args[2]}: gates "
+              + " → ".join(f"G{h['gate']}:{h['outcome'].upper()}" for h in snap["gate_outcomes_at_capture"]))
     elif args[0] == "measure" and len(args) == 2:
         measure(args[1])
         print(f"Phase 6 re-measured — see {out_dir(args[1]) / out_name(args[1], 'phase6_step1_operate-memo.md')}")

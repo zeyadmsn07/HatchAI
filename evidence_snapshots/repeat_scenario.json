@@ -1,0 +1,527 @@
+{
+  "snapshot_version": 1,
+  "label": "REPEAT -> GO: Arabic calligraphy workshop booking, Jordan (live capture)",
+  "captured_at": "2026-11-17T15:31:37+00:00",
+  "captured_from_run": "capture-6ef8cc82",
+  "brief": "A booking app for Arabic calligraphy workshops for adult hobbyists in Jordan. I have web development skills, USD 200 budget, 6 hours per week.",
+  "note": "Evidence captured from a live HatchAI run (real web/HN/Wikipedia/World Bank fetches). Replaying it re-runs verification, scoring and gates without any network access.",
+  "rounds": [
+    {
+      "round": 1,
+      "idea": "A booking app for Arabic calligraphy workshops for adult hobbyists in Jordan.",
+      "target_user": "",
+      "geography": "Jordan",
+      "synthesis_mode": "extractive",
+      "model": null,
+      "sources": [
+        {
+          "key": "S1",
+          "url": "https://news.ycombinator.com/item?id=10447090",
+          "title": "HN: Ask HN: How to market software to Dubai, Qatar, etc?",
+          "domain": "news.ycombinator.com",
+          "fetch_time": "2026-11-17T15:31:22+00:00",
+          "text_hash": "c004345412b2d10b",
+          "passages": [
+            "Ask HN: How to market software to Dubai, Qatar, etc? — Hacker News thread with 10 points and 5 comments, posted 2015-10-25."
+          ],
+          "collector": "hn",
+          "category": "demand"
+        },
+        {
+          "key": "S2",
+          "url": "https://news.ycombinator.com/item?id=36323393",
+          "title": "HN: Ask HN: Books to learn about Arabic text processing",
+          "domain": "news.ycombinator.com",
+          "fetch_time": "2026-11-17T15:31:22+00:00",
+          "text_hash": "92817c7a19f59a2f",
+          "passages": [
+            "Ask HN: Books to learn about Arabic text processing — Hacker News thread with 2 points and 3 comments, posted 2023-06-14."
+          ],
+          "collector": "hn",
+          "category": "demand"
+        },
+        {
+          "key": "S3",
+          "url": "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=JO",
+          "title": "World Bank — Individuals using the Internet (% of population), Jordan",
+          "domain": "data.worldbank.org",
+          "fetch_time": "2026-11-17T15:31:22+00:00",
+          "text_hash": "71880db740774ed1",
+          "passages": [
+            "Individuals using the Internet (% of population) for Jordan in 2024: 95.6."
+          ],
+          "collector": "worldbank",
+          "category": "local_constraints"
+        },
+        {
+          "key": "S4",
+          "url": "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=JO",
+          "title": "World Bank — GDP per capita (current US$), Jordan",
+          "domain": "data.worldbank.org",
+          "fetch_time": "2026-11-17T15:31:22+00:00",
+          "text_hash": "909f661718b27cf7",
+          "passages": [
+            "GDP per capita (current US$) for Jordan in 2025: 5,347.8."
+          ],
+          "collector": "worldbank",
+          "category": "local_constraints"
+        },
+        {
+          "key": "S5",
+          "url": "https://www.harflawn.com/arabic-calligraphy-workshops",
+          "title": "Workshops | Arabic Calligraphy | Harf.Lawn",
+          "domain": "harflawn.com",
+          "fetch_time": "2026-11-17T15:31:22+00:00",
+          "text_hash": "f39dc1af856dd327",
+          "passages": [
+            "Experience Arabic calligraphy through interactive workshops. Learn from skilled artists, explore traditional and modern styles, and reserve your spot today."
+          ],
+          "collector": "web:yahoo",
+          "category": "competitors"
+        },
+        {
+          "key": "S6",
+          "url": "https://www.scriptsnscribes.com/",
+          "title": "Scripts 'n' Scribes- Arabic Calligraphy",
+          "domain": "scriptsnscribes.com",
+          "fetch_time": "2026-11-17T15:31:22+00:00",
+          "text_hash": "822bee1ee83f7e57",
+          "passages": [
+            "This workshop offers an introduction to Islamic calligraphy, with particular emphasis on the Thuluth and Naskh scripts. Participants will explore the essential principles and foundations of each script.",
+            "Scripts 'n' Scribes- Arabic Calligraphy Connecting you to the Art of Arabic Calligraphy We are passionate about bringing together those who seek knowledge of Arabic calligraphy and other traditional arts and the accomplished teachers and masters of those arts."
+          ],
+          "collector": "web:yahoo",
+          "category": "competitors"
+        },
+        {
+          "key": "S7",
+          "url": "https://mqacademy.app/",
+          "title": "My Qalam Academy | Master the Art of Arabic Calligraphy",
+          "domain": "mqacademy.app",
+          "fetch_time": "2026-11-17T15:31:22+00:00",
+          "text_hash": "7d34a2eb41b5f23e",
+          "passages": [
+            "If complex Arabic calligraphy has always looked intimidating, this class shows you a completely different way in. We skip the traditional beginner stuff — no ink supplies, no paper prep, no pen-holding — and go straight to the fun part: digital design and visual composition.",
+            "My Qalam Academy | Master the Art of Arabic Calligraphy"
+          ],
+          "collector": "web:yahoo",
+          "category": "competitors"
+        },
+        {
+          "key": "S8",
+          "url": "https://bookamuslim.com/arabic-calligraphy-workshops/",
+          "title": "Arabic Calligraphy Workshops - Book A Muslim",
+          "domain": "bookamuslim.com",
+          "fetch_time": "2026-11-17T15:31:22+00:00",
+          "text_hash": "b65d45f3c6f17817",
+          "passages": [
+            "Explore the various fonts and their unique history, from Kufic to Thuluth, and create your own stunning calligraphy masterpieces. Book today and experience the cultural significance and timeless elegance of Arabic calligraphy."
+          ],
+          "collector": "web:yahoo",
+          "category": "competitors"
+        },
+        {
+          "key": "S9",
+          "url": "https://www.jordanmarketing.net/contact-us/",
+          "title": "Contact - Jordan Marketing",
+          "domain": "jordanmarketing.net",
+          "fetch_time": "2026-11-17T15:31:22+00:00",
+          "text_hash": "d07d57ab15677b62",
+          "passages": [
+            "To find out more about our range of digital marketing and lead generation services, get in touch with the team. You can reach us on 0843 289 7379 or via the contact form opposite."
+          ],
+          "collector": "web:yahoo",
+          "category": "channels"
+        },
+        {
+          "key": "S10",
+          "url": "https://www.jordanmarketing.net/",
+          "title": "Jordan Marketing - Digital Marketing & Lead Generation ...",
+          "domain": "jordanmarketing.net",
+          "fetch_time": "2026-11-17T15:31:22+00:00",
+          "text_hash": "d07d57ab15677b62",
+          "passages": [
+            "To find out more about our range of digital marketing and lead generation services, get in touch with the team. You can reach us on 0843 289 7379 or via the contact form opposite."
+          ],
+          "collector": "web:yahoo",
+          "category": "channels"
+        },
+        {
+          "key": "S11",
+          "url": "https://www.jordandigitalmarketing.com/contact-us",
+          "title": "Contact Jordan Digital Marketing | Talk to a Growth Strategy ...",
+          "domain": "jordandigitalmarketing.com",
+          "fetch_time": "2026-11-17T15:31:22+00:00",
+          "text_hash": "70f16314c580978b",
+          "passages": [
+            "Ready to take your marketing to the next level? Send us a message to get the ball rolling."
+          ],
+          "collector": "web:yahoo",
+          "category": "channels"
+        },
+        {
+          "key": "S12",
+          "url": "https://www.allspots.com/jo/directory/Marketing+&+marketing+surveys-تسويق+ودراسات+تسويق/Reach+Jordan-.html",
+          "title": "ALLSPOTS ☎: Reach Jordan",
+          "domain": "allspots.com",
+          "fetch_time": "2026-11-17T15:31:22+00:00",
+          "text_hash": "667361db3199c438",
+          "passages": [
+            "Community Feedback Alternative paths to Reach Jordan المسار 2: Home استشارات و دراسات تسويق ودراسات تسويق عمان عمان المسار 3: Home دعاية و اعلان اعلان مواد دعائية عمان المسار 4: Home Advertising Services and Products Advertising and promotional items"
+          ],
+          "collector": "web:yahoo",
+          "category": "channels"
+        }
+      ],
+      "raw_claims": [],
+      "raw_angles": [],
+      "verified_claims_at_capture": [
+        {
+          "category": "demand",
+          "text": "HN: Ask HN: Books to learn about Arabic text processing reports: \"Ask HN: Books to learn about Arabic text processing — Hacker News thread with 2 points and 3 comments, posted 2023-06-14.\"",
+          "source_keys": [
+            "S2"
+          ],
+          "quote": "Ask HN: Books to learn about Arabic text processing — Hacker News thread with 2 points and 3 comments, posted 2023-06-14.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "local_constraints",
+          "text": "World Bank — Individuals using the Internet (% of population), Jordan reports: \"Individuals using the Internet (% of population) for Jordan in 2024: 95.6.\"",
+          "source_keys": [
+            "S3"
+          ],
+          "quote": "Individuals using the Internet (% of population) for Jordan in 2024: 95.6.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "local_constraints",
+          "text": "World Bank — GDP per capita (current US$), Jordan reports: \"GDP per capita (current US$) for Jordan in 2025: 5,347.8.\"",
+          "source_keys": [
+            "S4"
+          ],
+          "quote": "GDP per capita (current US$) for Jordan in 2025: 5,347.8.",
+          "verified": true,
+          "is_assumption": false
+        }
+      ],
+      "evidence_score_at_capture": 46.5
+    },
+    {
+      "round": 2,
+      "idea": "A booking app for Arabic calligraphy workshops for adult hobbyists in Jordan.",
+      "target_user": "",
+      "geography": "Jordan",
+      "synthesis_mode": "extractive",
+      "model": null,
+      "sources": [
+        {
+          "key": "S13",
+          "url": "https://addagio.io/resources/booking-statistics",
+          "title": "Booking Industry Statistics 2026 — Data & Trends | Addagio",
+          "domain": "addagio.io",
+          "fetch_time": "2026-11-17T15:31:34+00:00",
+          "text_hash": "22d366fc828b0763",
+          "passages": [
+            "The statistics on this page are industry estimates compiled from multiple sources including publicly available market research reports, platform investor disclosures, industry association publications, and Addagio's own anonymized booking data."
+          ],
+          "collector": "web:yahoo",
+          "category": "demand"
+        },
+        {
+          "key": "S14",
+          "url": "https://axiobench.com/booking-industry-statistics/",
+          "title": "Booking Industry Statistics | Verified 2026 Data – Axiobench",
+          "domain": "axiobench.com",
+          "fetch_time": "2026-11-17T15:31:34+00:00",
+          "text_hash": "efd2884cefc9b86f",
+          "passages": [
+            "Nov 10, 2026 · The booking demand baseline reached 1.52 billion international arrivals in 2025, explore the figures behind growth, companies, and operational constraints."
+          ],
+          "collector": "web:yahoo",
+          "category": "demand"
+        },
+        {
+          "key": "S15",
+          "url": "https://simplybook.me/en/blog/online-booking-statistics",
+          "title": "Online Booking Statistics 2026: 35+ Trends Every Business ...",
+          "domain": "simplybook.me",
+          "fetch_time": "2026-11-17T15:31:34+00:00",
+          "text_hash": "457200b841f74221",
+          "passages": [
+            "Jun 2, 2026 · This article compiles 35+ statistics on online booking, appointment scheduling, and no-show rates, sourced from published research, industry surveys, and booking platform data."
+          ],
+          "collector": "web:yahoo",
+          "category": "demand"
+        },
+        {
+          "key": "S16",
+          "url": "https://www.researchgate.net/publication/353275523_A_Systematic_Review_on_Arabic_Calligraphy_within_Islamic_Architecture",
+          "title": "(PDF) A Systematic Review on Arabic Calligraphy within ...",
+          "domain": "researchgate.net",
+          "fetch_time": "2026-11-17T15:31:34+00:00",
+          "text_hash": "620dcd31a11fbabf",
+          "passages": [
+            "Apr 25, 2021 · This paper helps to provide some sources of information that can be used by people who would like to understand and study Islamic calligraphy and Islamic art."
+          ],
+          "collector": "web:yahoo",
+          "category": "demand"
+        },
+        {
+          "key": "S17",
+          "url": "https://sawwahtravel.com/trips/570/calligraphy-house-experience",
+          "title": "Authentic Experiences with Sawwah Travel and tour booking ...",
+          "domain": "sawwahtravel.com",
+          "fetch_time": "2026-11-17T15:31:34+00:00",
+          "text_hash": "8c24e2aa13b64178",
+          "passages": [
+            "A local staff woman will be waiting to greet and brief you about the history of Arabic calligraphy and its close ties to the Islamic culture. Next, you’ll be introduced to the main principles of Arabic calligraphic styles.",
+            "Authentic Experiences with Sawwah Travel and tour booking platform Sawwah calligraphy House Experience Wild Jordan Art 1 Hour(s) Easy Comfortable Arabic English Previous Next Description The House of Calligraphy showcases one of most attractive forms of art: Arabic Calligraphy.",
+            "A local staff woman will be waiting to greet and brief you about the history of Arabic calligraphy and its close ties to the Islamic culture."
+          ],
+          "collector": "web:yahoo",
+          "category": "local_constraints"
+        },
+        {
+          "key": "S18",
+          "url": "https://questtravel-jo.com/tour/an-artistic-heritage-experience/",
+          "title": "Arabic Calligraphy Experience In Jordan | Quest Travel",
+          "domain": "questtravel-jo.com",
+          "fetch_time": "2026-11-17T15:31:34+00:00",
+          "text_hash": "5e9edf36a695a712",
+          "passages": [
+            "Create your own Arabic calligraphy artwork in Jordan during a private cultural experience guided by local artistic heritage and Quest Travel.",
+            "Arabic Calligraphy Experience In Jordan | Quest Travel MICE About Our Story What We Do Jordan Discover Jordan Amman Petra Wadi Rum Dead Sea Madaba Ajloun Jerash Aqaba Jordan Travel Insights Tours Signature Tours Experiences Contact Us © 2026 Quest Travel Jordan - DMC .",
+            "Timeless Ink - The Arabic Calligraphy Experience An Artistic Heritage Experience The House of Calligraphy celebrates one of the Arab world’s most distinctive art forms: Arabic calligraphy.",
+            "Created to bring cultures closer through the beauty of the written word, the space introduces guests to the history of Arabic calligraphy and its close relationship with Islamic culture."
+          ],
+          "collector": "web:yahoo",
+          "category": "local_constraints"
+        },
+        {
+          "key": "S19",
+          "url": "https://www.asiabylocals.com/jordan/amman/amman-calligraphy-class-art-walk-and-lunch-tour",
+          "title": "Amman: Calligraphy Class, Art Walk | AsiaByLocals",
+          "domain": "asiabylocals.com",
+          "fetch_time": "2026-11-17T15:31:34+00:00",
+          "text_hash": "ca645b2a02be83c5",
+          "passages": [
+            "Immerse yourself in the art of Arabic calligraphy with a hands-on class. Jordan treasures tours runs it, and 6 things are covered by the price. It can be cancelled free of charge.",
+            "Immerse yourself in the art of Arabic calligraphy with a hands-on class Operated by Jordan treasures tours.",
+            "Immerse yourself in the art of Arabic calligraphy with a hands-on class Operated by Jordan tr ...",
+            "Immerse yourself in the art of Arabic calligraphy with a hands-on class."
+          ],
+          "collector": "web:yahoo",
+          "category": "local_constraints"
+        },
+        {
+          "key": "S20",
+          "url": "https://www.facebook.com/elharfhouse/",
+          "title": "ELHARF | Amman - Facebookواقع توظيف الخط العربي في التصميم الجرافيكي لدى المصمم ...Arabic Calligrapher Jordan - Scarlett Entertainmentالأردن المهيأ - اكاديمية ا",
+          "domain": "facebook.com",
+          "fetch_time": "2026-11-17T15:31:34+00:00",
+          "text_hash": "52ee22a1a97fe06f",
+          "passages": [
+            "The timespan covers the period from early spread of Islam from the rule of the Rashidun Caliphs to the end of the Ottoman Empire and the beginning of the Hashemite Kingdom of Jordan. This research aims to study the current state of employing Arabic calligraphy in graphic design by Jordanian designers, based on its aesthetic implications and creative use within graphic design. Local Jordanian artist, founder of ALAZAAT Design, draws inspiration from the late Egyptian artist Mohieddien El-Labbad. Arabic Calligrapher has captivated clients in Jordan, the UK, Portugal, Germany, Australia, Turkey, the USA, and the MENA region. للتقييم وكتابة تغذية راجعة امكانية الوصول × تفاصيل ★: مناسب فقط للأشخاص الذين يستطيعون صعود الكثير من الدرج ★★: هناك ٣ درجات أو أكثر عند المدخل مع بعض مناطق الجلوس والخدمة مهيئة أو لا يوجد في الداخل اماكن مهيئة ..."
+          ],
+          "collector": "web:yahoo",
+          "category": "local_constraints"
+        },
+        {
+          "key": "S21",
+          "url": "http://www.araboo.com/dir/jordan-communities-forums",
+          "title": "Jordan Communities and Forums - Arab - Araboo.com",
+          "domain": "araboo.com",
+          "fetch_time": "2026-11-17T15:31:34+00:00",
+          "text_hash": "6c92db851c1467b2",
+          "passages": [
+            "Sites that help people on the Internet communicate and interact with each other regarding Jordan matters. These feature message boards, discussion forums, chat rooms and other messaging services."
+          ],
+          "collector": "web:yahoo",
+          "category": "channels"
+        },
+        {
+          "key": "S22",
+          "url": "https://www.telegram-groups.com/jordan-telegram-groups/",
+          "title": "50 Jordan Telegram Groups (2026) — 44K Members",
+          "domain": "telegram-groups.com",
+          "fetch_time": "2026-11-17T15:31:34+00:00",
+          "text_hash": "e94a0bc2a0fc3d77",
+          "passages": [
+            "Find the best Jordan Telegram groups. Browse 50 active jordan communities with member counts and direct join links. Updated November 2026."
+          ],
+          "collector": "web:yahoo",
+          "category": "channels"
+        },
+        {
+          "key": "S23",
+          "url": "https://www.reddit.com/r/Jordanians/",
+          "title": "For Jordanians, by Jordanians. - Reddit",
+          "domain": "reddit.com",
+          "fetch_time": "2026-11-17T15:31:34+00:00",
+          "text_hash": "94e1981608dcac9c",
+          "passages": [
+            "r/Jordanians: An open-minded community dedicated to the Hashemite Kingdom of Jordan. We're here to share ideas, offer help and have fun."
+          ],
+          "collector": "web:yahoo",
+          "category": "channels"
+        },
+        {
+          "key": "S24",
+          "url": "https://www.internations.org/jordan-expats",
+          "title": "Jordan‘s Expat Community - Make Friends - Find Forums & Events",
+          "domain": "internations.org",
+          "fetch_time": "2026-11-17T15:31:34+00:00",
+          "text_hash": "33285cb76da4e35e",
+          "passages": [
+            "Get important information in our forums about jobs, housing and the life in Jordan. Meet other expats and make friends at our monthly local events."
+          ],
+          "collector": "web:yahoo",
+          "category": "channels"
+        }
+      ],
+      "raw_claims": [],
+      "raw_angles": [],
+      "verified_claims_at_capture": [
+        {
+          "category": "demand",
+          "text": "HN: Ask HN: Books to learn about Arabic text processing reports: \"Ask HN: Books to learn about Arabic text processing — Hacker News thread with 2 points and 3 comments, posted 2023-06-14.\"",
+          "source_keys": [
+            "S2"
+          ],
+          "quote": "Ask HN: Books to learn about Arabic text processing — Hacker News thread with 2 points and 3 comments, posted 2023-06-14.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "demand",
+          "text": "Booking Industry Statistics | Verified 2026 Data – Axiobench reports: \"Nov 10, 2026 · The booking demand baseline reached 1.52 billion international arrivals in 2025, explore the figures behind growth, companies, and operational constraints.\"",
+          "source_keys": [
+            "S14"
+          ],
+          "quote": "Nov 10, 2026 · The booking demand baseline reached 1.52 billion international arrivals in 2025, explore the figures behind growth, companies, and operational constraints.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "competitors",
+          "text": "Authentic Experiences with Sawwah Travel and tour booking ... reports: \"Authentic Experiences with Sawwah Travel and tour booking platform Sawwah calligraphy House Experience Wild Jordan Art 1 Hour(s) Easy Comfortable Arabic English Previous Next Description The House of Calligraphy showcases one of most attrac\"",
+          "source_keys": [
+            "S17"
+          ],
+          "quote": "Authentic Experiences with Sawwah Travel and tour booking platform Sawwah calligraphy House Experience Wild Jordan Art 1 Hour(s) Easy Comfortable Arabic English Previous Next Description The House of Calligraphy showcases one of most attrac",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "competitors",
+          "text": "Online Booking Statistics 2026: 35+ Trends Every Business ... reports: \"Jun 2, 2026 · This article compiles 35+ statistics on online booking, appointment scheduling, and no-show rates, sourced from published research, industry surveys, and booking platform data.\"",
+          "source_keys": [
+            "S15"
+          ],
+          "quote": "Jun 2, 2026 · This article compiles 35+ statistics on online booking, appointment scheduling, and no-show rates, sourced from published research, industry surveys, and booking platform data.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "pricing",
+          "text": "Amman: Calligraphy Class, Art Walk | AsiaByLocals reports: \"Immerse yourself in the art of Arabic calligraphy with a hands-on class. Jordan treasures tours runs it, and 6 things are covered by the price. It can be cancelled free of charge.\"",
+          "source_keys": [
+            "S19"
+          ],
+          "quote": "Immerse yourself in the art of Arabic calligraphy with a hands-on class. Jordan treasures tours runs it, and 6 things are covered by the price. It can be cancelled free of charge.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "local_constraints",
+          "text": "World Bank — Individuals using the Internet (% of population), Jordan reports: \"Individuals using the Internet (% of population) for Jordan in 2024: 95.6.\"",
+          "source_keys": [
+            "S3"
+          ],
+          "quote": "Individuals using the Internet (% of population) for Jordan in 2024: 95.6.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "local_constraints",
+          "text": "World Bank — GDP per capita (current US$), Jordan reports: \"GDP per capita (current US$) for Jordan in 2025: 5,347.8.\"",
+          "source_keys": [
+            "S4"
+          ],
+          "quote": "GDP per capita (current US$) for Jordan in 2025: 5,347.8.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "channels",
+          "text": "50 Jordan Telegram Groups (2026) — 44K Members reports: \"Find the best Jordan Telegram groups. Browse 50 active jordan communities with member counts and direct join links. Updated November 2026.\"",
+          "source_keys": [
+            "S22"
+          ],
+          "quote": "Find the best Jordan Telegram groups. Browse 50 active jordan communities with member counts and direct join links. Updated November 2026.",
+          "verified": true,
+          "is_assumption": false
+        },
+        {
+          "category": "channels",
+          "text": "Booking Industry Statistics | Verified 2026 Data – Axiobench reports: \"Nov 10, 2026 · The booking demand baseline reached 1.52 billion international arrivals in 2025, explore the figures behind growth, companies, and operational constraints.\"",
+          "source_keys": [
+            "S14"
+          ],
+          "quote": "Nov 10, 2026 · The booking demand baseline reached 1.52 billion international arrivals in 2025, explore the figures behind growth, companies, and operational constraints.",
+          "verified": true,
+          "is_assumption": false
+        }
+      ],
+      "evidence_score_at_capture": 100.0
+    }
+  ],
+  "gate_outcomes_at_capture": [
+    {
+      "gate": 1,
+      "outcome": "repeat",
+      "round": 1,
+      "E": 46.5,
+      "V": 0.0
+    },
+    {
+      "gate": 1,
+      "outcome": "go",
+      "round": 2,
+      "E": 100.0,
+      "V": 0.0
+    },
+    {
+      "gate": 2,
+      "outcome": "go",
+      "round": 2,
+      "E": 100.0,
+      "V": 4.5
+    },
+    {
+      "gate": 3,
+      "outcome": "go",
+      "round": 2,
+      "E": 0.0,
+      "V": 0.0
+    },
+    {
+      "gate": 4,
+      "outcome": "go",
+      "round": 2,
+      "E": 0.0,
+      "V": 0.0
+    },
+    {
+      "gate": 5,
+      "outcome": "go",
+      "round": 2,
+      "E": 0.0,
+      "V": 0.0
+    }
+  ],
+  "final_status_at_capture": "completed"
+}

@@ -34,25 +34,46 @@ def _clean(v: str) -> str:
 
 
 def run(run_id: str, brief: FounderBrief, round_no: int = 1,
-        previous: ResearchFindings | None = None, idea_override: str | None = None) -> ResearchFindings:
+        previous: ResearchFindings | None = None, idea_override: str | None = None,
+        replay: dict | None = None, capture: list | None = None) -> ResearchFindings:
+    """Research one round.
+
+    replay:  a captured evidence snapshot; sources (and captured raw LLM claims, if any) are
+             loaded from it instead of being collected — no network and no LLM call.
+    capture: a list that receives this round's record (sources, raw claims, verified claims)
+             so the run can be saved as a snapshot.
+    """
     idea = idea_override or brief.idea
     target, geo = _clean(brief.target_user), _clean(brief.geography)
 
     existing = previous.sources if previous else []
-    sources, _ = evidence.collect(idea, target, geo, round_no=round_no, existing=existing)
-    new_sources = sources[len(existing):]
-    callbacks.log(run_id=run_id, agent="researcher", action=f"collect_evidence_round_{round_no}",
-                  sources=[s.url for s in new_sources], model=None, cost=0, phase=1)
-
     claims: list[Claim] = []
     angles: list[str] = []
     model, tokens, mode = None, 0, "extractive"
-    if sources:
+    if replay is not None:
+        sources, rnd = evidence.replay_collect(replay, idea, round_no, existing)
+        new_sources = sources[len(existing):]
+        claims = [Claim(**c) for c in rnd.get("raw_claims", [])]
+        angles = list(rnd.get("raw_angles", []))
+        mode = rnd.get("synthesis_mode", "extractive")
+        callbacks.log(run_id=run_id, agent="researcher", action=f"replay_evidence_round_{round_no}",
+                      sources=[s.url for s in new_sources], model=None, cost=0, phase=1,
+                      outcome=f"REPLAY of snapshot {replay.get('_file', '?')} captured {replay.get('captured_at', '?')}; "
+                              "no new collection")
+    else:
+        sources, _ = evidence.collect(idea, target, geo, round_no=round_no, existing=existing)
+        new_sources = sources[len(existing):]
+        callbacks.log(run_id=run_id, agent="researcher", action=f"collect_evidence_round_{round_no}",
+                      sources=[s.url for s in new_sources], model=None, cost=0, phase=1)
+
+    if sources and replay is None:
         res = llm_gateway.call_llm(_system(), _user_prompt(idea, target, geo, sources),
                                    ResearchFindings, temperature=0.2)
         if res:
             llm_findings, model, tokens = res
             claims, angles, mode = llm_findings.claims[:10], llm_findings.opportunity_angles[:3], "llm"
+    raw_claims = [c.model_copy() for c in claims]
+    raw_angles = list(angles)
 
     claims = evidence.verify_claims(claims, sources)
     verified_cats = {c.category for c in claims if c.verified}
@@ -74,7 +95,19 @@ def run(run_id: str, brief: FounderBrief, round_no: int = 1,
         claims=claims, opportunity_angles=angles, sources=sources,
         source_count=len(sources), domain_count=len({s.domain for s in sources}),
         research_round=round_no, mode=mode,
+        evidence_mode="replay" if replay is not None else "live",
+        snapshot=(f"{replay.get('_file', '?')} (captured {replay.get('captured_at', '?')})" if replay is not None else ""),
     )
+    if capture is not None:
+        capture.append({
+            "round": round_no, "idea": idea, "target_user": target, "geography": geo,
+            "synthesis_mode": mode, "model": model,
+            "sources": [s.model_dump() for s in new_sources],
+            "raw_claims": [c.model_dump() for c in raw_claims],
+            "raw_angles": raw_angles,
+            "verified_claims_at_capture": [c.model_dump() for c in claims if c.verified],
+            "evidence_score_at_capture": None,   # filled in by the orchestrator after the gate
+        })
     callbacks.log(run_id=run_id, agent="researcher", action="synthesize_and_verify_claims",
                   sources=sorted({s.url for c in claims if c.verified
                                   for s in sources if s.key in c.source_keys}),

@@ -44,7 +44,8 @@ graph TD
   3. **Evidence collection (no LLM, keyless, free).** Category queries are sent to web search via `ddgs` (several backends tried in turn), Hacker News (Algolia API), Wikipedia (MediaWiki API) and the World Bank Indicators API (internet use and GDP per capita for the detected country). Pages are fetched and the best sentences are kept. Lines that look like prompt injection are dropped and ad-redirect URLs are filtered. Each source enters a **ledger** with key `S1..Sn`, URL, title, domain, fetch time, SHA-256 of the text, collector and category.
   4. **Synthesis.** With an LLM, the model sees only `[S#] passage` lines and writes claims with a source key and a verbatim quote. Without an LLM, *extractive mode* turns the most relevant passages into claims verbatim. A passage qualifies only if it matches both idea terms and the category's vocabulary and is not navigation text.
   5. **Citation verifier.** Unknown keys are dropped. Each quote must occur in a passage of a cited source (normalised substring or ≥ 0.9 fuzzy window). Claims that fail become `ASSUMPTION (citation not verified)`. Categories with no verified claim get an explicit `ASSUMPTION` placeholder.
-* **Output:** `phase1_step1_intake.md`, `phase1_step2_research-findings.md` (claims with links, evidence-score breakdown, ledger) and `phase1_step3_sources.json`.
+  6. **Capture and replay (reproducibility).** A live run started with capture (`python orchestrator.py capture "<brief>" <file>`) saves, for every research round, the exact `Source` records it collected (key, URL, title, domain, original fetch time, SHA-256, passages, collector, category), the raw claims and angles before verification, the verified claims, and the round's E-score. The file also holds the gate outcomes. `python orchestrator.py replay <file>` loads each round's sources from the snapshot instead of calling the collectors, with network access and LLMs switched off. It re-runs the unchanged verifier, scoring and gates, and writes `phase1_step4_evidence-replay-check.md`, which compares the replayed gate outcomes with the captured ones; the command exits non-zero if they differ. A round missing from the snapshot fails the run; replay never falls back to live search. Replayed runs say **Evidence mode: REPLAY** in the findings and Gate 1 files, and log `replay_evidence_round_N` (not `collect_evidence_round_N`) with the original source URLs.
+* **Output:** `phase1_step1_intake.md`, `phase1_step2_research-findings.md` (claims with links, evidence-score breakdown, ledger, evidence mode) and `phase1_step3_sources.json`; replays add `phase1_step4_evidence-replay-check.md`.
 
 ### Phase 2: Validate
 
@@ -102,6 +103,8 @@ Guardrail 0 blocks create no gate record, so they cannot be overridden.
 * **Gate 5:** idempotency, revocation and reconciliation all PASS, launch drafts are held for approval, and they contain no forbidden phrases.
 
 **When the system recommends STOP on weak evidence:** the committed demo's weak brief ("generic study notes", no user, no country, no budget) is stopped at Gate 1 before any spending. The tests (`tests/test_pipeline.py`) also run REPEAT → GO and REPEAT → PIVOT → REPEAT → STOP end to end.
+
+**Reproducible REPEAT scenario (committed):** `evidence_snapshots/repeat_scenario.json` was captured from a live run of an Arabic calligraphy workshop booking idea in Jordan. Round 1 reached E = 46.5 (verified demand and local constraints only), so Gate 1 recommended **REPEAT**; the broader round 2 reached GO, and the run completed. To reproduce it offline: `python orchestrator.py replay evidence_snapshots/repeat_scenario.json`. Its outputs are in `outputs/*-replay-scenario.*` and its log entries in `decision_log.json` under `run_id: demo-replay`. Caveat: some verified claims in this scenario are only loosely relevant (e.g. generic booking-industry statistics). Replay reproduces the decision; it does not vouch for the claims.
 
 ## Sale to cash
 
@@ -166,6 +169,7 @@ State per run: runs/<run>/state/*.json; outputs: runs/<run>/outputs/ (demo runs:
 |---|---|
 | Guardrail 0, output scanner, gates 1–5, founder approval, decision log | Working |
 | Live evidence collection (web, HN, Wikipedia, World Bank), citation verifier | Working |
+| Evidence capture and offline replay (snapshot, labelled REPLAY, capture-vs-replay check) | Working |
 | Intake, research synthesis, critique (LLM optional; rule-based / extractive fallback) | Working |
 | Code-computed viability, Lean Canvas with source keys, pre-registered demand test design | Working (the demand test itself is NOT run) |
 | MVP generator: 5 archetypes, idea-specific spec and tests, real test run and boot | Working |

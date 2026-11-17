@@ -9,6 +9,7 @@ An open-source team of agents that takes a founder's idea through six gated phas
 
 **Committed demo run** (`python orchestrator.py demo`, outputs in [`outputs/`](outputs/), log in [`decision_log.json`](decision_log.json)):
 the strong brief (STEM flashcards, Egypt) gets G1–G5 **GO**. Its MVP *STEM Recall* passed **21/21** generated tests and booted. The weak brief ("generic study notes", no user, no country) is stopped at **Gate 1: STOP**.
+A third, **reproducible** scenario replays evidence captured from a live run ([`evidence_snapshots/repeat_scenario.json`](evidence_snapshots/repeat_scenario.json), Arabic calligraphy workshop booking in Jordan). Round 1 is too thin (E = 46.5), so Gate 1 says **REPEAT**; a broader second round reaches **GO**. Anyone can reproduce it offline with no network or LLM; outputs carry the `-replay-scenario` suffix and are labelled REPLAY.
 
 ## Quickstart
 
@@ -26,8 +27,10 @@ python orchestrator.py demo               # regenerate outputs/ + decision_log.j
 python orchestrator.py run "<brief>"      # CLI run; you approve every gate at the prompt
 python demand_test_traffic.py generated_mvps/demo-strong --visitors 300 --signups 20   # labelled TEST traffic
 python orchestrator.py measure demo-strong # re-run Phase 6 on the MVP's stored counts
+python orchestrator.py replay evidence_snapshots/repeat_scenario.json   # REPEAT -> GO, offline; exits 0 if gates match the capture
+python orchestrator.py capture "<brief>" evidence_snapshots/my.json     # live run that saves its evidence for replay
 cd generated_mvps/demo-strong && python server.py --port 8080   # run the generated MVP
-python -m pytest                          # 65 tests: gates, approval, evidence, builder, pipeline, web, measurement
+python -m pytest                          # 72 tests: gates, approval, evidence, builder, pipeline, web, measurement, replay
 ```
 
 Without Docker: `pip install -r requirements.txt && uvicorn app:app` (Python 3.12).
@@ -38,6 +41,7 @@ Without Docker: `pip install -r requirements.txt && uvicorn app:app` (Python 3.1
 |---|---|---|
 | 1.1 Intake | **Working** | Deterministic parser; unstated fields → `UNKNOWN`/`ASSUMPTION` (LLM can only rephrase) |
 | 1.2 Guardrail 0 | **Working** | Excluded products and trick intents, fail-closed, no override; re-run on pivots |
+| Evidence capture / replay | **Working** | Snapshot of the evidence a live run collected; replay re-runs verification, scores and gates offline, labelled REPLAY |
 | 1.3 Evidence collection | **Working** | `ddgs` web, HN Algolia, Wikipedia, World Bank API; ledger with URL + SHA-256 |
 | 1.4 Synthesis + citation verifier | **Working** | LLM or extractive (no-LLM) mode; quotes re-matched to fetched text |
 | Gate 1 | **Working** | E-score; GO / REPEAT (2nd research round) / PIVOT / STOP |

@@ -2,7 +2,7 @@
 
 **Recommendation (computed by code): STOP**
 
-STOP: the brief names neither a target user nor a geography, so no market can be validated. Resubmit with a specific user and country. E=90.0 (GO ≥ 55, STOP < 25); verified categories: ['channels', 'competitors', 'demand', 'local_constraints', 'pricing']; cited domains: 5; research round 1.
+STOP: the brief names neither a target user nor a geography, so no market can be validated. Resubmit with a specific user and country. E=71.2 (GO ≥ 55, STOP < 25); verified categories: ['competitors', 'demand', 'local_constraints', 'pricing']; cited domains: 3; research round 1.
 
 ## Checks
 
@@ -20,4 +20,4 @@ Required before anything proceeds — see `decision_log.json` (`gate_1_decision`
 
 | Gate | Round | Outcome | E | V |
 |---|---|---|---|---|
-| 1 | 1 | STOP | 90.0 | 0.0 |
+| 1 | 1 | STOP | 71.2 | 0.0 |

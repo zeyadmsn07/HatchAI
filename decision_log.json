@@ -1,6 +1,6 @@
 [
   {
-    "timestamp": "2026-11-17T15:22:22.017186+00:00",
+    "timestamp": "2026-11-17T15:38:25.427185+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -10,7 +10,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:36.014601+00:00",
+    "timestamp": "2026-11-17T15:38:38.409155+00:00",
     "agent": "researcher",
     "action": "collect_evidence_round_1",
     "sources": [
@@ -18,17 +18,14 @@
       "https://news.ycombinator.com/item?id=44491043",
       "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
       "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://arxiv.org/pdf/2607.25096",
+      "https://arxiv.org/html/2607.25096v1",
+      "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
+      "https://notiq.study/blog/flashcards-spaced-repetition-science",
       "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
       "https://studyboost.org/blog/best-spaced-repetition-app/",
       "https://www.remnote.com/pricing",
-      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
-      "https://xpay.app/blog/epayments-education-sector-egypt",
-      "https://www3.aucegypt.edu/OnlinePayment/Default.aspx",
-      "https://aastmtic2.aast.edu/QNB/Tution.aspx",
-      "https://www.aucegypt.edu/services/communications/marketing",
-      "https://www.facebook.com/SchoolOfMarketing.CO/",
-      "https://www.timeshighereducation.com/campus/digital-marketing-route-reaching-international-students",
-      "https://23hublab.com/student-acquisition-strategy-in-egypt/"
+      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026"
     ],
     "model": null,
     "cost": 0.0,
@@ -36,18 +33,17 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:36.102560+00:00",
+    "timestamp": "2026-11-17T15:38:38.541984+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
+      "https://arxiv.org/html/2607.25096v1",
       "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
       "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
       "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
       "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
-      "https://news.ycombinator.com/item?id=40626452",
-      "https://news.ycombinator.com/item?id=44491043",
       "https://studyboost.org/blog/best-spaced-repetition-app/",
-      "https://www.timeshighereducation.com/campus/digital-marketing-route-reaching-international-students"
+      "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization"
     ],
     "model": null,
     "cost": 0.0,
@@ -55,7 +51,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:36.154047+00:00",
+    "timestamp": "2026-11-17T15:38:38.603548+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -66,7 +62,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:36.197737+00:00",
+    "timestamp": "2026-11-17T15:38:38.682248+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -77,18 +73,17 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:36.255441+00:00",
+    "timestamp": "2026-11-17T15:38:38.798931+00:00",
     "agent": "validator",
     "action": "red_team_critique",
     "sources": [
-      "https://news.ycombinator.com/item?id=40626452",
-      "https://news.ycombinator.com/item?id=44491043",
       "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
       "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://arxiv.org/html/2607.25096v1",
+      "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
       "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
       "https://studyboost.org/blog/best-spaced-repetition-app/",
-      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
-      "https://www.timeshighereducation.com/campus/digital-marketing-route-reaching-international-students"
+      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026"
     ],
     "model": null,
     "cost": 0.0,
@@ -96,18 +91,17 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:36.267089+00:00",
+    "timestamp": "2026-11-17T15:38:38.834390+00:00",
     "agent": "validator",
     "action": "build_lean_canvas",
     "sources": [
-      "https://news.ycombinator.com/item?id=40626452",
-      "https://news.ycombinator.com/item?id=44491043",
       "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=EG",
       "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG",
+      "https://arxiv.org/html/2607.25096v1",
+      "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
       "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
       "https://studyboost.org/blog/best-spaced-repetition-app/",
-      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
-      "https://www.timeshighereducation.com/campus/digital-marketing-route-reaching-international-students"
+      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026"
     ],
     "model": null,
     "cost": 0.0,
@@ -115,7 +109,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:36.274317+00:00",
+    "timestamp": "2026-11-17T15:38:38.857151+00:00",
     "agent": "validator",
     "action": "design_demand_test",
     "sources": [],
@@ -125,7 +119,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:36.301013+00:00",
+    "timestamp": "2026-11-17T15:38:38.929333+00:00",
     "agent": "gate",
     "action": "gate_2_evaluation",
     "sources": [],
@@ -136,7 +130,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:36.331798+00:00",
+    "timestamp": "2026-11-17T15:38:39.010301+00:00",
     "agent": "founder",
     "action": "gate_2_decision",
     "sources": [],
@@ -147,7 +141,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:36.395621+00:00",
+    "timestamp": "2026-11-17T15:38:39.133889+00:00",
     "agent": "builder",
     "action": "select_template",
     "sources": [],
@@ -158,7 +152,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:36.407383+00:00",
+    "timestamp": "2026-11-17T15:38:39.156438+00:00",
     "agent": "builder",
     "action": "design_app_spec",
     "sources": [],
@@ -168,7 +162,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:36.433366+00:00",
+    "timestamp": "2026-11-17T15:38:39.254067+00:00",
     "agent": "builder",
     "action": "generate_mvp_code_spaced_repetition",
     "sources": [],
@@ -178,7 +172,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:38.264194+00:00",
+    "timestamp": "2026-11-17T15:38:41.894953+00:00",
     "agent": "builder",
     "action": "run_generated_tests",
     "sources": [],
@@ -189,7 +183,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:38.342270+00:00",
+    "timestamp": "2026-11-17T15:38:42.011362+00:00",
     "agent": "gate",
     "action": "gate_3_evaluation",
     "sources": [],
@@ -200,7 +194,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:38.386050+00:00",
+    "timestamp": "2026-11-17T15:38:42.095465+00:00",
     "agent": "founder",
     "action": "gate_3_decision",
     "sources": [],
@@ -211,7 +205,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:38.463939+00:00",
+    "timestamp": "2026-11-17T15:38:42.171958+00:00",
     "agent": "commercial",
     "action": "evidence_anchored_pricing",
     "sources": [
@@ -226,7 +220,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:38.484106+00:00",
+    "timestamp": "2026-11-17T15:38:42.191565+00:00",
     "agent": "commercial",
     "action": "draft_policy_templates",
     "sources": [],
@@ -236,7 +230,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:38.509110+00:00",
+    "timestamp": "2026-11-17T15:38:42.253954+00:00",
     "agent": "gate",
     "action": "gate_4_evaluation",
     "sources": [],
@@ -247,7 +241,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:38.541926+00:00",
+    "timestamp": "2026-11-17T15:38:42.336850+00:00",
     "agent": "founder",
     "action": "gate_4_decision",
     "sources": [],
@@ -258,7 +252,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:38.597149+00:00",
+    "timestamp": "2026-11-17T15:38:42.419085+00:00",
     "agent": "launch",
     "action": "draft_launch_copy",
     "sources": [],
@@ -269,7 +263,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:38.662456+00:00",
+    "timestamp": "2026-11-17T15:38:42.605193+00:00",
     "agent": "payments",
     "action": "sale_to_cash_simulation_mocked",
     "sources": [],
@@ -279,7 +273,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:38.678453+00:00",
+    "timestamp": "2026-11-17T15:38:42.669511+00:00",
     "agent": "gate",
     "action": "gate_5_evaluation",
     "sources": [],
@@ -290,7 +284,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:38.712239+00:00",
+    "timestamp": "2026-11-17T15:38:42.759302+00:00",
     "agent": "founder",
     "action": "gate_5_decision",
     "sources": [],
@@ -301,7 +295,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:38.758543+00:00",
+    "timestamp": "2026-11-17T15:38:42.848177+00:00",
     "agent": "operate",
     "action": "read_metrics_and_apply_preregistered_rule",
     "sources": [],
@@ -312,7 +306,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:38.780692+00:00",
+    "timestamp": "2026-11-17T15:38:42.897845+00:00",
     "agent": "orchestrator",
     "action": "run_completed",
     "sources": [],
@@ -323,7 +317,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:38.849624+00:00",
+    "timestamp": "2026-11-17T15:38:43.022571+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -333,23 +327,23 @@
     "run_id": "demo-weak"
   },
   {
-    "timestamp": "2026-11-17T15:22:46.075350+00:00",
+    "timestamp": "2026-11-17T15:38:53.381457+00:00",
     "agent": "researcher",
     "action": "collect_evidence_round_1",
     "sources": [
       "https://news.ycombinator.com/item?id=12382737",
       "https://news.ycombinator.com/item?id=13195588",
       "https://www.locklizard.com/document-security-blog/sell-study-notes-online/",
-      "https://www.scribbr.com/tips/make-and-sell-study-notes/",
       "https://answerins.com/",
+      "https://www.scribbr.com/tips/make-and-sell-study-notes/",
       "https://studysoup.com/study_help/classes",
-      "https://studyrift.com/",
-      "https://richtactic.com/tactic/study-notes-selling",
-      "https://www.researchprospect.com/platforms-to-sell-study-notes-online/",
-      "https://genio.co/pricing/individuals",
       "https://techtidesolutions.com/rankings/online-payment-methods/",
       "https://thecfoclub.com/tools/best-digital-payment-solutions/",
-      "https://www.nerdwallet.com/business/software/best/online-payment-processing-services"
+      "https://tech.co/pos-system/what-are-digital-payments",
+      "https://www.upwork.com/resources/community-marketing",
+      "https://www.lettrlabs.com/post/community-marketing-strategy",
+      "https://blog.hubspot.com/marketing/community-marketing",
+      "https://thebigmarketing.com/community-marketing/"
     ],
     "model": null,
     "cost": 0.0,
@@ -357,14 +351,12 @@
     "run_id": "demo-weak"
   },
   {
-    "timestamp": "2026-11-17T15:22:46.148882+00:00",
+    "timestamp": "2026-11-17T15:38:57.862762+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
-      "https://richtactic.com/tactic/study-notes-selling",
-      "https://studyrift.com/",
+      "https://answerins.com/",
       "https://www.locklizard.com/document-security-blog/sell-study-notes-online/",
-      "https://www.researchprospect.com/platforms-to-sell-study-notes-online/",
       "https://www.scribbr.com/tips/make-and-sell-study-notes/"
     ],
     "model": null,
@@ -373,7 +365,7 @@
     "run_id": "demo-weak"
   },
   {
-    "timestamp": "2026-11-17T15:22:46.189617+00:00",
+    "timestamp": "2026-11-17T15:38:57.940518+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -384,7 +376,7 @@
     "run_id": "demo-weak"
   },
   {
-    "timestamp": "2026-11-17T15:22:46.227429+00:00",
+    "timestamp": "2026-11-17T15:38:57.990455+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -395,7 +387,7 @@
     "run_id": "demo-weak"
   },
   {
-    "timestamp": "2026-11-17T15:22:46.268781+00:00",
+    "timestamp": "2026-11-17T15:38:58.026525+00:00",
     "agent": "orchestrator",
     "action": "run_stopped",
     "sources": [],
@@ -406,7 +398,7 @@
     "run_id": "demo-weak"
   },
   {
-    "timestamp": "2026-11-17T15:22:54.727330+00:00",
+    "timestamp": "2026-11-17T15:39:07.287954+00:00",
     "agent": "demo_script",
     "action": "send_labelled_test_traffic",
     "sources": [],
@@ -417,7 +409,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:54.745281+00:00",
+    "timestamp": "2026-11-17T15:39:07.306864+00:00",
     "agent": "orchestrator",
     "action": "remeasure_phase_6",
     "sources": [],
@@ -427,7 +419,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:54.767942+00:00",
+    "timestamp": "2026-11-17T15:39:07.330306+00:00",
     "agent": "operate",
     "action": "read_metrics_and_apply_preregistered_rule",
     "sources": [],
@@ -438,7 +430,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:22:54.782532+00:00",
+    "timestamp": "2026-11-17T15:39:07.344019+00:00",
     "agent": "operate",
     "action": "pipeline_check_on_test_traffic",
     "sources": [],
@@ -447,5 +439,394 @@
     "approved_by": null,
     "outcome": "TEST only: pivot",
     "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:11.597116+00:00",
+    "agent": "intake",
+    "action": "normalize_brief",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:11.625912+00:00",
+    "agent": "researcher",
+    "action": "replay_evidence_round_1",
+    "sources": [
+      "https://news.ycombinator.com/item?id=10447090",
+      "https://news.ycombinator.com/item?id=36323393",
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=JO",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=JO",
+      "https://www.harflawn.com/arabic-calligraphy-workshops",
+      "https://www.scriptsnscribes.com/",
+      "https://mqacademy.app/",
+      "https://bookamuslim.com/arabic-calligraphy-workshops/",
+      "https://www.jordanmarketing.net/contact-us/",
+      "https://www.jordanmarketing.net/",
+      "https://www.jordandigitalmarketing.com/contact-us",
+      "https://www.allspots.com/jo/directory/Marketing+&+marketing+surveys-\u062a\u0633\u0648\u064a\u0642+\u0648\u062f\u0631\u0627\u0633\u0627\u062a+\u062a\u0633\u0648\u064a\u0642/Reach+Jordan-.html"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "REPLAY of snapshot evidence_snapshots/repeat_scenario.json captured 2026-11-17T15:31:37+00:00; no new collection",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:11.643438+00:00",
+    "agent": "researcher",
+    "action": "synthesize_and_verify_claims",
+    "sources": [
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=JO",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=JO",
+      "https://news.ycombinator.com/item?id=36323393"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:11.676765+00:00",
+    "agent": "gate",
+    "action": "gate_1_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "repeat",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:11.724509+00:00",
+    "agent": "founder",
+    "action": "gate_1_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "repeat (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:11.771134+00:00",
+    "agent": "researcher",
+    "action": "replay_evidence_round_2",
+    "sources": [
+      "https://addagio.io/resources/booking-statistics",
+      "https://axiobench.com/booking-industry-statistics/",
+      "https://simplybook.me/en/blog/online-booking-statistics",
+      "https://www.researchgate.net/publication/353275523_A_Systematic_Review_on_Arabic_Calligraphy_within_Islamic_Architecture",
+      "https://sawwahtravel.com/trips/570/calligraphy-house-experience",
+      "https://questtravel-jo.com/tour/an-artistic-heritage-experience/",
+      "https://www.asiabylocals.com/jordan/amman/amman-calligraphy-class-art-walk-and-lunch-tour",
+      "https://www.facebook.com/elharfhouse/",
+      "http://www.araboo.com/dir/jordan-communities-forums",
+      "https://www.telegram-groups.com/jordan-telegram-groups/",
+      "https://www.reddit.com/r/Jordanians/",
+      "https://www.internations.org/jordan-expats"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "REPLAY of snapshot evidence_snapshots/repeat_scenario.json captured 2026-11-17T15:31:37+00:00; no new collection",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:11.794659+00:00",
+    "agent": "researcher",
+    "action": "synthesize_and_verify_claims",
+    "sources": [
+      "https://axiobench.com/booking-industry-statistics/",
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=JO",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=JO",
+      "https://news.ycombinator.com/item?id=36323393",
+      "https://sawwahtravel.com/trips/570/calligraphy-house-experience",
+      "https://simplybook.me/en/blog/online-booking-statistics",
+      "https://www.asiabylocals.com/jordan/amman/amman-calligraphy-class-art-walk-and-lunch-tour",
+      "https://www.telegram-groups.com/jordan-telegram-groups/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:11.826297+00:00",
+    "agent": "gate",
+    "action": "gate_1_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "go",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:11.874541+00:00",
+    "agent": "founder",
+    "action": "gate_1_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "approve (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:11.939078+00:00",
+    "agent": "validator",
+    "action": "red_team_critique",
+    "sources": [
+      "https://news.ycombinator.com/item?id=36323393",
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=JO",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=JO",
+      "https://axiobench.com/booking-industry-statistics/",
+      "https://simplybook.me/en/blog/online-booking-statistics",
+      "https://sawwahtravel.com/trips/570/calligraphy-house-experience",
+      "https://www.asiabylocals.com/jordan/amman/amman-calligraphy-class-art-walk-and-lunch-tour",
+      "https://www.telegram-groups.com/jordan-telegram-groups/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:11.955085+00:00",
+    "agent": "validator",
+    "action": "build_lean_canvas",
+    "sources": [
+      "https://news.ycombinator.com/item?id=36323393",
+      "https://data.worldbank.org/indicator/IT.NET.USER.ZS?locations=JO",
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=JO",
+      "https://axiobench.com/booking-industry-statistics/",
+      "https://simplybook.me/en/blog/online-booking-statistics",
+      "https://sawwahtravel.com/trips/570/calligraphy-house-experience",
+      "https://www.asiabylocals.com/jordan/amman/amman-calligraphy-class-art-walk-and-lunch-tour",
+      "https://www.telegram-groups.com/jordan-telegram-groups/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:11.970380+00:00",
+    "agent": "validator",
+    "action": "design_demand_test",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:12.005848+00:00",
+    "agent": "gate",
+    "action": "gate_2_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "go",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:12.054568+00:00",
+    "agent": "founder",
+    "action": "gate_2_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "approve (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:12.136415+00:00",
+    "agent": "builder",
+    "action": "select_template",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "booking",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:12.154039+00:00",
+    "agent": "builder",
+    "action": "design_app_spec",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:12.179237+00:00",
+    "agent": "builder",
+    "action": "generate_mvp_code_booking",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:14.022512+00:00",
+    "agent": "builder",
+    "action": "run_generated_tests",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "ran=23 failed=0 errors=0 smoke=True",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:14.075559+00:00",
+    "agent": "gate",
+    "action": "gate_3_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "go",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:14.127223+00:00",
+    "agent": "founder",
+    "action": "gate_3_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "approve (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:14.174118+00:00",
+    "agent": "commercial",
+    "action": "evidence_anchored_pricing",
+    "sources": [
+      "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=JO"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:14.186527+00:00",
+    "agent": "commercial",
+    "action": "draft_policy_templates",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:14.219329+00:00",
+    "agent": "gate",
+    "action": "gate_4_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "go",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:14.267178+00:00",
+    "agent": "founder",
+    "action": "gate_4_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "approve (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:14.311654+00:00",
+    "agent": "launch",
+    "action": "draft_launch_copy",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pending_founder_approval",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:14.409483+00:00",
+    "agent": "payments",
+    "action": "sale_to_cash_simulation_mocked",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:14.441194+00:00",
+    "agent": "gate",
+    "action": "gate_5_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "go",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:14.490379+00:00",
+    "agent": "founder",
+    "action": "gate_5_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "approve (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:14.537925+00:00",
+    "agent": "operate",
+    "action": "read_metrics_and_apply_preregistered_rule",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "insufficient_data (real: 0 visitors, 0 sign-ups)",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:14.563285+00:00",
+    "agent": "orchestrator",
+    "action": "run_completed",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "completed",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T15:39:14.581707+00:00",
+    "agent": "orchestrator",
+    "action": "replay_check",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "gate outcomes MATCH capture of 2026-11-17T15:31:37+00:00",
+    "run_id": "demo-replay"
   }
 ]

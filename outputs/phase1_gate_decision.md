@@ -2,7 +2,7 @@
 
 **Recommendation (computed by code): GO**
 
-GO: enough verified, diverse evidence to start validation. E=100.0 (GO ≥ 55, STOP < 25); verified categories: ['channels', 'competitors', 'demand', 'local_constraints', 'pricing']; cited domains: 5; research round 1.
+GO: enough verified, diverse evidence to start validation. E=95.0 (GO ≥ 55, STOP < 25); verified categories: ['channels', 'competitors', 'demand', 'local_constraints', 'pricing']; cited domains: 5; research round 1.
 
 ## Checks
 
@@ -20,4 +20,4 @@ Required before anything proceeds — see `decision_log.json` (`gate_1_decision`
 
 | Gate | Round | Outcome | E | V |
 |---|---|---|---|---|
-| 1 | 1 | GO | 100.0 | 0.0 |
+| 1 | 1 | GO | 95.0 | 0.0 |

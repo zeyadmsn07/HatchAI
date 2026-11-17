@@ -73,6 +73,8 @@ class ResearchFindings(BaseModel):
     sources: List[Source] = Field(default_factory=list)
     research_round: int = 1
     mode: str = "extractive"     # "llm" or "extractive" (no-LLM, verbatim quotes)
+    evidence_mode: str = "live"  # "live" (collected in this run) or "replay" (loaded from a snapshot)
+    snapshot: str = ""           # snapshot file + capture time when evidence_mode == "replay"
 
 
 class KillAssumption(BaseModel):
