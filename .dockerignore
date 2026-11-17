@@ -1,0 +1,6 @@
+.env
+.git
+.hackathon/
+state.db
+__pycache__/
+uploads/
