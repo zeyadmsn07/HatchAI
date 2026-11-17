@@ -1,6 +1,17 @@
 [
   {
-    "timestamp": "2026-11-17T15:38:25.427185+00:00",
+    "timestamp": "2026-11-17T17:53:35.207187+00:00",
+    "agent": "orchestrator",
+    "action": "llm_mode_at_start",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "LLM_DISABLED: HATCHAI_NO_LLM=1",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T17:53:35.294743+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -10,9 +21,9 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:38.409155+00:00",
+    "timestamp": "2026-11-17T17:53:35.309628+00:00",
     "agent": "researcher",
-    "action": "collect_evidence_round_1",
+    "action": "replay_evidence_round_1",
     "sources": [
       "https://news.ycombinator.com/item?id=40626452",
       "https://news.ycombinator.com/item?id=44491043",
@@ -23,17 +34,25 @@
       "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
       "https://notiq.study/blog/flashcards-spaced-repetition-science",
       "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://www.mintdeck.app/blog/best-spaced-repetition-apps-2026",
+      "https://www.motownai.com/blog/best-flashcard-apps-university-students-2026",
+      "https://studyglen.com/guides/best-spaced-repetition-apps",
       "https://studyboost.org/blog/best-spaced-repetition-app/",
       "https://www.remnote.com/pricing",
-      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026"
+      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
+      "https://www.aucegypt.edu/services/communications/marketing",
+      "https://www.facebook.com/SchoolOfMarketing.CO/",
+      "https://23hublab.com/student-acquisition-strategy-in-egypt/",
+      "https://www.leadsquared.com/industries/education/higher-education-marketing-guide/"
     ],
     "model": null,
     "cost": 0.0,
     "approved_by": null,
+    "outcome": "REPLAY of snapshot evidence_snapshots/strong_scenario.json captured 2026-11-17T15:52:54+00:00; no new collection",
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:38.541984+00:00",
+    "timestamp": "2026-11-17T17:53:35.340286+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -43,7 +62,9 @@
       "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
       "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
       "https://studyboost.org/blog/best-spaced-repetition-app/",
-      "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization"
+      "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
+      "https://www.leadsquared.com/industries/education/higher-education-marketing-guide/",
+      "https://www.motownai.com/blog/best-flashcard-apps-university-students-2026"
     ],
     "model": null,
     "cost": 0.0,
@@ -51,7 +72,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:38.603548+00:00",
+    "timestamp": "2026-11-17T17:53:35.373649+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -62,7 +83,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:38.682248+00:00",
+    "timestamp": "2026-11-17T17:53:35.421778+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -73,7 +94,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:38.798931+00:00",
+    "timestamp": "2026-11-17T17:53:35.484687+00:00",
     "agent": "validator",
     "action": "red_team_critique",
     "sources": [
@@ -82,8 +103,10 @@
       "https://arxiv.org/html/2607.25096v1",
       "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
       "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://www.motownai.com/blog/best-flashcard-apps-university-students-2026",
       "https://studyboost.org/blog/best-spaced-repetition-app/",
-      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026"
+      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
+      "https://www.leadsquared.com/industries/education/higher-education-marketing-guide/"
     ],
     "model": null,
     "cost": 0.0,
@@ -91,7 +114,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:38.834390+00:00",
+    "timestamp": "2026-11-17T17:53:35.498815+00:00",
     "agent": "validator",
     "action": "build_lean_canvas",
     "sources": [
@@ -100,8 +123,10 @@
       "https://arxiv.org/html/2607.25096v1",
       "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
       "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://www.motownai.com/blog/best-flashcard-apps-university-students-2026",
       "https://studyboost.org/blog/best-spaced-repetition-app/",
-      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026"
+      "https://laxuai.com/blog/best-flashcard-apps-for-students-2026",
+      "https://www.leadsquared.com/industries/education/higher-education-marketing-guide/"
     ],
     "model": null,
     "cost": 0.0,
@@ -109,7 +134,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:38.857151+00:00",
+    "timestamp": "2026-11-17T17:53:35.512290+00:00",
     "agent": "validator",
     "action": "design_demand_test",
     "sources": [],
@@ -119,7 +144,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:38.929333+00:00",
+    "timestamp": "2026-11-17T17:53:35.560690+00:00",
     "agent": "gate",
     "action": "gate_2_evaluation",
     "sources": [],
@@ -130,7 +155,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:39.010301+00:00",
+    "timestamp": "2026-11-17T17:53:35.633332+00:00",
     "agent": "founder",
     "action": "gate_2_decision",
     "sources": [],
@@ -141,7 +166,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:39.133889+00:00",
+    "timestamp": "2026-11-17T17:53:35.720385+00:00",
     "agent": "builder",
     "action": "select_template",
     "sources": [],
@@ -152,7 +177,18 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:39.156438+00:00",
+    "timestamp": "2026-11-17T17:53:35.734466+00:00",
+    "agent": "builder",
+    "action": "llm_spec_text",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "LLM_DISABLED: LLM disabled (HATCHAI_NO_LLM=1)",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T17:53:35.750137+00:00",
     "agent": "builder",
     "action": "design_app_spec",
     "sources": [],
@@ -162,7 +198,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:39.254067+00:00",
+    "timestamp": "2026-11-17T17:53:35.774340+00:00",
     "agent": "builder",
     "action": "generate_mvp_code_spaced_repetition",
     "sources": [],
@@ -172,7 +208,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:41.894953+00:00",
+    "timestamp": "2026-11-17T17:53:37.475745+00:00",
     "agent": "builder",
     "action": "run_generated_tests",
     "sources": [],
@@ -183,7 +219,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:42.011362+00:00",
+    "timestamp": "2026-11-17T17:53:37.568522+00:00",
     "agent": "gate",
     "action": "gate_3_evaluation",
     "sources": [],
@@ -194,7 +230,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:42.095465+00:00",
+    "timestamp": "2026-11-17T17:53:37.619294+00:00",
     "agent": "founder",
     "action": "gate_3_decision",
     "sources": [],
@@ -205,7 +241,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:42.171958+00:00",
+    "timestamp": "2026-11-17T17:53:37.666799+00:00",
     "agent": "commercial",
     "action": "evidence_anchored_pricing",
     "sources": [
@@ -220,7 +256,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:42.191565+00:00",
+    "timestamp": "2026-11-17T17:53:37.683152+00:00",
     "agent": "commercial",
     "action": "draft_policy_templates",
     "sources": [],
@@ -230,7 +266,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:42.253954+00:00",
+    "timestamp": "2026-11-17T17:53:37.725138+00:00",
     "agent": "gate",
     "action": "gate_4_evaluation",
     "sources": [],
@@ -241,7 +277,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:42.336850+00:00",
+    "timestamp": "2026-11-17T17:53:37.776050+00:00",
     "agent": "founder",
     "action": "gate_4_decision",
     "sources": [],
@@ -252,7 +288,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:42.419085+00:00",
+    "timestamp": "2026-11-17T17:53:37.817242+00:00",
     "agent": "launch",
     "action": "draft_launch_copy",
     "sources": [],
@@ -263,7 +299,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:42.605193+00:00",
+    "timestamp": "2026-11-17T17:53:37.914586+00:00",
     "agent": "payments",
     "action": "sale_to_cash_simulation_mocked",
     "sources": [],
@@ -273,7 +309,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:42.669511+00:00",
+    "timestamp": "2026-11-17T17:53:37.946562+00:00",
     "agent": "gate",
     "action": "gate_5_evaluation",
     "sources": [],
@@ -284,7 +320,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:42.759302+00:00",
+    "timestamp": "2026-11-17T17:53:37.999176+00:00",
     "agent": "founder",
     "action": "gate_5_decision",
     "sources": [],
@@ -295,7 +331,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:42.848177+00:00",
+    "timestamp": "2026-11-17T17:53:38.041497+00:00",
     "agent": "operate",
     "action": "read_metrics_and_apply_preregistered_rule",
     "sources": [],
@@ -306,7 +342,7 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:42.897845+00:00",
+    "timestamp": "2026-11-17T17:53:38.078634+00:00",
     "agent": "orchestrator",
     "action": "run_completed",
     "sources": [],
@@ -317,7 +353,29 @@
     "run_id": "demo-strong"
   },
   {
-    "timestamp": "2026-11-17T15:38:43.022571+00:00",
+    "timestamp": "2026-11-17T17:53:38.101869+00:00",
+    "agent": "orchestrator",
+    "action": "replay_check",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "gate outcomes MATCH capture of 2026-11-17T15:52:54+00:00",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T17:53:38.144494+00:00",
+    "agent": "orchestrator",
+    "action": "llm_mode_at_start",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "LLM_DISABLED: HATCHAI_NO_LLM=1",
+    "run_id": "demo-weak"
+  },
+  {
+    "timestamp": "2026-11-17T17:53:38.190895+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -327,37 +385,39 @@
     "run_id": "demo-weak"
   },
   {
-    "timestamp": "2026-11-17T15:38:53.381457+00:00",
+    "timestamp": "2026-11-17T17:53:38.212448+00:00",
     "agent": "researcher",
-    "action": "collect_evidence_round_1",
+    "action": "replay_evidence_round_1",
     "sources": [
       "https://news.ycombinator.com/item?id=12382737",
       "https://news.ycombinator.com/item?id=13195588",
-      "https://www.locklizard.com/document-security-blog/sell-study-notes-online/",
-      "https://answerins.com/",
-      "https://www.scribbr.com/tips/make-and-sell-study-notes/",
-      "https://studysoup.com/study_help/classes",
-      "https://techtidesolutions.com/rankings/online-payment-methods/",
-      "https://thecfoclub.com/tools/best-digital-payment-solutions/",
-      "https://tech.co/pos-system/what-are-digital-payments",
-      "https://www.upwork.com/resources/community-marketing",
-      "https://www.lettrlabs.com/post/community-marketing-strategy",
-      "https://blog.hubspot.com/marketing/community-marketing",
-      "https://thebigmarketing.com/community-marketing/"
+      "https://www.screensnap.pro/blog/best-study-notes-app",
+      "https://www.savemyexams.com/learning-hub/useful-resources/best-note-taking-apps-for-students/",
+      "https://www.goodnotes.com/blog/best-free-note-taking-apps-for-students-2026",
+      "https://www.mindomax.com/best-study-apps-for-students",
+      "https://studyrift.com/",
+      "https://richtactic.com/tactic/study-notes-selling",
+      "https://www.researchprospect.com/platforms-to-sell-study-notes-online/",
+      "https://genio.co/pricing/individuals"
     ],
     "model": null,
     "cost": 0.0,
     "approved_by": null,
+    "outcome": "REPLAY of snapshot evidence_snapshots/weak_scenario.json captured 2026-11-17T15:53:01+00:00; no new collection",
     "run_id": "demo-weak"
   },
   {
-    "timestamp": "2026-11-17T15:38:57.862762+00:00",
+    "timestamp": "2026-11-17T17:53:38.249638+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
-      "https://answerins.com/",
-      "https://www.locklizard.com/document-security-blog/sell-study-notes-online/",
-      "https://www.scribbr.com/tips/make-and-sell-study-notes/"
+      "https://genio.co/pricing/individuals",
+      "https://news.ycombinator.com/item?id=12382737",
+      "https://news.ycombinator.com/item?id=13195588",
+      "https://richtactic.com/tactic/study-notes-selling",
+      "https://studyrift.com/",
+      "https://www.goodnotes.com/blog/best-free-note-taking-apps-for-students-2026",
+      "https://www.screensnap.pro/blog/best-study-notes-app"
     ],
     "model": null,
     "cost": 0.0,
@@ -365,7 +425,7 @@
     "run_id": "demo-weak"
   },
   {
-    "timestamp": "2026-11-17T15:38:57.940518+00:00",
+    "timestamp": "2026-11-17T17:53:38.290004+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -376,7 +436,7 @@
     "run_id": "demo-weak"
   },
   {
-    "timestamp": "2026-11-17T15:38:57.990455+00:00",
+    "timestamp": "2026-11-17T17:53:38.342657+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -387,7 +447,7 @@
     "run_id": "demo-weak"
   },
   {
-    "timestamp": "2026-11-17T15:38:58.026525+00:00",
+    "timestamp": "2026-11-17T17:53:38.366870+00:00",
     "agent": "orchestrator",
     "action": "run_stopped",
     "sources": [],
@@ -398,50 +458,29 @@
     "run_id": "demo-weak"
   },
   {
-    "timestamp": "2026-11-17T15:39:07.287954+00:00",
-    "agent": "demo_script",
-    "action": "send_labelled_test_traffic",
-    "sources": [],
-    "model": null,
-    "cost": 0.0,
-    "approved_by": null,
-    "outcome": "TEST only: 300 visitors, 20 sign-ups (X-HatchAI-Traffic: TEST, @example.com)",
-    "run_id": "demo-strong"
-  },
-  {
-    "timestamp": "2026-11-17T15:39:07.306864+00:00",
+    "timestamp": "2026-11-17T17:53:38.382886+00:00",
     "agent": "orchestrator",
-    "action": "remeasure_phase_6",
+    "action": "replay_check",
     "sources": [],
     "model": null,
     "cost": 0.0,
     "approved_by": null,
-    "run_id": "demo-strong"
+    "outcome": "gate outcomes MATCH capture of 2026-11-17T15:53:01+00:00",
+    "run_id": "demo-weak"
   },
   {
-    "timestamp": "2026-11-17T15:39:07.330306+00:00",
-    "agent": "operate",
-    "action": "read_metrics_and_apply_preregistered_rule",
+    "timestamp": "2026-11-17T17:53:38.439208+00:00",
+    "agent": "orchestrator",
+    "action": "llm_mode_at_start",
     "sources": [],
     "model": null,
     "cost": 0.0,
     "approved_by": null,
-    "outcome": "insufficient_data (real: 0 visitors, 0 sign-ups)",
-    "run_id": "demo-strong"
+    "outcome": "LLM_DISABLED: HATCHAI_NO_LLM=1",
+    "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:07.344019+00:00",
-    "agent": "operate",
-    "action": "pipeline_check_on_test_traffic",
-    "sources": [],
-    "model": null,
-    "cost": 0.0,
-    "approved_by": null,
-    "outcome": "TEST only: pivot",
-    "run_id": "demo-strong"
-  },
-  {
-    "timestamp": "2026-11-17T15:39:11.597116+00:00",
+    "timestamp": "2026-11-17T17:53:38.492800+00:00",
     "agent": "intake",
     "action": "normalize_brief",
     "sources": [],
@@ -451,7 +490,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:11.625912+00:00",
+    "timestamp": "2026-11-17T17:53:38.512644+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_1",
     "sources": [
@@ -475,7 +514,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:11.643438+00:00",
+    "timestamp": "2026-11-17T17:53:38.530091+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -489,7 +528,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:11.676765+00:00",
+    "timestamp": "2026-11-17T17:53:38.572699+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -500,7 +539,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:11.724509+00:00",
+    "timestamp": "2026-11-17T17:53:38.621459+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -511,7 +550,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:11.771134+00:00",
+    "timestamp": "2026-11-17T17:53:38.669179+00:00",
     "agent": "researcher",
     "action": "replay_evidence_round_2",
     "sources": [
@@ -535,7 +574,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:11.794659+00:00",
+    "timestamp": "2026-11-17T17:53:38.687873+00:00",
     "agent": "researcher",
     "action": "synthesize_and_verify_claims",
     "sources": [
@@ -554,7 +593,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:11.826297+00:00",
+    "timestamp": "2026-11-17T17:53:38.721135+00:00",
     "agent": "gate",
     "action": "gate_1_evaluation",
     "sources": [],
@@ -565,7 +604,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:11.874541+00:00",
+    "timestamp": "2026-11-17T17:53:38.773160+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
@@ -576,7 +615,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:11.939078+00:00",
+    "timestamp": "2026-11-17T17:53:38.827816+00:00",
     "agent": "validator",
     "action": "red_team_critique",
     "sources": [
@@ -595,7 +634,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:11.955085+00:00",
+    "timestamp": "2026-11-17T17:53:38.840823+00:00",
     "agent": "validator",
     "action": "build_lean_canvas",
     "sources": [
@@ -614,7 +653,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:11.970380+00:00",
+    "timestamp": "2026-11-17T17:53:38.854425+00:00",
     "agent": "validator",
     "action": "design_demand_test",
     "sources": [],
@@ -624,7 +663,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:12.005848+00:00",
+    "timestamp": "2026-11-17T17:53:38.894530+00:00",
     "agent": "gate",
     "action": "gate_2_evaluation",
     "sources": [],
@@ -635,7 +674,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:12.054568+00:00",
+    "timestamp": "2026-11-17T17:53:38.946719+00:00",
     "agent": "founder",
     "action": "gate_2_decision",
     "sources": [],
@@ -646,7 +685,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:12.136415+00:00",
+    "timestamp": "2026-11-17T17:53:39.119242+00:00",
     "agent": "builder",
     "action": "select_template",
     "sources": [],
@@ -657,7 +696,18 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:12.154039+00:00",
+    "timestamp": "2026-11-17T17:53:39.244544+00:00",
+    "agent": "builder",
+    "action": "llm_spec_text",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "LLM_DISABLED: LLM disabled (HATCHAI_NO_LLM=1)",
+    "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T17:53:39.260427+00:00",
     "agent": "builder",
     "action": "design_app_spec",
     "sources": [],
@@ -667,7 +717,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:12.179237+00:00",
+    "timestamp": "2026-11-17T17:53:39.289248+00:00",
     "agent": "builder",
     "action": "generate_mvp_code_booking",
     "sources": [],
@@ -677,7 +727,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:14.022512+00:00",
+    "timestamp": "2026-11-17T17:53:40.845369+00:00",
     "agent": "builder",
     "action": "run_generated_tests",
     "sources": [],
@@ -688,7 +738,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:14.075559+00:00",
+    "timestamp": "2026-11-17T17:53:40.936755+00:00",
     "agent": "gate",
     "action": "gate_3_evaluation",
     "sources": [],
@@ -699,7 +749,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:14.127223+00:00",
+    "timestamp": "2026-11-17T17:53:40.980152+00:00",
     "agent": "founder",
     "action": "gate_3_decision",
     "sources": [],
@@ -710,7 +760,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:14.174118+00:00",
+    "timestamp": "2026-11-17T17:53:41.014431+00:00",
     "agent": "commercial",
     "action": "evidence_anchored_pricing",
     "sources": [
@@ -722,7 +772,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:14.186527+00:00",
+    "timestamp": "2026-11-17T17:53:41.026657+00:00",
     "agent": "commercial",
     "action": "draft_policy_templates",
     "sources": [],
@@ -732,7 +782,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:14.219329+00:00",
+    "timestamp": "2026-11-17T17:53:41.061735+00:00",
     "agent": "gate",
     "action": "gate_4_evaluation",
     "sources": [],
@@ -743,7 +793,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:14.267178+00:00",
+    "timestamp": "2026-11-17T17:53:41.102290+00:00",
     "agent": "founder",
     "action": "gate_4_decision",
     "sources": [],
@@ -754,7 +804,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:14.311654+00:00",
+    "timestamp": "2026-11-17T17:53:41.138678+00:00",
     "agent": "launch",
     "action": "draft_launch_copy",
     "sources": [],
@@ -765,7 +815,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:14.409483+00:00",
+    "timestamp": "2026-11-17T17:53:41.233401+00:00",
     "agent": "payments",
     "action": "sale_to_cash_simulation_mocked",
     "sources": [],
@@ -775,7 +825,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:14.441194+00:00",
+    "timestamp": "2026-11-17T17:53:41.261742+00:00",
     "agent": "gate",
     "action": "gate_5_evaluation",
     "sources": [],
@@ -786,7 +836,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:14.490379+00:00",
+    "timestamp": "2026-11-17T17:53:41.310187+00:00",
     "agent": "founder",
     "action": "gate_5_decision",
     "sources": [],
@@ -797,7 +847,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:14.537925+00:00",
+    "timestamp": "2026-11-17T17:53:41.340968+00:00",
     "agent": "operate",
     "action": "read_metrics_and_apply_preregistered_rule",
     "sources": [],
@@ -808,7 +858,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:14.563285+00:00",
+    "timestamp": "2026-11-17T17:53:41.372298+00:00",
     "agent": "orchestrator",
     "action": "run_completed",
     "sources": [],
@@ -819,7 +869,7 @@
     "run_id": "demo-replay"
   },
   {
-    "timestamp": "2026-11-17T15:39:14.581707+00:00",
+    "timestamp": "2026-11-17T17:53:41.390303+00:00",
     "agent": "orchestrator",
     "action": "replay_check",
     "sources": [],
@@ -828,5 +878,48 @@
     "approved_by": null,
     "outcome": "gate outcomes MATCH capture of 2026-11-17T15:31:37+00:00",
     "run_id": "demo-replay"
+  },
+  {
+    "timestamp": "2026-11-17T17:53:49.443723+00:00",
+    "agent": "demo_script",
+    "action": "send_labelled_test_traffic",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "TEST only: 300 visitors, 20 sign-ups (X-HatchAI-Traffic: TEST, @example.com)",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T17:53:49.459065+00:00",
+    "agent": "orchestrator",
+    "action": "remeasure_phase_6",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T17:53:49.482567+00:00",
+    "agent": "operate",
+    "action": "read_metrics_and_apply_preregistered_rule",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "insufficient_data (real: 0 visitors, 0 sign-ups)",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T17:53:49.495806+00:00",
+    "agent": "operate",
+    "action": "pipeline_check_on_test_traffic",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "TEST only: pivot",
+    "run_id": "demo-strong"
   }
 ]

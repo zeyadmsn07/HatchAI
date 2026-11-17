@@ -1,5 +1,8 @@
 # Gate 5 decision
 
+> Evidence mode: REPLAY of evidence_snapshots/repeat_scenario.json (captured 2026-11-17T15:31:37+00:00); no evidence was collected in this run
+> LLM mode: LLM_DISABLED (no LLM was called in this run)
+
 **Recommendation (computed by code): GO**
 
 GO: sale-to-cash simulation passed; launch drafts held for approval.

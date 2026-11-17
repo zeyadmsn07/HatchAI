@@ -1,5 +1,7 @@
 # Phase 1 — Research findings (round 2)
 
+> LLM mode: LLM_DISABLED (no LLM was called in this run)
+
 > **Evidence mode: REPLAY** — sources loaded from snapshot evidence_snapshots/repeat_scenario.json (captured 2026-11-17T15:31:37+00:00). Nothing was collected in this run; fetch times and hashes below are the ORIGINAL capture values.
 > Synthesis mode: **extractive** (no LLM: claims are verbatim passages from fetched sources).
 > Every claim cites a fetched source whose text contains the quoted passage, or is labelled ASSUMPTION.

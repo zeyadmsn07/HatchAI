@@ -116,6 +116,93 @@ def test_missing_round_fails_closed_instead_of_searching(repeat_snapshot, monkey
     assert res["match"] is False
 
 
+def _shift_clock(monkeypatch, days: int):
+    """Move every clock the pipeline reads forward by `days` (date.today and datetime.now)."""
+    import datetime as real
+    import delivery
+    import payments
+    import refunds
+    from agents import builder
+
+    class ShiftedDate(real.date):
+        @classmethod
+        def today(cls):
+            d = real.date.today() + real.timedelta(days=days)
+            return cls(d.year, d.month, d.day)
+
+    class ShiftedDatetime(real.datetime):
+        @classmethod
+        def now(cls, tz=None):
+            n = real.datetime.now(tz) + real.timedelta(days=days)
+            return cls(n.year, n.month, n.day, n.hour, n.minute, n.second, n.microsecond, n.tzinfo)
+
+    monkeypatch.setattr(builder, "date", ShiftedDate)
+    for mod in (orchestrator, db, evidence, payments, refunds, delivery):
+        monkeypatch.setattr(mod, "datetime", ShiftedDatetime)
+    return ShiftedDate
+
+
+# Files that legitimately differ between any two runs: random order ids/tokens and their timestamps
+# (payment log), a random port and a wall-clock duration (MVP test report).
+NONDETERMINISTIC = ("payment_test_log", "phase3_step3_mvp-test-report")
+
+
+def test_replay_with_clock_plus_90_days_is_identical(monkeypatch):
+    _no_network(monkeypatch)
+    base = orchestrator.replay(orchestrator.DEMO_SNAPSHOT, run_id="clock-now")
+    shifted_date = _shift_clock(monkeypatch, 90)
+    import datetime as real
+    from agents import builder
+    assert builder.date.today() == real.date.today() + real.timedelta(days=90)     # the mock is active
+    later = orchestrator.replay(orchestrator.DEMO_SNAPSHOT, run_id="clock-plus90")
+
+    assert base["match"] and later["match"]
+    assert orchestrator._gate_signature(base["replayed"]) == orchestrator._gate_signature(later["replayed"])
+    f1 = orchestrator._load("clock-now", "findings", orchestrator.ResearchFindings)
+    f2 = orchestrator._load("clock-plus90", "findings", orchestrator.ResearchFindings)
+    assert f1.model_dump() == f2.model_dump()          # same claims, scores, sources
+
+    d1, d2 = orchestrator.out_dir("clock-now"), orchestrator.out_dir("clock-plus90")
+    names = sorted(p.name for p in d1.iterdir())
+    assert names == sorted(p.name for p in d2.iterdir())
+    compared = [n for n in names if not n.startswith(NONDETERMINISTIC)]
+    assert len(compared) >= 17
+    for n in compared:
+        a = (d1 / n).read_text(encoding="utf-8")
+        b = (d2 / n).read_text(encoding="utf-8").replace("clock-plus90", "clock-now")   # run id in paths only
+        assert a == b, f"{n} differs when the clock moves 90 days"
+    # the dated sample content is anchored to the capture date, not to the (shifted) clock
+    cfg = json.loads((builder.GENERATED / "clock-plus90" / "config.json").read_text(encoding="utf-8"))
+    assert cfg["seed_items"][0]["start"].startswith("2026-11-24")    # capture date 2026-11-17 + 7 days
+
+
+def test_live_mode_still_uses_the_real_clock(monkeypatch):
+    shifted = _shift_clock(monkeypatch, 90)
+    from agents import builder
+    from agents.intake import parse_brief
+    seeds = builder._seeds("booking", parse_brief("Booking app for yoga tutors in Kenya"), "Yoga")
+    assert seeds[0]["start"].startswith(str(shifted.today() + __import__("datetime").timedelta(days=7)))
+
+
+def test_committed_snapshot_integrity():
+    import hashlib
+    snap = json.loads(orchestrator.DEMO_SNAPSHOT.read_text(encoding="utf-8"))
+    assert "label" in snap and snap["label"] not in json.dumps(snap["rounds"], ensure_ascii=False)
+    sources = [s for r in snap["rounds"] for s in r["sources"]]
+    assert len(sources) == 24
+    for s in sources:
+        assert hashlib.sha256(" ".join(s["passages"]).encode("utf-8")).hexdigest()[:16] == s["text_hash"], s["key"]
+
+
+def test_new_captures_record_metadata(repeat_snapshot):
+    _, snap = repeat_snapshot
+    meta = snap["capture_metadata"]
+    assert meta["capture_date"] == snap["captured_at"][:10]
+    assert "ddgs" in meta["search_method"]["web_search"] and meta["search_method"]["collectors_used"]
+    assert set(meta["code_state"]) == {"commit", "uncommitted_changes"}
+    assert all("queries" in r and "demand" in r["queries"] for r in snap["rounds"])
+
+
 def test_committed_snapshot_replays_to_repeat_then_go(monkeypatch):
     """The snapshot in the repository (captured from a live run) reproduces REPEAT -> GO offline."""
     _no_network(monkeypatch)

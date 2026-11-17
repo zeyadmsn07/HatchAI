@@ -149,6 +149,6 @@ if __name__ == "__main__":
     ap.add_argument("--port", type=int, default=8080)
     ap.add_argument("--db", default="app.db")
     a = ap.parse_args()
-    srv = make_server(a.port, a.db)
-    print(f"{CONFIG['product_name']} running on http://localhost:{a.port}")
+    srv = make_server(a.port, a.db)   # --port 0: the OS picks a free port (printed below)
+    print(f"{CONFIG['product_name']} running on http://localhost:{srv.server_address[1]}", flush=True)
     srv.serve_forever()

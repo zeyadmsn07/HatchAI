@@ -13,11 +13,10 @@ from __future__ import annotations
 
 import argparse
 import json
-import socket
-import subprocess
 import sys
 import time
 import urllib.request
+import uuid
 from pathlib import Path
 
 HEADERS = {"X-HatchAI-Traffic": "TEST", "Content-Type": "application/json"}
@@ -39,11 +38,9 @@ def send_test_traffic(app_dir: str | Path, visitors: int = 300, signups: int = 2
         raise FileNotFoundError(f"{app_dir} is not a generated MVP (no server.py)")
     if signups > visitors:
         raise ValueError("signups cannot exceed visitors")
-    with socket.socket() as s:
-        s.bind(("127.0.0.1", 0))
-        port = s.getsockname()[1]
-    proc = subprocess.Popen([sys.executable, "server.py", "--port", str(port), "--db", db_name],
-                            cwd=app_dir, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from agents.builder import start_mvp_server   # OS-assigned port, no reserve-then-release race
+    proc, port = start_mvp_server(app_dir, db_name)
     base = f"http://127.0.0.1:{port}"
     try:
         for _ in range(50):
@@ -54,7 +51,7 @@ def send_test_traffic(app_dir: str | Path, visitors: int = 300, signups: int = 2
                 time.sleep(0.2)
         else:
             raise RuntimeError("MVP did not start")
-        run_tag = time.strftime("%Y%m%d%H%M%S")
+        run_tag = f"{time.strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:6]}"   # unique per batch, even within one second
         for i in range(visitors):
             _request(base + "/", extra={"Cookie": f"hatchai_vid=test-{run_tag}-{i:04d}"})
         for i in range(signups):

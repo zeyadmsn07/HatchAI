@@ -1,5 +1,8 @@
 # Gate 3 decision
 
+> Evidence mode: REPLAY of evidence_snapshots/strong_scenario.json (captured 2026-11-17T15:52:54+00:00); no evidence was collected in this run
+> LLM mode: LLM_DISABLED (no LLM was called in this run)
+
 **Recommendation (computed by code): GO**
 
 GO: runnable MVP built and verified. 23 generated tests ran, 0 failed, 0 errors (attempt 1).

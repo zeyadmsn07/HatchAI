@@ -1,5 +1,8 @@
 # Phase 3 — MVP spec and build: Arabic Book
 
+> Evidence mode: REPLAY of evidence_snapshots/repeat_scenario.json (captured 2026-11-17T15:31:37+00:00); no evidence was collected in this run
+> LLM mode: LLM_DISABLED (no LLM was called in this run)
+
 > Book sessions without double-bookings or clashes, for early users in Jordan.
 
 **Status:** generated, tested and booted by the pipeline — 23 tests, 0 failures,
@@ -17,6 +20,11 @@
 | Safe booking | Capacity, duplicate and time-clash checks. | `book` | UNKNOWN (not stated by founder) lack an adequate booking app. |
 | Self-service cancellation | Frees the seat immediately. | `cancel` | Key metric: Demand-test sign-up rate; weekly active users; riskiest: Target users will pay a recurring price. |
 | Consented waitlist (demand test) | Email + explicit consent; feeds the pre-registered demand test. Nothing is sent automatically. | `waitlist` | Riskiest assumption: Target users will pay a recurring price |
+
+## LLM use (bounded; never code, scores or gate decisions)
+
+- `template_suggestion`: **not_needed (deterministic selection succeeded)**
+- `spec_text`: **LLM_DISABLED** — LLM disabled (HATCHAI_NO_LLM=1)
 
 ## Data model
 

@@ -1,5 +1,8 @@
 # Phase 6 — Operate & learn: An AI-powered flashcard and spaced-repetition study tool for university students
 
+> Evidence mode: REPLAY of evidence_snapshots/strong_scenario.json (captured 2026-11-17T15:52:54+00:00); no evidence was collected in this run
+> LLM mode: LLM_DISABLED (no LLM was called in this run)
+
 ## Real traffic (the only input to the decision)
 
 | Metric | Value | Source |
@@ -7,8 +10,8 @@
 | Unique visitors | 0 | demo-strong/app.db (read via the MVP's Store.metrics()) |
 | Page visits | 0 | same |
 | Waitlist sign-ups (consented) | 0 | same |
-| Test-mode orders (simulation) | 9 | sale-to-cash simulation, MOCKED |
-| Test-mode refunds (simulation) | 9 | sale-to-cash simulation, MOCKED |
+| Test-mode orders (simulation) | 1 | sale-to-cash simulation, MOCKED |
+| Test-mode refunds (simulation) | 1 | sale-to-cash simulation, MOCKED |
 
 ## Pre-registered rule (stored in Phase 2)
 

@@ -1,5 +1,8 @@
 # Phase 3 — MVP spec and build: STEM Recall
 
+> Evidence mode: REPLAY of evidence_snapshots/strong_scenario.json (captured 2026-11-17T15:52:54+00:00); no evidence was collected in this run
+> LLM mode: LLM_DISABLED (no LLM was called in this run)
+
 > Flashcards that schedule each review for you (SM-2), for university students in Egypt.
 
 **Status:** generated, tested and booted by the pipeline — 23 tests, 0 failures,
@@ -17,6 +20,11 @@
 | SM-2 adaptive scheduling | Grades 0–5 reschedule each card (1, 6, then ×ease days). | `review` | university students lack an adequate AI-powered flashcard and spaced-repetition study tool. |
 | Retention stats | Reviews, average ease and recall rate per user. | `stats` | Key metric: Demand-test sign-up rate; weekly active users; riskiest: Target users will pay a recurring price. |
 | Consented waitlist (demand test) | Email + explicit consent; feeds the pre-registered demand test. Nothing is sent automatically. | `waitlist` | Riskiest assumption: Target users will pay a recurring price |
+
+## LLM use (bounded; never code, scores or gate decisions)
+
+- `template_suggestion`: **not_needed (deterministic selection succeeded)**
+- `spec_text`: **LLM_DISABLED** — LLM disabled (HATCHAI_NO_LLM=1)
 
 ## Data model
 

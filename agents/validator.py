@@ -1,8 +1,7 @@
 """Validator agent — red-team critique, Lean Canvas, pre-registered demand test.
 
 The viability score used by Gate 2 is computed in code (`gates.compute_viability`)
-from verified evidence and founder fit. An open-weight LLM, when available, may
-contribute a written critique and extra risks, but cannot set the score.
+from verified evidence and founder fit. No LLM is used in this phase.
 """
 from __future__ import annotations
 
@@ -11,15 +10,12 @@ import re
 import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from pathlib import Path
 
 import callbacks
 import gates
-import llm_gateway
 from models import (CanvasBlock, Critique, DemandTest, FounderBrief, GateOutcome, KillAssumption,
                     LeanCanvas, ResearchFindings)
 
-SYSTEM_PROMPT = Path(__file__).parent.parent / "prompts" / "validator.md"
 
 _GAP_RISKS = {
     "demand": ("Target users actively feel this problem today",
@@ -65,21 +61,6 @@ def run_critique(run_id: str, brief: FounderBrief, findings: ResearchFindings) -
                f"Gaps: {', '.join(gaps) or 'none'}. Willingness to pay is untested until the "
                f"pre-registered demand test runs.")
     model, tokens = None, 0
-
-    system = SYSTEM_PROMPT.read_text(encoding="utf-8") if SYSTEM_PROMPT.exists() else ""
-    verified_lines = "\n".join(f"- [{c.category}] {c.text[:220]}" for c in findings.claims if c.verified)
-    res = llm_gateway.call_llm(
-        system,
-        f"Idea: {brief.idea}\nTarget user: {brief.target_user}\nGeography: {brief.geography}\n"
-        f"Skills: {brief.skills}\nBudget USD: {brief.budget_usd}\nHours/week: {brief.hours_per_week}\n\n"
-        f"Verified evidence:\n{verified_lines or '(none)'}\nEvidence gaps: {gaps}",
-        Critique, temperature=0.3)
-    if res:
-        llm_c, model, tokens = res
-        summary = f"{summary}\n\nRed-team critique (LLM, {model}): {llm_c.summary[:800]}"
-        for a in llm_c.riskiest_assumptions[:3]:
-            if a.kill_criterion:
-                risks.append(a)
 
     critique = Critique(
         summary=summary,

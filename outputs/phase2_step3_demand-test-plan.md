@@ -1,5 +1,8 @@
 # Phase 2 — Pre-registered demand test
 
+> Evidence mode: REPLAY of evidence_snapshots/strong_scenario.json (captured 2026-11-17T15:52:54+00:00); no evidence was collected in this run
+> LLM mode: LLM_DISABLED (no LLM was called in this run)
+
 > Status: **NOT_RUN**. Thresholds are fixed before any data exists. Simulated results are never used as evidence.
 
 | Field | Value |

@@ -35,8 +35,7 @@ db.init_db()
 
 app = FastAPI(title="HatchAI", version="1.0.0")
 
-OUTPUTS = orchestrator.OUTPUTS
-OUTPUTS.mkdir(exist_ok=True)
+orchestrator.OUTPUTS.mkdir(exist_ok=True)   # read orchestrator.OUTPUTS at request time, never cached here
 
 
 # ---------------------------------------------------------------------------
@@ -138,10 +137,11 @@ def index():
       </div>
     </div>
     <div class="mt-4 small text-muted">
-      <strong>No API keys required.</strong> Language steps use a local open-weight model via Ollama
-      (<code>OLLAMA_MODEL</code>, default <code>qwen3:8b</code>) or Groq's free tier (Llama 3.3 70B).
-      Without a model, agents run in labelled rule-based / extractive mode. Research uses live, cited web sources.
-      Currently active model: <code>""" + (llm_gateway.active_model_label() or "none (rule-based mode)") + """</code>.
+      <strong>No API keys required.</strong> An optional local open-weight model on any OpenAI-compatible
+      endpoint (<code>HATCHAI_LLM_BASE_URL</code>, <code>HATCHAI_LLM_MODEL</code>) drafts only the MVP's name and
+      tagline and suggests template synonyms; it never writes code or changes scores or gates.
+      Everything else is deterministic. Research uses live, cited web sources.
+      LLM mode right now: <code>""" + llm_gateway.current_mode() + (f" ({llm_gateway.active_model_label()})" if llm_gateway.active_model_label() else "") + """</code>.
     </div>
   </div>
 </div>
@@ -410,7 +410,7 @@ def view_run_output(run_id: str, filename: str):
 
 @app.get("/outputs/{filename}")
 def view_output(filename: str):
-    return _render_file(OUTPUTS, filename)
+    return _render_file(orchestrator.OUTPUTS, filename)
 
 
 def _render_file(base: pathlib.Path, filename: str):
@@ -447,4 +447,4 @@ def _render_file(base: pathlib.Path, filename: str):
 @app.get("/health")
 def health():
     label = llm_gateway.active_model_label()
-    return {"status": "ok", "model": label, "mode": "llm" if label else "rule-based (no LLM reachable)"}
+    return {"status": "ok", "model": label, "llm_mode": llm_gateway.current_mode()}

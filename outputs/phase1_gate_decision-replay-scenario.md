@@ -1,5 +1,8 @@
 # Gate 1 decision
 
+> Evidence mode: REPLAY of evidence_snapshots/repeat_scenario.json (captured 2026-11-17T15:31:37+00:00); no evidence was collected in this run
+> LLM mode: LLM_DISABLED (no LLM was called in this run)
+
 **Recommendation (computed by code): GO**
 
 GO: enough verified, diverse evidence to start validation. E=100.0 (GO ≥ 55, STOP < 25); verified categories: ['channels', 'competitors', 'demand', 'local_constraints', 'pricing']; cited domains: 7; research round 2.

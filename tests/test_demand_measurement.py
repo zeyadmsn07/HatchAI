@@ -36,7 +36,7 @@ def test_test_traffic_is_counted_persisted_and_labelled(mvp_dir):
     assert res["metrics"]["real"] == {"visits": 0, "unique_visitors": 0, "signups": 0}
     # persisted in the MVP's own app.db: a second server process adds to the same totals
     res2 = send_test_traffic(mvp_dir, visitors=5, signups=1)
-    assert res2["metrics"]["test"]["visits"] == 17 and res2["metrics"]["test"]["signups"] == 4
+    assert res2["metrics"]["test"] == {"visits": 17, "unique_visitors": 17, "signups": 4}   # no id reuse across batches
     s = _store(mvp_dir)
     signups = s.events("waitlist")
     visits = s.events("visit")

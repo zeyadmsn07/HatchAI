@@ -1,5 +1,8 @@
 # Phase 2 — Red-team critique
 
+> Evidence mode: REPLAY of evidence_snapshots/strong_scenario.json (captured 2026-11-17T15:52:54+00:00); no evidence was collected in this run
+> LLM mode: LLM_DISABLED (no LLM was called in this run)
+
 ## Summary
 
 5/5 evidence categories have verified, quoted sources (demand, competitors, pricing, local_constraints, channels). Gaps: none. Willingness to pay is untested until the pre-registered demand test runs.

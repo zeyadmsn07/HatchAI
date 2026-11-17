@@ -185,8 +185,18 @@ class AppSpec(BaseModel):
     target_user: str = ""
 
 
-class LLMSeedContent(BaseModel):
-    """Optional LLM contribution to the MVP: names and seed content only — never code."""
+class SynonymMatch(BaseModel):
+    phrase: str                  # must appear verbatim in the idea
+    keyword: str                 # must be an existing keyword of the suggested template
+
+
+class TemplateSuggestion(BaseModel):
+    """LLM task 1 — synonym-aware template suggestion. Code decides whether any of it counts."""
+    template: str
+    synonyms: List[SynonymMatch] = Field(default_factory=list)
+
+
+class SpecText(BaseModel):
+    """LLM task 2 — product name and tagline for the MVP spec. Text only, never code."""
     product_name: str
     tagline: str
-    seed_items: List[Dict[str, Any]] = Field(default_factory=list)

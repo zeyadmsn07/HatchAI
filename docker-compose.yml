@@ -1,6 +1,6 @@
 # One command: `docker compose up`  ->  http://localhost:8000
 # Optional local open-weight LLM: `docker compose --profile llm up`
-#   (starts Ollama and pulls ${OLLAMA_MODEL:-qwen3:8b} once; ~5 GB download).
+#   (starts Ollama and pulls ${HATCHAI_LLM_MODEL:-qwen3:8b} once; ~5 GB download).
 # An Ollama already running on the host machine is also detected automatically.
 services:
   app:
@@ -12,8 +12,8 @@ services:
         required: false
     environment:
       - DB_PATH=/app/data/hatchai.db
-      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama:11434,http://host.docker.internal:11434}
-      - OLLAMA_MODEL=${OLLAMA_MODEL:-qwen3:8b}
+      - HATCHAI_LLM_BASE_URL=${HATCHAI_LLM_BASE_URL:-http://ollama:11434/v1,http://host.docker.internal:11434/v1}
+      - HATCHAI_LLM_MODEL=${HATCHAI_LLM_MODEL:-qwen3:8b}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
@@ -41,7 +41,7 @@ services:
       - ollama
     environment:
       - OLLAMA_HOST=http://ollama:11434
-    entrypoint: ["/bin/sh", "-c", "sleep 3 && ollama pull ${OLLAMA_MODEL:-qwen3:8b}"]
+    entrypoint: ["/bin/sh", "-c", "sleep 3 && ollama pull ${HATCHAI_LLM_MODEL:-qwen3:8b}"]
     restart: "no"
 
 volumes:

@@ -1,5 +1,8 @@
 # Phase 2 — Lean Canvas
 
+> Evidence mode: REPLAY of evidence_snapshots/repeat_scenario.json (captured 2026-11-17T15:31:37+00:00); no evidence was collected in this run
+> LLM mode: LLM_DISABLED (no LLM was called in this run)
+
 | Block | Content | Evidence |
 |---|---|---|
 | **Problem** | UNKNOWN (not stated by founder) lack an adequate booking app. Evidence: HN: Ask HN: Books to learn about Arabic text processing reports: "Ask HN: Books to learn about Arabic text processing — Hacker News thread with 2 points and 3 c | [S14](https://axiobench.com/booking-industry-statistics/), [S2](https://news.ycombinator.com/item?id=36323393) |

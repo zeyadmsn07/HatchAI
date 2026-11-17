@@ -127,6 +127,21 @@ def test_override_after_unsupported_continues_without_mvp(strong_collector):
     assert db.get_run("e2e-unsup-ovr")["status"] == "gate_4_pending"     # Phase 4 ran with no MVP
 
 
+def test_reset_clears_simulated_orders_of_a_rerun(strong_collector):
+    def orders(rid):
+        with db.get_conn() as conn:
+            return conn.execute("SELECT COUNT(*) FROM orders WHERE run_id=?", (rid,)).fetchone()[0]
+    for _ in range(2):
+        orchestrator._reset_run("e2e-rerun")
+        run = orchestrator.run_sync(STRONG_BRIEF, "e2e-rerun", auto=True)
+        assert run["status"] == "completed"
+        assert orders("e2e-rerun") == 1
+    log = (orchestrator.out_dir("e2e-rerun") / "payment_test_log.md").read_text(encoding="utf-8")
+    assert "Orders checked: 1" in log
+    orchestrator._reset_run("e2e-rerun")
+    assert orders("e2e-rerun") == 0
+
+
 def test_guardrail_blocks_before_any_research(strong_collector):
     run = orchestrator.run_sync("A platform selling physical goods in Egypt for students", "e2e-block", auto=True)
     assert run["status"] == "stopped" and "Guardrail 0" in run["error"]

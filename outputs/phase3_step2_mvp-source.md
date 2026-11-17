@@ -1,5 +1,8 @@
 # Phase 3 — Generated MVP source: STEM Recall
 
+> Evidence mode: REPLAY of evidence_snapshots/strong_scenario.json (captured 2026-11-17T15:52:54+00:00); no evidence was collected in this run
+> LLM mode: LLM_DISABLED (no LLM was called in this run)
+
 Idea-specific files are shown in full. Shared runtime files (server.py, store.py, index.html, tests/test_server.py) are copied from `mvp_templates/_shared/`.
 
 ## `config.json`

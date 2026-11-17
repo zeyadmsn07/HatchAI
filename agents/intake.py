@@ -1,10 +1,8 @@
-"""Intake agent — normalises the founder brief.
+"""Intake agent — normalises the founder brief (deterministic, no LLM).
 
-A deterministic parser always runs first and decides which fields the founder
-actually supplied. An open-weight LLM (if available) may phrase the fields
-better, but any field the founder did not supply is forced to carry an
-`ASSUMPTION:` prefix and is listed in `unknown_fields` — the model cannot turn
-a guess into a fact.
+The parser decides which fields the founder actually supplied; any field the founder
+did not supply is marked UNKNOWN and listed in `unknown_fields`. No LLM is used here,
+so nothing can turn a guess into a fact.
 """
 from __future__ import annotations
 
@@ -13,14 +11,11 @@ import re
 import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from pathlib import Path
 
 import callbacks
 import evidence
-import llm_gateway
 from models import FounderBrief
 
-SYSTEM_PROMPT = Path(__file__).parent.parent / "prompts" / "intake.md"
 TRACKED = ("target_user", "geography", "skills", "budget_usd", "hours_per_week", "values")
 
 
@@ -99,23 +94,7 @@ def parse_brief(raw: str) -> FounderBrief:
 
 
 def run(run_id: str, raw_text: str) -> FounderBrief:
-    parsed = parse_brief(raw_text)
-    brief, model, tokens = parsed, None, 0
-
-    system = SYSTEM_PROMPT.read_text(encoding="utf-8") if SYSTEM_PROMPT.exists() else ""
-    res = llm_gateway.call_llm(system, f"Founder brief:\n\n{raw_text}", FounderBrief, temperature=0.2)
-    if res:
-        llm_brief, model, tokens = res
-        # Founder-supplied facts win; LLM may only rephrase/tidy them.
-        for f in ("idea", "target_user", "geography", "skills", "values", "language"):
-            if f not in parsed.unknown_fields and getattr(llm_brief, f, ""):
-                setattr(brief, f, str(getattr(llm_brief, f))[:240])
-        for f in parsed.unknown_fields:
-            val = getattr(llm_brief, f, None)
-            if isinstance(val, str) and val and not val.upper().startswith(("UNKNOWN", "ASSUMPTION")):
-                setattr(brief, f, f"ASSUMPTION: {val[:160]}")
-        brief.unknown_fields = parsed.unknown_fields
-
+    brief = parse_brief(raw_text)
     callbacks.log(run_id=run_id, agent="intake", action="normalize_brief", sources=[],
-                  model=model, cost=0, phase=1, tokens=tokens)
+                  model=None, cost=0, phase=1)
     return brief

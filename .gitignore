@@ -20,3 +20,4 @@ data/
 
 # local tooling (not part of the project)
 .ollama_local/
+.pytest_tmp/

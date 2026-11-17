@@ -1,20 +1,23 @@
 # Phase 4 — Pricing: STEM Recall
 
+> Evidence mode: REPLAY of evidence_snapshots/strong_scenario.json (captured 2026-11-17T15:52:54+00:00); no evidence was collected in this run
+> LLM mode: LLM_DISABLED (no LLM was called in this run)
+
 > Payments are **MOCKED** (local simulation only). Prices are a starting hypothesis for the
 > demand test, not a forecast. Nothing here promises revenue.
 
 ## Evidence
 
-Competitor monthly prices found in fetched sources (median = **USD 7.50**):
+Competitor monthly prices found in fetched sources (median = **USD 8.75**):
 
 | Price | Source |
 |---|---|
-| $4.99/month | https://laxuai.com/blog/best-spaced-repetition-apps-2026 |
 | $4.99/month | https://laxuai.com/blog/best-spaced-repetition-apps-2026 |
 | $10.00/month | https://studyboost.org/blog/best-spaced-repetition-app/ |
 | $7.50/month | https://studyboost.org/blog/best-spaced-repetition-app/ |
 | $4.99/month | https://laxuai.com/blog/best-flashcard-apps-for-students-2026 |
 | $19.99/month | https://laxuai.com/blog/best-flashcard-apps-for-students-2026 |
+| $20.00/month | https://laxuai.com/blog/best-flashcard-apps-for-students-2026 |
 
 World Bank: GDP per capita for Egypt, Arab Rep. = USD 3,086/year (https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=EG). Affordability cap (ASSUMPTION: ≤ 1% of monthly GDP per capita) = **USD 2.57/month**.
 

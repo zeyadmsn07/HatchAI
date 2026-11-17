@@ -12,3 +12,4 @@ data/
 .state_*.json
 .claude/
 .ollama_local/
+.pytest_tmp/

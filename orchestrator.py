@@ -11,7 +11,8 @@ through approval.record_decision (web UI, API, or CLI prompt):
   stop           any      -> run stopped
 
 CLI:
-  python orchestrator.py demo                 # committed demo: strong idea (full run) + weak idea (STOP)
+  python orchestrator.py demo                 # committed demo: replays strong (GO), weak (STOP), REPEAT -> GO
+  python orchestrator.py demo --live          # same, but strong and weak do fresh live research
   python orchestrator.py run "<brief>"        # interactive: you approve each gate at the prompt
   python orchestrator.py run "<brief>" --yes  # follow every gate recommendation automatically
   python orchestrator.py measure <run_id>     # re-run Phase 6 on the MVP's stored counts
@@ -68,9 +69,69 @@ def out_name(run_id: str, filename: str) -> str:
     return f"{stem}{suffix}.{ext}"
 
 
+def _record_llm_mode(run_id: str) -> None:
+    """Probe once at run start and log the run's LLM mode (model name only if one is served)."""
+    import llm_gateway as g
+    mode = g.current_mode()
+    p = g.probe() if mode != g.LLM_DISABLED else None
+    st = {"mode_at_start": mode, "model": p.model if p and p.reachable else None,
+          "base_url": p.base_url if p and p.reachable else None,
+          "error": "" if mode == g.LLM_LIVE else (p.error if p else "HATCHAI_NO_LLM=1"), "tasks": []}
+    _store(run_id, "llm", st)
+    callbacks.log(run_id, "orchestrator", "llm_mode_at_start", model=st["model"], phase=0,
+                  outcome=f"{mode}" + (f": {st['error']}" if st["error"] else f": {st['model']} at {st['base_url']}"))
+
+
+def evidence_label(run_id: str) -> str:
+    """One-line evidence-mode label for every output and log of a run."""
+    ecfg = _load(run_id, "evidence_config", default=None) or {"mode": "live"}
+    if ecfg.get("mode") == "replay":
+        snap = load_snapshot(ecfg["snapshot"])
+        return (f"REPLAY of {snap['_file']} (captured {snap['captured_at']}); "
+                "no evidence was collected in this run")
+    return "live (evidence collected by this run)"
+
+
+def llm_label(run_id: str) -> str:
+    """Run-level LLM mode: LLM_DISABLED | LLM_LIVE | LLM_UNAVAILABLE_FALLBACK, with model and per-task detail.
+
+    LLM_LIVE is only claimed for a task a real model answered (and code accepted); before any
+    LLM task runs (the LLM is used in Phase 3 only) the label states the mode found at run start.
+    """
+    import llm_gateway as g
+    st = _load(run_id, "llm", default=None) or {}
+    start = st.get("mode_at_start", "unknown")
+    if start == g.LLM_DISABLED:
+        return f"{g.LLM_DISABLED} (no LLM was called in this run)"
+    tasks = [t for t in st.get("tasks", []) if str(t.get("mode", "")).startswith("LLM_")]
+    if not tasks:
+        where = (f"model {st.get('model')} at {st.get('base_url')}" if start == g.LLM_LIVE
+                 else st.get("error") or "no local endpoint")
+        return f"{start} at run start ({where}); no LLM task has run yet (LLM tasks run in Phase 3 only)"
+    live = [t for t in tasks if t["mode"] == g.LLM_LIVE]
+    detail = ", ".join(f"{t['task']}={t['mode']}" for t in tasks)
+    if live:
+        return f"{g.LLM_LIVE} (model {live[0]['model']}; {detail})"
+    return f"{g.LLM_FALLBACK} (deterministic fallback used; {detail})"
+
+
+def _with_label(run_id: str, filename: str, content: str) -> str:
+    if not filename.endswith((".md", ".txt")) or "LLM mode:" in content[:800]:
+        return content
+    lines = [] if "Evidence mode" in content[:600] else [f"Evidence mode: {evidence_label(run_id)}"]
+    lines.append(f"LLM mode: {llm_label(run_id)}")
+    if filename.endswith(".txt"):
+        return "".join(l.replace("Evidence mode:", "evidence mode:") + "\n" for l in lines) + content
+    block = "\n".join(f"> {l}" for l in lines)
+    first, _, rest = content.partition("\n")
+    if first.startswith("# "):
+        return f"{first}\n\n{block}\n{rest}"
+    return f"{block}\n\n{content}"
+
+
 def _write(run_id: str, filename: str, content: str) -> pathlib.Path:
     path = out_dir(run_id) / out_name(run_id, filename)
-    path.write_text(content, encoding="utf-8")
+    path.write_text(_with_label(run_id, filename, content), encoding="utf-8")
     return path
 
 
@@ -127,6 +188,7 @@ def start_run(brief_text: str, run_id: str | None = None, auto_approve: bool = F
     db.create_run(run_id, secrets.token_hex(16), json.dumps({"raw": brief_text}),
                   datetime.now(timezone.utc).isoformat(), auto_approve=auto_approve)
     _store(run_id, "evidence_config", evidence_cfg or {"mode": "live", "capture": False})
+    _record_llm_mode(run_id)
     db.update_run_status(run_id, "phase_1_running", phase=1)
     _spawn(_run_phase_1, run_id)
     return run_id
@@ -291,7 +353,11 @@ def _run_phase_3(run_id: str):
         critique = _load(run_id, "critique", Critique)
         c = _counters(run_id)
 
-        report = build_run(run_id, brief, canvas, critique, attempt=c["build_attempt"])
+        report = build_run(run_id, brief, canvas, critique, attempt=c["build_attempt"],
+                           ref_date=_reference_date(run_id))
+        llm_state = _load(run_id, "llm", default={}) or {}
+        llm_state["tasks"] = llm_state.get("tasks", []) + report.get("llm_tasks", [])
+        _store(run_id, "llm", llm_state)
         gate = gates.evaluate_gate_3(report, attempt=c["build_attempt"])
         if not report.get("supported", True):
             # No template fits: write a spec-only document; never claim an MVP exists.
@@ -379,8 +445,7 @@ def _write_operate_memo(run_id: str, operate_run) -> str:
     app = _load(run_id, "app", default={}) or {}
     memo = operate_run(run_id, brief, dt, pathlib.Path(app["app_dir"]) if app.get("app_dir") else None,
                        _load(run_id, "payment", default={}))
-    _write(run_id, "phase6_step1_operate-memo.md", memo)
-    return memo
+    return _write(run_id, "phase6_step1_operate-memo.md", memo).read_text(encoding="utf-8")
 
 
 def measure(run_id: str) -> str:
@@ -565,6 +630,10 @@ def _format_mvp_spec(r: dict, canvas: LeanCanvas) -> str:
 |---|---|---|---|
 {feats}
 
+## LLM use (bounded; never code, scores or gate decisions)
+
+{_format_llm_tasks(r.get("llm_tasks", []))}
+
 ## Data model
 
 {s.item_label} fields: {fields}. Seed content: {len(s.seed_items)} items, **SAMPLE DATA**
@@ -585,6 +654,21 @@ python -m unittest discover -s tests -v
 
 Files: {', '.join(r['file_list'])}
 """
+
+
+def _format_llm_tasks(tasks: list) -> str:
+    if not tasks:
+        return "- No LLM task ran in this build."
+    out = []
+    for t in tasks:
+        extra = t.get("error") or ""
+        if t["task"] == "template_suggestion" and t.get("accepted"):
+            extra = f"accepted synonyms {t['accepted']}; selection changed: {t['changed_selection']}"
+        if t["task"] == "spec_text" and t.get("applied"):
+            extra = "product name and tagline written by the model and accepted by code"
+        model = f", model {t['model']}" if t.get("model") else ""
+        out.append(f"- `{t['task']}`: **{t['mode']}**{model}" + (f" — {extra}" if extra else ""))
+    return "\n".join(out)
 
 
 def _format_unsupported_spec(r: dict, brief: FounderBrief, canvas: LeanCanvas, critique: Critique) -> str:
@@ -612,6 +696,10 @@ def _format_unsupported_spec(r: dict, brief: FounderBrief, canvas: LeanCanvas, c
 - **Problem (Lean Canvas):** {canvas.problem.content.split(' Evidence:')[0]}
 - **Riskiest assumption to test first:** {risk}
 - **Smallest test of demand:** a landing page with a consented waitlist (see the Phase 2 demand-test plan).
+
+## LLM use
+
+{_format_llm_tasks(r.get("llm_tasks", []))}
 
 ## Founder options at Gate 3
 
@@ -682,12 +770,28 @@ DEMO_BRIEF_WEAK = (
 )
 
 
+def _reference_date(run_id: str):
+    """'Today' for date-dependent sample content: live -> None (real clock); replay -> capture date."""
+    from datetime import date
+    ecfg = _load(run_id, "evidence_config", default={}) or {}
+    if ecfg.get("mode") != "replay":
+        return None
+    return date.fromisoformat(load_snapshot(ecfg["snapshot"])["captured_at"][:10])
+
+
 def _reset_run(run_id: str):
     import shutil
+    from payments import init_payments
     shutil.rmtree(RUNS / run_id, ignore_errors=True)
+    init_payments()   # make sure the simulation tables exist before clearing them
     with db.get_conn() as conn:
         for t in ("gate_results", "decision_log", "runs"):
             conn.execute(f"DELETE FROM {t} WHERE run_id=?", (run_id,))
+        # Simulated sale-to-cash rows of this run (entitlements and events are keyed by order id)
+        orders = "SELECT order_id FROM orders WHERE run_id=?"
+        conn.execute(f"DELETE FROM entitlements WHERE order_id IN ({orders})", (run_id,))
+        conn.execute(f"DELETE FROM payment_events WHERE order_id IN ({orders})", (run_id,))
+        conn.execute("DELETE FROM orders WHERE run_id=?", (run_id,))
     for p in OUTPUTS.glob("*"):
         if run_id in DEMO_RUNS and p.is_file() and p in list_outputs(run_id):
             p.unlink()
@@ -754,6 +858,37 @@ def load_snapshot(path) -> dict:
     return snap
 
 
+def _git_state() -> dict:
+    import subprocess
+    try:
+        head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True,
+                              timeout=10).stdout.strip() or None
+        dirty = subprocess.run(["git", "status", "--porcelain", "--untracked-files=no"], cwd=ROOT,
+                               capture_output=True, text=True, timeout=10).stdout.strip()
+        return {"commit": head, "uncommitted_changes": bool(dirty) if head else None}
+    except Exception:
+        return {"commit": None, "uncommitted_changes": None}
+
+
+def _capture_metadata(rounds: list) -> dict:
+    import evidence
+    import llm_gateway
+    collectors = sorted({s["collector"] for r in rounds for s in r["sources"]})
+    return {
+        "capture_date": datetime.now(timezone.utc).date().isoformat(),
+        "search_method": {
+            "collectors_used": collectors,
+            "web_search": f"ddgs metasearch, backends tried in order: {', '.join(evidence._WEB_BACKENDS)}",
+            "other_sources": "Hacker News Algolia API, Wikipedia MediaWiki API, World Bank Indicators API",
+            "page_fetch": "httpx GET of each web result; up to 3 keyword-ranked sentences kept per page",
+            "query_planner": "evidence.plan_queries (round 1: category queries; round 2: broadened)",
+            "synthesis_model": llm_gateway.active_model_label(),
+            "text_hash": "first 16 hex chars of SHA-256 over ' '.join(passages) as stored",
+        },
+        "code_state": _git_state(),
+    }
+
+
 def write_snapshot(run_id: str, path, label: str = "") -> dict:
     """Save the evidence a live (capture-enabled) run actually collected, plus its gate outcomes."""
     rounds = _load(run_id, "capture_rounds", default=None)
@@ -768,6 +903,7 @@ def write_snapshot(run_id: str, path, label: str = "") -> dict:
         "brief": json.loads(run["brief_json"])["raw"],
         "note": ("Evidence captured from a live HatchAI run (real web/HN/Wikipedia/World Bank fetches). "
                  "Replaying it re-runs verification, scoring and gates without any network access."),
+        "capture_metadata": _capture_metadata(rounds),
         "rounds": rounds,
         "gate_outcomes_at_capture": _counters(run_id)["history"],
         "final_status_at_capture": run["status"],
@@ -852,53 +988,104 @@ This replay (final status {run['status']}):
 """
 
 
-def run_demo():
+# Demo scenarios: run id -> (brief used for --live, committed snapshot replayed by default)
+DEMO_SCENARIOS = {
+    "demo-strong": (DEMO_BRIEF_STRONG, SNAPSHOTS / "strong_scenario.json"),
+    "demo-weak": (DEMO_BRIEF_WEAK, SNAPSHOTS / "weak_scenario.json"),
+    "demo-replay": (None, DEMO_SNAPSHOT),          # REPEAT -> GO; always replayed
+}
+
+
+class SnapshotMissingError(RuntimeError):
+    """A committed evidence snapshot the demo needs is missing or unreadable."""
+
+
+def check_demo_snapshots(live: bool = False) -> None:
+    """Every snapshot the demo will replay must exist and parse. No silent fallback to live research.
+    (The REPEAT -> GO scenario is replayed even with --live, so its snapshot is always required.)"""
+    for rid, (brief, snap) in DEMO_SCENARIOS.items():
+        if live and brief:
+            continue
+        if not snap.exists():
+            raise SnapshotMissingError(f"snapshot missing: {snap}; run `python orchestrator.py demo --live` "
+                                       "for live research")
+        try:
+            loaded = load_snapshot(snap)
+            if not loaded.get("rounds") or "gate_outcomes_at_capture" not in loaded:
+                raise ValueError("no captured rounds or gate outcomes")
+        except Exception as exc:
+            raise SnapshotMissingError(f"snapshot unreadable: {snap} ({type(exc).__name__}: {exc}); "
+                                       "run `python orchestrator.py demo --live` for live research") from exc
+
+
+def run_demo(live: bool = False, log_path=None) -> dict:
+    """Default: replay all three committed snapshots (reproducible, offline research).
+    live=True: strong and weak scenarios do fresh live research instead (results vary run to run).
+    Raises SnapshotMissingError before touching any run if a needed snapshot is missing/unreadable."""
     logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
+    check_demo_snapshots(live)
     db.init_db()
+    results = {}
     for rid in DEMO_RUNS:
         _reset_run(rid)
-    for rid, brief in (("demo-strong", DEMO_BRIEF_STRONG), ("demo-weak", DEMO_BRIEF_WEAK)):
-        print(f"[{rid}] running…")
-        run = run_sync(brief, rid, auto=True)
-        hist = _counters(rid)["history"]
+    for rid, (brief, snap) in DEMO_SCENARIOS.items():
+        if live and brief:
+            print(f"[{rid}] LIVE research run…")
+            run_sync(brief, rid, auto=True, evidence_cfg={"mode": "live", "capture": False})
+            hist, match = _counters(rid)["history"], None
+        else:
+            shown = snap.relative_to(ROOT).as_posix() if snap.resolve().is_relative_to(ROOT) else snap
+            print(f"[{rid}] REPLAY of {shown} (no network)…")
+            res = replay(snap, rid)
+            hist, match = res["replayed"], res["match"]
+        run = db.get_run(rid)
+        results[rid] = {"status": run["status"], "history": hist, "match": match}
         print(f"[{rid}] final status: {run['status']}  gates: "
-              + " → ".join(f"G{h['gate']}:{h['outcome'].upper()}" for h in hist))
+              + " → ".join(f"G{h['gate']}:{h['outcome'].upper()}" for h in hist)
+              + ("" if match is None else f"  (matches capture: {match})"))
     _demo_test_traffic("demo-strong")
-    if DEMO_SNAPSHOT.exists():
-        print("[demo-replay] replaying committed evidence snapshot (no network)…")
-        res = replay(DEMO_SNAPSHOT, "demo-replay")
-        print(f"[demo-replay] final status: {res['run']['status']}  gates: "
-              + " → ".join(f"G{h['gate']}:{h['outcome'].upper()}" for h in res["replayed"])
-              + f"  (matches capture: {res['match']})")
-    db.export_decision_log(str(ROOT / "decision_log.json"), run_ids=list(DEMO_RUNS))
+    db.export_decision_log(str(log_path or ROOT / "decision_log.json"), run_ids=list(DEMO_RUNS))
     print("decision_log.json and outputs/ updated.")
+    return results
 
 
-if __name__ == "__main__":
-    args = sys.argv[1:]
+def main(argv: list[str]) -> int:
+    """CLI entry point; returns the process exit code."""
+    args = argv
     if not args or args[0] in ("demo", "strong"):
-        run_demo()
-    elif args[0] == "run" and len(args) >= 2:
+        try:
+            run_demo(live="--live" in args)
+        except SnapshotMissingError as exc:
+            print(f"ERROR: {exc}", file=sys.stderr)
+            return 2
+        return 0
+    if args[0] == "run" and len(args) >= 2:
         logging.basicConfig(level=logging.WARNING)
         rid = secrets.token_hex(6)
         r = run_sync(args[1], rid, auto="--yes" in args)
         print(f"run {rid}: {r['status']} — outputs in {out_dir(rid)}")
-    elif args[0] == "replay" and len(args) >= 2:
+        return 0
+    if args[0] == "replay" and len(args) >= 2:
         logging.basicConfig(level=logging.WARNING)
         res = replay(args[1], args[2] if len(args) > 2 else "demo-replay")
         print(" → ".join(f"G{h['gate']}:{h['outcome'].upper()}" for h in res["replayed"]),
               f"| final status: {res['run']['status']} | gate outcomes match capture: {res['match']}")
         if res["run"]["run_id"] in DEMO_RUNS:
             db.export_decision_log(str(ROOT / "decision_log.json"), run_ids=list(DEMO_RUNS))
-        sys.exit(0 if res["match"] else 2)
-    elif args[0] == "capture" and len(args) >= 3:
+        return 0 if res["match"] else 2
+    if args[0] == "capture" and len(args) >= 3:
         logging.basicConfig(level=logging.WARNING)
         snap = capture(args[1], args[2])
         print(f"snapshot written to {args[2]}: gates "
               + " → ".join(f"G{h['gate']}:{h['outcome'].upper()}" for h in snap["gate_outcomes_at_capture"]))
-    elif args[0] == "measure" and len(args) == 2:
+        return 0
+    if args[0] == "measure" and len(args) == 2:
         measure(args[1])
         print(f"Phase 6 re-measured — see {out_dir(args[1]) / out_name(args[1], 'phase6_step1_operate-memo.md')}")
-    else:
-        print(__doc__)
-        sys.exit(1)
+        return 0
+    print(__doc__)
+    return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

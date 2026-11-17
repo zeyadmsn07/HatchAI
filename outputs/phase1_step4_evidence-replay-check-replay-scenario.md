@@ -1,5 +1,8 @@
 # Phase 1 — Evidence REPLAY check: REPEAT -> GO: Arabic calligraphy workshop booking, Jordan (live capture)
 
+> Evidence mode: REPLAY of evidence_snapshots/repeat_scenario.json (captured 2026-11-17T15:31:37+00:00); no evidence was collected in this run
+> LLM mode: LLM_DISABLED (no LLM was called in this run)
+
 > This run used **replayed** evidence from `evidence_snapshots/repeat_scenario.json`. Nothing was fetched: the snapshot holds the
 > sources a live run collected on **2026-11-17T15:31:37+00:00** (original URLs, passages, fetch times, SHA-256).
 > Verification, scoring and all gates were re-computed from that snapshot with the current code.

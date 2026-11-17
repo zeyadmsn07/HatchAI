@@ -3,8 +3,10 @@
 Network-free by design: `evidence.collect` is replaced by `fake_collect`, which returns
 fixture passages (clearly fake example.org URLs) so gate behaviour is deterministic.
 """
+import hashlib
 import os
 import sys
+from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -51,21 +53,60 @@ class FakeCollector:
         return existing, {s.key: s.category for s in existing}
 
 
+REPO = Path(__file__).resolve().parent.parent
+
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_configure(config):
+    """Temp dirs go to <repo>/.pytest_tmp (relative to the repo root, whatever the working directory),
+    unless --basetemp is given explicitly."""
+    if not config.option.basetemp:
+        config.option.basetemp = str(REPO / ".pytest_tmp")
+# Committed artifacts that no test may create, change or delete.
+PROTECTED = ("outputs", "decision_log.json", "evidence_snapshots")
+
+
+def repo_artifact_hashes() -> dict[str, str]:
+    """SHA-256 of every file under the protected paths (missing paths recorded as such)."""
+    out = {}
+    for rel in PROTECTED:
+        p = REPO / rel
+        files = sorted(f for f in p.rglob("*") if f.is_file()) if p.is_dir() else ([p] if p.exists() else [])
+        if not files:
+            out[rel] = "<missing>"
+        for f in files:
+            out[f.relative_to(REPO).as_posix()] = hashlib.sha256(f.read_bytes()).hexdigest()
+    return out
+
+
+@pytest.fixture(scope="session", autouse=True)
+def committed_artifacts_untouched():
+    """Fails the session if any test changed outputs/, decision_log.json or evidence_snapshots/."""
+    before = repo_artifact_hashes()
+    yield
+    after = repo_artifact_hashes()
+    changed = sorted(k for k in before.keys() | after.keys() if before.get(k) != after.get(k))
+    assert not changed, f"tests modified committed artifacts: {changed}"
+
+
 @pytest.fixture(autouse=True)
 def isolated(tmp_path, monkeypatch):
     monkeypatch.setenv("DB_PATH", str(tmp_path / "test.db"))
     monkeypatch.setenv("HATCHAI_OFFLINE", "1")
     monkeypatch.setenv("HATCHAI_NO_LLM", "1")
     import db
+    import llm_gateway
     import orchestrator
     import payments
     from agents import builder
     monkeypatch.setattr(orchestrator, "RUNS", tmp_path / "runs")
     monkeypatch.setattr(orchestrator, "OUTPUTS", tmp_path / "outputs")
     monkeypatch.setattr(builder, "GENERATED", tmp_path / "generated")
+    llm_gateway.reset_probe_cache()          # no LLM probe result leaks between tests
     db.init_db()
     payments.init_payments()
     yield tmp_path
+    llm_gateway.reset_probe_cache()
 
 
 @pytest.fixture
