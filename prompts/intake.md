@@ -18,3 +18,6 @@ Rules:
 2. Never invent facts. Assumptions must be plausible inferences, not inventions.
 3. The idea must be a digital product only. Physical goods, financial/crypto/investment products, health/medical/legal advice products are not permitted.
 4. Return valid JSON matching the FounderBrief schema exactly.
+
+Note: a deterministic parser runs first. Any field the founder did not state keeps an
+ASSUMPTION/UNKNOWN label regardless of your answer.

@@ -1,30 +1,34 @@
-# Pricing — Founder brief:
+# Phase 4 — Pricing: STEM Recall
 
-I want to build an AI-powered flashcard and spaced-repetition study tool for university students in Egyp
+> Payments are **MOCKED** (local simulation only). Prices are a starting hypothesis for the
+> demand test, not a forecast. Nothing here promises revenue.
 
-> **MOCKED** — All prices are ASSUMPTIONS based on market estimates. No payment integration exists.
+## Evidence
 
-## Price-to-Income Sanity Check
+Competitor monthly prices found in fetched sources (median = **USD 4.99**):
 
-ASSUMPTION: Local monthly income per capita for Egypt ≈ EGP 3,000–5,000 (USD 60–100).
-Pricing should not exceed 3–5% of monthly income for accessibility.
+| Price | Source |
+|---|---|
+| $4.99/month | https://laxuai.com/blog/best-spaced-repetition-apps-2026 |
+
+ASSUMPTION: no income data fetched for this geography — no affordability cap applied.
+
+## Method
+
+1. Anchor = median competitor price.
+2. Entry price = 50% of anchor (new entrant discount, ASSUMPTION), capped by local affordability when known.
+3. The core job stays free; paid tiers add capacity only (no core feature behind a paywall).
 
 ## Tiers
 
-| Tier | Price | Features |
+| Tier | Price (USD) | Includes |
 |---|---|---|
-| Free | EGP 0 / month | Core feature, 20 items/day limit |
-| Student | EGP 49 / month (~USD 1) | Unlimited items, shared decks |
-| Pro | EGP 99 / month (~USD 2) | All features, priority support |
+| Free | 0 | All core features, up to the free item limit |
+| Plus | 2.50 / month | Higher limits, export |
+| Team / institution | 12.50 / month | 5 seats, shared content |
 
-> ASSUMPTION: Competitor benchmarks suggest EGP 50–200/month is market rate.
-> ASSUMPTION: Student tier at EGP 49 is below 2% of median monthly income.
+Target user: university students. Geography: Egypt. Local-currency display at checkout is an ASSUMPTION to verify with the chosen processor.
 
-## Currency
+## Kill criterion (from Phase 2)
 
-Primary currency: Egyptian Pound (EGP). USD pricing shown for reference only.
-
-## Payments (MOCKED)
-
-No live payment processor is configured. See `payment_test_log.md` for the
-local simulation of the checkout → delivery → refund flow.
+If fewer than 3% of demand-test visitors click the Plus tier, revisit price or value before building further.

@@ -1,12 +1,398 @@
 [
   {
-    "timestamp": "2026-11-17T11:55:03.384295+00:00",
+    "timestamp": "2026-11-17T15:13:17.312888+00:00",
+    "agent": "intake",
+    "action": "normalize_brief",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:41.535167+00:00",
+    "agent": "researcher",
+    "action": "collect_evidence_round_1",
+    "sources": [
+      "https://news.ycombinator.com/item?id=40626452",
+      "https://news.ycombinator.com/item?id=44491043",
+      "https://en.wikipedia.org/wiki/Duolingo",
+      "https://arxiv.org/pdf/2607.25096",
+      "https://arxiv.org/html/2607.25096v1",
+      "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
+      "https://notiq.study/blog/flashcards-spaced-repetition-science",
+      "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://www.mintdeck.app/blog/best-spaced-repetition-apps-2026",
+      "https://www.motownai.com/blog/best-flashcard-apps-university-students-2026",
+      "https://studyglen.com/guides/best-spaced-repetition-apps",
+      "https://xpay.app/blog/epayments-education-sector-egypt",
+      "https://www3.aucegypt.edu/OnlinePayment/Default.aspx",
+      "https://aastmtic2.aast.edu/QNB/Tution.aspx",
+      "https://digital.gov.eg/categories/terms/\u0633\u062f\u0627\u062f-\u0627\u0644\u0631\u0633\u0648\u0645-\u0623\u0648\u0646\u0644\u0627\u064a\u0646"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:41.627702+00:00",
+    "agent": "researcher",
+    "action": "synthesize_and_verify_claims",
+    "sources": [
+      "https://arxiv.org/html/2607.25096v1",
+      "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
+      "https://studyglen.com/guides/best-spaced-repetition-apps",
+      "https://www.mintdeck.app/blog/best-spaced-repetition-apps-2026",
+      "https://www.motownai.com/blog/best-flashcard-apps-university-students-2026",
+      "https://xpay.app/blog/epayments-education-sector-egypt"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:41.658934+00:00",
+    "agent": "gate",
+    "action": "gate_1_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "go",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:41.698772+00:00",
     "agent": "founder",
     "action": "gate_1_decision",
     "sources": [],
     "model": null,
     "cost": 0.0,
     "approved_by": "founder",
-    "outcome": "approve"
+    "outcome": "approve (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:41.772894+00:00",
+    "agent": "validator",
+    "action": "red_team_critique",
+    "sources": [
+      "https://arxiv.org/html/2607.25096v1",
+      "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
+      "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://www.mintdeck.app/blog/best-spaced-repetition-apps-2026",
+      "https://www.motownai.com/blog/best-flashcard-apps-university-students-2026",
+      "https://studyglen.com/guides/best-spaced-repetition-apps",
+      "https://xpay.app/blog/epayments-education-sector-egypt"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:41.786606+00:00",
+    "agent": "validator",
+    "action": "build_lean_canvas",
+    "sources": [
+      "https://arxiv.org/html/2607.25096v1",
+      "https://studycardsai.com/blog/spaced-repetition-science-ai-optimization",
+      "https://laxuai.com/blog/best-spaced-repetition-apps-2026",
+      "https://www.mintdeck.app/blog/best-spaced-repetition-apps-2026",
+      "https://www.motownai.com/blog/best-flashcard-apps-university-students-2026",
+      "https://studyglen.com/guides/best-spaced-repetition-apps",
+      "https://xpay.app/blog/epayments-education-sector-egypt"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:41.797072+00:00",
+    "agent": "validator",
+    "action": "design_demand_test",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:41.840903+00:00",
+    "agent": "gate",
+    "action": "gate_2_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "go",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:41.883977+00:00",
+    "agent": "founder",
+    "action": "gate_2_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "approve (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:41.960528+00:00",
+    "agent": "builder",
+    "action": "select_template",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "spaced_repetition",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:41.980011+00:00",
+    "agent": "builder",
+    "action": "design_app_spec",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:42.004876+00:00",
+    "agent": "builder",
+    "action": "generate_mvp_code_spaced_repetition",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:43.993673+00:00",
+    "agent": "builder",
+    "action": "run_generated_tests",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "ran=21 failed=0 errors=0 smoke=True",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:44.025521+00:00",
+    "agent": "gate",
+    "action": "gate_3_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "go",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:44.070015+00:00",
+    "agent": "founder",
+    "action": "gate_3_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "approve (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:44.122914+00:00",
+    "agent": "commercial",
+    "action": "evidence_anchored_pricing",
+    "sources": [
+      "https://laxuai.com/blog/best-spaced-repetition-apps-2026"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:44.135514+00:00",
+    "agent": "commercial",
+    "action": "draft_policy_templates",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:44.171939+00:00",
+    "agent": "gate",
+    "action": "gate_4_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "go",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:44.217414+00:00",
+    "agent": "founder",
+    "action": "gate_4_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "approve (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:44.280319+00:00",
+    "agent": "launch",
+    "action": "draft_launch_copy",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "pending_founder_approval",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:44.360953+00:00",
+    "agent": "payments",
+    "action": "sale_to_cash_simulation_mocked",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:44.385541+00:00",
+    "agent": "gate",
+    "action": "gate_5_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "go",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:44.430356+00:00",
+    "agent": "founder",
+    "action": "gate_5_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "approve (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:44.481287+00:00",
+    "agent": "operate",
+    "action": "read_metrics_and_apply_preregistered_rule",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "insufficient_data",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:44.508018+00:00",
+    "agent": "orchestrator",
+    "action": "run_completed",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "completed",
+    "run_id": "demo-strong"
+  },
+  {
+    "timestamp": "2026-11-17T15:13:49.351774+00:00",
+    "agent": "intake",
+    "action": "normalize_brief",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-weak"
+  },
+  {
+    "timestamp": "2026-11-17T15:14:01.125300+00:00",
+    "agent": "researcher",
+    "action": "collect_evidence_round_1",
+    "sources": [
+      "https://news.ycombinator.com/item?id=12382737",
+      "https://news.ycombinator.com/item?id=13195588",
+      "https://answerins.com/",
+      "https://www.locklizard.com/document-security-blog/sell-study-notes-online/",
+      "https://studysoup.com/study_help/classes",
+      "http://writingtools.ai/tools/study-guide-generator",
+      "https://www.upwork.com/resources/community-marketing",
+      "https://www.lettrlabs.com/post/community-marketing-strategy",
+      "https://blog.hubspot.com/marketing/community-marketing",
+      "https://thebigmarketing.com/community-marketing/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-weak"
+  },
+  {
+    "timestamp": "2026-11-17T15:14:01.167995+00:00",
+    "agent": "researcher",
+    "action": "synthesize_and_verify_claims",
+    "sources": [
+      "https://answerins.com/",
+      "https://news.ycombinator.com/item?id=12382737",
+      "https://studysoup.com/study_help/classes",
+      "https://www.locklizard.com/document-security-blog/sell-study-notes-online/"
+    ],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "run_id": "demo-weak"
+  },
+  {
+    "timestamp": "2026-11-17T15:14:01.208287+00:00",
+    "agent": "gate",
+    "action": "gate_1_evaluation",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "stop",
+    "run_id": "demo-weak"
+  },
+  {
+    "timestamp": "2026-11-17T15:14:01.267086+00:00",
+    "agent": "founder",
+    "action": "gate_1_decision",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": "founder",
+    "outcome": "stop (auto: CLI --yes follows gate recommendation)",
+    "run_id": "demo-weak"
+  },
+  {
+    "timestamp": "2026-11-17T15:14:01.331075+00:00",
+    "agent": "orchestrator",
+    "action": "run_stopped",
+    "sources": [],
+    "model": null,
+    "cost": 0.0,
+    "approved_by": null,
+    "outcome": "stop",
+    "run_id": "demo-weak"
   }
 ]

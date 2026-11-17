@@ -34,7 +34,7 @@ def init_db():
                 auto_approve INTEGER DEFAULT 0
             );
         """)
-        # Migration: add auto_approve column if it doesn't exist (for existing DBs)
+        # Migrations for existing DBs
         try:
             conn.execute("ALTER TABLE runs ADD COLUMN auto_approve INTEGER DEFAULT 0")
             conn.commit()
@@ -53,6 +53,7 @@ def init_db():
                 founder_override INTEGER DEFAULT 0,
                 override_reason TEXT DEFAULT '',
                 decided_at TEXT,
+                pivot_to TEXT DEFAULT '',
                 PRIMARY KEY (run_id, gate_id)
             );
             CREATE TABLE IF NOT EXISTS decision_log (
@@ -70,10 +71,14 @@ def init_db():
                 tokens INTEGER
             );
         """)
+        try:
+            conn.execute("ALTER TABLE gate_results ADD COLUMN pivot_to TEXT DEFAULT ''")
+        except Exception:
+            pass
 
 
 @contextmanager
-def get_conn():
+def get_conn():  # noqa: D401
     conn = sqlite3.connect(_db_path(), check_same_thread=False, timeout=10)
     conn.row_factory = sqlite3.Row
     try:
@@ -120,13 +125,13 @@ def update_run_status(run_id, status, phase=None, error=None):
             )
 
 
-def save_gate_result(run_id, gate_id, outcome, evidence_score, viability_score, reason, checks):
+def save_gate_result(run_id, gate_id, outcome, evidence_score, viability_score, reason, checks, pivot_to=""):
     with get_conn() as conn:
         conn.execute(
             "INSERT OR REPLACE INTO gate_results "
-            "(run_id, gate_id, outcome, evidence_score, viability_score, reason, checks_json) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?)",
-            (run_id, gate_id, outcome, evidence_score, viability_score, reason, json.dumps(checks)),
+            "(run_id, gate_id, outcome, evidence_score, viability_score, reason, checks_json, pivot_to) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (run_id, gate_id, outcome, evidence_score, viability_score, reason, json.dumps(checks), pivot_to or ""),
         )
 
 
@@ -160,11 +165,8 @@ def log_action(run_id, agent, action, sources=None, model=None, cost=0, approved
             (run_id, ts, agent, action, json.dumps(sources or []), model, cost or 0,
              approved_by, phase, outcome, tokens),
         )
-    # Only auto-export when using the default (non-test) DB path
-    if _db_path() == DB_PATH or _db_path() == os.environ.get("DB_PATH", DB_PATH):
-        log_path = os.environ.get("DECISION_LOG_PATH", "decision_log.json")
-        if log_path == "decision_log.json" and not _is_test_db():
-            export_decision_log(log_path)
+    # decision_log.json is exported explicitly by the demo CLI (orchestrator.run_demo)
+    # so that the committed file holds the demo runs only.
 
 
 def get_log_entries(run_id=None, limit=200):
@@ -181,10 +183,16 @@ def get_log_entries(run_id=None, limit=200):
         return [dict(r) for r in rows]
 
 
-def export_decision_log(path="decision_log.json"):
+def export_decision_log(path="decision_log.json", run_ids=None):
+    """Write the log as JSON. With run_ids, only those runs are exported (demo runs)."""
     entries = []
     with get_conn() as conn:
-        rows = conn.execute("SELECT * FROM decision_log ORDER BY id ASC").fetchall()
+        if run_ids:
+            q = ",".join("?" for _ in run_ids)
+            rows = conn.execute(f"SELECT * FROM decision_log WHERE run_id IN ({q}) ORDER BY id ASC",
+                                list(run_ids)).fetchall()
+        else:
+            rows = conn.execute("SELECT * FROM decision_log ORDER BY id ASC").fetchall()
         for r in rows:
             d = dict(r)
             entry = {
@@ -198,6 +206,8 @@ def export_decision_log(path="decision_log.json"):
             }
             if d.get("outcome"):
                 entry["outcome"] = d["outcome"]
+            if d.get("run_id"):
+                entry["run_id"] = d["run_id"]
             entries.append(entry)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(entries, f, indent=2)

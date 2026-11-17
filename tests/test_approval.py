@@ -1,73 +1,55 @@
-"""Smoke tests for founder approval — no pipeline action may proceed without approval."""
-import sys, os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-import pytest
+"""Founder approval is enforced in code: nothing advances without a valid, allowed decision."""
+import approval
+import db
 
 
-@pytest.fixture(autouse=True)
-def isolated_db(tmp_path):
-    db_file = str(tmp_path / "test.db")
-    os.environ["DB_PATH"] = db_file
-    import db
-    db.init_db()
-    yield db
-    os.environ.pop("DB_PATH", None)
-
-
-def _make_run(run_id, token):
-    import db
+def _gate(run_id, outcome, token="tok", status=None):
     db.create_run(run_id, token, "{}", "2026-01-01T00:00:00Z")
-    db.save_gate_result(run_id, 1, "go", 65.0, 3.8, "Strong", {"ok": True})
+    db.update_run_status(run_id, status or "gate_1_pending", phase=1)
+    db.save_gate_result(run_id, 1, outcome, 60.0, 3.5, "r", {})
 
 
-def test_approve_with_valid_token(isolated_db):
-    import approval
-    _make_run("appr-1", "valid-token-abc")
-    ok, err = approval.record_decision("appr-1", 1, "approve", "valid-token-abc")
-    assert ok, err
+def test_approve_go_with_valid_token():
+    _gate("a1", "go")
+    assert approval.record_decision("a1", 1, "approve", "tok") == (True, "")
+    assert db.get_gate_result("a1", 1)["founder_decision"] == "approve"
+    entry = db.get_log_entries("a1")[-1]
+    assert entry["approved_by"] == "founder" and entry["action"] == "gate_1_decision"
 
 
-def test_approve_fails_with_wrong_token(isolated_db):
-    import approval
-    _make_run("appr-2", "correct-token")
-    ok, err = approval.record_decision("appr-2", 1, "approve", "wrong-token")
-    assert not ok
-    assert "Invalid" in err
+def test_wrong_or_missing_token_rejected():
+    _gate("a2", "go", token="right")
+    assert not approval.record_decision("a2", 1, "approve", "wrong")[0]
+    assert not approval.record_decision("a2", 1, "approve", "")[0]
 
 
-def test_cannot_double_approve(isolated_db):
-    import approval
-    _make_run("appr-3", "tok")
-    ok1, _ = approval.record_decision("appr-3", 1, "approve", "tok")
-    ok2, err2 = approval.record_decision("appr-3", 1, "approve", "tok")
-    assert ok1
-    assert not ok2
-    assert "already" in err2.lower()
+def test_cannot_decide_twice():
+    _gate("a3", "go")
+    assert approval.record_decision("a3", 1, "approve", "tok")[0]
+    ok, err = approval.record_decision("a3", 1, "approve", "tok")
+    assert not ok and "already" in err
 
 
-def test_override_stop_requires_reason(isolated_db):
-    import db, approval
-    db.create_run("appr-4", "tok", "{}", "2026-01-01T00:00:00Z")
-    db.save_gate_result("appr-4", 1, "stop", 15.0, 1.0, "Weak", {})
-    ok, err = approval.record_decision("appr-4", 1, "override_stop", "tok", override_reason="")
-    assert not ok
-    assert "reason" in err.lower()
+def test_approve_not_allowed_unless_go():
+    for outcome in ("repeat", "pivot", "stop"):
+        _gate(f"a4{outcome}", outcome)
+        ok, err = approval.record_decision(f"a4{outcome}", 1, "approve", "tok")
+        assert not ok and "not allowed" in err
 
 
-def test_override_stop_succeeds_with_reason(isolated_db):
-    import db, approval
-    db.create_run("appr-5", "tok", "{}", "2026-01-01T00:00:00Z")
-    db.save_gate_result("appr-5", 1, "stop", 15.0, 1.0, "Weak", {})
-    ok, err = approval.record_decision("appr-5", 1, "override_stop", "tok",
-                                       override_reason="Founder has inside knowledge not in sources")
-    assert ok, err
+def test_override_requires_written_reason():
+    _gate("a5", "stop")
+    ok, err = approval.record_decision("a5", 1, "override_stop", "tok", override_reason=" ")
+    assert not ok and "reason" in err
+    assert approval.record_decision("a5", 1, "override_stop", "tok", "Founder interviewed 20 users")[0]
 
 
-def test_stop_decision_recorded(isolated_db):
-    import db, approval
-    _make_run("appr-6", "tok")
-    ok, _ = approval.record_decision("appr-6", 1, "stop", "tok")
-    assert ok
-    gate = db.get_gate_result("appr-6", 1)
-    assert gate["founder_decision"] == "stop"
+def test_decision_only_while_gate_pending():
+    _gate("a6", "go", status="phase_2_running")
+    ok, err = approval.record_decision("a6", 1, "approve", "tok")
+    assert not ok and "not awaiting" in err
+
+
+def test_unknown_decision_rejected():
+    _gate("a7", "go")
+    assert not approval.record_decision("a7", 1, "publish_everything", "tok")[0]

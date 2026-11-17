@@ -1,19 +1,23 @@
-# Gate 1 Decision
+# Gate 1 decision
 
-> Evidence score computed from offline-mode sources — all research claims are ASSUMPTION-labelled in `phase1_step2_opportunities.md`.
+**Recommendation (computed by code): GO**
 
-**Outcome:** REPEAT
-
-**Evidence Score:** 78.0
-**Viability Score:** 0.0
-
-**Reason:** Evidence score 78.0 is below GO threshold 40 or domain diversity < 3. Recommend one more research round.
+GO: enough verified, diverse evidence to start validation. E=90.0 (GO ≥ 55, STOP < 25); verified categories: ['channels', 'competitors', 'demand', 'local_constraints', 'pricing']; cited domains: 7; research round 1.
 
 ## Checks
 
-- ✓ evidence score above go
+- ✓ brief defines target user and geography
+- ✓ evidence score at least go
 - ✓ evidence score above stop
-- ✗ distinct domains ok
-- ✓ target market set
-- ✓ geography set
+- ✓ demand evidence verified
+- ✓ cited domains at least 3
 
+## Founder decision
+
+Required before anything proceeds — see `decision_log.json` (`gate_1_decision`, `approved_by: founder`).
+
+## Gate history for this run
+
+| Gate | Round | Outcome | E | V |
+|---|---|---|---|---|
+| 1 | 1 | GO | 90.0 | 0.0 |

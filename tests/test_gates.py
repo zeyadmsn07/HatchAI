@@ -1,137 +1,117 @@
-"""Smoke tests for gate logic — no API keys or network required."""
-import sys, os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+"""Gate logic: Guardrail 0, evidence/viability scoring, GO / REPEAT / PIVOT / STOP."""
+from tests.conftest import STRONG, make_sources
 
-import pytest
-from models import ResearchFindings, Claim, Source, Critique, GateOutcome
-from gates import guardrail_0, compute_evidence_score, evaluate_gate_1, evaluate_gate_2
+from gates import (compute_evidence_score, compute_viability, evaluate_gate_1, evaluate_gate_2, evaluate_gate_3,
+                   evaluate_gate_4, evaluate_gate_5, guardrail_0, scan_output)
+from models import Claim, Critique, FounderBrief, GateOutcome, KillAssumption, ResearchFindings
 
-
-# ---------------------------------------------------------------------------
-# Guardrail 0
-# ---------------------------------------------------------------------------
-
-def test_guardrail_0_allows_valid_idea():
-    blocked, reason = guardrail_0("An AI study planner for university students in Egypt")
-    assert not blocked, reason
+BRIEF = FounderBrief(idea="flashcards", target_user="students", geography="Egypt", skills="web development",
+                     hours_per_week=10)
+WEAK_BRIEF = FounderBrief(idea="notes", unknown_fields=["target_user", "geography", "skills", "hours_per_week"])
 
 
-def test_guardrail_0_blocks_physical_goods():
-    blocked, reason = guardrail_0("An e-commerce store selling physical goods")
-    assert blocked
-    assert "physical goods" in reason.lower()
+def findings_for(categories, n_domains=5, angles=("Narrow to STEM students",)):
+    spec = {c: STRONG[c] for c in categories}
+    sources = make_sources(spec)
+    claims = [Claim(category=s.category, text=s.passages[0], source_keys=[s.key], quote=s.passages[0],
+                    verified=True) for s in sources]
+    for c in set(STRONG) - set(categories):
+        claims.append(Claim(category=c, text=f"ASSUMPTION: {c}", is_assumption=True))
+    return ResearchFindings(claims=claims, sources=sources[:n_domains], opportunity_angles=list(angles))
 
 
-def test_guardrail_0_blocks_crypto():
-    blocked, reason = guardrail_0("A cryptocurrency trading platform")
-    assert blocked
+# Guardrail 0 -------------------------------------------------------------
+
+def test_guardrail_allows_valid_idea():
+    assert guardrail_0("An AI study planner for university students in Egypt") == (False, "")
 
 
-def test_guardrail_0_blocks_fake_reviews():
-    blocked, reason = guardrail_0("An app that creates fake reviews for businesses")
-    assert blocked
+def test_guardrail_blocks_excluded_categories_and_trick_intents():
+    for text in ("A store selling physical goods", "A cryptocurrency trading bot", "Generate fake reviews for shops",
+                 "Guaranteed income for subscribers", "Impersonate a famous brand", "medical advice chatbot"):
+        assert guardrail_0(text)[0], text
 
 
-def test_guardrail_0_blocks_guaranteed_income():
-    blocked, reason = guardrail_0("A system that provides guaranteed income to users")
-    assert blocked
+def test_output_scanner_flags_income_promises():
+    assert scan_output("Join now — guaranteed income in 30 days!") == ["guaranteed income"]
+    assert scan_output("An early, free MVP. Feedback welcome.") == []
 
 
-# ---------------------------------------------------------------------------
-# Evidence Score
-# ---------------------------------------------------------------------------
+# Scores --------------------------------------------------------------------
 
-def _make_findings(n_claims=5, n_verified=3, n_domains=3, n_sources=3):
-    categories = ["demand", "competitors", "pricing", "local_constraints", "channels"]
-    claims = [
-        Claim(category=categories[i % len(categories)],
-              text=f"claim {i}", verified=(i < n_verified), is_assumption=(i >= n_verified))
-        for i in range(n_claims)
-    ]
-    sources = [
-        Source(key=f"S{i+1}", url=f"https://domain{i+1}.com/page",
-               title=f"Source {i+1}", domain=f"domain{i+1}.com",
-               fetch_time="2026-01-01T00:00:00Z",
-               text_hash="abc", passages=["some text"])
-        for i in range(n_sources)
-    ]
-    return ResearchFindings(claims=claims, sources=sources[:n_domains])
+def test_evidence_score_counts_only_verified_claims():
+    full = findings_for(list(STRONG))
+    assert compute_evidence_score(full) > 85
+    unverified = ResearchFindings(claims=[Claim(category=c, text="ASSUMPTION", is_assumption=True) for c in STRONG])
+    assert compute_evidence_score(unverified) == 0.0
 
 
-def test_evidence_score_all_categories_some_verified():
-    findings = _make_findings(n_claims=5, n_verified=3, n_domains=3)
-    score = compute_evidence_score(findings)
-    assert 40 < score < 100, f"Expected moderate score, got {score}"
+def test_viability_is_computed_from_evidence_and_founder_fit():
+    risks = [KillAssumption(assumption="pay", kill_criterion="<3% click price")]
+    v_strong, b = compute_viability(findings_for(list(STRONG)), BRIEF, risks)
+    v_weak, _ = compute_viability(findings_for([]), WEAK_BRIEF, [])
+    assert v_strong == 4.5 and b["founder_skills"] == 0.5 and b["demand_test_passed"] == 0.0
+    assert v_weak == 1.0
 
 
-def test_evidence_score_zero_sources():
-    findings = ResearchFindings(claims=[], sources=[])
-    score = compute_evidence_score(findings)
-    assert score == 0.0
+# Gate 1 ---------------------------------------------------------------------
+
+def test_gate1_go_with_strong_verified_evidence():
+    g = evaluate_gate_1(findings_for(list(STRONG)), BRIEF)
+    assert g.outcome == GateOutcome.GO, g.reason
 
 
-def test_evidence_score_max():
-    findings = _make_findings(n_claims=5, n_verified=5, n_domains=5)
-    score = compute_evidence_score(findings)
-    assert score > 70
+def test_gate1_stop_when_brief_has_no_user_or_geography():
+    g = evaluate_gate_1(findings_for(list(STRONG)), WEAK_BRIEF)
+    assert g.outcome == GateOutcome.STOP
+    assert "neither a target user nor a geography" in g.reason
 
 
-# ---------------------------------------------------------------------------
-# Gate 1
-# ---------------------------------------------------------------------------
-
-def test_gate_1_go_on_strong_evidence():
-    findings = _make_findings(n_claims=5, n_verified=3, n_domains=5)
-    findings.evidence_score = compute_evidence_score(findings)
-    result = evaluate_gate_1(findings)
-    assert result.outcome == GateOutcome.GO, f"Expected GO but got {result.outcome}: {result.reason}"
+def test_gate1_repeat_then_pivot_then_stop_as_budgets_run_out():
+    mid = findings_for(["demand", "competitors"], n_domains=2)
+    assert evaluate_gate_1(mid, BRIEF, round_no=1).outcome == GateOutcome.REPEAT
+    g = evaluate_gate_1(mid, BRIEF, round_no=2, pivots_used=0)
+    assert g.outcome == GateOutcome.PIVOT and g.pivot_to == "Narrow to STEM students"
+    assert evaluate_gate_1(mid, BRIEF, round_no=2, pivots_used=1).outcome == GateOutcome.STOP
 
 
-def test_gate_1_stop_on_weak_evidence():
-    findings = ResearchFindings(
-        claims=[Claim(category="demand", text="x", is_assumption=True)],
-        sources=[],
-    )
-    result = evaluate_gate_1(findings)
-    assert result.outcome == GateOutcome.STOP, f"Expected STOP but got {result.outcome}"
-    assert result.evidence_score < 25
+def test_gate1_stop_on_no_evidence_after_retry():
+    empty = findings_for([])
+    assert evaluate_gate_1(empty, BRIEF, round_no=1).outcome == GateOutcome.REPEAT
+    assert evaluate_gate_1(empty, BRIEF, round_no=2).outcome == GateOutcome.STOP
 
 
-def test_gate_1_repeat_on_medium_evidence():
-    # 2 categories covered, 1 verified, 1 domain — should produce REPEAT or STOP, not GO
-    findings = _make_findings(n_claims=2, n_verified=1, n_domains=1)
-    findings.evidence_score = compute_evidence_score(findings)
-    result = evaluate_gate_1(findings)
-    assert result.outcome in (GateOutcome.REPEAT, GateOutcome.STOP)
+# Gate 2 ---------------------------------------------------------------------
+
+def _critique(v, unresolved=0):
+    return Critique(summary="s", viability_score=v, unresolved_kill_assumptions=unresolved)
 
 
-# ---------------------------------------------------------------------------
-# Gate 2
-# ---------------------------------------------------------------------------
-
-def test_gate_2_go_on_strong_scores():
-    findings = _make_findings(n_claims=5, n_verified=3, n_domains=5)
-    findings.evidence_score = 65.0
-    critique = Critique(
-        summary="Good",
-        evidence_score=65.0,
-        viability_score=3.8,
-        recommendation=GateOutcome.GO,
-        unresolved_kill_assumptions=0,
-    )
-    result = evaluate_gate_2(findings, critique)
-    assert result.outcome == GateOutcome.GO, result.reason
+def test_gate2_outcomes():
+    strong = findings_for(list(STRONG))
+    assert evaluate_gate_2(strong, _critique(4.0)).outcome == GateOutcome.GO
+    assert evaluate_gate_2(strong, _critique(2.5)).outcome == GateOutcome.PIVOT
+    assert evaluate_gate_2(strong, _critique(1.5)).outcome == GateOutcome.STOP
+    assert evaluate_gate_2(findings_for(["demand", "competitors"], 2), _critique(4.0)).outcome == GateOutcome.REPEAT  # E=44
+    assert evaluate_gate_2(strong, _critique(4.0, unresolved=1)).outcome == GateOutcome.REPEAT
 
 
-def test_gate_2_stop_on_low_viability():
-    findings = _make_findings()
-    findings.evidence_score = 60.0
-    critique = Critique(
-        summary="Weak",
-        evidence_score=60.0,
-        viability_score=1.2,  # below hard-stop threshold
-        recommendation=GateOutcome.STOP,
-        unresolved_kill_assumptions=2,
-    )
-    result = evaluate_gate_2(findings, critique)
-    assert result.outcome == GateOutcome.STOP
+# Gates 3–5 ------------------------------------------------------------------
+
+def test_gate3_requires_passing_generated_tests():
+    ok = {"files": 9, "tests": {"ran": 20, "failed": 0, "errors": 0}, "features_traced": True,
+          "smoke_ok": True, "forbidden_phrases": []}
+    assert evaluate_gate_3(ok).outcome == GateOutcome.GO
+    bad = {**ok, "tests": {"ran": 20, "failed": 2, "errors": 0}}
+    assert evaluate_gate_3(bad, attempt=1).outcome == GateOutcome.REPEAT
+    assert evaluate_gate_3(bad, attempt=2).outcome == GateOutcome.STOP
+
+
+def test_gate4_and_gate5_structural_checks():
+    pricing = "## Tiers\n| Free | 0 |"
+    policies = "Terms ... Privacy ... Refund ... not legal advice"
+    assert evaluate_gate_4(pricing, policies).outcome == GateOutcome.GO
+    assert evaluate_gate_4(pricing + " guaranteed income", policies).outcome == GateOutcome.STOP
+    log = "IDEMPOTENCY: PASS\nREVOCATION: PASS\nRECONCILIATION: PASS"
+    assert evaluate_gate_5(log, "PENDING_FOUNDER_APPROVAL").outcome == GateOutcome.GO
+    assert evaluate_gate_5(log.replace("REVOCATION: PASS", "REVOCATION: FAIL")).outcome == GateOutcome.STOP

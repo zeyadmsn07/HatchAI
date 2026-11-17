@@ -1,17 +1,27 @@
-# Gate 5 Decision
+# Gate 5 decision
 
-> MOCKED Sale-to-Cash simulation — local HMAC-signed events only. No real payment processor, no real money moved. See `payment_test_log.md`.
+**Recommendation (computed by code): GO**
 
-**Outcome:** GO
-
-**Evidence Score:** 0.0
-**Viability Score:** 0.0
-
-**Reason:** Sale-to-Cash simulation passed.
+GO: sale-to-cash simulation passed; launch drafts held for approval.
 
 ## Checks
 
 - ✓ idempotency pass
 - ✓ revocation pass
 - ✓ reconciliation pass
+- ✓ launch drafts held for approval
+- ✓ no forbidden phrases in drafts
 
+## Founder decision
+
+Required before anything proceeds — see `decision_log.json` (`gate_5_decision`, `approved_by: founder`).
+
+## Gate history for this run
+
+| Gate | Round | Outcome | E | V |
+|---|---|---|---|---|
+| 1 | 1 | GO | 90.0 | 0.0 |
+| 2 | 1 | GO | 90.0 | 4.5 |
+| 3 | 1 | GO | 0.0 | 0.0 |
+| 4 | 1 | GO | 0.0 | 0.0 |
+| 5 | 1 | GO | 0.0 | 0.0 |

@@ -1,6 +1,6 @@
 .env
 *.db
-hatchai.db
+*.db-journal
 state.db
 .claude/settings.local.json
 __pycache__/
@@ -13,3 +13,10 @@ uploads/
 *.egg-info/
 dist/
 build/
+# per-run working data and generated MVP code (regenerate with `python orchestrator.py demo`)
+runs/
+generated_mvps/
+data/
+
+# local tooling (not part of the project)
+.ollama_local/

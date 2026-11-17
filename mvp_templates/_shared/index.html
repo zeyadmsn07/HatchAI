@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MVP</title>
+<style>
+  :root { --bg:#f7f7f5; --card:#fff; --ink:#1d1d1f; --muted:#6b6b6b; --accent:#2f6fed; --line:#e3e3e0; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#16171a; --card:#202226; --ink:#ececec; --muted:#a0a0a0; --line:#33363b; } }
+  body { font-family: system-ui, sans-serif; background:var(--bg); color:var(--ink); margin:0; }
+  main { max-width: 980px; margin: 0 auto; padding: 16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:16px; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:16px; }
+  label { display:block; font-size:.85em; color:var(--muted); margin-top:8px; }
+  input, textarea, select { width:100%; box-sizing:border-box; padding:8px; border:1px solid var(--line); border-radius:6px; background:var(--bg); color:var(--ink); }
+  button { margin-top:10px; padding:8px 14px; border:0; border-radius:6px; background:var(--accent); color:#fff; cursor:pointer; }
+  table { width:100%; border-collapse: collapse; font-size:.9em; } td, th { border-bottom:1px solid var(--line); padding:6px; text-align:start; }
+  pre { white-space: pre-wrap; background:var(--bg); padding:8px; border-radius:6px; font-size:.85em; }
+  .badge { font-size:.75em; background:#f0b400; color:#000; padding:2px 8px; border-radius:4px; }
+  .muted { color:var(--muted); font-size:.9em; }
+</style>
+</head>
+<body>
+<main>
+  <div class="card">
+    <h1 id="name">…</h1>
+    <p id="tagline" class="muted"></p>
+    <p class="muted">Built for <span id="target"></span>. <span class="badge">Payments MOCKED</span>
+      <button id="dir" style="display:none" onclick="toggleDir()">العربية / English</button></p>
+  </div>
+  <div class="grid">
+    <div class="card"><h2 id="addTitle">Add</h2><form id="form"></form><div id="formMsg" class="muted"></div></div>
+    <div class="card"><h2>Actions</h2><div id="actions"></div><pre id="out">Results appear here.</pre></div>
+  </div>
+  <div class="card"><h2 id="listTitle">Items</h2><table id="list"></table></div>
+  <div class="card"><h2>Features</h2><ul id="features"></ul></div>
+  <div class="card"><h2>Join the waitlist</h2>
+    <form id="wl"><input name="email" type="email" placeholder="you@example.com" required>
+    <label><input name="consent" type="checkbox" style="width:auto" required> I agree to be contacted about this product. Nothing is sent automatically.</label>
+    <button type="submit">Join</button></form><div id="wlMsg" class="muted"></div></div>
+</main>
+<script>
+let CFG = null;
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function toggleDir(){ document.documentElement.dir = document.documentElement.dir === "rtl" ? "ltr" : "rtl"; }
+async function api(path, body){
+  const r = await fetch(path, body ? {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)} : {});
+  return {ok: r.ok, data: await r.json()};
+}
+async function load(){
+  CFG = (await api("/api/config")).data;
+  document.title = CFG.product_name;
+  name.textContent = CFG.product_name; tagline.textContent = CFG.tagline; target.textContent = CFG.target_user;
+  if ((CFG.languages||[]).includes("ar")) document.getElementById("dir").style.display = "inline-block";
+  addTitle.textContent = "Add " + CFG.item_label; listTitle.textContent = CFG.item_label_plural;
+  form.innerHTML = CFG.fields.map(f => `<label>${esc(f.label)}</label>` + (f.type === "longtext"
+      ? `<textarea name="${f.name}" rows="3"></textarea>`
+      : `<input name="${f.name}" type="${f.type === "number" ? "number" : f.type === "date" ? "date" : f.type === "datetime" ? "datetime-local" : "text"}">`)).join("")
+      + `<button type="submit">Save</button>`;
+  features.innerHTML = CFG.features.map(f => `<li><b>${esc(f.name)}</b> — ${esc(f.description)} <span class="muted">(answers: ${esc(f.traces_to)})</span></li>`).join("");
+  actions.innerHTML = Object.entries(CFG.actions).map(([k, a]) =>
+      `<div><b>${esc(a.label)}</b>` + Object.entries(a.params).map(([p, v]) =>
+      `<label>${esc(p)}</label><input data-action="${k}" data-param="${p}" value="${esc(v)}">`).join("")
+      + `<button onclick="run('${k}')">${esc(a.label)}</button></div><hr>`).join("");
+  await refresh();
+}
+async function refresh(){
+  const items = (await api("/api/items")).data;
+  const cols = CFG.fields.map(f => f.name);
+  list.innerHTML = `<tr><th>id</th>${cols.map(c => `<th>${esc(c)}</th>`).join("")}</tr>` +
+    items.map(i => `<tr><td>${i.id}</td>${cols.map(c => `<td>${esc(i[c])}</td>`).join("")}</tr>`).join("");
+  return items;
+}
+async function run(k){
+  const items = await refresh();
+  const params = {};
+  document.querySelectorAll(`[data-action="${k}"]`).forEach(el => {
+    let v = el.value; if (v === "$first_id") v = items.length ? items[0].id : 0;
+    params[el.dataset.param] = (v !== "" && !isNaN(v)) ? Number(v) : v;
+  });
+  const r = await api("/api/actions/" + k, params);
+  out.textContent = JSON.stringify(r.data, null, 2); refresh();
+}
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  const body = Object.fromEntries(new FormData(form));
+  CFG.fields.forEach(f => { if (f.type === "number" && body[f.name] !== "") body[f.name] = Number(body[f.name]); });
+  const r = await api("/api/items", body);
+  formMsg.textContent = r.ok ? "Saved." : "Error: " + r.data.error;
+  if (r.ok) { form.reset(); refresh(); }
+});
+wl.addEventListener("submit", async e => {
+  e.preventDefault();
+  const r = await api("/api/waitlist", {email: wl.email.value, consent: wl.consent.checked});
+  wlMsg.textContent = r.ok ? "Thanks, you're on the list." : "Error: " + r.data.error;
+});
+load();
+</script>
+</body>
+</html>

@@ -1,32 +1,21 @@
-# Phase 5 — Launch Drafts
+# Phase 5 — Launch drafts
 
-> **PENDING_FOUNDER_APPROVAL** — These drafts have NOT been posted anywhere.
-> Nothing is published, sent, or signed without an explicit founder approve step.
+> **PENDING_FOUNDER_APPROVAL** — nothing here has been posted, sent or published.
+> Drafts are written in the founder's own voice and must be posted by the founder personally.
+> No testimonials, user counts, countdowns or outcome promises are included.
 
-## Store Listing Draft
+## Community post draft
 
-**Founder brief:
+I'm building **STEM Recall** for university students in Egypt. It's an early, free MVP.
+I'd value honest feedback — what would make it worth using every week? There is a waitlist on the page
+if you want to hear when it improves. (Paid plan, if any, would be about USD 2.50/month; the core stays free.)
 
-I want to build an AI-powered flashcard and spaced-repetition study tool for university students in Egyp**
+## Store / landing listing draft
 
-ASSUMPTION: young adults aged 18–35 in the target geography can now access Founder brief:
+**STEM Recall** — a focused tool for university students. Free core features. Early version: expect rough edges.
 
-I want to build an AI-powered flashcard and spaced-repetition study tool for university students in Egyp in ASSUMPTION: Egypt.
-Built for real people, priced fairly.
+## Approval checklist (founder)
 
----
-
-## Announcement Copy Draft
-
-We're launching Founder brief:
-
-I want to build an AI-powered flashcard and spaced-repetition study tool for university students in Egyp — an founder brief:
-
-i want to build an ai-powered flashcard and spaced-repetition study tool for university students in egyp designed for
-ASSUMPTION: young adults aged 18–35 in the target geography in ASSUMPTION: Egypt.
-
-[This copy is a draft. It has not been published.]
-
----
-
-*Review and edit these drafts. Approve via the dashboard before publication.*
+- [ ] Facts in the copy are true today
+- [ ] Posted from my own account, in communities whose rules allow it
+- [ ] Waitlist consent text reviewed

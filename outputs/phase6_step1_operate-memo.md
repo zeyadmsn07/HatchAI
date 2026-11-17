@@ -1,42 +1,34 @@
-# Operate & Learn Memo — Founder brief:
+# Phase 6 — Operate & learn: An AI-powered flashcard and spaced-repetition study tool for university students
 
-I want to build an AI-powered flashcard and spaced-repetition study tool for university students in Egyp
+## Real data (as of this run)
 
-> **MOCKED** — All metrics below are **SYNTHETIC** (seed=42).
-> They demonstrate decision logic only and must not be presented as real results.
+| Metric | Value | Source |
+|---|---|---|
+| Waitlist sign-ups | 0 | MVP not yet run by the founder (no app.db) |
+| Unique visitors | 0 | STUBBED — no analytics connector yet |
+| Test-mode orders (simulation) | 6 | sale-to-cash simulation, MOCKED |
+| Test-mode refunds (simulation) | 6 | sale-to-cash simulation, MOCKED |
 
-## SYNTHETIC Funnel (Week 1)
+## Pre-registered rule (from Phase 2)
 
-| Metric | Value |
-|---|---|
-| Ad impressions | 1127 |
-| Click-throughs | 67 |
-| Waitlist sign-ups | 15 |
-| Converted to paid | 7 |
-| Refunds | 1 |
-| Day-7 retention | 30% |
-| Monthly recurring revenue | EGP 343 |
+GO if >= 10% of >= 300 unique visitors sign up within 14 days; STOP if < 3% — channel: Community posts + up to USD 50.0 of targeted ads to the Phase 3 MVP landing page; 14 days; budget USD 50.0.
+Status: **NOT_RUN**.
 
-## Pre-registered Threshold Comparison
+## Decision: **INSUFFICIENT_DATA**
 
-**Test:** Number of students who click through and join waitlist
-**Pre-registered threshold:** 50 sign-ups within 7 days (pre-registered; NOT RUN)
-**Result:** 15 sign-ups in 7 days (SYNTHETIC)
+0 visitors < 300 required; keep the test running.
 
-## Decision
+## Next actions (each needs founder approval)
 
-**PIVOT or STOP**
+1. Approve and post the Phase 5 launch drafts in the two named communities.
+2. Run the MVP (`python server.py` in the generated folder) so sign-ups are recorded in `app.db`.
+3. Re-run Phase 6 after 14 days; the rule above decides PERSEVERE / PIVOT / STOP.
 
-Sign-ups (15) did not meet the pre-registered threshold of 50.
+## How the rule would decide — SYNTHETIC inputs (illustration only, not results)
 
-Day-7 retention of 30% is above
-the 30% minimum viable retention threshold (ASSUMPTION).
-
-## Recommended Actions
-
-1. Conduct 10 user interviews to understand drop-off.
-2. Revise value proposition.
-3. Consider pivot to B2B channel.
-
----
-*All numbers are SYNTHETIC. Run a real demand test before making business decisions.*
+| Sign-ups | Visitors | Decision |
+|---|---|---|
+| 45 | 320 | PERSEVERE |
+| 20 | 400 | PIVOT |
+| 5 | 350 | STOP |
+| 12 | 90 | INSUFFICIENT_DATA |

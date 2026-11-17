@@ -40,6 +40,7 @@ class FounderBrief(BaseModel):
     values: str = "ASSUMPTION: unspecified"
     tech_preference: str = "Python/web"
     assumptions: List[str] = Field(default_factory=list)
+    unknown_fields: List[str] = Field(default_factory=list)
 
 
 class Source(BaseModel):
@@ -50,6 +51,8 @@ class Source(BaseModel):
     fetch_time: str
     text_hash: str
     passages: List[str] = Field(default_factory=list)
+    collector: str = ""          # web:<backend> | hn | wikipedia | worldbank
+    category: str = ""           # evidence category the query targeted
 
 
 class Claim(BaseModel):
@@ -68,6 +71,8 @@ class ResearchFindings(BaseModel):
     source_count: int = 0
     domain_count: int = 0
     sources: List[Source] = Field(default_factory=list)
+    research_round: int = 1
+    mode: str = "extractive"     # "llm" or "extractive" (no-LLM, verbatim quotes)
 
 
 class KillAssumption(BaseModel):
@@ -114,6 +119,7 @@ class Critique(BaseModel):
     founder_fit: str = ""
     recommendation: GateOutcome = GateOutcome.STOP
     unresolved_kill_assumptions: int = 0
+    viability_breakdown: Dict[str, float] = Field(default_factory=dict)
 
 
 class GateResult(BaseModel):
@@ -125,6 +131,7 @@ class GateResult(BaseModel):
     checks: Dict[str, bool] = Field(default_factory=dict)
     founder_override: bool = False
     override_reason: str = ""
+    pivot_to: str = ""           # suggested new direction when outcome == pivot
 
 
 class DecisionLogEntry(BaseModel):
@@ -139,3 +146,41 @@ class DecisionLogEntry(BaseModel):
     phase: Optional[int] = None
     outcome: Optional[str] = None
     tokens: Optional[int] = None
+
+
+# ---------------------------------------------------------------------------
+# Phase 3 — MVP generator
+# ---------------------------------------------------------------------------
+
+class FieldSpec(BaseModel):
+    name: str
+    label: str
+    type: str = "text"           # text | number | date | datetime | longtext
+
+
+class FeatureSpec(BaseModel):
+    name: str
+    description: str
+    traces_to: str               # Lean Canvas problem / risk this feature answers
+    action: str                  # API action implementing it (verified by generated tests)
+
+
+class AppSpec(BaseModel):
+    product_name: str
+    tagline: str
+    archetype: str               # key of a template in mvp_templates/
+    item_label: str              # e.g. "Flashcard"
+    item_label_plural: str
+    fields: List[FieldSpec] = Field(default_factory=list)
+    seed_items: List[Dict[str, Any]] = Field(default_factory=list)
+    features: List[FeatureSpec] = Field(default_factory=list)
+    languages: List[str] = Field(default_factory=lambda: ["en"])
+    free_tier_limit: int = 50
+    target_user: str = ""
+
+
+class LLMSeedContent(BaseModel):
+    """Optional LLM contribution to the MVP: names and seed content only — never code."""
+    product_name: str
+    tagline: str
+    seed_items: List[Dict[str, Any]] = Field(default_factory=list)

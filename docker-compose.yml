@@ -1,13 +1,49 @@
+# One command: `docker compose up`  ->  http://localhost:8000
+# Optional local open-weight LLM: `docker compose --profile llm up`
+#   (starts Ollama and pulls ${OLLAMA_MODEL:-qwen3:8b} once; ~5 GB download).
+# An Ollama already running on the host machine is also detected automatically.
 services:
   app:
     build: .
     ports:
       - "8000:8000"
-    volumes:
-      - ./outputs:/app/outputs
-      - ./decision_log.json:/app/decision_log.json
     env_file:
       - path: .env
         required: false
     environment:
-      - DB_PATH=/app/hatchai.db
+      - DB_PATH=/app/data/hatchai.db
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama:11434,http://host.docker.internal:11434}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-qwen3:8b}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - hatchai-data:/app/data
+      - ./runs:/app/runs
+      - ./generated_mvps:/app/generated_mvps
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  ollama:
+    image: ollama/ollama:0.11.4
+    profiles: ["llm"]
+    volumes:
+      - ollama-models:/root/.ollama
+    ports:
+      - "11434:11434"
+
+  ollama-pull:
+    image: ollama/ollama:0.11.4
+    profiles: ["llm"]
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+    entrypoint: ["/bin/sh", "-c", "sleep 3 && ollama pull ${OLLAMA_MODEL:-qwen3:8b}"]
+    restart: "no"
+
+volumes:
+  hatchai-data:
+  ollama-models:

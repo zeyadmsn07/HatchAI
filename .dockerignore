@@ -1,6 +1,14 @@
 .env
 .git
 .hackathon/
+.pytest_cache/
 state.db
+*.db
 __pycache__/
 uploads/
+runs/
+generated_mvps/
+data/
+.state_*.json
+.claude/
+.ollama_local/

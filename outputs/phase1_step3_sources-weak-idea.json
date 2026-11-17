@@ -1,0 +1,142 @@
+[
+  {
+    "key": "S1",
+    "url": "https://news.ycombinator.com/item?id=12382737",
+    "title": "HN: Maker of EpiPen to Sell Generic Version for Half the Price",
+    "domain": "news.ycombinator.com",
+    "fetch_time": "2026-11-17T15:14:01+00:00",
+    "text_hash": "8a7fb949e4c422bf",
+    "passages": [
+      "Maker of EpiPen to Sell Generic Version for Half the Price — Hacker News thread with 1 points and 1 comments, posted 2016-08-29."
+    ],
+    "collector": "hn",
+    "category": "demand"
+  },
+  {
+    "key": "S2",
+    "url": "https://news.ycombinator.com/item?id=13195588",
+    "title": "HN: Mylan to Sell Generic EpiPen at Half the Price of Original",
+    "domain": "news.ycombinator.com",
+    "fetch_time": "2026-11-17T15:14:01+00:00",
+    "text_hash": "d353c165c9ae593e",
+    "passages": [
+      "Mylan to Sell Generic EpiPen at Half the Price of Original — Hacker News thread with 1 points and 0 comments, posted 2016-12-16."
+    ],
+    "collector": "hn",
+    "category": "demand"
+  },
+  {
+    "key": "S3",
+    "url": "https://answerins.com/",
+    "title": "Buy and Sell Study Notes and Resources | Answerins",
+    "domain": "answerins.com",
+    "fetch_time": "2026-11-17T15:14:01+00:00",
+    "text_hash": "58cab71f855269f9",
+    "passages": [
+      "Browse and sell study notes, summaries, and study resources for every subject and course. Join students worldwide on Answerins to learn more and earn more.",
+      "Buy and Sell Study Notes and Resources | Answerins The best study resources The best study resources The ultimate study resources Find the study notes, summaries, and past exams you need to prepare faster and score higher, all shared by real students on Answerins.",
+      "Find my subject Find Subjects on Answerins Discover study notes, summaries, and practice questions covering every subject and course level.",
+      "Find my subject Qualifications Prepare for professional certifications and qualifications with targeted study notes, practice exams, and revision guides."
+    ],
+    "collector": "web:yahoo",
+    "category": "demand"
+  },
+  {
+    "key": "S4",
+    "url": "https://www.locklizard.com/document-security-blog/sell-study-notes-online/",
+    "title": "How to sell study notes & guides online and prevent piracy",
+    "domain": "locklizard.com",
+    "fetch_time": "2026-11-17T15:14:01+00:00",
+    "text_hash": "7644aba3be742198",
+    "passages": [
+      "Learn where to sell study notes and class guides, what you can sell, how much to sell them for, and how to protect them from piracy.",
+      "OneClass OneClass sells access to class notes, textbook notes, study guides, homework help, and textbook solutions.",
+      "Studypool can also randomly select up to 50% of your notes to make them permanently free.",
+      "It pays “up to $12” per study unit, or $15 if you review notes."
+    ],
+    "collector": "web:yahoo",
+    "category": "demand"
+  },
+  {
+    "key": "S5",
+    "url": "https://studysoup.com/study_help/classes",
+    "title": "Notes & Study Guides | Study Help | StudySoup",
+    "domain": "studysoup.com",
+    "fetch_time": "2026-11-17T15:14:01+00:00",
+    "text_hash": "26ae8085170b39e2",
+    "passages": [
+      "Get prepared for your midterms and finals with our study tools! We have notes and study guides created by students, for students. We also have fundamentals videos that will help you remember the most important information that you’ll need for all of your exams!",
+      "--> StudySoup | Your Study Team × Login to your account or Register for free Notes & Study Guides Textbook Answers Exam Prep Videos Study Tools for better grades!"
+    ],
+    "collector": "web:yahoo",
+    "category": "demand"
+  },
+  {
+    "key": "S6",
+    "url": "http://writingtools.ai/tools/study-guide-generator",
+    "title": "Free Study Guide Generator — Notes → Guide + Practice ...",
+    "domain": "writingtools.ai",
+    "fetch_time": "2026-11-17T15:14:01+00:00",
+    "text_hash": "b9ca583e78a737b9",
+    "passages": [
+      "Generate a structured study guide from any topic, chapter, notes, or pasted text. Get key concepts, definitions, summaries, practice questions, and a quick review section—optimized for faster learning and better retention.",
+      "For best accuracy, paste lecture notes or relevant text so the study guide reflects what you’re actually learning.",
+      "See It in Action See how raw notes become a structured, exam-ready study guide with key concepts and practice questions.",
+      "Instant AI Study Guide from Any Topic or Notes Paste notes or enter a topic to generate a complete study guide with summaries, key concepts, and a clear structure you can review quickly."
+    ],
+    "collector": "web:yahoo",
+    "category": "demand"
+  },
+  {
+    "key": "S7",
+    "url": "https://www.upwork.com/resources/community-marketing",
+    "title": "Community Marketing 101: Basics, Strategies, and Examples",
+    "domain": "upwork.com",
+    "fetch_time": "2026-11-17T15:14:01+00:00",
+    "text_hash": "d4668a302ad78705",
+    "passages": [
+      "Sep 4, 2024 · Learn community marketing basics, strategies, and types. Boost engagement, foster loyalty, and drive growth through community-building techniques."
+    ],
+    "collector": "web:yahoo",
+    "category": "channels"
+  },
+  {
+    "key": "S8",
+    "url": "https://www.lettrlabs.com/post/community-marketing-strategy",
+    "title": "Community-Based Marketing Strategy: How to Build Real ...",
+    "domain": "lettrlabs.com",
+    "fetch_time": "2026-11-17T15:14:01+00:00",
+    "text_hash": "45d34a902afc8374",
+    "passages": [
+      "Discover how community-based marketing drives real engagement, trust, and loyalty—outperforming traditional tactics in 2025."
+    ],
+    "collector": "web:yahoo",
+    "category": "channels"
+  },
+  {
+    "key": "S9",
+    "url": "https://blog.hubspot.com/marketing/community-marketing",
+    "title": "Community marketing: How to use it to drive customer advocacy ...",
+    "domain": "blog.hubspot.com",
+    "fetch_time": "2026-11-17T15:14:01+00:00",
+    "text_hash": "a6a34323d8870730",
+    "passages": [
+      "Mar 10, 2026 · This guide breaks down what community marketing is, how it fits into modern lifecycle marketing, and how marketing teams can build and scale community programs that deliver measurable business impact."
+    ],
+    "collector": "web:yahoo",
+    "category": "channels"
+  },
+  {
+    "key": "S10",
+    "url": "https://thebigmarketing.com/community-marketing/",
+    "title": "Community Marketing Explained with Examples - thebigmarketing.com",
+    "domain": "thebigmarketing.com",
+    "fetch_time": "2026-11-17T15:14:01+00:00",
+    "text_hash": "0c244c6cf02686df",
+    "passages": [
+      "Community marketing enables businesses to connect with local communities and establish authentic relationships. Grassroots campaigns, social media advocacy, and neighborhood activations are some of the strategies used in community marketing."
+    ],
+    "collector": "web:yahoo",
+    "category": "channels"
+  }
+]

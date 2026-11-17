@@ -1,18 +1,26 @@
-# Gate 3 Decision
+# Gate 3 decision
 
-> Structural check on the STUBBED MVP spec (`phase3_step1_mvp-spec.md`). No code was built or deployed.
+**Recommendation (computed by code): GO**
 
-**Outcome:** REPEAT
-
-**Evidence Score:** 0.0
-**Viability Score:** 0.0
-
-**Reason:** Missing required PRD sections.
+GO: runnable MVP built and verified. 21 generated tests ran, 0 failed, 0 errors (attempt 1).
 
 ## Checks
 
-- ✓ has user stories
-- ✓ has scope
-- ✓ has stack
-- ✗ has out of scope
+- ✓ mvp files generated
+- ✓ generated tests ran
+- ✓ all generated tests pass
+- ✓ every feature traced to problem
+- ✓ server smoke test pass
+- ✓ no forbidden phrases
 
+## Founder decision
+
+Required before anything proceeds — see `decision_log.json` (`gate_3_decision`, `approved_by: founder`).
+
+## Gate history for this run
+
+| Gate | Round | Outcome | E | V |
+|---|---|---|---|---|
+| 1 | 1 | GO | 90.0 | 0.0 |
+| 2 | 1 | GO | 90.0 | 4.5 |
+| 3 | 1 | GO | 0.0 | 0.0 |

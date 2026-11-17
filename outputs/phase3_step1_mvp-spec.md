@@ -1,56 +1,39 @@
-# MVP Specification — Founder brief:
+# Phase 3 — MVP spec and build: STEM Recall
 
-I want to build an AI-powered flashcard and spaced-repetition study tool for university students in Egyp
+> Flashcards that schedule each review for you (SM-2), for university students in Egypt.
 
-> **STUBBED** — This specification was generated automatically. No code has been built or deployed.
+**Status:** generated, tested and booted by the pipeline — 21 tests, 0 failures,
+0 errors; smoke test passed. Build attempt 1.
 
-## Problem
+## Archetype
 
-1. No quality Arabic-language spaced-repetition tool exists.
-2. ASSUMPTION: Students waste time on ineffective revision methods.
-3. ASSUMPTION: Existing tools lack STEM-specific content.
+`spaced_repetition` — 'spaced_repetition' scored 6 (matched ['flashcard', 'repetition', 'spaced']), 6 ahead of 'booking' (min score 2, min margin 1). All scores: {'spaced_repetition': 6, 'booking': 0, 'habit_tracker': 0, 'directory': 0, 'course': 0}.
 
-## User Stories
+## Features (each traced to a problem or risk, each verified by a generated test)
 
-- As a ASSUMPTION: young adults aged 18–35 in the target geography, I want to access the core feature so I can solve my primary problem.
-- As a ASSUMPTION: young adults aged 18–35 in the target geography, I want Arabic-language support so the tool works in my language.
-- As a ASSUMPTION: young adults aged 18–35 in the target geography, I want a free tier so I can evaluate before paying.
+| Feature | What it does | API action | Traces to |
+|---|---|---|---|
+| Due-today review queue | Shows only the cards due today, oldest first. | `due` | university students lack an adequate AI-powered flashcard and spaced-repetition study tool. |
+| SM-2 adaptive scheduling | Grades 0–5 reschedule each card (1, 6, then ×ease days). | `review` | university students lack an adequate AI-powered flashcard and spaced-repetition study tool. |
+| Retention stats | Reviews, average ease and recall rate per user. | `stats` | Key metric: Demand-test sign-up rate; weekly active users; riskiest: Target users will pay a recurring price. |
+| Consented waitlist (demand test) | Email + explicit consent; feeds the pre-registered demand test. Nothing is sent automatically. | `waitlist` | Riskiest assumption: Target users will pay a recurring price |
+
+## Data model
+
+Flashcard fields: `front` (text), `back` (longtext), `deck` (text). Seed content: 9 items, **SAMPLE DATA**
+(deterministic, derived from the brief).
 
 ## Scope
 
-**In scope (MVP):**
-- Core value proposition feature only
-- User authentication (email + password, no OAuth for MVP)
-- Basic Arabic/English UI
-- Free tier + paid subscription upgrade flow (MOCKED — no real payments)
+- In: the features above, JSON API, web UI (en, ar, RTL toggle), consented waitlist, free-tier item limit (200).
+- Out: accounts/auth, real payments (MOCKED), analytics (STUBBED), hosting/deployment (founder decision).
 
-**Out of Scope (MVP)**
-- Mobile native app (web-first only)
-- Advanced analytics
-- API access
-- Team / multi-seat plans
+## Run it
 
-## Stack
+```bash
+cd generated_mvps/demo-strong
+python server.py --port 8080          # http://localhost:8080
+python -m unittest discover -s tests -v
+```
 
-- **Backend:** Python / FastAPI
-- **Frontend:** HTML + HTMX (no JS framework)
-- **Database:** SQLite (dev), PostgreSQL (production)
-- **Hosting:** Any VPS / Render / Railway (ASSUMPTION)
-- **Payments:** Stripe checkout (MOCKED — not implemented)
-
-## Effort Estimate
-
-ASSUMPTION: ~40 hours total (4 weeks × 10.0 h/week)
-
-## Riskiest Assumptions to Validate Before Building
-
-- Students will pay even a small monthly fee (risk: high)
-- Arabic localisation is a sufficient differentiator (risk: medium)
-
-## Feature → Problem Tracing
-
-| Feature | Lean Canvas Problem |
-|---|---|
-| Core feature | 1. No quality Arabic-language spaced-repetition tool exists.... |
-| Arabic UI | Local-constraints evidence |
-| Free tier | Pricing/willingness-to-pay assumption |
+Files: README.md, config.json, core.py, index.html, server.py, store.py, tests/test_core.py, tests/test_server.py, tests/test_spec.py

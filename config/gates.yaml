@@ -1,7 +1,9 @@
 gate_1:
-  evidence_score_go: 40
+  evidence_score_go: 55
   evidence_score_stop: 25
   min_distinct_domains: 3
+  max_research_rounds: 2
+  max_pivots: 1
   require_target_market: true
   require_geography: true
 
@@ -13,7 +15,13 @@ gate_2:
   max_unresolved_kill_assumptions: 0
 
 gate_3:
-  require_prd_sections: true
+  min_tests: 6
+  max_build_attempts: 2
+  # Template selection: an idea must score at least this much for one template
+  # (strong keyword = 2, weak = 1) and beat the runner-up by the margin; otherwise
+  # no MVP is generated and Gate 3 recommends STOP.
+  min_template_score: 2
+  min_template_margin: 1
 
 gate_4:
   require_pricing: true
@@ -30,7 +38,7 @@ evidence_score:
   category_weight: 40
   verified_ratio_weight: 25
   domain_diversity_weight: 20
-  recency_weight: 15
+  source_type_weight: 15
   max_domains: 5
 
 excluded_terms:
@@ -43,6 +51,17 @@ excluded_terms:
   - health advice
   - medical advice
   - legal advice
+
+forbidden_output_phrases:
+  - guaranteed income
+  - guaranteed profit
+  - guaranteed results
+  - you will earn
+  - get rich
+  - risk-free income
+  - only a few spots left
+  - offer ends in
+  - limited time only
 
 trick_intents:
   - create fake

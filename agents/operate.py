@@ -1,92 +1,89 @@
-"""Operate agent — MOCKED.
+"""Operate & learn agent.
 
-Generates SYNTHETIC post-launch metrics and compares them to pre-registered
-thresholds. All data is clearly labelled SYNTHETIC and must never be
-presented as real results.
+Reads REAL numbers only:
+  * waitlist sign-ups from the generated MVP's database (generated_mvps/<run>/app.db,
+    created when the founder runs the MVP);
+  * test-mode orders/refunds from the sale-to-cash simulation.
+Then applies the demand-test rule pre-registered in Phase 2. With no traffic yet,
+the decision is INSUFFICIENT_DATA — the system never invents results. A clearly
+labelled SYNTHETIC table shows how the same rule would decide on other inputs.
 """
 from __future__ import annotations
 
 import os
+import sqlite3
 import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import random
-from models import FounderBrief, DemandTest
+from pathlib import Path
+
 import callbacks
+from models import DemandTest, FounderBrief
+
+MIN_VISITORS = 300
+GO_RATE = 0.10
+STOP_RATE = 0.03
 
 
-def run(run_id: str, brief: FounderBrief, demand_test: DemandTest) -> str:
-    memo = _generate_memo(brief, demand_test)
-    callbacks.log(
-        run_id=run_id,
-        agent="operate",
-        action="generate_operate_memo",
-        sources=[],
-        model="offline-mock",
-        cost=0,
-        phase=6,
-    )
-    return memo
+def decide(signups: int, visitors: int) -> tuple[str, str]:
+    """Pre-registered rule from Phase 2 (deterministic)."""
+    if visitors < MIN_VISITORS:
+        return "INSUFFICIENT_DATA", f"{visitors} visitors < {MIN_VISITORS} required; keep the test running."
+    rate = signups / visitors
+    if rate >= GO_RATE:
+        return "PERSEVERE", f"sign-up rate {rate:.1%} ≥ {GO_RATE:.0%}"
+    if rate < STOP_RATE:
+        return "STOP", f"sign-up rate {rate:.1%} < {STOP_RATE:.0%}"
+    return "PIVOT", f"sign-up rate {rate:.1%} between {STOP_RATE:.0%} and {GO_RATE:.0%}"
 
 
-def _generate_memo(brief: FounderBrief, demand_test: DemandTest) -> str:
-    # Fixed seed so the SYNTHETIC numbers are reproducible
-    rng = random.Random(42)
+def read_mvp_metrics(app_dir: Path | None) -> dict:
+    db = app_dir / "app.db" if app_dir else None
+    if not db or not db.exists():
+        return {"signups": 0, "visitors": 0, "source": "MVP not yet run by the founder (no app.db)"}
+    with sqlite3.connect(db) as c:
+        n = c.execute("SELECT COUNT(*) FROM events WHERE kind='waitlist'").fetchone()[0]
+    return {"signups": n, "visitors": 0, "source": f"{db} (visitor analytics not implemented — STUBBED)"}
 
-    # Synthetic funnel
-    impressions = rng.randint(800, 1200)
-    clicks = rng.randint(60, 120)
-    sign_ups = rng.randint(15, 40)
-    paid = rng.randint(2, 8)
-    refunds = rng.randint(0, 2)
-    day7_retention = round(rng.uniform(0.25, 0.45), 2)
-    mrr = paid * 49  # EGP (Student tier)
 
-    threshold_num = 50  # from demand_test threshold text
+def run(run_id: str, brief: FounderBrief, demand_test: DemandTest, app_dir: Path | None,
+        payment: dict | None = None) -> str:
+    m = read_mvp_metrics(app_dir)
+    decision, why = decide(m["signups"], m["visitors"])
+    callbacks.log(run_id=run_id, agent="operate", action="read_metrics_and_apply_preregistered_rule",
+                  sources=[], model=None, cost=0, phase=6, outcome=decision.lower())
+    payment = payment or {}
+    synthetic = "\n".join(
+        f"| {s} | {v} | {decide(s, v)[0]} |" for s, v in ((45, 320), (20, 400), (5, 350), (12, 90)))
+    return f"""# Phase 6 — Operate & learn: {brief.idea[:80]}
 
-    persevere = sign_ups >= threshold_num
-    decision = "PERSEVERE" if persevere else "PIVOT or STOP"
-    decision_reason = (
-        f"Sign-ups ({sign_ups}) {'met' if persevere else 'did not meet'} "
-        f"the pre-registered threshold of {threshold_num}."
-    )
+## Real data (as of this run)
 
-    return f"""# Operate & Learn Memo — {brief.idea}
+| Metric | Value | Source |
+|---|---|---|
+| Waitlist sign-ups | {m['signups']} | {m['source']} |
+| Unique visitors | {m['visitors']} | STUBBED — no analytics connector yet |
+| Test-mode orders (simulation) | {payment.get('orders', 0)} | sale-to-cash simulation, MOCKED |
+| Test-mode refunds (simulation) | {payment.get('refunds', 0)} | sale-to-cash simulation, MOCKED |
 
-> **MOCKED** — All metrics below are **SYNTHETIC** (seed=42).
-> They demonstrate decision logic only and must not be presented as real results.
+## Pre-registered rule (from Phase 2)
 
-## SYNTHETIC Funnel (Week 1)
+{demand_test.threshold} — channel: {demand_test.channel}; {demand_test.duration_days} days; budget USD {demand_test.cost_usd}.
+Status: **{demand_test.status}**.
 
-| Metric | Value |
-|---|---|
-| Ad impressions | {impressions} |
-| Click-throughs | {clicks} |
-| Waitlist sign-ups | {sign_ups} |
-| Converted to paid | {paid} |
-| Refunds | {refunds} |
-| Day-7 retention | {day7_retention:.0%} |
-| Monthly recurring revenue | EGP {mrr} |
+## Decision: **{decision}**
 
-## Pre-registered Threshold Comparison
+{why}
 
-**Test:** {demand_test.metric}
-**Pre-registered threshold:** {demand_test.threshold}
-**Result:** {sign_ups} sign-ups in {demand_test.duration_days} days (SYNTHETIC)
+## Next actions (each needs founder approval)
 
-## Decision
+1. Approve and post the Phase 5 launch drafts in the two named communities.
+2. Run the MVP (`python server.py` in the generated folder) so sign-ups are recorded in `app.db`.
+3. Re-run Phase 6 after {demand_test.duration_days} days; the rule above decides PERSEVERE / PIVOT / STOP.
 
-**{decision}**
+## How the rule would decide — SYNTHETIC inputs (illustration only, not results)
 
-{decision_reason}
-
-Day-7 retention of {day7_retention:.0%} is {'above' if day7_retention >= 0.30 else 'below'}
-the 30% minimum viable retention threshold (ASSUMPTION).
-
-## Recommended Actions
-
-{'1. Invest in content marketing and referral programme.\n2. Expand to second geography.\n3. Test annual pricing.' if persevere else '1. Conduct 10 user interviews to understand drop-off.\n2. Revise value proposition.\n3. Consider pivot to B2B channel.'}
-
----
-*All numbers are SYNTHETIC. Run a real demand test before making business decisions.*
+| Sign-ups | Visitors | Decision |
+|---|---|---|
+{synthetic}
 """

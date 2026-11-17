@@ -7,7 +7,8 @@ Routes:
   GET  /api/runs/{run_id}/status  → JSON status (for polling)
   POST /api/runs/{run_id}/gates/{n}/decide → founder gate decision
   GET  /api/runs                  → list all runs (JSON)
-  GET  /outputs/{filename}        → view an output file
+  GET  /runs/{run_id}/outputs/{f} → view an output file of a run
+  GET  /outputs/{filename}        → view a committed demo output file
   GET  /health                    → health check
 """
 from __future__ import annotations
@@ -19,7 +20,9 @@ import pathlib
 from datetime import datetime, timezone
 
 from fastapi import FastAPI, Form, HTTPException, Request
-from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
+from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse
+
+import llm_gateway
 
 import db
 import approval
@@ -32,7 +35,7 @@ db.init_db()
 
 app = FastAPI(title="HatchAI", version="1.0.0")
 
-OUTPUTS = pathlib.Path("outputs")
+OUTPUTS = orchestrator.OUTPUTS
 OUTPUTS.mkdir(exist_ok=True)
 
 
@@ -135,9 +138,10 @@ def index():
       </div>
     </div>
     <div class="mt-4 small text-muted">
-      <strong>No API keys required.</strong> The pipeline runs in offline mock mode
-      when <code>GEMINI_API_KEY</code> / <code>GROQ_API_KEY</code> are absent.
-      All synthetic outputs are labelled ASSUMPTION or MOCKED.
+      <strong>No API keys required.</strong> Language steps use a local open-weight model via Ollama
+      (<code>OLLAMA_MODEL</code>, default <code>qwen3:8b</code>) or Groq's free tier (Llama 3.3 70B).
+      Without a model, agents run in labelled rule-based / extractive mode. Research uses live, cited web sources.
+      Currently active model: <code>""" + (llm_gateway.active_model_label() or "none (rule-based mode)") + """</code>.
     </div>
   </div>
 </div>
@@ -172,12 +176,10 @@ def create_run(
 
     run_id = orchestrator.start_run(brief_text)
     run = db.get_run(run_id)
-
-    # Return redirect to status page
-    return HTMLResponse(
-        f'<meta http-equiv="refresh" content="0; url=/runs/{run_id}">',
-        status_code=200,
-    )
+    # The founder token lives in an HttpOnly cookie on the founder's browser only.
+    resp = RedirectResponse(f"/runs/{run_id}", status_code=303)
+    resp.set_cookie(f"hatchai_{run_id}", run["founder_token"], httponly=True, samesite="strict")
+    return resp
 
 
 # ---------------------------------------------------------------------------
@@ -185,19 +187,23 @@ def create_run(
 # ---------------------------------------------------------------------------
 
 @app.get("/runs/{run_id}", response_class=HTMLResponse)
-def run_status_page(run_id: str):
+def run_status_page(run_id: str, request: Request):
     run = db.get_run(run_id)
     if not run:
         raise HTTPException(404, f"Run {run_id} not found")
 
     status = run["status"]
     phase = run["phase"] or 0
-    founder_token = run["founder_token"]
+    is_founder = approval.verify_token(run_id, request.cookies.get(f"hatchai_{run_id}", ""))
 
     # Phase progress
     phase_names = [
-        "Discover", "Validate", "Build",
-        "Commercial", "Launch", "Operate & Learn"
+        "Discover (live sources)",
+        "Validate (demand test: STUBBED execution)",
+        "Build (generated + tested MVP)",
+        "Commercial (policies: MOCKED)",
+        "Launch (payments: MOCKED, posting: STUBBED)",
+        "Operate & Learn (analytics: STUBBED)",
     ]
     progress_html = ""
     for i, name in enumerate(phase_names, 1):
@@ -215,44 +221,46 @@ def run_status_page(run_id: str):
         if gate:
             outcome = gate["outcome"]
             color_cls = {"go": "gate-go", "stop": "gate-stop", "repeat": "gate-repeat", "pivot": "gate-repeat"}.get(outcome, "")
-            override_input = ""
-            if outcome == "stop":
-                override_input = """
-<div class="mb-2">
-  <input id="override_reason" class="form-control form-control-sm"
-         placeholder="Written reason required to override STOP">
-</div>
-<button class="btn btn-warning btn-sm"
+            allowed = approval.ALLOWED.get(outcome, set())
+            labels = {
+                "approve": ("btn-success", f"Approve: proceed to Phase {gate_id + 1}"),
+                "repeat": ("btn-warning", "Repeat (as recommended)"),
+                "pivot": ("btn-info", "Pivot to suggested angle"),
+                "stop": ("btn-danger", "Stop this run"),
+            }
+            buttons = "".join(
+                f'<button class="btn {labels[d][0]} btn-sm" onclick="decide(&quot;{d}&quot;, &quot;&quot;)">{labels[d][1]}</button>'
+                for d in ("approve", "repeat", "pivot", "stop") if d in allowed)
+            if "override_stop" in allowed:
+                buttons += """
+<input id="override_reason" class="form-control form-control-sm" style="max-width:360px"
+       placeholder="Written reason required to proceed against the recommendation">
+<button class="btn btn-outline-secondary btn-sm"
   onclick="decide('override_stop', document.getElementById('override_reason').value)">
-  Override STOP (requires reason)
+  Proceed anyway (override)
 </button>"""
+            pivot_html = f"<p class='small'><b>Suggested pivot:</b> {gate.get('pivot_to')}</p>" if gate.get("pivot_to") else ""
+            if not is_founder:
+                buttons = "<span class='small text-muted'>Only the founder's browser (token cookie) can decide this gate.</span>"
             gate_html = f"""
 <div class="card gate-card {color_cls} mb-4">
   <div class="card-body">
-    <h5 class="card-title">Gate {gate_id} — <strong>{outcome.upper()}</strong></h5>
-    <p class="card-text">{gate['reason']}</p>
+    <h5 class="card-title">Gate {gate_id}: recommendation <strong>{outcome.upper()}</strong></h5>
+    <p class="card-text small">{gate['reason']}</p>
+    {pivot_html}
     <p class="small text-muted">
       Evidence score: {gate['evidence_score']} &nbsp;|&nbsp;
-      Viability score: {gate['viability_score']}
+      Viability score: {gate['viability_score']} &nbsp;|&nbsp; computed by code, not by an LLM
     </p>
-    <div class="d-flex gap-2 flex-wrap align-items-center">
-      <button class="btn btn-success btn-sm" onclick="decide('approve', '')">
-        ✓ Approve — proceed to Phase {gate_id + 1}
-      </button>
-      <button class="btn btn-danger btn-sm" onclick="decide('stop', '')">
-        ✗ Stop this run
-      </button>
-      {override_input}
-    </div>
+    <div class="d-flex gap-2 flex-wrap align-items-center">{buttons}</div>
   </div>
 </div>
 <script>
 function decide(choice, override_reason) {{
-  const token = "{founder_token}";
   fetch("/api/runs/{run_id}/gates/{gate_id}/decide", {{
-    method: "POST",
+    method: "POST", credentials: "same-origin",
     headers: {{"Content-Type": "application/json"}},
-    body: JSON.stringify({{choice, token, override_reason}})
+    body: JSON.stringify({{choice, override_reason}})
   }}).then(r => r.json()).then(d => {{
     if (d.ok) location.reload();
     else alert("Error: " + d.error);
@@ -262,16 +270,20 @@ function decide(choice, override_reason) {{
 
     # Output files
     outputs_html = ""
-    if OUTPUTS.exists():
-        files = sorted(OUTPUTS.glob("*.md")) + sorted(OUTPUTS.glob("*.json")) + sorted(OUTPUTS.glob("*.html"))
-        if files:
-            outputs_html = "<h6 class='mt-3'>Output Files</h6><ul class='list-unstyled'>"
-            for f in files:
-                outputs_html += f'<li><a href="/outputs/{f.name}" class="small">{f.name}</a></li>'
-            outputs_html += "</ul>"
+    files = orchestrator.list_outputs(run_id)
+    if files:
+        outputs_html = "<h6 class='mt-3'>Output Files</h6><ul class='list-unstyled'>"
+        for f in files:
+            outputs_html += f'<li><a href="/runs/{run_id}/outputs/{f.name}" class="small">{f.name}</a></li>'
+        outputs_html += "</ul>"
+    app_state = orchestrator._load(run_id, "app", default={}) or {}
+    if app_state.get("app_dir"):
+        rel = pathlib.Path(app_state["app_dir"]).relative_to(orchestrator.ROOT).as_posix()
+        outputs_html += (f"<p class='small mt-2'><b>Generated MVP:</b> {app_state['product_name']}<br>"
+                         f"<code>cd {rel} &amp;&amp; python server.py --port 8080</code></p>")
 
     # Decision log
-    log_entries = db.get_log_entries(run_id=run_id, limit=20)
+    log_entries = db.get_log_entries(run_id=run_id, limit=500)[-25:]
     log_rows = "".join(
         f"<tr><td class='text-muted small'>{e['timestamp'][:19]}</td>"
         f"<td class='small'>{e['agent']}</td>"
@@ -297,7 +309,7 @@ function decide(choice, override_reason) {{
           <span class="badge {status_badge}">{status.replace('_', ' ')}</span>
         </div>
         <p class="small text-muted mt-2">
-          Founder token:<br><code class="small">{founder_token}</code>
+          {"You are the founder of this run." if is_founder else "Viewer (no founder token)."}
         </p>
       </div>
     </div>
@@ -315,7 +327,7 @@ function decide(choice, override_reason) {{
     {"<div class='alert alert-danger'>Run failed: " + (run.get('error') or 'unknown error') + "</div>" if status == "failed" else ""}
     {gate_html}
     <div class="card">
-      <div class="card-header small">Decision Log (last 20 entries)</div>
+      <div class="card-header small">Decision Log (last 25 entries)</div>
       <div class="card-body p-0">
         <table class="table table-sm mb-0">
           <thead><tr>
@@ -361,7 +373,7 @@ def api_run_status(run_id: str):
 async def api_gate_decide(run_id: str, gate_id: int, request: Request):
     body = await request.json()
     choice = body.get("choice", "")
-    token = body.get("token", "")
+    token = body.get("token") or request.cookies.get(f"hatchai_{run_id}", "")
     override_reason = body.get("override_reason", "")
 
     if not choice or not token:
@@ -377,7 +389,7 @@ async def api_gate_decide(run_id: str, gate_id: int, request: Request):
 
 @app.get("/api/runs")
 def api_list_runs():
-    return db.get_all_runs()
+    return [{k: v for k, v in r.items() if k != "founder_token"} for r in db.get_all_runs()]
 
 
 @app.get("/api/runs/{run_id}/log")
@@ -389,13 +401,24 @@ def api_run_log(run_id: str):
 # Output file viewer
 # ---------------------------------------------------------------------------
 
+@app.get("/runs/{run_id}/outputs/{filename}")
+def view_run_output(run_id: str, filename: str):
+    if not db.get_run(run_id):
+        raise HTTPException(404)
+    return _render_file(orchestrator.out_dir(run_id), filename)
+
+
 @app.get("/outputs/{filename}")
 def view_output(filename: str):
-    path = OUTPUTS / filename
+    return _render_file(OUTPUTS, filename)
+
+
+def _render_file(base: pathlib.Path, filename: str):
+    path = base / filename
+    if not path.resolve().is_relative_to(base.resolve()):
+        raise HTTPException(403, "Path traversal not allowed")
     if not path.exists():
         raise HTTPException(404, f"Output file {filename} not found")
-    if not path.resolve().is_relative_to(OUTPUTS.resolve()):
-        raise HTTPException(403, "Path traversal not allowed")
 
     content = path.read_text(encoding="utf-8")
 
@@ -403,7 +426,7 @@ def view_output(filename: str):
         return JSONResponse(json.loads(content))
 
     if filename.endswith(".html"):
-        return HTMLResponse(content)
+        return PlainTextResponse(content)
 
     # Render Markdown-ish text in a simple pre block
     escaped = content.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
@@ -423,7 +446,5 @@ def view_output(filename: str):
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "offline_mode": not bool(
-        __import__("os").environ.get("GEMINI_API_KEY") or
-        __import__("os").environ.get("GROQ_API_KEY")
-    )}
+    label = llm_gateway.active_model_label()
+    return {"status": "ok", "model": label, "mode": "llm" if label else "rule-based (no LLM reachable)"}

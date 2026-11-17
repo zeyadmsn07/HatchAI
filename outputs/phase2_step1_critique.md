@@ -1,36 +1,35 @@
-# Phase 2 — Validation Critique
+# Phase 2 — Red-team critique
 
 ## Summary
 
-ASSUMPTION: The idea addresses a real gap in Arabic educational technology. Key risks are willingness to pay at a low price point and competition from free tools. Evidence is mostly secondary and unverified.
+5/5 evidence categories have verified, quoted sources (demand, competitors, pricing, local_constraints, channels). Gaps: none. Willingness to pay is untested until the pre-registered demand test runs.
 
-## Scores
+## Viability score (computed by code): 4.5 / 5
 
-| Metric | Value |
+| Component | Points |
 |---|---|
-| Evidence Score | 0.0 |
-| Viability Score | 3.8 / 5 |
-| Unresolved Kill Assumptions | 0 |
+| base | 1.0 |
+| demand verified | 1.0 |
+| competitors verified | 0.5 |
+| pricing verified | 0.5 |
+| local constraints verified | 0.5 |
+| founder skills | 0.5 |
+| founder time | 0.25 |
+| risks testable | 0.25 |
+| demand test passed | 0.0 |
 
-## Demand Signal
+## Demand signal
 
-ASSUMPTION: Moderate demand signal — growing student population and limited Arabic tools suggest opportunity, but no primary data confirms willingness to pay.
+Memdora: Designing Cognitively-Grounded Flashcard ... reports: "This preparation burden is so significant that it deters sustained adoption: a recent study of AI flashcard systems found that students  [S5] | Active Recall & Spaced Repetition: Evidence & Effectiveness reports: "Retention Improvement Comparative research from Johns Hopkins University demonstrated that students using AI-optimized spaced repe [S6]
 
-## Founder Fit
+## Founder fit
 
-ASSUMPTION: Founder-fit is acceptable assuming basic web-dev skills; build estimate is within the stated weekly hours.
+Skills: web development; 10.0 h/week; budget USD 500.0. Founder-fit points: 0.75
 
-## Riskiest Assumptions
+## Riskiest assumptions and kill criteria
 
-### Students will pay even a small monthly fee
-- Risk: high
-- Kill criterion: If fewer than 5% of surveyed students indicate willingness to pay, stop.
-- Evidence gaps: No primary willingness-to-pay data, No pricing survey
-### Arabic localisation is a sufficient differentiator
-- Risk: medium
-- Kill criterion: If a free Arabic competitor already has >50k users, pivot.
-- Evidence gaps: Competitor localisation audit not completed
+| Assumption | Risk | Kill criterion | Evidence gaps |
+|---|---|---|---|
+| Target users will pay a recurring price | high | If fewer than 3% of landing-page visitors click a priced plan, stop or pivot pricing. | No primary willingness-to-pay data (demand test NOT_RUN) |
 
-## Recommendation
-
-**GO**
+**Gate 2 recommendation:** GO
